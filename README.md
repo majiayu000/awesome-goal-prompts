@@ -9,6 +9,8 @@ Browse the live catalog: https://majiayu000.github.io/awesome-goal-prompts/
 
 A good goal is not a wish. It is a runnable contract: one objective, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk.
 
+Provenance is explicit: `source-backed` examples include a public URL, source type, and short evidence phrase; `seed` examples are reusable catalog patterns and are not claimed as collected from X, GitHub, or docs.
+
 ## Contents
 
 - [Goal Prompts](#goal-prompts)
@@ -58,6 +60,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Branch Protection Audit](prompts/goal-examples.md#branch-protection-audit) - Audit required checks, reviews, linear history, and admin bypasses.
 - [Release Rollback Drill](prompts/goal-examples.md#release-rollback-drill) - Create and test a rollback path for the latest release.
 - [Semantic Version Check](prompts/goal-examples.md#semantic-version-check) - Infer the correct semver bump from API, behavior, and changelog diffs.
+- [CI Pipeline Green](prompts/goal-examples.md#explainx-ci-pipeline-green) - Repair CI test, lint, typecheck, and security scan failures until checks pass. _(source-backed)_
 
 ### devops-runtime
 - [Docker Image Slimming](prompts/goal-examples.md#docker-image-slimming) - Reduce image size while keeping runtime dependencies and security scans green.
@@ -119,6 +122,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Anomaly Detection Baseline](prompts/goal-examples.md#anomaly-detection-baseline) - Backtest alert thresholds against historical metrics.
 - [Attribution Window Review](prompts/goal-examples.md#attribution-window-review) - Verify campaign attribution windows and dedupe rules.
 - [Self-Serve Data Contract](prompts/goal-examples.md#self-serve-data-contract) - Define trusted datasets and usage limits for business users.
+- [Analyze Product Usage Patterns](prompts/goal-examples.md#cursor-usage-pattern-analysis) - Analyze product usage patterns between tab view and agent panels. _(source-backed)_
 
 ### ai-evals
 - [LLM Golden Set Build](prompts/goal-examples.md#llm-golden-set-build) - Build an eval set from real failures and frequent tasks.
@@ -157,6 +161,12 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Bulk Actions](prompts/goal-examples.md#frontend-bulk-actions) - Handle selection, confirm, undo, partial failure, and feedback.
 - [Search Filter Experience](prompts/goal-examples.md#frontend-search-filter) - Unify search, filter chips, clear actions, and result counts.
 - [Realtime Update Prompts](prompts/goal-examples.md#frontend-realtime-updates) - Handle background changes, conflicts, and refresh prompts.
+- [Fix Freezing Chart Tooltips](prompts/goal-examples.md#cursor-chart-tooltip-freeze) - Debug and fix chart tooltips that freeze on hover. _(source-backed)_
+- [Improve Common Error Messages](prompts/goal-examples.md#github-copilot-error-messages) - Use a cloud coding agent to implement user-friendly messages for common errors. _(source-backed)_
+- [Visual Feedback With Test Guard](prompts/goal-examples.md#qiita-aochan-visual-feedback) - Add correct and wrong answer visual feedback while keeping tests green. _(source-backed)_
+- [Theme Toggle Persistence](prompts/goal-examples.md#apidog-theme-toggle) - Add a dark and light theme toggle that persists across refreshes. _(source-backed)_
+- [Button Console Error Fix](prompts/goal-examples.md#hn-button-console-error-fix) - Use browser automation to click a button, inspect console errors, fix the issue, and prove it. _(source-backed)_
+- [Next.js Chat History Sidebar](prompts/goal-examples.md#video-nextjs-chat-sidebar) - Replace a Next.js sidebar with chat history, then test, fix build issues, and push. _(source-backed)_
 
 ### design
 - [Visual Hierarchy Pass](prompts/goal-examples.md#design-visual-hierarchy) - Reorder headings, metadata, primary actions, and secondary actions.
@@ -200,6 +210,8 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Screenshot Docs](prompts/goal-examples.md#docs-screenshot-docs) - Add real screenshots and labels for UI workflows.
 - [Docs Lint Gate](prompts/goal-examples.md#docs-docs-lint) - Add link, spelling, and executable code block checks.
 - [Weekly Changelog Coverage](prompts/goal-examples.md#claude-weekly-changelog) - Ensure CHANGELOG.md includes an entry for every PR merged this week. _(source-backed)_
+- [Contributor README Rewrite](prompts/goal-examples.md#apidog-contributor-readme) - Rewrite README installation, run, test, and architecture guidance for new contributors. _(source-backed)_
+- [Public API Docs Coverage](prompts/goal-examples.md#explainx-public-api-jsdoc) - Add JSDoc and examples for public functions while keeping documentation links valid. _(source-backed)_
 
 ### product
 - [User Journeys](prompts/goal-examples.md#product-user-journeys) - Map persona tasks into pages, events, and success states.
@@ -214,6 +226,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Search Relevance](prompts/goal-examples.md#product-search-relevance) - Define query handling, ranking, typo tolerance, and no-result behavior.
 - [Admin Workflows](prompts/goal-examples.md#product-admin-workflows) - Design review, undo, audit log, and bulk moderation flows.
 - [Success Criteria](prompts/goal-examples.md#product-success-criteria) - Define quantitative and qualitative completion measures for a feature.
+- [Design Doc Acceptance Complete](prompts/goal-examples.md#claude-design-doc-acceptance) - Implement a design document until every acceptance criterion is satisfied. _(source-backed)_
 
 ### qa
 - [Critical Path Tests](prompts/goal-examples.md#qa-critical-paths) - Cover signup, create, edit, delete, export, and recovery flows.
@@ -228,6 +241,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Data Migration Test](prompts/goal-examples.md#qa-data-migration) - Verify counts, constraints, and rollback around data migration.
 - [Security Smoke](prompts/goal-examples.md#qa-security-smoke) - Check auth, permission bypass, and sensitive info leakage.
 - [Bug Reproduction Template](prompts/goal-examples.md#qa-bug-repro-template) - Standardize environment, steps, expected, actual, and evidence.
+- [QA Engineer Simulation](prompts/goal-examples.md#x-qa-engineer-simulation) - Use `/goal` as a quality loop until tests pass and lint is clean. _(source-backed)_
 
 ### accessibility
 - [Keyboard Navigation](prompts/goal-examples.md#accessibility-keyboard-nav) - Ensure the whole app works with Tab, Enter, and Escape.
@@ -257,51 +271,117 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Render Count Audit](prompts/goal-examples.md#performance-render-count) - Find unnecessary React renders and expensive selectors.
 - [Performance CI Gate](prompts/goal-examples.md#performance-ci-gate) - Add Lighthouse or trace thresholds to CI.
 - [Lighthouse And Core Web Vitals Gate](prompts/goal-examples.md#explainx-lighthouse-core-web-vitals) - Improve Lighthouse and Core Web Vitals to explicit thresholds without regressions. _(source-backed)_
+- [Bundle Size Reduction](prompts/goal-examples.md#udit-bundle-size-reduction) - Iteratively reduce bundle size below the documented threshold. _(source-backed)_
+- [Benchmark Optimization](prompts/goal-examples.md#udit-benchmark-optimization) - Optimize performance against a benchmark command until the goal is reached. _(source-backed)_
 
 ### workflow
 - [Goal Prompt Writer](prompts/goal-examples.md#goal-meta-prompt-writer) - Ask the agent to inspect a repo and write a precise goal prompt before execution.
 - [Goal Continuation Audit](prompts/goal-examples.md#goal-continuation-audit) - Check that a long-running goal keeps its done_when and verification contract after compaction.
 - [Verifiable End-State Contract](prompts/goal-examples.md#codex-verifiable-end-state) - Complete one objective only when a verifiable end state is met. _(source-backed)_
 - [Four Files Walkthrough](prompts/goal-examples.md#hermes-four-files-walkthrough) - Create four note files across turns and verify each contains its number. _(source-backed)_
+- [Meta Goal Prompt Generator](prompts/goal-examples.md#x-meta-goal-prompt-generator) - Ask the agent to inspect the session, repo, history, and docs before writing the actual `/goal` prompt. _(source-backed)_
+- [AGENTS.md Goal Workflow](prompts/goal-examples.md#x-agentsmd-goal-workflow) - Use AGENTS.md rules together with `/goal` so long-running work keeps repo-specific constraints. _(source-backed)_
+- [Plan-Then-Goal Execution](prompts/goal-examples.md#x-plan-then-goal-execution) - Use plan mode to define the work, then start a new goal session to implement the plan completely. _(source-backed)_
+- [Measurable Goal Structure](prompts/goal-examples.md#x-measurable-goal-structure) - Write goals with a clear target, proof requirement, and explicit limits. _(source-backed)_
+- [Non-Interactive Goal Creation](prompts/goal-examples.md#github-noninteractive-goal-creation) - Create and confirm an active goal during non-interactive Codex execution before continuing. _(source-backed)_
+- [Prep A Goal Workspace](prompts/goal-examples.md#github-goalbuddy-workspace) - Prepare a goal workspace with board, notes, receipts, and an exact `/goal` command. _(source-backed)_
+- [Long Goal With Constraints](prompts/goal-examples.md#github-claude-long-goal-template) - Use a longer goal template with repo path, constraints, plan pointer, and execution order. _(source-backed)_
 
 ### migration
 - [Visual Migration With Playwright](prompts/goal-examples.md#codex-visual-migration-playwright) - Migrate a project while preserving screen output and checking it with Playwright. _(source-backed)_
 - [Feature Port With CI Green](prompts/goal-examples.md#hermes-feature-port-ci-green) - Port a feature from another repo, include tests, and get CI green. _(source-backed)_
 - [Vue 2 To Vue 3 Visual And Unit Gate](prompts/goal-examples.md#qiita-vue2-vue3-visual-unit) - Migrate listed Vue screens and stop only when visual and unit tests pass. _(source-backed)_
+- [Finish Migration Keep Tests Green](prompts/goal-examples.md#openai-slash-finish-migration) - Use `/goal` to complete a migration while keeping the relevant tests green. _(source-backed)_
+- [Module API Migration](prompts/goal-examples.md#claude-module-api-migration) - Migrate a module to a new API while keeping call sites compiling and tests passing. _(source-backed)_
+- [Moment To Day.js Migration](prompts/goal-examples.md#explainx-moment-dayjs-migration) - Replace Moment.js with Day.js while preserving date output across edge cases. _(source-backed)_
+- [React 19 Migration](prompts/goal-examples.md#cursor-forum-react19-migration) - Migrate a project to React 19 and continue until the build passes. _(source-backed)_
+- [Pydantic V1 To V2 Migration](prompts/goal-examples.md#github-pydantic-v2-migration) - Migrate a project from Pydantic v1 to v2 while preserving API behavior. _(source-backed)_
 
 ### prototype
 - [PLAN.md Milestone Prototype](prompts/goal-examples.md#codex-plan-milestone-prototype) - Implement a PLAN.md-driven prototype with tests at each milestone and browser verification. _(source-backed)_
 - [Canvas Puzzle PLAN.md Prototype](prompts/goal-examples.md#qiita-canvas-puzzle-plan) - Implement PLAN.md milestones for a canvas puzzle prototype and prove e2e passes. _(source-backed)_
+- [Rift Salvage Game Goal](prompts/goal-examples.md#video-rift-salvage-game) - Build a 2D combat game prototype with assets, combat, boss logic, and browser verification. _(source-backed)_
 
 ### prompt-optimization
 - [Eval-Driven Prompt Optimization](prompts/goal-examples.md#codex-eval-prompt-optimization) - Optimize prompts against an eval suite until the target score or pass rate is reached. _(source-backed)_
 - [Router Prompt Eval Score](prompts/goal-examples.md#qiita-router-eval-score) - Improve a router prompt against an eval directory until the result score reaches a target. _(source-backed)_
+- [RAG Chat Flywheel](prompts/goal-examples.md#reddit-rag-chat-flywheel) - Iterate on code, tests, and metrics to improve a document-chat RAG system. _(source-backed)_
 
 ### testing
 - [Auth Tests And Lint Clean](prompts/goal-examples.md#claude-auth-tests-lint) - Keep working until auth tests pass and the lint step is clean. _(source-backed)_
 - [Ruff Clean Source Tree](prompts/goal-examples.md#hermes-ruff-src-clean) - Fix every lint error in src and prove ruff passes. _(source-backed)_
 - [TypeScript ESLint Coverage Gate](prompts/goal-examples.md#explainx-typescript-eslint-coverage) - Resolve TypeScript errors, pass tests, clear ESLint warnings, and keep coverage above a threshold. _(source-backed)_
+- [Fix Hermes CLI Tests](prompts/goal-examples.md#hermes-cli-tests-pass) - Fix failing Hermes CLI tests until the project test script passes. _(source-backed)_
+- [Add Authentication Tests](prompts/goal-examples.md#google-jules-auth-tests) - Create unit tests for an authentication module in a Jules session. _(source-backed)_
+- [Add UserService Unit Tests](prompts/goal-examples.md#openhands-userservice-tests) - Add unit tests for UserService and raise target coverage to the documented threshold. _(source-backed)_
+- [Parallel Test Coverage Recovery](prompts/goal-examples.md#devin-parallel-coverage-recovery) - Find low-coverage modules and open separate test-improvement PRs for each module. _(source-backed)_
+- [Single Vitest Case Fix](prompts/goal-examples.md#qiita-aochan-single-vitest-fix) - Fix a quiz application until one named Vitest case passes. _(source-backed)_
+- [Full Quiz Test Recovery](prompts/goal-examples.md#qiita-aochan-full-vitest-recovery) - Repair the quiz app until the full Vitest suite exits cleanly. _(source-backed)_
+- [Auth Coverage Lift](prompts/goal-examples.md#jdhodges-auth-coverage-lift) - Raise authentication code coverage from the documented baseline to the documented target within a scoped edit boundary. _(source-backed)_
+- [Auth Test Repair Boundary](prompts/goal-examples.md#apidog-auth-test-repair) - Fix failing auth tests while preserving the documented file boundary. _(source-backed)_
+- [Coverage Autoresearch Loop](prompts/goal-examples.md#udit-coverage-autoresearch) - Iterate on tests until coverage reaches the documented target. _(source-backed)_
+- [Test And TypeScript Clean](prompts/goal-examples.md#theaidaily-test-typescript-clean) - Keep working until tests exit cleanly and TypeScript errors are gone. _(source-backed)_
+- [Go Race Cleanup](prompts/goal-examples.md#cursor-forum-go-race-cleanup) - Eliminate data races detected by the Go race detector. _(source-backed)_
+- [Tests And Lint Completion](prompts/goal-examples.md#x-tests-lint-completion) - Run a `/goal` loop until all tests pass and lint is clean. _(source-backed)_
+- [Tests Pass And PR Ready](prompts/goal-examples.md#reddit-tests-pass-pr-ready) - Keep Claude Code working until tests pass and the PR is ready for review. _(source-backed)_
+- [Flaky Auth Tests Goal](prompts/goal-examples.md#github-claude-goal-flaky-auth) - Use a Claude goal plugin example to find and fix flaky authentication tests. _(source-backed)_
+- [Improve Benchmark Coverage](prompts/goal-examples.md#github-benchmark-coverage-goal) - Use `/goal` to improve benchmark coverage and persist the command in history. _(source-backed)_
+- [Batch Fix Bugs](prompts/goal-examples.md#github-claude-batch-bugs) - Use a Claude Code goal to fix a numbered batch of bugs without looping on missing skills. _(source-backed)_
 
 ### investigation
 - [Session Drift Report](prompts/goal-examples.md#hermes-session-drift-report) - Investigate session ID drift during mid-run compression and write a report. _(source-backed)_
+- [Billing Empty State Root Cause](prompts/goal-examples.md#reddit-billing-empty-state) - Find why active subscriptions show an empty state without changing pricing or webhook code. _(source-backed)_
 
 ### cli
 - [EXIF Rename CLI](prompts/goal-examples.md#hermes-exif-rename-cli) - Build a small CLI that renames photos by EXIF date and test it on a photos folder. _(source-backed)_
 
 ### refactor
 - [Auth Dependency Injection Refactor](prompts/goal-examples.md#explainx-auth-di-refactor) - Refactor auth code to dependency injection while preserving tests, coverage, and public API. _(source-backed)_
+- [Split Oversized File](prompts/goal-examples.md#claude-split-oversized-file) - Split an oversized source file into focused modules while preserving behavior. _(source-backed)_
+
+### greenfield-build
+- [Build Design Tool From Scratch](prompts/goal-examples.md#openai-long-horizon-design-tool) - Run a long-horizon Codex task to build a design tool with milestone verification. _(source-backed)_
+
+### backlog
+- [Clear Labeled Issue Backlog](prompts/goal-examples.md#claude-clear-labeled-issues) - Work through a labeled issue queue until no matching issues remain. _(source-backed)_
+- [Clear Trading App Backlog](prompts/goal-examples.md#reddit-trading-backlog-clearance) - Generate a roadmap backlog for a trading app and then clear it with goals. _(source-backed)_
+- [Ship Backlog Features](prompts/goal-examples.md#reddit-ship-backlog-features) - Implement the feature list from BACKLOG.md until CI is green. _(source-backed)_
+
+### research
+- [Read-Only Font Match](prompts/goal-examples.md#jdhodges-read-only-font-match) - Research font matches in read-only mode and produce a report without purchasing or downloading assets. _(source-backed)_
+- [Public Benchmark Table](prompts/goal-examples.md#apidog-benchmark-table) - Collect distinct public benchmarks and build a date-sorted comparison table. _(source-backed)_
+- [Review Sentiment JSON Agent](prompts/goal-examples.md#hn-review-sentiment-json-agent) - Fetch reviews with browser automation, classify sentiment, and write structured JSON output. _(source-backed)_
+
+### maintenance
+- [Repo Maintenance Audit](prompts/goal-examples.md#apidog-repo-maintenance-audit) - Find dead code, unused dependencies, and stale files, then produce a PR-ready justification list. _(source-backed)_
+- [Clean Worktree File Budget](prompts/goal-examples.md#theaidaily-clean-worktree-budget) - Keep the worktree clean and enforce a source file size budget. _(source-backed)_
+
+### goal-maintenance
+- [Goal Escape Hatch](prompts/goal-examples.md#x-goal-escape-hatch) - Add an explicit incomplete state for impossible subtasks so a goal loop can stop safely. _(source-backed)_
+- [Goal-Forge Done-When Loop](prompts/goal-examples.md#x-goal-forge-done-when) - Write a GOAL.md-style contract where `done_when` controls completion instead of vague success claims. _(source-backed)_
+- [Review Plan Until No Gaps](prompts/goal-examples.md#github-review-plan-no-gaps) - Loop on implementation-plan review until a fresh review finds no remaining gaps. _(source-backed)_
+- [Long Task Until Verification](prompts/goal-examples.md#github-long-task-verification) - Continue a long-running task until final verification passes rather than stopping on partial progress. _(source-backed)_
+- [Completion Audit Before Done](prompts/goal-examples.md#github-completion-audit-before-done) - Audit completion criteria before calling the goal complete. _(source-backed)_
+- [Goal Permission Context Sync](prompts/goal-examples.md#github-goal-permission-context) - Ensure goal continuation uses the current permission context after approval mode changes. _(source-backed)_
+- [Real CLI Goal Loop](prompts/goal-examples.md#github-hermes-real-cli-loop) - Verify a real CLI goal loop where the second judge round confirms completion. _(source-backed)_
+- [Verify File Creation](prompts/goal-examples.md#github-hermes-file-verification) - Verify that a requested file was actually created instead of trusting the agent claim. _(source-backed)_
+- [Queue Follow-Up Goals](prompts/goal-examples.md#github-hermes-goal-queue) - Promote queued follow-up goals: fix tests, run full tests, then produce coverage. _(source-backed)_
+
+### orchestration
+- [DAG Agent Dispatch](prompts/goal-examples.md#hn-dag-agent-dispatch) - Split a goal into a dependency graph and dispatch independent agents into isolated worktrees. _(source-backed)_
 
 ## Templates
 
 - [Full template](templates/full-goal-template.md) for high-risk or multi-step work.
 - [Compact template](templates/compact-goal-template.md) for routine work.
 - [Structured JSON data](data/examples.json) for search, tooling, or site generation.
+- [Data schema](docs/schema.md) for provenance fields and source types.
 
 ## Quality Bar
 
 - One example should cover one measurable objective.
 - The prompt must include verification that can run in a real repository or produce a concrete artifact.
-- New externally sourced examples must include `source_name` and `source_url` in `data/examples.json`.
+- New externally sourced examples must include `source_name`, `source_url`, `source_type`, and `evidence` in `data/examples.json`.
 - Do not add undocumented slash-command behavior, fake tool capabilities, or examples copied from private/non-verifiable sources.
 
 ## Sources And Caveats

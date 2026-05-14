@@ -18,6 +18,8 @@ If an example is based on a public post, documentation page, article, or reposit
 
 - `source_name`: short human-readable source name
 - `source_url`: canonical public URL
+- `source_type`: one of the provenance classes in `SOURCES.md`
+- `evidence`: a short phrase from, or tightly tied to, the public source
 - `origin`: `source-backed`
 
 If there is no verifiable public source, keep `origin` as `seed` and do not describe it as collected from X, GitHub, docs, or a named author.
@@ -53,4 +55,5 @@ Reject examples that:
 - The constraints prevent scope creep.
 - The verification does not depend on prior claims or stale logs.
 - The stop rules cover missing secrets, missing production access, destructive data operations, and repeated failed fixes.
-- Source-backed examples include a public URL, and seed examples are not presented as external citations.
+- Source-backed examples include a public URL, source type, and evidence phrase.
+- Seed examples are not presented as external citations.

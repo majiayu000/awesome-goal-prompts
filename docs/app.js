@@ -24,7 +24,11 @@ const els = {
   detailIntent: document.querySelector("#detail-intent"),
   detailVerify: document.querySelector("#detail-verify"),
   sourceRow: document.querySelector("#source-row"),
+  sourceTypeRow: document.querySelector("#source-type-row"),
+  evidenceRow: document.querySelector("#evidence-row"),
   detailSource: document.querySelector("#detail-source"),
+  detailSourceType: document.querySelector("#detail-source-type"),
+  detailEvidence: document.querySelector("#detail-evidence"),
   detailPrompt: document.querySelector("#detail-prompt"),
   copy: document.querySelector("#copy-button"),
 };
@@ -213,6 +217,22 @@ function renderDetail() {
     els.sourceRow.classList.add("hidden");
     els.detailSource.removeAttribute("href");
     els.detailSource.textContent = "";
+  }
+
+  if (entry.source_type) {
+    els.sourceTypeRow.classList.remove("hidden");
+    els.detailSourceType.textContent = entry.source_type;
+  } else {
+    els.sourceTypeRow.classList.add("hidden");
+    els.detailSourceType.textContent = "";
+  }
+
+  if (entry.evidence) {
+    els.evidenceRow.classList.remove("hidden");
+    els.detailEvidence.textContent = entry.evidence;
+  } else {
+    els.evidenceRow.classList.add("hidden");
+    els.detailEvidence.textContent = "";
   }
 }
 

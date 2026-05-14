@@ -14,6 +14,8 @@ For source-backed examples, add the public URL here:
 
 - Source name:
 - Source URL:
+- Source type:
+- Evidence phrase:
 
 For seed examples, confirm this is not presented as collected from a public source:
 

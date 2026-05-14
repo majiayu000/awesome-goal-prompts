@@ -19,11 +19,28 @@ This repository is based on public documentation, source inspection notes, and c
 
 Examples marked `source-backed` in `data/examples.json` are derived from public material that documents or demonstrates goal-style workflows. They are still rewritten as reusable task contracts instead of copied verbatim.
 
-- OpenAI Codex follow-goals examples: https://developers.openai.com/codex/use-cases/follow-goals
-- Claude Code goal examples: https://code.claude.com/docs/en/goal
-- Hermes persistent goals examples: https://hermes-agent.nousresearch.com/docs/user-guide/features/goals
-- ExplainX goal mode guide: https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026
-- Qiita goal examples and notes: https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae
+Every source-backed entry now carries:
+
+- `source_name`: short label for the source
+- `source_url`: public URL
+- `source_type`: provenance class
+- `evidence`: a short phrase from, or tightly tied to, the source
+
+Use `data/examples.json` as the source of truth for the full URL list.
+
+## Source Types
+
+- `official-goal`: official documentation for a goal feature.
+- `official-workflow`: official documentation or blog post for a long-running coding-agent workflow.
+- `official-agent-task`: official agent task example from a related coding-agent product, not necessarily `/goal`.
+- `third-party-tutorial`: public tutorial or article with a concrete task or template.
+- `third-party-review`: public review with a concrete tested task.
+- `third-party-project`: public project page demonstrating an iterative goal workflow.
+- `x-post`: public X post with a concrete goal pattern, task, or usage rule.
+- `public-forum`: public Reddit, HN, Cursor forum, or similar discussion with a concrete task.
+- `github-issue`, `github-pr`, `github-discussion`: public GitHub thread with a concrete goal behavior, task, or template.
+- `tool-readme`: public repository README or docs with a concrete example.
+- `video-summary`: public video summary page with a concrete demo task.
 
 ## Catalog Seeds
 

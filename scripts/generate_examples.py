@@ -219,24 +219,89 @@ goal-continuation-audit|workflow|Goal Continuation Audit|Check that a long-runni
 
 
 SOURCE_BACKED_ENTRIES = """
-codex-verifiable-end-state|workflow|Verifiable End-State Contract|Complete one objective only when a verifiable end state is met.|manual status plus repo-local verification|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs
-codex-visual-migration-playwright|migration|Visual Migration With Playwright|Migrate a project while preserving screen output and checking it with Playwright.|npx playwright test|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs
-codex-plan-milestone-prototype|prototype|PLAN.md Milestone Prototype|Implement a PLAN.md-driven prototype with tests at each milestone and browser verification.|npx playwright test|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs
-codex-eval-prompt-optimization|prompt-optimization|Eval-Driven Prompt Optimization|Optimize prompts against an eval suite until the target score or pass rate is reached.|python -m pytest evals|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs
-claude-auth-tests-lint|testing|Auth Tests And Lint Clean|Keep working until auth tests pass and the lint step is clean.|npm test -- test/auth && npm run lint|https://code.claude.com/docs/en/goal|Claude Code docs
-claude-weekly-changelog|docs|Weekly Changelog Coverage|Ensure CHANGELOG.md includes an entry for every PR merged this week.|git log --since='7 days ago' --merges && rg '^-' CHANGELOG.md|https://code.claude.com/docs/en/goal|Claude Code docs
-hermes-ruff-src-clean|testing|Ruff Clean Source Tree|Fix every lint error in src and prove ruff passes.|ruff check src/|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs
-hermes-feature-port-ci-green|migration|Feature Port With CI Green|Port a feature from another repo, include tests, and get CI green.|pytest && npm test|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs
-hermes-session-drift-report|investigation|Session Drift Report|Investigate session ID drift during mid-run compression and write a report.|test -f reports/session-drift.md|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs
-hermes-exif-rename-cli|cli|EXIF Rename CLI|Build a small CLI that renames photos by EXIF date and test it on a photos folder.|pytest tests/cli && ./rename-exif photos/ --dry-run|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs
-hermes-four-files-walkthrough|workflow|Four Files Walkthrough|Create four note files across turns and verify each contains its number.|for i in 1 2 3 4; do test \"$(cat /tmp/note_$i.txt)\" = \"$i\"; done|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs
-explainx-typescript-eslint-coverage|testing|TypeScript ESLint Coverage Gate|Resolve TypeScript errors, pass tests, clear ESLint warnings, and keep coverage above a threshold.|npm run typecheck && npm test && npm run lint && npm run coverage|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog
-explainx-auth-di-refactor|refactor|Auth Dependency Injection Refactor|Refactor auth code to dependency injection while preserving tests, coverage, and public API.|npm test -- auth && npm run coverage|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog
-explainx-npm-audit-clean|security-ops|NPM Audit Clean Remediation|Patch npm audit vulnerabilities without breaking tests or public APIs.|npm audit && npm test|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog
-explainx-lighthouse-core-web-vitals|performance|Lighthouse And Core Web Vitals Gate|Improve Lighthouse and Core Web Vitals to explicit thresholds without regressions.|npm run lighthouse|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog
-qiita-vue2-vue3-visual-unit|migration|Vue 2 To Vue 3 Visual And Unit Gate|Migrate listed Vue screens and stop only when visual and unit tests pass.|pnpm test:visual && pnpm test:unit|https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae|Qiita article
-qiita-canvas-puzzle-plan|prototype|Canvas Puzzle PLAN.md Prototype|Implement PLAN.md milestones for a canvas puzzle prototype and prove e2e passes.|pnpm e2e|https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae|Qiita article
-qiita-router-eval-score|prompt-optimization|Router Prompt Eval Score|Improve a router prompt against an eval directory until the result score reaches a target.|python -m pytest evals/router|https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae|Qiita article
+codex-verifiable-end-state|workflow|Verifiable End-State Contract|Complete one objective only when a verifiable end state is met.|manual status plus repo-local verification|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs|official-goal|verifiable stopping condition
+codex-visual-migration-playwright|migration|Visual Migration With Playwright|Migrate a project while preserving screen output and checking it with Playwright.|npx playwright test|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs|official-goal|visual migration
+codex-plan-milestone-prototype|prototype|PLAN.md Milestone Prototype|Implement a PLAN.md-driven prototype with tests at each milestone and browser verification.|npx playwright test|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs|official-goal|PLAN.md
+codex-eval-prompt-optimization|prompt-optimization|Eval-Driven Prompt Optimization|Optimize prompts against an eval suite until the target score or pass rate is reached.|python -m pytest evals|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs|official-goal|eval suite
+claude-auth-tests-lint|testing|Auth Tests And Lint Clean|Keep working until auth tests pass and the lint step is clean.|npm test -- test/auth && npm run lint|https://code.claude.com/docs/en/goal|Claude Code docs|official-goal|test/auth pass
+claude-weekly-changelog|docs|Weekly Changelog Coverage|Ensure CHANGELOG.md includes an entry for every PR merged this week.|git log --since='7 days ago' --merges && rg '^-' CHANGELOG.md|https://code.claude.com/docs/en/goal|Claude Code docs|official-goal|CHANGELOG.md has an entry
+hermes-ruff-src-clean|testing|Ruff Clean Source Tree|Fix every lint error in src and prove ruff passes.|ruff check src/|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs|official-goal|ruff check
+hermes-feature-port-ci-green|migration|Feature Port With CI Green|Port a feature from another repo, include tests, and get CI green.|pytest && npm test|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs|official-goal|CI green
+hermes-session-drift-report|investigation|Session Drift Report|Investigate session ID drift during mid-run compression and write a report.|test -f reports/session-drift.md|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs|official-goal|write up a report
+hermes-exif-rename-cli|cli|EXIF Rename CLI|Build a small CLI that renames photos by EXIF date and test it on a photos folder.|pytest tests/cli && ./rename-exif photos/ --dry-run|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs|official-goal|photos/ folder
+hermes-four-files-walkthrough|workflow|Four Files Walkthrough|Create four note files across turns and verify each contains its number.|for i in 1 2 3 4; do test \"$(cat /tmp/note_$i.txt)\" = \"$i\"; done|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs|official-goal|Create four files
+explainx-typescript-eslint-coverage|testing|TypeScript ESLint Coverage Gate|Resolve TypeScript errors, pass tests, clear ESLint warnings, and keep coverage above a threshold.|npm run typecheck && npm test && npm run lint && npm run coverage|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog|third-party-tutorial|TypeScript errors resolved
+explainx-auth-di-refactor|refactor|Auth Dependency Injection Refactor|Refactor auth code to dependency injection while preserving tests, coverage, and public API.|npm test -- auth && npm run coverage|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog|third-party-tutorial|auth.ts dependency injection
+explainx-npm-audit-clean|security-ops|NPM Audit Clean Remediation|Patch npm audit vulnerabilities without breaking tests or public APIs.|npm audit && npm test|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog|third-party-tutorial|npm audit vulnerabilities patched
+explainx-lighthouse-core-web-vitals|performance|Lighthouse And Core Web Vitals Gate|Improve Lighthouse and Core Web Vitals to explicit thresholds without regressions.|npm run lighthouse|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog|third-party-tutorial|Lighthouse performance score >95
+qiita-vue2-vue3-visual-unit|migration|Vue 2 To Vue 3 Visual And Unit Gate|Migrate listed Vue screens and stop only when visual and unit tests pass.|pnpm test:visual && pnpm test:unit|https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae|Qiita article|third-party-tutorial|pnpm test:visual
+qiita-canvas-puzzle-plan|prototype|Canvas Puzzle PLAN.md Prototype|Implement PLAN.md milestones for a canvas puzzle prototype and prove e2e passes.|pnpm e2e|https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae|Qiita article|third-party-tutorial|canvas puzzle
+qiita-router-eval-score|prompt-optimization|Router Prompt Eval Score|Improve a router prompt against an eval directory until the result score reaches a target.|python -m pytest evals/router|https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae|Qiita article|third-party-tutorial|router prompt
+openai-slash-finish-migration|migration|Finish Migration Keep Tests Green|Use `/goal` to complete a migration while keeping the relevant tests green.|repo-local migration tests|https://developers.openai.com/codex/cli/slash-commands#set-an-experimental-goal-with-goal|OpenAI Codex slash commands|official-goal|Finish the migration
+openai-long-horizon-design-tool|greenfield-build|Build Design Tool From Scratch|Run a long-horizon Codex task to build a design tool with milestone verification.|tests, lint, and typecheck per milestone|https://developers.openai.com/blog/run-long-horizon-tasks-with-codex|OpenAI Codex blog|official-workflow|verification steps
+claude-module-api-migration|migration|Module API Migration|Migrate a module to a new API while keeping call sites compiling and tests passing.|compile call sites && tests pass|https://code.claude.com/docs/en/goal|Claude Code docs|official-goal|new API
+claude-design-doc-acceptance|product|Design Doc Acceptance Complete|Implement a design document until every acceptance criterion is satisfied.|acceptance criteria review|https://code.claude.com/docs/en/goal|Claude Code docs|official-goal|acceptance criteria
+claude-split-oversized-file|refactor|Split Oversized File|Split an oversized source file into focused modules while preserving behavior.|module size budget && tests pass|https://code.claude.com/docs/en/goal|Claude Code docs|official-goal|size budget
+claude-clear-labeled-issues|backlog|Clear Labeled Issue Backlog|Work through a labeled issue queue until no matching issues remain.|issue queue empty|https://code.claude.com/docs/en/goal|Claude Code docs|official-goal|queue is empty
+hermes-cli-tests-pass|testing|Fix Hermes CLI Tests|Fix failing Hermes CLI tests until the project test script passes.|scripts/run_tests.sh|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs|official-goal|scripts/run_tests.sh passes
+cursor-usage-pattern-analysis|data-analytics|Analyze Product Usage Patterns|Analyze product usage patterns between tab view and agent panels.|analysis files and tests shown|https://cursor.com/en-US/product|Cursor product page|official-agent-task|Analyze Tab vs Agent Usage Patterns
+cursor-chart-tooltip-freeze|frontend|Fix Freezing Chart Tooltips|Debug and fix chart tooltips that freeze on hover.|frontend diff plus interaction verification|https://cursor.com/en-US/product|Cursor product page|official-agent-task|Chart tooltips freeze
+github-copilot-error-messages|frontend|Improve Common Error Messages|Use a cloud coding agent to implement user-friendly messages for common errors.|pushed code changes|https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/start-copilot-sessions|GitHub Copilot docs|official-agent-task|user friendly message
+google-jules-auth-tests|testing|Add Authentication Tests|Create unit tests for an authentication module in a Jules session.|session completed with PR output|https://jules.google/docs/api/reference/sessions/|Google Jules sessions docs|official-agent-task|Add auth tests
+openhands-userservice-tests|testing|Add UserService Unit Tests|Add unit tests for UserService and raise target coverage to the documented threshold.|coverage target evidence|https://docs.openhands.dev/openhands/usage/get-started/tutorials|OpenHands tutorials|official-agent-task|Target coverage: 80%
+devin-parallel-coverage-recovery|testing|Parallel Test Coverage Recovery|Find low-coverage modules and open separate test-improvement PRs for each module.|separate PR per module|https://docs.devin.ai/product-guides/advanced-mode|Devin advanced capabilities|official-agent-task|below 50% coverage
+qiita-aochan-single-vitest-fix|testing|Single Vitest Case Fix|Fix a quiz application until one named Vitest case passes.|pnpm exec vitest run -t "increments score only on correct answer"|https://qiita.com/Aochan0604/items/8cc5f28901455097095c|Qiita Aochan0604|third-party-tutorial|pnpm exec vitest run -t
+qiita-aochan-full-vitest-recovery|testing|Full Quiz Test Recovery|Repair the quiz app until the full Vitest suite exits cleanly.|pnpm exec vitest run|https://qiita.com/Aochan0604/items/8cc5f28901455097095c|Qiita Aochan0604|third-party-tutorial|pnpm exec vitest run exits 0
+qiita-aochan-visual-feedback|frontend|Visual Feedback With Test Guard|Add correct and wrong answer visual feedback while keeping tests green.|pnpm exec vitest run && git status --short|https://qiita.com/Aochan0604/items/8cc5f28901455097095c|Qiita Aochan0604|third-party-tutorial|.correct and .wrong
+jdhodges-read-only-font-match|research|Read-Only Font Match|Research font matches in read-only mode and produce a report without purchasing or downloading assets.|written report|https://www.jdhodges.com/blog/codex-goal-feature-review/|J.D. Hodges blog|third-party-review|read-only font-match
+jdhodges-auth-coverage-lift|testing|Auth Coverage Lift|Raise authentication code coverage from the documented baseline to the documented target within a scoped edit boundary.|npm test|https://www.jdhodges.com/blog/codex-goal-feature-review/|J.D. Hodges blog|third-party-review|coverage from 38% to 75%
+apidog-auth-test-repair|testing|Auth Test Repair Boundary|Fix failing auth tests while preserving the documented file boundary.|npm test|https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/|Apidog blog|third-party-tutorial|npm test exits 0
+apidog-benchmark-table|research|Public Benchmark Table|Collect distinct public benchmarks and build a date-sorted comparison table.|table covers 10 sources|https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/|Apidog blog|third-party-tutorial|10 distinct benchmarks
+apidog-repo-maintenance-audit|maintenance|Repo Maintenance Audit|Find dead code, unused dependencies, and stale files, then produce a PR-ready justification list.|each item has justification|https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/|Apidog blog|third-party-tutorial|dead code, unused dependencies
+apidog-contributor-readme|docs|Contributor README Rewrite|Rewrite README installation, run, test, and architecture guidance for new contributors.|commands and expected output documented|https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/|Apidog blog|third-party-tutorial|README.md install/run/test
+apidog-theme-toggle|frontend|Theme Toggle Persistence|Add a dark and light theme toggle that persists across refreshes.|browser refresh verification|https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/|Apidog blog|third-party-tutorial|dark/light theme toggle
+explainx-ci-pipeline-green|devops-ci|CI Pipeline Green|Repair CI test, lint, typecheck, and security scan failures until checks pass.|local CI rerun and remote CI|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog|third-party-tutorial|All CI checks passing
+explainx-moment-dayjs-migration|migration|Moment To Day.js Migration|Replace Moment.js with Day.js while preserving date output across edge cases.|tests and edge-case output compare|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog|third-party-tutorial|Moment.js usage with Day.js
+explainx-public-api-jsdoc|docs|Public API Docs Coverage|Add JSDoc and examples for public functions while keeping documentation links valid.|docs coverage and broken link check|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog|third-party-tutorial|public functions ... JSDoc
+udit-coverage-autoresearch|testing|Coverage Autoresearch Loop|Iterate on tests until coverage reaches the documented target.|npm test -- --coverage|https://udit.co/projects/autoresearch|Udit Autoresearch|third-party-project|Increase test coverage to 95%
+udit-bundle-size-reduction|performance|Bundle Size Reduction|Iteratively reduce bundle size below the documented threshold.|npm run build and size report|https://udit.co/projects/autoresearch|Udit Autoresearch|third-party-project|Reduce bundle size below 200KB
+udit-benchmark-optimization|performance|Benchmark Optimization|Optimize performance against a benchmark command until the goal is reached.|npm run bench|https://udit.co/projects/autoresearch|Udit Autoresearch|third-party-project|npm run bench
+theaidaily-test-typescript-clean|testing|Test And TypeScript Clean|Keep working until tests exit cleanly and TypeScript errors are gone.|npm test && npx tsc --noEmit|https://theaidaily.nl/zo-gebruik-je-claude-code-goal-slash-command/|TheAIDaily|third-party-tutorial|npm test exit code 0
+theaidaily-clean-worktree-budget|maintenance|Clean Worktree File Budget|Keep the worktree clean and enforce a source file size budget.|git status --short && file length check|https://theaidaily.nl/zo-gebruik-je-claude-code-goal-slash-command/|TheAIDaily|third-party-tutorial|git status is clean
+cursor-forum-react19-migration|migration|React 19 Migration|Migrate a project to React 19 and continue until the build passes.|build passes|https://forum.cursor.com/t/add-autonomous-goal-mode-similar-to-claude-code-s-goal/160374|Cursor Forum|public-forum|React 19 until build passes
+cursor-forum-go-race-cleanup|testing|Go Race Cleanup|Eliminate data races detected by the Go race detector.|go test -race|https://forum.cursor.com/t/add-autonomous-goal-mode-similar-to-claude-code-s-goal/160374|Cursor Forum|public-forum|go test -race
+x-meta-goal-prompt-generator|workflow|Meta Goal Prompt Generator|Ask the agent to inspect the session, repo, history, and docs before writing the actual `/goal` prompt.|generated goal prompt with clarified uncertainties|https://x.com/meta_alchemist/status/2054214497443995694|@meta_alchemist on X|x-post|write me the /goal prompt for this
+x-tests-lint-completion|testing|Tests And Lint Completion|Run a `/goal` loop until all tests pass and lint is clean.|tests pass && lint clean|https://x.com/sairahul1/status/2054821159066386482|@sairahul1 on X|x-post|/goal all tests pass and lint is clean
+x-goal-escape-hatch|goal-maintenance|Goal Escape Hatch|Add an explicit incomplete state for impossible subtasks so a goal loop can stop safely.|incomplete marker and rationale|https://x.com/KingBootoshi/status/2054837169748152645|@KingBootoshi on X|x-post|/GOAL NEEDED AN ESCAPE HATCH
+x-agentsmd-goal-workflow|workflow|AGENTS.md Goal Workflow|Use AGENTS.md rules together with `/goal` so long-running work keeps repo-specific constraints.|AGENTS.md rules honored|https://x.com/dhruvbaldawa/status/2053745268118733252|@dhruvbaldawa on X|x-post|combine it with /goal
+x-goal-forge-done-when|goal-maintenance|Goal-Forge Done-When Loop|Write a GOAL.md-style contract where `done_when` controls completion instead of vague success claims.|done_when audit|https://x.com/Michaelzsguo/status/2053508788431511637|@Michaelzsguo on X|x-post|done_when is intrinsic
+x-plan-then-goal-execution|workflow|Plan-Then-Goal Execution|Use plan mode to define the work, then start a new goal session to implement the plan completely.|plan completed against checklist|https://x.com/ivangdavila/status/2053867892064616481|@ivangdavila on X|x-post|Use /plan mode to define the goal
+x-measurable-goal-structure|workflow|Measurable Goal Structure|Write goals with a clear target, proof requirement, and explicit limits.|proof and limits present|https://x.com/Arslandev97/status/2054781760194711978|@Arslandev97 on X|x-post|Set a clear goal. Make it measurable.
+x-qa-engineer-simulation|qa|QA Engineer Simulation|Use `/goal` as a quality loop until tests pass and lint is clean.|tests pass && lint clean|https://x.com/LenaWithAI/status/2054845479502930372|@LenaWithAI on X|x-post|runs until tests pass and lint is clean
+reddit-trading-backlog-clearance|backlog|Clear Trading App Backlog|Generate a roadmap backlog for a trading app and then clear it with goals.|backlog cleared|https://www.reddit.com/r/codex/comments/1t7b3x1/goal_in_the_codex_app_is_amazing/|Reddit r/codex|public-forum|210 task backlog
+reddit-ship-backlog-features|backlog|Ship Backlog Features|Implement the feature list from BACKLOG.md until CI is green.|CI green|https://www.reddit.com/r/WebAfterAI/comments/1t6lgsb/openai_just_dropped_goal_in_codex_set_a_goal_and/|Reddit r/WebAfterAI|public-forum|/goal ship the 18 features
+reddit-tests-pass-pr-ready|testing|Tests Pass And PR Ready|Keep Claude Code working until tests pass and the PR is ready for review.|tests pass|https://www.reddit.com/r/ClaudeCode/comments/1taty8a/claude_code_just_shipped_a_run_until_done_mode/|Reddit r/ClaudeCode|public-forum|all tests pass and the PR is ready
+reddit-billing-empty-state|investigation|Billing Empty State Root Cause|Find why active subscriptions show an empty state without changing pricing or webhook code.|npm test|https://www.reddit.com/r/ClaudeAI/comments/1taelgl/what_improved_my_claude_code_workflow_stop/|Reddit r/ClaudeAI|public-forum|billing page shows an empty state
+reddit-rag-chat-flywheel|prompt-optimization|RAG Chat Flywheel|Iterate on code, tests, and metrics to improve a document-chat RAG system.|Playwright tests and metric review|https://www.reddit.com/r/ClaudeCode/comments/1pe5nnw/update_1_creating_a_claude_code_flywheel/|Reddit r/ClaudeCode|public-forum|continually improve my RAG based document chat
+hn-button-console-error-fix|frontend|Button Console Error Fix|Use browser automation to click a button, inspect console errors, fix the issue, and prove it.|Playwright interaction|https://news.ycombinator.com/item?id=45642911|HN Playwright Skill|public-forum|console error when you click the button
+hn-review-sentiment-json-agent|research|Review Sentiment JSON Agent|Fetch reviews with browser automation, classify sentiment, and write structured JSON output.|JSON files written|https://news.ycombinator.com/item?id=45840088|HN You Should Write An Agent|public-forum|fetch ten reviews
+hn-dag-agent-dispatch|orchestration|DAG Agent Dispatch|Split a goal into a dependency graph and dispatch independent agents into isolated worktrees.|PR output|https://news.ycombinator.com/item?id=47355676|HN Astro|public-forum|isolated git worktree and opens a PR
+video-nextjs-chat-sidebar|frontend|Next.js Chat History Sidebar|Replace a Next.js sidebar with chat history, then test, fix build issues, and push.|tests and build|https://videohighlight.com/v/AJpK3YTTKZ4|VideoHighlight YouTube summary|video-summary|replace a sidebar with chat history
+video-rift-salvage-game|prototype|Rift Salvage Game Goal|Build a 2D combat game prototype with assets, combat, boss logic, and browser verification.|browser verification|https://pogovet.com/youtube/codex-just-became-the-best-long-running-agentic-harness|Pogovet YouTube summary|video-summary|2D combat game Rift Salvage
+github-claude-goal-flaky-auth|testing|Flaky Auth Tests Goal|Use a Claude goal plugin example to find and fix flaky authentication tests.|python3 -m pytest tests|https://github.com/jthack/claude-goal|jthack/claude-goal|tool-readme|find and fix the flaky auth tests
+github-pydantic-v2-migration|migration|Pydantic V1 To V2 Migration|Migrate a project from Pydantic v1 to v2 while preserving API behavior.|pytest -q|https://github.com/davidondrej/jailbreak-autoresearch/blob/main/docs-slash-goal.md|jailbreak-autoresearch docs|tool-readme|Migrate this project from Pydantic v1 to v2
+github-review-plan-no-gaps|goal-maintenance|Review Plan Until No Gaps|Loop on implementation-plan review until a fresh review finds no remaining gaps.|fresh plan review has no new gaps|https://github.com/openai/codex/issues/21176|openai/codex issue 21176|github-issue|review the plan ImplementationPlan.md
+github-noninteractive-goal-creation|workflow|Non-Interactive Goal Creation|Create and confirm an active goal during non-interactive Codex execution before continuing.|get_goal and thread_goals evidence|https://github.com/openai/codex/discussions/21764|openai/codex discussion 21764|github-discussion|Build the Meta0 LifeOS ontology boundary artifact
+github-long-task-verification|goal-maintenance|Long Task Until Verification|Continue a long-running task until final verification passes rather than stopping on partial progress.|final verification|https://github.com/openai/codex/issues/22049|openai/codex issue 22049|github-issue|Complete a long-running task until final verification passes
+github-benchmark-coverage-goal|testing|Improve Benchmark Coverage|Use `/goal` to improve benchmark coverage and persist the command in history.|cargo test -p codex-tui goal_slash_command -- --nocapture|https://github.com/openai/codex/pull/21860|openai/codex PR 21860|github-pr|/goal improve benchmark coverage
+github-completion-audit-before-done|goal-maintenance|Completion Audit Before Done|Audit completion criteria before calling the goal complete.|focused coverage and evals|https://github.com/openai/codex/pull/22045|openai/codex PR 22045|github-pr|completion audits before calling update_goal
+github-goal-permission-context|goal-maintenance|Goal Permission Context Sync|Ensure goal continuation uses the current permission context after approval mode changes.|cargo check focused crates|https://github.com/openai/codex/issues/22090|openai/codex issue 22090|github-issue|uses stale permission context
+github-goalbuddy-workspace|workflow|Prep A Goal Workspace|Prepare a goal workspace with board, notes, receipts, and an exact `/goal` command.|board, receipts, and verify files|https://github.com/tolibear/goalbuddy|tolibear/goalbuddy|tool-readme|prints the exact /goal command
+github-claude-batch-bugs|testing|Batch Fix Bugs|Use a Claude Code goal to fix a numbered batch of bugs without looping on missing skills.|no unsatisfied skill loop|https://github.com/anthropics/claude-code/issues/58348|anthropics/claude-code issue 58348|github-issue|/goal Fix bugs #1-#6
+github-claude-long-goal-template|workflow|Long Goal With Constraints|Use a longer goal template with repo path, constraints, plan pointer, and execution order.|stop hook evaluates cleanly|https://github.com/anthropics/claude-code/issues/58192|anthropics/claude-code issue 58192|github-issue|Goal: <several lines of overarching aim>
+github-hermes-real-cli-loop|goal-maintenance|Real CLI Goal Loop|Verify a real CLI goal loop where the second judge round confirms completion.|live judge round-trip|https://github.com/NousResearch/hermes-agent/pull/18262|NousResearch/hermes-agent PR 18262|github-pr|print hello, Ralph loop
+github-hermes-file-verification|goal-maintenance|Verify File Creation|Verify that a requested file was actually created instead of trusting the agent claim.|find and read_file evidence|https://github.com/NousResearch/hermes-agent/issues/18421|NousResearch/hermes-agent issue 18421|github-issue|/home/ubuntu/ml-resumo.md
+github-hermes-goal-queue|goal-maintenance|Queue Follow-Up Goals|Promote queued follow-up goals: fix tests, run full tests, then produce coverage.|queue promotion evidence|https://github.com/NousResearch/hermes-agent/issues/22617|NousResearch/hermes-agent issue 22617|github-issue|/goal Fix failing tests
 """.strip()
 
 
@@ -267,6 +332,12 @@ CATEGORY_CONTEXT = {
     "investigation": ("an investigation task", "logs, traces, reproduction notes, source paths, and the final report"),
     "cli": ("a command-line tool", "CLI entrypoints, argument parsing, filesystem behavior, dry-run mode, and fixtures"),
     "refactor": ("a refactoring task", "the target module, call sites, public API, tests, and compatibility notes"),
+    "research": ("a research task", "source lists, citation notes, evidence files, and acceptance criteria"),
+    "maintenance": ("a repository maintenance task", "dead code, dependencies, file structure, scripts, and PR notes"),
+    "backlog": ("a backlog execution task", "roadmaps, backlog files, issue queues, acceptance criteria, and CI evidence"),
+    "orchestration": ("an agent orchestration task", "plans, worktrees, subtask ownership, PRs, and coordination notes"),
+    "goal-maintenance": ("a goal-management workflow", "active goals, done conditions, audit logs, and continuation state"),
+    "greenfield-build": ("a greenfield implementation task", "product requirements, milestones, tests, and verification notes"),
 }
 
 
@@ -363,6 +434,30 @@ CATEGORY_CONSTRAINTS = {
         "Do not change public APIs, data formats, or user-visible behavior unless the goal requires it.",
         "Keep behavior characterization tests before large internal changes.",
     ],
+    "research": [
+        "Do not present unsourced claims as facts.",
+        "Keep direct quotes short and attach a public URL for every external claim.",
+    ],
+    "maintenance": [
+        "Do not delete files, dependencies, or scripts without evidence that they are unused.",
+        "Keep every proposed removal tied to a specific verification step.",
+    ],
+    "backlog": [
+        "Do not expand the backlog while executing it.",
+        "Keep each finished item tied to its original acceptance criteria.",
+    ],
+    "orchestration": [
+        "Keep subtask ownership explicit and avoid overlapping write scopes.",
+        "Do not merge or deploy automatically unless the goal explicitly allows it.",
+    ],
+    "goal-maintenance": [
+        "Do not mark a goal complete without auditing the current done condition.",
+        "Keep goal edits and completion reasons visible in the final output.",
+    ],
+    "greenfield-build": [
+        "Keep implementation tied to the stated product requirements.",
+        "Do not ship a demo-only path without tests or runnable verification.",
+    ],
 }
 
 
@@ -382,10 +477,16 @@ def parse_entries() -> list[dict[str, str | None]]:
                 "origin": "seed",
                 "source_url": None,
                 "source_name": None,
+                "source_type": None,
+                "evidence": None,
             }
         )
     for line in SOURCE_BACKED_ENTRIES.splitlines():
-        slug, category, title, intent, verify, source_url, source_name = line.split("|")
+        parts = line.split("|")
+        if len(parts) == 9:
+            slug, category, title, intent, verify, source_url, source_name, source_type, evidence = parts
+        else:
+            raise SystemExit(f"bad source-backed entry field count: {line}")
         entries.append(
             {
                 "id": slug,
@@ -398,6 +499,8 @@ def parse_entries() -> list[dict[str, str | None]]:
                 "origin": "source-backed",
                 "source_url": source_url,
                 "source_name": source_name,
+                "source_type": source_type,
+                "evidence": evidence,
             }
         )
     slugs = [str(entry["slug"]) for entry in entries]
@@ -468,7 +571,12 @@ def by_category(entries: list[dict[str, str | None]]) -> dict[str, list[dict[str
 
 def source_line(entry: dict[str, str | None]) -> str | None:
     if entry.get("source_url") and entry.get("source_name"):
-        return f"- Source: [{entry['source_name']}]({entry['source_url']})"
+        parts = [f"- Source: [{entry['source_name']}]({entry['source_url']})"]
+        if entry.get("source_type"):
+            parts.append(f"- Source type: `{entry['source_type']}`")
+        if entry.get("evidence"):
+            parts.append(f"- Evidence: {entry['evidence']}")
+        return "\n".join(parts)
     return None
 
 
@@ -533,6 +641,8 @@ def build_readme(entries: list[dict[str, str | None]]) -> str:
         "",
         "A good goal is not a wish. It is a runnable contract: one objective, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk.",
         "",
+        "Provenance is explicit: `source-backed` examples include a public URL, source type, and short evidence phrase; `seed` examples are reusable catalog patterns and are not claimed as collected from X, GitHub, or docs.",
+        "",
         "## Contents",
         "",
         "- [Goal Prompts](#goal-prompts)",
@@ -559,12 +669,13 @@ def build_readme(entries: list[dict[str, str | None]]) -> str:
             "- [Full template](templates/full-goal-template.md) for high-risk or multi-step work.",
             "- [Compact template](templates/compact-goal-template.md) for routine work.",
             "- [Structured JSON data](data/examples.json) for search, tooling, or site generation.",
+            "- [Data schema](docs/schema.md) for provenance fields and source types.",
             "",
             "## Quality Bar",
             "",
             "- One example should cover one measurable objective.",
             "- The prompt must include verification that can run in a real repository or produce a concrete artifact.",
-            "- New externally sourced examples must include `source_name` and `source_url` in `data/examples.json`.",
+            "- New externally sourced examples must include `source_name`, `source_url`, `source_type`, and `evidence` in `data/examples.json`.",
             "- Do not add undocumented slash-command behavior, fake tool capabilities, or examples copied from private/non-verifiable sources.",
             "",
             "## Sources And Caveats",
