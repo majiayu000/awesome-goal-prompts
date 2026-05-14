@@ -219,7 +219,7 @@ goal-continuation-audit|workflow|Goal Continuation Audit|Check that a long-runni
 
 
 SOURCE_BACKED_ENTRIES = """
-codex-verifiable-end-state|workflow|Verifiable End-State Contract|Complete one objective only when a verifiable end state is met.|manual status plus repo-local verification|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs|official-goal|verifiable stopping condition
+codex-verifiable-end-state|workflow|Verifiable End-State Contract|Complete one goal only when a verifiable end state is met.|manual status plus repo-local verification|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs|official-goal|verifiable stopping condition
 codex-visual-migration-playwright|migration|Visual Migration With Playwright|Migrate a project while preserving screen output and checking it with Playwright.|npx playwright test|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs|official-goal|visual migration
 codex-plan-milestone-prototype|prototype|PLAN.md Milestone Prototype|Implement a PLAN.md-driven prototype with tests at each milestone and browser verification.|npx playwright test|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs|official-goal|PLAN.md
 codex-eval-prompt-optimization|prompt-optimization|Eval-Driven Prompt Optimization|Optimize prompts against an eval suite until the target score or pass rate is reached.|python -m pytest evals|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs|official-goal|eval suite
@@ -586,7 +586,7 @@ def build_markdown(entries: list[dict[str, str | None]]) -> str:
         "",
         "Each example is a complete `/goal` task contract. Replace placeholder commands, paths, and project names with your repository's real values before running.",
         "",
-        "These examples intentionally use only the documented `/goal <objective>` form. They do not rely on unofficial subcommands.",
+        "These examples intentionally use only the documented `/goal <goal>` form. They do not rely on unofficial subcommands.",
         "",
         "## Index",
         "",
@@ -639,13 +639,14 @@ def build_readme(entries: list[dict[str, str | None]]) -> str:
         "",
         "Browse the live catalog: https://majiayu000.github.io/awesome-goal-prompts/",
         "",
-        "A good goal is not a wish. It is a runnable contract: one objective, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk.",
+        "A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk.",
         "",
         "Provenance is explicit: `source-backed` examples include a public URL, source type, and short evidence phrase; `seed` examples are reusable catalog patterns and are not claimed as collected from X, GitHub, or docs.",
         "",
         "## Contents",
         "",
         "- [Goal Prompts](#goal-prompts)",
+        "- [How To Write A Good Goal](#how-to-write-a-good-goal)",
         "- [Templates](#templates)",
         "- [Quality Bar](#quality-bar)",
         "- [Sources And Caveats](#sources-and-caveats)",
@@ -664,6 +665,12 @@ def build_readme(entries: list[dict[str, str | None]]) -> str:
         lines.append("")
     lines.extend(
         [
+            "## How To Write A Good Goal",
+            "",
+            "Start with the tutorial: [How To Write A Good `/goal`](docs/how-to-write-goals.md).",
+            "",
+            "The short version: write one measurable goal, point at the real context, add hard constraints, define `DONE WHEN`, require fresh verification, and give the agent explicit stop rules for uncertainty or risk.",
+            "",
             "## Templates",
             "",
             "- [Full template](templates/full-goal-template.md) for high-risk or multi-step work.",
@@ -673,7 +680,7 @@ def build_readme(entries: list[dict[str, str | None]]) -> str:
             "",
             "## Quality Bar",
             "",
-            "- One example should cover one measurable objective.",
+            "- One example should cover one measurable goal.",
             "- The prompt must include verification that can run in a real repository or produce a concrete artifact.",
             "- New externally sourced examples must include `source_name`, `source_url`, `source_type`, and `evidence` in `data/examples.json`.",
             "- Do not add undocumented slash-command behavior, fake tool capabilities, or examples copied from private/non-verifiable sources.",

@@ -1,7 +1,9 @@
 # Compact Goal Template
 
+See [How To Write A Good `/goal`](../docs/how-to-write-goals.md) for when to use the compact form.
+
 ```text
-/goal <single measurable objective>
+/goal <single measurable goal>
 
 Read first: <files/issues/logs>.
 Constraints: <what must not change; what must be preserved>.

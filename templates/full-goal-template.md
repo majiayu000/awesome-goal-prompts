@@ -1,9 +1,11 @@
 # Full Goal Template
 
+See [How To Write A Good `/goal`](../docs/how-to-write-goals.md) for the tutorial and review checklist.
+
 ```text
 /goal
 GOAL:
-<One clear, measurable outcome. Do not include unrelated backlog items.>
+<One clear, measurable goal. Do not include unrelated backlog items.>
 
 CONTEXT:
 - Repository or product area:

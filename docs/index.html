@@ -3,136 +3,281 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A searchable catalog of /goal task contracts for coding agents.">
-    <meta name="theme-color" content="#121417">
-    <title>Awesome Goal Prompts</title>
+    <meta name="description" content="The Contract Codex: a searchable catalog of runnable /goal task contracts for coding agents.">
+    <meta name="theme-color" content="#16140f">
+    <title>The Contract Codex · Awesome Goal Prompts</title>
     <link rel="icon" href="assets/goal-map.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
     <script src="app.js" defer></script>
   </head>
   <body>
-    <header class="site-header">
-      <a class="brand" href="./" aria-label="Awesome Goal Prompts home">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="The Contract Codex home" data-i18n-aria="homeAria">
         <span class="brand-mark">/g</span>
         <span>
-          <strong>Awesome Goal Prompts</strong>
-          <small>Runnable task contracts for coding agents</small>
+          <strong data-i18n="brandName">The Contract Codex</strong>
+          <small data-i18n="brandSub">V1 · Awesome Goal Prompts</small>
         </span>
       </a>
-      <nav class="top-nav" aria-label="Repository links">
-        <a href="https://github.com/majiayu000/awesome-goal-prompts">GitHub</a>
-        <a href="https://github.com/majiayu000/awesome-goal-prompts/blob/main/SOURCES.md">Sources</a>
-        <a href="https://github.com/majiayu000/awesome-goal-prompts/blob/main/CONTRIBUTING.md">Contribute</a>
+      <nav class="top-nav" aria-label="Repository links" data-i18n-aria="repoLinksAria">
+        <a href="#catalog" data-i18n="navCatalog">Catalog</a>
+        <a href="#write-goal" data-i18n="navWrite">Write /goal</a>
+        <a href="https://github.com/majiayu000/awesome-goal-prompts/blob/main/SOURCES.md" data-i18n="navSources">Sources</a>
+        <a href="https://github.com/majiayu000/awesome-goal-prompts/blob/main/CONTRIBUTING.md" data-i18n="navContribute">Contribute</a>
+        <div class="lang-toggle" role="group" aria-label="Language" data-i18n-aria="languageAria">
+          <button class="lang-btn" type="button" data-lang-option="en">EN</button>
+          <button class="lang-btn" type="button" data-lang-option="zh">中</button>
+        </div>
+        <a class="nav-cta" href="https://github.com/majiayu000/awesome-goal-prompts" data-i18n="navGithub">GitHub</a>
       </nav>
     </header>
 
     <main>
       <section class="hero" aria-labelledby="page-title">
-        <div class="hero-copy">
-          <p class="eyebrow">Goal catalog</p>
-          <h1 id="page-title">Find a precise `/goal` prompt before the agent starts editing.</h1>
-          <p class="lede">Search by engineering problem, filter by risk, inspect the verification contract, then copy the full prompt into Codex, Claude Code, Hermes, or another coding agent.</p>
-          <div class="hero-actions">
-            <a class="button primary" href="#catalog">Browse catalog</a>
-            <a class="button ghost" href="https://github.com/majiayu000/awesome-goal-prompts/blob/main/templates/full-goal-template.md">Full template</a>
-          </div>
-        </div>
-        <figure class="hero-visual">
-          <img src="assets/goal-map.svg" alt="Diagram of a goal prompt contract from objective to verification.">
-        </figure>
-      </section>
-
-      <section id="catalog" class="catalog-shell" aria-label="Goal prompt browser">
-        <aside class="sidebar">
-          <div class="metric-grid" aria-label="Catalog statistics">
-            <div>
-              <span id="stat-total">0</span>
-              <small>examples</small>
-            </div>
-            <div>
-              <span id="stat-categories">0</span>
-              <small>categories</small>
-            </div>
-            <div>
-              <span id="stat-sourced">0</span>
-              <small>sourced</small>
+        <div class="hero__grid">
+          <div class="hero__copy">
+            <p class="eyebrow"><span class="dot"></span> <span data-i18n="heroEyebrow">A catalog of runnable task contracts · founded 2026</span></p>
+            <h1 id="page-title" class="hero__title"><span class="hero__plain" data-i18n="heroTitleLead">Goals are not </span><span class="hero__strike" data-i18n="heroTitleStrike">vibes.</span><span class="hero__plain" data-i18n="heroTitleBridge"> They are </span><em data-i18n="heroTitleEm">contracts.</em></h1>
+            <p class="hero__manifesto" data-i18n="heroManifesto">One goal. Enough context to inspect. Explicit constraints. Verifiable completion. Stop rules for uncertainty and risk. Browse production-grade task contracts before your coding agent starts editing, then copy the prompt into Codex, Claude Code, Hermes, or another agent.</p>
+            <div class="hero__flow" aria-label="Goal prompt structure" data-i18n-aria="goalStructureAria">
+              <span data-i18n="flowObjective">Goal</span>
+              <span data-i18n="flowContext">Context</span>
+              <span data-i18n="flowConstraints">Constraints</span>
+              <span data-i18n="flowVerify">Verify</span>
+              <span data-i18n="flowStopRules">Stop rules</span>
             </div>
           </div>
-
-          <div class="field">
-            <label for="search-input">Search</label>
-            <input id="search-input" type="search" autocomplete="off" placeholder="auth, migration, Lighthouse">
-          </div>
-
-          <div class="field">
-            <label for="category-select">Category</label>
-            <select id="category-select"></select>
-          </div>
-
-          <div class="field">
-            <label for="difficulty-select">Difficulty</label>
-            <select id="difficulty-select">
-              <option value="all">All difficulties</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Origin</label>
-            <div class="segmented" role="group" aria-label="Origin filter">
-              <button class="segment active" type="button" data-origin="all">All</button>
-              <button class="segment" type="button" data-origin="source-backed">Sourced</button>
-              <button class="segment" type="button" data-origin="seed">Seed</button>
+          <aside class="hero__ledger" aria-label="Catalog statistics" data-i18n-aria="catalogStatsAria">
+            <div class="seal" aria-hidden="true">
+              <span data-i18n="sealWord">Codex</span>
+              <small id="seal-total">000 / 000</small>
             </div>
-          </div>
-
-          <div class="category-list" id="category-list" aria-label="Category shortcuts"></div>
-        </aside>
-
-        <section class="results-column" aria-label="Matching goals">
-          <div class="results-toolbar">
-            <p id="result-count">Loading examples...</p>
-            <button class="button small" id="reset-button" type="button">Reset</button>
-          </div>
-          <div id="results" class="results-list"></div>
-        </section>
-
-        <section class="detail-panel" aria-live="polite" aria-label="Selected goal prompt">
-          <div id="detail-empty" class="detail-empty">
-            <p>Select a goal to inspect the full contract.</p>
-          </div>
-          <article id="detail-card" class="detail-card hidden">
-            <div class="detail-head">
+            <dl class="hero__stats">
               <div>
-                <p id="detail-meta" class="eyebrow"></p>
-                <h2 id="detail-title"></h2>
+                <dt>i.</dt>
+                <dd><span data-i18n="statContracts">Contracts</span><strong id="stat-total">0</strong></dd>
               </div>
-              <button class="button small primary" id="copy-button" type="button">Copy</button>
-            </div>
-            <p id="detail-intent" class="detail-intent"></p>
-            <dl class="detail-facts">
               <div>
-                <dt>Verify</dt>
-                <dd><code id="detail-verify"></code></dd>
+                <dt>ii.</dt>
+                <dd><span data-i18n="statCategories">Categories</span><strong id="stat-categories">0</strong></dd>
               </div>
-              <div id="source-row">
-                <dt>Source</dt>
-                <dd><a id="detail-source" href="#" target="_blank" rel="noreferrer"></a></dd>
+              <div>
+                <dt>iii.</dt>
+                <dd><span data-i18n="statExternalSources">External Sources</span><strong id="stat-sourced">0</strong></dd>
               </div>
-              <div id="source-type-row">
-                <dt>Source type</dt>
-                <dd id="detail-source-type"></dd>
-              </div>
-              <div id="evidence-row">
-                <dt>Evidence</dt>
-                <dd id="detail-evidence"></dd>
+              <div>
+                <dt>iv.</dt>
+                <dd><span data-i18n="statAdvanced">Advanced</span><strong id="stat-advanced">0</strong></dd>
               </div>
             </dl>
-            <pre><code id="detail-prompt"></code></pre>
+          </aside>
+        </div>
+      </section>
+
+      <section id="write-goal" class="guide" aria-labelledby="guide-title">
+        <div class="guide__intro">
+          <p class="eyebrow" data-i18n="guideEyebrow">§ Manual · How to write</p>
+          <h2 id="guide-title" data-i18n="guideTitle">Turn a request into a contract before the agent edits.</h2>
+          <p data-i18n="guideCopy">A strong goal has one finish line, real repo context, hard boundaries, fresh verification, and an escape hatch. Community X posts are useful for patterns, but official docs and repository evidence define what a tool can actually do.</p>
+          <a class="guide__link" href="https://github.com/majiayu000/awesome-goal-prompts/blob/main/docs/how-to-write-goals.md" data-i18n="guideLink">Read the full tutorial</a>
+        </div>
+        <div class="guide__steps" aria-label="Goal writing checklist" data-i18n-aria="goalChecklistAria">
+          <article>
+            <span>01</span>
+            <h3 data-i18n="stepOutcomeTitle">Goal</h3>
+            <p data-i18n="stepOutcomeCopy">Write one measurable goal. Replace "fix everything" with a concrete behavior, artifact, score, or passing command.</p>
           </article>
+          <article>
+            <span>02</span>
+            <h3 data-i18n="stepContextTitle">Context</h3>
+            <p data-i18n="stepContextCopy">Name the files, issues, logs, screenshots, plans, and repo rules the agent must inspect before changing code.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3 data-i18n="stepConstraintsTitle">Constraints</h3>
+            <p data-i18n="stepConstraintsCopy">Say what must not change: public APIs, data shape, auth behavior, tests, visual output, or deployment scope.</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3 data-i18n="stepProofTitle">Proof</h3>
+            <p data-i18n="stepProofCopy">Define DONE WHEN and VERIFY with commands, reports, screenshots, or generated artifacts from the current run.</p>
+          </article>
+          <article>
+            <span>05</span>
+            <h3 data-i18n="stepStopTitle">Stop</h3>
+            <p data-i18n="stepStopCopy">Tell the agent when to stop: missing secrets, production access, destructive operations, unclear decisions, or repeated failed fixes.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="catalog" class="controls" aria-label="Catalog filters" data-i18n-aria="catalogFiltersAria">
+        <label class="search-box" for="search-input">
+          <span>/</span>
+          <input id="search-input" type="search" autocomplete="off" placeholder="Search: auth lint, tests fail, migration..." data-i18n-placeholder="searchPlaceholder">
+        </label>
+        <div class="control-group" aria-label="Difficulty filter" data-i18n-aria="difficultyFilterAria">
+          <span class="control-label" data-i18n="difficultyLabel">Difficulty</span>
+          <button class="pill active" type="button" data-difficulty="all" data-i18n="all">All</button>
+          <button class="pill" type="button" data-difficulty="intermediate" data-i18n="intermediate">Intermediate</button>
+          <button class="pill" type="button" data-difficulty="advanced" data-i18n="advanced">Advanced</button>
+        </div>
+        <div class="control-group" aria-label="Origin filter" data-i18n-aria="originFilterAria">
+          <span class="control-label" data-i18n="originLabel">Origin</span>
+          <button class="pill active" type="button" data-origin="all" data-i18n="all">All</button>
+          <button class="pill" type="button" data-origin="seed" data-i18n="seed">Seed</button>
+          <button class="pill" type="button" data-origin="source-backed" data-i18n="sourced">Sourced</button>
+        </div>
+        <button class="pill reset" id="reset-button" type="button" data-i18n="reset">Reset</button>
+      </section>
+
+      <section class="recipes" aria-label="Start here scenarios" data-i18n-aria="recipesAria">
+        <span class="recipes__label" data-i18n="startHere">Start here</span>
+        <button class="recipe active" type="button" data-recipe="all" data-i18n="recipeAll">All contracts</button>
+        <button class="recipe" type="button" data-recipe="auth-red" data-i18n="recipeAuth">Auth tests + lint red</button>
+        <button class="recipe" type="button" data-recipe="migration" data-i18n="recipeMigration">Migration with compatibility proof</button>
+        <button class="recipe" type="button" data-recipe="security" data-i18n="recipeSecurity">Security audit</button>
+        <button class="recipe" type="button" data-recipe="docs" data-i18n="recipeDocs">Docs and onboarding</button>
+      </section>
+
+      <section class="main" aria-label="Goal prompt browser" data-i18n-aria="browserAria">
+        <aside class="rail" aria-label="Category shelf" data-i18n-aria="categoryShelfAria">
+          <div class="rail__head">
+            <p class="eyebrow" data-i18n="shelfEyebrow">§ I · Shelf</p>
+            <h2 data-i18n="categoryIndex">Category Index</h2>
+          </div>
+          <div class="rail__list" id="category-list"></div>
+        </aside>
+
+        <section class="catalog" aria-label="Matching contracts" data-i18n-aria="matchingContractsAria">
+          <div class="catalog__head">
+            <div>
+              <p class="eyebrow" data-i18n="contractAwaiting">§ Contract · Awaiting Signature</p>
+              <h2 id="category-title">All Contracts</h2>
+            </div>
+            <p id="result-count">Loading contracts...</p>
+          </div>
+          <div id="results" class="entry-list"></div>
         </section>
+
+        <aside class="panel" aria-live="polite" aria-label="Selected goal contract" data-i18n-aria="selectedContractAria">
+          <div id="detail-empty" class="empty">
+            <span data-i18n="selectContract">Select a contract to inspect its terms.</span>
+          </div>
+          <article id="detail-card" class="contract hidden">
+            <div class="panel__head">
+              <span data-i18n="contractIssued">Contract · Issued</span>
+              <div class="panel__actions">
+                <button class="btn btn--ghost" id="validate-button" type="button" data-i18n="verifyButton">Verify</button>
+                <button class="btn btn--filled" id="copy-button" type="button" data-i18n="copyGoal">Copy /goal</button>
+              </div>
+            </div>
+            <div class="contract__body">
+              <div class="contract__masthead">
+                <div class="contract__number">
+                  <span data-i18n="contractNumberLabel">No.</span>
+                  <strong id="detail-number">000</strong>
+                </div>
+                <div>
+                  <p id="detail-meta" class="contract__meta"></p>
+                  <h2 id="detail-title" class="contract__title"></h2>
+                  <p class="translation-note" data-i18n="translationNote">Prompt source text is preserved in English.</p>
+                </div>
+              </div>
+              <div class="contract__rule" aria-hidden="true"></div>
+
+              <section class="contract__section">
+                <h3><span>§</span> <span data-i18n="objective">Goal</span> <small>I</small></h3>
+                <p id="detail-intent" class="contract__objective"></p>
+              </section>
+
+              <section class="contract__section">
+                <h3><span>§</span> <span data-i18n="context">Context</span> <small>II</small></h3>
+                <ul id="detail-context" class="contract__list"></ul>
+              </section>
+
+              <section class="contract__section">
+                <h3><span>§</span> <span data-i18n="constraints">Constraints</span> <small>III</small></h3>
+                <ul id="detail-constraints" class="contract__list"></ul>
+              </section>
+
+              <section class="contract__section">
+                <h3><span>§</span> <span data-i18n="verification">Verification</span> <small>IV</small></h3>
+                <ul id="detail-verify-list" class="contract__list contract__verify"></ul>
+              </section>
+
+              <section class="contract__section">
+                <h3><span>§</span> <span data-i18n="stopRules">Stop Rules</span> <small>V</small></h3>
+                <ul id="detail-stop" class="contract__list contract__stop"></ul>
+              </section>
+
+              <div class="contract__done">
+                <span data-i18n="doneWhen">Done When</span>
+                <p id="detail-done"></p>
+              </div>
+
+              <dl class="contract__facts">
+                <div>
+                  <dt data-i18n="verifyTerm">Verify</dt>
+                  <dd><code id="detail-verify"></code></dd>
+                </div>
+                <div id="source-row">
+                  <dt data-i18n="source">Source</dt>
+                  <dd><a id="detail-source" href="#" target="_blank" rel="noreferrer"></a></dd>
+                </div>
+                <div id="source-type-row">
+                  <dt data-i18n="sourceType">Source Type</dt>
+                  <dd id="detail-source-type"></dd>
+                </div>
+                <div id="evidence-row">
+                  <dt data-i18n="evidence">Evidence</dt>
+                  <dd id="detail-evidence"></dd>
+                </div>
+              </dl>
+
+              <details class="raw-prompt">
+                <summary data-i18n="fullPrompt">Full prompt</summary>
+                <pre><code id="detail-prompt"></code></pre>
+              </details>
+
+              <details class="adapter">
+                <summary data-i18n="adaptPrompt">Adapt this prompt</summary>
+                <div class="adapter__grid">
+                  <label>
+                    <span data-i18n="projectType">Project type</span>
+                    <input id="adapter-type" type="text" autocomplete="off" placeholder="Node/TypeScript repo" data-i18n-placeholder="projectTypePlaceholder">
+                  </label>
+                  <label>
+                    <span data-i18n="targetModule">Target module</span>
+                    <input id="adapter-module" type="text" autocomplete="off" placeholder="auth module" data-i18n-placeholder="targetModulePlaceholder">
+                  </label>
+                  <label>
+                    <span data-i18n="verificationCommand">Verification command</span>
+                    <input id="adapter-verify" type="text" autocomplete="off" placeholder="npm test -- test/auth && npm run lint" data-i18n-placeholder="verificationCommandPlaceholder">
+                  </label>
+                  <label>
+                    <span data-i18n="extraConstraint">Extra constraint</span>
+                    <input id="adapter-constraint" type="text" autocomplete="off" placeholder="Public API must remain unchanged" data-i18n-placeholder="extraConstraintPlaceholder">
+                  </label>
+                </div>
+                <button class="btn btn--filled adapter__copy" id="copy-adapted-button" type="button" data-i18n="copyAdapted">Copy adapted /goal</button>
+              </details>
+
+              <footer class="contract__footer">
+                <span data-i18n="designedFor">Designed for Codex · Claude Code · Hermes</span>
+                <strong>/goal</strong>
+              </footer>
+            </div>
+          </article>
+        </aside>
       </section>
     </main>
+
+    <footer class="footer">
+      <span class="footer__seal">/g</span>
+      <span data-i18n="footerText">The Contract Codex · MIT License · 2026</span>
+      <a href="https://github.com/majiayu000/awesome-goal-prompts">majiayu000/awesome-goal-prompts</a>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </body>
 </html>

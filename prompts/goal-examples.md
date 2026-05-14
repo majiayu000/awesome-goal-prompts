@@ -2,7 +2,7 @@
 
 Each example is a complete `/goal` task contract. Replace placeholder commands, paths, and project names with your repository's real values before running.
 
-These examples intentionally use only the documented `/goal <objective>` form. They do not rely on unofficial subcommands.
+These examples intentionally use only the documented `/goal <goal>` form. They do not rely on unofficial subcommands.
 
 ## Index
 
@@ -260,7 +260,7 @@ These examples intentionally use only the documented `/goal <objective>` form. T
 ### workflow
 - [Goal Prompt Writer](#goal-meta-prompt-writer) - Ask the agent to inspect a repo and write a precise goal prompt before execution.
 - [Goal Continuation Audit](#goal-continuation-audit) - Check that a long-running goal keeps its done_when and verification contract after compaction.
-- [Verifiable End-State Contract](#codex-verifiable-end-state) - Complete one objective only when a verifiable end state is met. Source-backed.
+- [Verifiable End-State Contract](#codex-verifiable-end-state) - Complete one goal only when a verifiable end state is met. Source-backed.
 - [Four Files Walkthrough](#hermes-four-files-walkthrough) - Create four note files across turns and verify each contains its number. Source-backed.
 - [Meta Goal Prompt Generator](#x-meta-goal-prompt-generator) - Ask the agent to inspect the session, repo, history, and docs before writing the actual `/goal` prompt. Source-backed.
 - [AGENTS.md Goal Workflow](#x-agentsmd-goal-workflow) - Use AGENTS.md rules together with `/goal` so long-running work keeps repo-specific constraints. Source-backed.
@@ -9497,7 +9497,7 @@ STOP RULES:
 - Category: `workflow`
 - Difficulty: `intermediate`
 - Origin: `source-backed`
-- Intent: Complete one objective only when a verifiable end state is met.
+- Intent: Complete one goal only when a verifiable end state is met.
 - Verification: `manual status plus repo-local verification`
 - Source: [OpenAI Codex docs](https://developers.openai.com/codex/use-cases/follow-goals)
 - Source type: `official-goal`
@@ -9506,7 +9506,7 @@ STOP RULES:
 ```text
 /goal
 GOAL:
-Complete Verifiable End-State Contract for a coding-agent workflow repository: Complete one objective only when a verifiable end state is met.
+Complete Verifiable End-State Contract for a coding-agent workflow repository: Complete one goal only when a verifiable end state is met.
 
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
@@ -9521,7 +9521,7 @@ CONSTRAINTS:
 - Pause if the goal text, branch state, or permissions are inconsistent.
 
 DONE WHEN:
-- The implementation or documentation directly satisfies: Complete one objective only when a verifiable end state is met.
+- The implementation or documentation directly satisfies: Complete one goal only when a verifiable end state is met.
 - The verification command or evidence path succeeds: `manual status plus repo-local verification`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 

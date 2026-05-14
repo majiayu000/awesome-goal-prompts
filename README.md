@@ -7,13 +7,14 @@ A curated list of `/goal` task contracts for coding agents.
 
 Browse the live catalog: https://majiayu000.github.io/awesome-goal-prompts/
 
-A good goal is not a wish. It is a runnable contract: one objective, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk.
+A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk.
 
 Provenance is explicit: `source-backed` examples include a public URL, source type, and short evidence phrase; `seed` examples are reusable catalog patterns and are not claimed as collected from X, GitHub, or docs.
 
 ## Contents
 
 - [Goal Prompts](#goal-prompts)
+- [How To Write A Good Goal](#how-to-write-a-good-goal)
 - [Templates](#templates)
 - [Quality Bar](#quality-bar)
 - [Sources And Caveats](#sources-and-caveats)
@@ -277,7 +278,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 ### workflow
 - [Goal Prompt Writer](prompts/goal-examples.md#goal-meta-prompt-writer) - Ask the agent to inspect a repo and write a precise goal prompt before execution.
 - [Goal Continuation Audit](prompts/goal-examples.md#goal-continuation-audit) - Check that a long-running goal keeps its done_when and verification contract after compaction.
-- [Verifiable End-State Contract](prompts/goal-examples.md#codex-verifiable-end-state) - Complete one objective only when a verifiable end state is met. _(source-backed)_
+- [Verifiable End-State Contract](prompts/goal-examples.md#codex-verifiable-end-state) - Complete one goal only when a verifiable end state is met. _(source-backed)_
 - [Four Files Walkthrough](prompts/goal-examples.md#hermes-four-files-walkthrough) - Create four note files across turns and verify each contains its number. _(source-backed)_
 - [Meta Goal Prompt Generator](prompts/goal-examples.md#x-meta-goal-prompt-generator) - Ask the agent to inspect the session, repo, history, and docs before writing the actual `/goal` prompt. _(source-backed)_
 - [AGENTS.md Goal Workflow](prompts/goal-examples.md#x-agentsmd-goal-workflow) - Use AGENTS.md rules together with `/goal` so long-running work keeps repo-specific constraints. _(source-backed)_
@@ -370,6 +371,12 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 ### orchestration
 - [DAG Agent Dispatch](prompts/goal-examples.md#hn-dag-agent-dispatch) - Split a goal into a dependency graph and dispatch independent agents into isolated worktrees. _(source-backed)_
 
+## How To Write A Good Goal
+
+Start with the tutorial: [How To Write A Good `/goal`](docs/how-to-write-goals.md).
+
+The short version: write one measurable goal, point at the real context, add hard constraints, define `DONE WHEN`, require fresh verification, and give the agent explicit stop rules for uncertainty or risk.
+
 ## Templates
 
 - [Full template](templates/full-goal-template.md) for high-risk or multi-step work.
@@ -379,7 +386,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 
 ## Quality Bar
 
-- One example should cover one measurable objective.
+- One example should cover one measurable goal.
 - The prompt must include verification that can run in a real repository or produce a concrete artifact.
 - New externally sourced examples must include `source_name`, `source_url`, `source_type`, and `evidence` in `data/examples.json`.
 - Do not add undocumented slash-command behavior, fake tool capabilities, or examples copied from private/non-verifiable sources.
