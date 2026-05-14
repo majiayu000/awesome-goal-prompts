@@ -218,6 +218,28 @@ goal-continuation-audit|workflow|Goal Continuation Audit|Check that a long-runni
 """.strip()
 
 
+SOURCE_BACKED_ENTRIES = """
+codex-verifiable-end-state|workflow|Verifiable End-State Contract|Complete one objective only when a verifiable end state is met.|manual status plus repo-local verification|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs
+codex-visual-migration-playwright|migration|Visual Migration With Playwright|Migrate a project while preserving screen output and checking it with Playwright.|npx playwright test|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs
+codex-plan-milestone-prototype|prototype|PLAN.md Milestone Prototype|Implement a PLAN.md-driven prototype with tests at each milestone and browser verification.|npx playwright test|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs
+codex-eval-prompt-optimization|prompt-optimization|Eval-Driven Prompt Optimization|Optimize prompts against an eval suite until the target score or pass rate is reached.|python -m pytest evals|https://developers.openai.com/codex/use-cases/follow-goals|OpenAI Codex docs
+claude-auth-tests-lint|testing|Auth Tests And Lint Clean|Keep working until auth tests pass and the lint step is clean.|npm test -- test/auth && npm run lint|https://code.claude.com/docs/en/goal|Claude Code docs
+claude-weekly-changelog|docs|Weekly Changelog Coverage|Ensure CHANGELOG.md includes an entry for every PR merged this week.|git log --since='7 days ago' --merges && rg '^-' CHANGELOG.md|https://code.claude.com/docs/en/goal|Claude Code docs
+hermes-ruff-src-clean|testing|Ruff Clean Source Tree|Fix every lint error in src and prove ruff passes.|ruff check src/|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs
+hermes-feature-port-ci-green|migration|Feature Port With CI Green|Port a feature from another repo, include tests, and get CI green.|pytest && npm test|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs
+hermes-session-drift-report|investigation|Session Drift Report|Investigate session ID drift during mid-run compression and write a report.|test -f reports/session-drift.md|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs
+hermes-exif-rename-cli|cli|EXIF Rename CLI|Build a small CLI that renames photos by EXIF date and test it on a photos folder.|pytest tests/cli && ./rename-exif photos/ --dry-run|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs
+hermes-four-files-walkthrough|workflow|Four Files Walkthrough|Create four note files across turns and verify each contains its number.|for i in 1 2 3 4; do test \"$(cat /tmp/note_$i.txt)\" = \"$i\"; done|https://hermes-agent.nousresearch.com/docs/user-guide/features/goals|Hermes docs
+explainx-typescript-eslint-coverage|testing|TypeScript ESLint Coverage Gate|Resolve TypeScript errors, pass tests, clear ESLint warnings, and keep coverage above a threshold.|npm run typecheck && npm test && npm run lint && npm run coverage|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog
+explainx-auth-di-refactor|refactor|Auth Dependency Injection Refactor|Refactor auth code to dependency injection while preserving tests, coverage, and public API.|npm test -- auth && npm run coverage|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog
+explainx-npm-audit-clean|security-ops|NPM Audit Clean Remediation|Patch npm audit vulnerabilities without breaking tests or public APIs.|npm audit && npm test|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog
+explainx-lighthouse-core-web-vitals|performance|Lighthouse And Core Web Vitals Gate|Improve Lighthouse and Core Web Vitals to explicit thresholds without regressions.|npm run lighthouse|https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026|ExplainX blog
+qiita-vue2-vue3-visual-unit|migration|Vue 2 To Vue 3 Visual And Unit Gate|Migrate listed Vue screens and stop only when visual and unit tests pass.|pnpm test:visual && pnpm test:unit|https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae|Qiita article
+qiita-canvas-puzzle-plan|prototype|Canvas Puzzle PLAN.md Prototype|Implement PLAN.md milestones for a canvas puzzle prototype and prove e2e passes.|pnpm e2e|https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae|Qiita article
+qiita-router-eval-score|prompt-optimization|Router Prompt Eval Score|Improve a router prompt against an eval directory until the result score reaches a target.|python -m pytest evals/router|https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae|Qiita article
+""".strip()
+
+
 CATEGORY_CONTEXT = {
     "backend-api": ("a backend API service", "API routes, OpenAPI specs, handlers, middleware, and API tests"),
     "backend-data": ("a data-backed backend service", "schema files, migrations, models, repositories, and data tests"),
@@ -238,6 +260,13 @@ CATEGORY_CONTEXT = {
     "accessibility": ("a web or mobile interface", "interactive elements, semantics, focus management, and a11y reports"),
     "performance": ("a web application with measurable performance goals", "Lighthouse reports, bundles, traces, and critical routes"),
     "workflow": ("a coding-agent workflow repository", "goal text, progress logs, branch state, and verification artifacts"),
+    "migration": ("a migration project", "legacy code, target implementation, compatibility tests, visual snapshots, and migration notes"),
+    "prototype": ("a prototype project", "PLAN.md, milestones, app code, tests, browser checks, and demo notes"),
+    "prompt-optimization": ("an eval-backed prompt project", "prompt files, eval cases, scoring reports, regressions, and failure examples"),
+    "testing": ("a project with failing or missing verification gates", "test suites, lint config, CI logs, coverage reports, and failing output"),
+    "investigation": ("an investigation task", "logs, traces, reproduction notes, source paths, and the final report"),
+    "cli": ("a command-line tool", "CLI entrypoints, argument parsing, filesystem behavior, dry-run mode, and fixtures"),
+    "refactor": ("a refactoring task", "the target module, call sites, public API, tests, and compatibility notes"),
 }
 
 
@@ -306,17 +335,43 @@ CATEGORY_CONSTRAINTS = {
         "Do not claim a goal is complete without a current audit of the stated contract.",
         "Pause if the goal text, branch state, or permissions are inconsistent.",
     ],
+    "migration": [
+        "Preserve existing user-visible behavior unless the goal explicitly names a behavior change.",
+        "Keep compatibility evidence for the old and new paths until the migration is verified.",
+    ],
+    "prototype": [
+        "Follow the stated PLAN.md or acceptance criteria instead of adding unrequested features.",
+        "Keep the prototype runnable and demonstrable at every completed milestone.",
+    ],
+    "prompt-optimization": [
+        "Do not delete, weaken, or cherry-pick eval cases to improve the score.",
+        "Report representative failures as well as the final score.",
+    ],
+    "testing": [
+        "Do not weaken lint, typecheck, or test rules to create a green result.",
+        "Fix production or fixture causes before changing expectations.",
+    ],
+    "investigation": [
+        "Separate observed evidence from hypotheses.",
+        "Do not patch production code until the root cause is reproduced or strongly evidenced.",
+    ],
+    "cli": [
+        "Do not perform destructive filesystem operations without a dry-run or explicit confirmation.",
+        "Keep command output deterministic enough for tests.",
+    ],
+    "refactor": [
+        "Do not change public APIs, data formats, or user-visible behavior unless the goal requires it.",
+        "Keep behavior characterization tests before large internal changes.",
+    ],
 }
 
 
-def parse_entries() -> list[dict[str, str]]:
-    entries = []
-    for index, line in enumerate(RAW_ENTRIES.splitlines(), start=1):
+def parse_entries() -> list[dict[str, str | None]]:
+    entries: list[dict[str, str | None]] = []
+    for line in RAW_ENTRIES.splitlines():
         slug, category, title, intent, verify = line.split("|")
         entries.append(
             {
-                "number": index,
-                "display_id": f"{index:03d}",
                 "id": slug,
                 "slug": slug,
                 "category": category,
@@ -324,15 +379,38 @@ def parse_entries() -> list[dict[str, str]]:
                 "intent": intent,
                 "verify": verify,
                 "difficulty": difficulty_for(category),
+                "origin": "seed",
+                "source_url": None,
+                "source_name": None,
             }
         )
+    for line in SOURCE_BACKED_ENTRIES.splitlines():
+        slug, category, title, intent, verify, source_url, source_name = line.split("|")
+        entries.append(
+            {
+                "id": slug,
+                "slug": slug,
+                "category": category,
+                "title": title,
+                "intent": intent,
+                "verify": verify,
+                "difficulty": difficulty_for(category),
+                "origin": "source-backed",
+                "source_url": source_url,
+                "source_name": source_name,
+            }
+        )
+    slugs = [str(entry["slug"]) for entry in entries]
+    if len(slugs) != len(set(slugs)):
+        duplicates = sorted({slug for slug in slugs if slugs.count(slug) > 1})
+        raise SystemExit(f"duplicate slugs: {', '.join(duplicates)}")
     return entries
 
 
 def difficulty_for(category: str) -> str:
-    if category.startswith("security") or category in {"backend-data", "devops-runtime", "ai-evals", "ai-ops"}:
+    if category.startswith("security") or category in {"backend-data", "devops-runtime", "ai-evals", "ai-ops", "migration"}:
         return "advanced"
-    if category in {"docs", "product", "design"}:
+    if category in {"docs", "product", "design", "workflow", "testing", "prototype", "cli", "refactor", "investigation", "prompt-optimization"}:
         return "intermediate"
     return "intermediate"
 
@@ -346,7 +424,7 @@ def constraints_for(category: str) -> list[str]:
     return base + CATEGORY_CONSTRAINTS.get(category, [])
 
 
-def prompt_for(entry: dict[str, str]) -> str:
+def prompt_for(entry: dict[str, str | None]) -> str:
     context_label, inspect_scope = CATEGORY_CONTEXT[entry["category"]]
     constraints = "\n".join(f"- {item}" for item in constraints_for(entry["category"]))
     return f"""/goal
@@ -381,9 +459,22 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN."""
 
 
-def build_markdown(entries: list[dict[str, str]]) -> str:
+def by_category(entries: list[dict[str, str | None]]) -> dict[str, list[dict[str, str | None]]]:
+    grouped: dict[str, list[dict[str, str | None]]] = {}
+    for entry in entries:
+        grouped.setdefault(str(entry["category"]), []).append(entry)
+    return grouped
+
+
+def source_line(entry: dict[str, str | None]) -> str | None:
+    if entry.get("source_url") and entry.get("source_name"):
+        return f"- Source: [{entry['source_name']}]({entry['source_url']})"
+    return None
+
+
+def build_markdown(entries: list[dict[str, str | None]]) -> str:
     lines = [
-        "# 200 Goal Prompt Examples",
+        "# Goal Prompt Examples",
         "",
         "Each example is a complete `/goal` task contract. Replace placeholder commands, paths, and project names with your repository's real values before running.",
         "",
@@ -392,26 +483,32 @@ def build_markdown(entries: list[dict[str, str]]) -> str:
         "## Index",
         "",
     ]
-    by_category: dict[str, list[dict[str, str]]] = {}
-    for entry in entries:
-        by_category.setdefault(entry["category"], []).append(entry)
-    for category, category_entries in by_category.items():
+    for category, category_entries in by_category(entries).items():
         lines.append(f"### {category}")
         for entry in category_entries:
-            lines.append(f"- [{entry['display_id']}. {entry['title']}](#{entry['display_id']}-{entry['slug']})")
+            suffix = " Source-backed." if entry["origin"] == "source-backed" else ""
+            lines.append(f"- [{entry['title']}](#{entry['slug']}) - {entry['intent']}{suffix}")
         lines.append("")
     lines.append("## Examples")
     lines.append("")
     for entry in entries:
+        source = source_line(entry)
         lines.extend(
             [
-                f'<a id="{entry["display_id"]}-{entry["slug"]}"></a>',
-                f"### {entry['display_id']}. {entry['title']}",
+                f'<a id="{entry["slug"]}"></a>',
+                f"### {entry['title']}",
                 "",
                 f"- Category: `{entry['category']}`",
                 f"- Difficulty: `{entry['difficulty']}`",
+                f"- Origin: `{entry['origin']}`",
                 f"- Intent: {entry['intent']}",
                 f"- Verification: `{entry['verify']}`",
+            ]
+        )
+        if source:
+            lines.append(source)
+        lines.extend(
+            [
                 "",
                 "```text",
                 prompt_for(entry),
@@ -422,20 +519,83 @@ def build_markdown(entries: list[dict[str, str]]) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
+def build_readme(entries: list[dict[str, str | None]]) -> str:
+    grouped = by_category(entries)
+    lines = [
+        "# Awesome Goal Prompts",
+        "",
+        "[![Awesome](https://awesome.re/badge.svg)](https://awesome.re)",
+        "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)",
+        "",
+        "A curated list of `/goal` task contracts for coding agents.",
+        "",
+        "A good goal is not a wish. It is a runnable contract: one objective, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk.",
+        "",
+        "## Contents",
+        "",
+        "- [Goal Prompts](#goal-prompts)",
+        "- [Templates](#templates)",
+        "- [Quality Bar](#quality-bar)",
+        "- [Sources And Caveats](#sources-and-caveats)",
+        "- [Contributing](#contributing)",
+        "",
+        "## Goal Prompts",
+        "",
+        "Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).",
+        "",
+    ]
+    for category, category_entries in grouped.items():
+        lines.append(f"### {category}")
+        for entry in category_entries:
+            marker = " _(source-backed)_" if entry["origin"] == "source-backed" else ""
+            lines.append(f"- [{entry['title']}](prompts/goal-examples.md#{entry['slug']}) - {entry['intent']}{marker}")
+        lines.append("")
+    lines.extend(
+        [
+            "## Templates",
+            "",
+            "- [Full template](templates/full-goal-template.md) for high-risk or multi-step work.",
+            "- [Compact template](templates/compact-goal-template.md) for routine work.",
+            "- [Structured JSON data](data/examples.json) for search, tooling, or site generation.",
+            "",
+            "## Quality Bar",
+            "",
+            "- One example should cover one measurable objective.",
+            "- The prompt must include verification that can run in a real repository or produce a concrete artifact.",
+            "- New externally sourced examples must include `source_name` and `source_url` in `data/examples.json`.",
+            "- Do not add undocumented slash-command behavior, fake tool capabilities, or examples copied from private/non-verifiable sources.",
+            "",
+            "## Sources And Caveats",
+            "",
+            "See [SOURCES.md](SOURCES.md) for public sources used by source-backed examples and notes about cross-tool differences.",
+            "",
+            "This repository does not claim that `/goal` behaves identically across Codex, Claude Code, Hermes, or other tools.",
+            "",
+            "## Contributing",
+            "",
+            "Read [CONTRIBUTING.md](CONTRIBUTING.md) before adding examples. Keep descriptions short, source-backed when based on external material, and scoped to verifiable engineering work.",
+            "",
+            "## License",
+            "",
+            "MIT",
+        ]
+    )
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def main() -> None:
     entries = parse_entries()
-    if len(entries) != 200:
-        raise SystemExit(f"expected 200 entries, got {len(entries)}")
     for entry in entries:
         entry["prompt"] = prompt_for(entry)
     (ROOT / "prompts").mkdir(exist_ok=True)
     (ROOT / "data").mkdir(exist_ok=True)
-    (ROOT / "prompts" / "200-goal-examples.md").write_text(build_markdown(entries), encoding="utf-8")
+    (ROOT / "README.md").write_text(build_readme(entries), encoding="utf-8")
+    (ROOT / "prompts" / "goal-examples.md").write_text(build_markdown(entries), encoding="utf-8")
     (ROOT / "data" / "examples.json").write_text(
         json.dumps(entries, indent=2, ensure_ascii=True) + "\n",
         encoding="utf-8",
     )
-    print(f"generated {len(entries)} examples")
+    print("generated goal catalog")
 
 
 if __name__ == "__main__":

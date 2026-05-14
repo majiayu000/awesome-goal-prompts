@@ -15,6 +15,20 @@ This repository is based on public documentation, source inspection notes, and c
 - Anthropic blog, Introduction to agentic coding: https://www.claude.com/blog/introduction-to-agentic-coding
 - Claude Code power user tips: https://support.claude.com/en/articles/14554000-claude-code-power-user-tips
 
+## Source-Backed Example Sources
+
+Examples marked `source-backed` in `data/examples.json` are derived from public material that documents or demonstrates goal-style workflows. They are still rewritten as reusable task contracts instead of copied verbatim.
+
+- OpenAI Codex follow-goals examples: https://developers.openai.com/codex/use-cases/follow-goals
+- Claude Code goal examples: https://code.claude.com/docs/en/goal
+- Hermes persistent goals examples: https://hermes-agent.nousresearch.com/docs/user-guide/features/goals
+- ExplainX goal mode guide: https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026
+- Qiita goal examples and notes: https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae
+
+## Catalog Seeds
+
+Entries with `origin: "seed"` are catalog patterns for common engineering goals. They are not presented as quotes from X, GitHub, or docs. When a seed entry is later traced to a public example, update it with `source_name`, `source_url`, and `origin: "source-backed"` instead of adding a duplicate.
+
 ## Caveats
 
 - Codex `/goal` is experimental in the public docs at the time this catalog was created.

@@ -14,6 +14,14 @@ Each prompt must include:
 - `OUTPUT`: what the final report must contain
 - `STOP RULES`: when to pause instead of guessing
 
+If an example is based on a public post, documentation page, article, or repository, add:
+
+- `source_name`: short human-readable source name
+- `source_url`: canonical public URL
+- `origin`: `source-backed`
+
+If there is no verifiable public source, keep `origin` as `seed` and do not describe it as collected from X, GitHub, docs, or a named author.
+
 ## Quality Bar
 
 Accept examples that:
@@ -45,3 +53,4 @@ Reject examples that:
 - The constraints prevent scope creep.
 - The verification does not depend on prior claims or stale logs.
 - The stop rules cover missing secrets, missing production access, destructive data operations, and repeated failed fixes.
+- Source-backed examples include a public URL, and seed examples are not presented as external citations.

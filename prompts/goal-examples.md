@@ -1,4 +1,4 @@
-# 200 Goal Prompt Examples
+# Goal Prompt Examples
 
 Each example is a complete `/goal` task contract. Replace placeholder commands, paths, and project names with your repository's real values before running.
 
@@ -7,250 +7,283 @@ These examples intentionally use only the documented `/goal <objective>` form. T
 ## Index
 
 ### backend-api
-- [001. API Contract Drift Audit](#001-api-contract-drift-audit)
-- [002. Idempotent Create Endpoint](#002-idempotent-create-endpoint)
-- [003. API Error Taxonomy](#003-api-error-taxonomy)
-- [004. Pagination Consistency](#004-pagination-consistency)
-- [005. Request Validation Boundary](#005-request-validation-boundary)
-- [006. API Rate Limit Policy](#006-api-rate-limit-policy)
-- [007. Webhook Retry Contract](#007-webhook-retry-contract)
-- [008. Backward-Compatible Response](#008-backward-compatible-response)
-- [009. gRPC Timeout Propagation](#009-grpc-timeout-propagation)
-- [010. Async Job State Machine](#010-async-job-state-machine)
-- [011. Resource-Level Authorization](#011-authz-resource-scope)
-- [012. API Versioning Plan](#012-api-versioning-plan)
+- [API Contract Drift Audit](#api-contract-drift-audit) - Compare OpenAPI, implementation, and tests to find field or status-code drift.
+- [Idempotent Create Endpoint](#idempotent-create-endpoint) - Add idempotency keys and replay-safe semantics to a create endpoint.
+- [API Error Taxonomy](#api-error-taxonomy) - Unify HTTP status codes, machine error codes, user messages, and logs.
+- [Pagination Consistency](#pagination-consistency) - Fix cursor or offset pagination so rows are not skipped, duplicated, or reordered.
+- [Request Validation Boundary](#request-validation-boundary) - Move input validation to the API boundary and reject unknown fields.
+- [API Rate Limit Policy](#api-rate-limit-policy) - Implement rate limit behavior, headers, and over-limit responses for critical routes.
+- [Webhook Retry Contract](#webhook-retry-contract) - Define webhook signature verification, retry, dedupe, and failure observability.
+- [Backward-Compatible Response](#backward-compatible-response) - Add response fields without breaking old clients and document removal paths.
+- [gRPC Timeout Propagation](#grpc-timeout-propagation) - Propagate deadlines across service calls and cancel work correctly.
+- [Async Job State Machine](#async-job-state-machine) - Make async job transitions explicit and tested across pending/running/succeeded/failed/canceled.
+- [Resource-Level Authorization](#authz-resource-scope) - Prevent logged-in users from accessing resources they do not own.
+- [API Versioning Plan](#api-versioning-plan) - Create a v1/v2 coexistence plan with deprecation headers and migration tests.
 
 ### backend-data
-- [013. Database Migration Safety](#013-db-migration-safety)
-- [014. Transaction Boundary Audit](#014-transaction-boundary-audit)
-- [015. Cache Invalidation Map](#015-cache-invalidation-map)
-- [016. N+1 Query Fix](#016-n-plus-one-query-fix)
-- [017. Optimistic Locking Rollout](#017-optimistic-locking-rollout)
-- [018. Soft Delete Integrity](#018-soft-delete-integrity)
-- [019. Index Regression Check](#019-db-index-regression)
-- [020. Outbox Reliable Events](#020-outbox-pattern-adoption)
-- [021. Read Replica Lag Guard](#021-read-replica-lag-guard)
-- [022. Schema Drift Detector](#022-schema-drift-detector)
+- [Database Migration Safety](#db-migration-safety) - Review a migration for rollback, online execution, and lock risk.
+- [Transaction Boundary Audit](#transaction-boundary-audit) - Find missing or oversized transactions in multi-table write paths.
+- [Cache Invalidation Map](#cache-invalidation-map) - Map write paths to cache keys and fix stale reads.
+- [N+1 Query Fix](#n-plus-one-query-fix) - Reduce list endpoint query count with batching or preloading.
+- [Optimistic Locking Rollout](#optimistic-locking-rollout) - Add version checks and conflict responses for concurrent edits.
+- [Soft Delete Integrity](#soft-delete-integrity) - Make queries, unique indexes, and restore flows respect soft deletion.
+- [Index Regression Check](#db-index-regression) - Add or adjust indexes and prove read gains do not create unacceptable write cost.
+- [Outbox Reliable Events](#outbox-pattern-adoption) - Use an outbox table to prevent lost events after successful database commits.
+- [Read Replica Lag Guard](#read-replica-lag-guard) - Prevent write-after-read paths from hitting stale replicas.
+- [Schema Drift Detector](#schema-drift-detector) - Compare ORM models, migrations, and the live database schema.
 
 ### devops-ci
-- [023. CI Flaky Test Triage](#023-ci-flaky-test-triage)
-- [024. Build Cache Correctness](#024-build-cache-correctness)
-- [025. Dependency Update Gate](#025-dependency-update-gate)
-- [026. Monorepo Affected Tests](#026-monorepo-affected-tests)
-- [027. Release Notes From Diff](#027-release-note-from-diff)
-- [028. Artifact Provenance](#028-artifact-provenance)
-- [029. CI Permission Minimization](#029-ci-permission-minimize)
-- [030. Branch Protection Audit](#030-branch-protection-audit)
-- [031. Release Rollback Drill](#031-release-rollback-drill)
-- [032. Semantic Version Check](#032-semantic-version-check)
+- [CI Flaky Test Triage](#ci-flaky-test-triage) - Identify flaky tests, separate real failures, and fix unstable waits or fixtures.
+- [Build Cache Correctness](#build-cache-correctness) - Check whether CI cache keys cause stale dependencies or cross-branch pollution.
+- [Dependency Update Gate](#dependency-update-gate) - Add dependency upgrade checks for tests, licenses, and vulnerabilities.
+- [Monorepo Affected Tests](#monorepo-affected-tests) - Run only affected tests without missing cross-package contracts.
+- [Release Notes From Diff](#release-note-from-diff) - Generate user-facing release notes from commits, PR labels, and breaking changes.
+- [Artifact Provenance](#artifact-provenance) - Trace a package or image back to the commit and workflow that produced it.
+- [CI Permission Minimization](#ci-permission-minimize) - Tighten GitHub Actions token permissions without breaking workflows.
+- [Branch Protection Audit](#branch-protection-audit) - Audit required checks, reviews, linear history, and admin bypasses.
+- [Release Rollback Drill](#release-rollback-drill) - Create and test a rollback path for the latest release.
+- [Semantic Version Check](#semantic-version-check) - Infer the correct semver bump from API, behavior, and changelog diffs.
 
 ### devops-runtime
-- [033. Docker Image Slimming](#033-docker-image-slimming)
-- [034. Kubernetes Probe Repair](#034-k8s-readiness-liveness)
-- [035. Terraform Plan Review](#035-terraform-plan-review)
-- [036. Helm Values Drift](#036-helm-values-drift)
-- [037. Autoscaling Thresholds](#037-autoscaling-thresholds)
-- [038. Runtime Config Validation](#038-runtime-config-validation)
-- [039. Zero-Downtime Migration](#039-zero-downtime-migration)
-- [040. Observability Minimum](#040-observability-minimum)
-- [041. Incident Runbook Gap](#041-incident-runbook-gap)
-- [042. Queue Backpressure](#042-queue-backpressure)
+- [Docker Image Slimming](#docker-image-slimming) - Reduce image size while keeping runtime dependencies and security scans green.
+- [Kubernetes Probe Repair](#k8s-readiness-liveness) - Separate startup, readiness, and liveness probes to avoid bad restarts.
+- [Terraform Plan Review](#terraform-plan-review) - Review infrastructure changes for deletes, replacements, and permission expansion.
+- [Helm Values Drift](#helm-values-drift) - Compare environment values to find hidden staging/prod differences.
+- [Autoscaling Thresholds](#autoscaling-thresholds) - Tune HPA or worker scaling thresholds against real load and queue depth.
+- [Runtime Config Validation](#runtime-config-validation) - Fail startup on missing or invalid environment and config values.
+- [Zero-Downtime Migration](#zero-downtime-migration) - Plan and verify expand-migrate-contract deployment steps.
+- [Observability Minimum](#observability-minimum) - Add logs, metrics, traces, and alerts for a service's critical paths.
+- [Incident Runbook Gap](#incident-runbook-gap) - Turn a recent incident timeline into missing runbook and alert updates.
+- [Queue Backpressure](#queue-backpressure) - Protect databases and external APIs when worker queues build up.
 
 ### security-appsec
-- [043. SQL Injection Audit](#043-sql-injection-audit)
-- [044. Command Injection Audit](#044-command-injection-audit)
-- [045. SSRF Defense Review](#045-ssrf-defense-review)
-- [046. XSS Output Encoding](#046-xss-output-encoding)
-- [047. CSRF Sensitive Action](#047-csrf-sensitive-action)
-- [048. Auth Bypass Route Map](#048-auth-bypass-route-map)
-- [049. File Upload Security](#049-file-upload-security)
-- [050. Tenant Isolation Test](#050-tenant-isolation-test)
-- [051. Replay Attack Defense](#051-replay-attack-defense)
-- [052. IDOR Audit](#052-insecure-direct-object-ref)
+- [SQL Injection Audit](#sql-injection-audit) - Replace SQL string concatenation with parameterized queries and tests.
+- [Command Injection Audit](#command-injection-audit) - Replace shell string execution with argument arrays and validation.
+- [SSRF Defense Review](#ssrf-defense-review) - Add URL allowlists and DNS/IP checks for fetch or callback features.
+- [XSS Output Encoding](#xss-output-encoding) - Audit HTML and Markdown rendering for unsafe sinks and missing encoding.
+- [CSRF Sensitive Action](#csrf-sensitive-action) - Protect cookie-authenticated writes from cross-site requests.
+- [Auth Bypass Route Map](#auth-bypass-route-map) - Enumerate routes and verify unauthenticated and unauthorized behavior.
+- [File Upload Security](#file-upload-security) - Validate MIME, extension, size, scanning, and storage isolation.
+- [Tenant Isolation Test](#tenant-isolation-test) - Verify tenant IDs are enforced in queries, caches, and background jobs.
+- [Replay Attack Defense](#replay-attack-defense) - Add nonce, timestamp, and expiration checks to signed requests.
+- [IDOR Audit](#insecure-direct-object-ref) - Verify direct object ID access always checks ownership or scope.
 
 ### security-ops
-- [053. Secret Scan Baseline](#053-secret-scan-baseline)
-- [054. IAM Least Privilege](#054-iam-least-privilege)
-- [055. GitHub Actions Supply Chain](#055-github-actions-supply-chain)
-- [056. Container Vulnerability Triage](#056-container-vuln-triage)
-- [057. Audit Log Coverage](#057-audit-log-coverage)
-- [058. Secret Rotation Drill](#058-secret-rotation-drill)
-- [059. Dependency Confusion Guard](#059-dependency-confusion-guard)
-- [060. SBOM Generation](#060-sbom-generation)
-- [061. Production Access Review](#061-prod-access-review)
-- [062. Backup Restore Security](#062-backup-restore-security)
+- [Secret Scan Baseline](#secret-scan-baseline) - Add secret scanning and triage historical findings safely.
+- [IAM Least Privilege](#iam-least-privilege) - Reduce cloud permissions to observed API usage and documented needs.
+- [GitHub Actions Supply Chain](#github-actions-supply-chain) - Pin third-party actions and review workflow permissions.
+- [Container Vulnerability Triage](#container-vuln-triage) - Prioritize image CVEs by exploitability and runtime exposure.
+- [Audit Log Coverage](#audit-log-coverage) - Add audit logs for login, permission changes, and sensitive data access.
+- [Secret Rotation Drill](#secret-rotation-drill) - Verify rotating a key does not interrupt the service.
+- [Dependency Confusion Guard](#dependency-confusion-guard) - Lock private package scopes and registries to prevent wrong-source installs.
+- [SBOM Generation](#sbom-generation) - Generate an SBOM and attach it to release artifacts.
+- [Production Access Review](#prod-access-review) - Inventory production access, approval paths, and audit evidence.
+- [Backup Restore Security](#backup-restore-security) - Verify encrypted backups and a restricted restore path.
+- [NPM Audit Clean Remediation](#explainx-npm-audit-clean) - Patch npm audit vulnerabilities without breaking tests or public APIs. Source-backed.
 
 ### data-eng
-- [063. ETL Contract Tests](#063-etl-contract-tests)
-- [064. Data Quality Rules](#064-data-quality-rules)
-- [065. Backfill Safety Plan](#065-backfill-safety-plan)
-- [066. Incremental Load Watermark](#066-incremental-load-watermark)
-- [067. Late-Arriving Data](#067-late-arriving-data)
-- [068. Data Lineage Map](#068-data-lineage-map)
-- [069. PII Classification](#069-pii-classification)
-- [070. Data Retention Enforcement](#070-data-retention-enforcement)
-- [071. Warehouse Cost Audit](#071-warehouse-cost-audit)
-- [072. Stream Processing Lag](#072-stream-processing-lag)
+- [ETL Contract Tests](#etl-contract-tests) - Add schema and sample-data contracts between source and target tables.
+- [Data Quality Rules](#data-quality-rules) - Define null, uniqueness, range, and reference checks for key datasets.
+- [Backfill Safety Plan](#backfill-safety-plan) - Design a sharded, resumable, verifiable historical backfill.
+- [Incremental Load Watermark](#incremental-load-watermark) - Fix missing or duplicate rows in incremental sync logic.
+- [Late-Arriving Data](#late-arriving-data) - Handle delayed events and metric corrections safely.
+- [Data Lineage Map](#data-lineage-map) - Map critical report fields from source to consumers.
+- [PII Classification](#pii-classification) - Classify sensitive fields and document masking rules.
+- [Data Retention Enforcement](#data-retention-enforcement) - Verify expiration, archival, deletion, and audit behavior.
+- [Warehouse Cost Audit](#warehouse-cost-audit) - Find expensive queries, duplicate tables, and unused scheduled jobs.
+- [Stream Processing Lag](#stream-processing-lag) - Diagnose Kafka/Flink/Spark lag and checkpoint bottlenecks.
 
 ### data-analytics
-- [073. Metric Definition Lock](#073-metric-definition-lock)
-- [074. Dashboard Trust Audit](#074-dashboard-trust-audit)
-- [075. A/B Test SRM Check](#075-ab-test-srm-check)
-- [076. Funnel Dropoff Diagnosis](#076-funnel-dropoff-diagnosis)
-- [077. Cohort Retention Query](#077-cohort-retention-query)
-- [078. Revenue Reconciliation](#078-revenue-reconciliation)
-- [079. Event Taxonomy Cleanup](#079-event-taxonomy-cleanup)
-- [080. Anomaly Detection Baseline](#080-anomaly-detection-baseline)
-- [081. Attribution Window Review](#081-attribution-window-review)
-- [082. Self-Serve Data Contract](#082-self-serve-data-contract)
+- [Metric Definition Lock](#metric-definition-lock) - Turn core metric definitions into tested SQL or semantic-layer checks.
+- [Dashboard Trust Audit](#dashboard-trust-audit) - Check filters, timezone, refresh cadence, permissions, and source reconciliation.
+- [A/B Test SRM Check](#ab-test-srm-check) - Detect sample ratio mismatch in experiment assignment.
+- [Funnel Dropoff Diagnosis](#funnel-dropoff-diagnosis) - Validate funnel events, step counts, and latency before interpreting dropoff.
+- [Cohort Retention Query](#cohort-retention-query) - Create reusable retention SQL with hand-checked small samples.
+- [Revenue Reconciliation](#revenue-reconciliation) - Reconcile payments, orders, refunds, and finance definitions.
+- [Event Taxonomy Cleanup](#event-taxonomy-cleanup) - Deduplicate event names, properties, and version changes.
+- [Anomaly Detection Baseline](#anomaly-detection-baseline) - Backtest alert thresholds against historical metrics.
+- [Attribution Window Review](#attribution-window-review) - Verify campaign attribution windows and dedupe rules.
+- [Self-Serve Data Contract](#self-serve-data-contract) - Define trusted datasets and usage limits for business users.
 
 ### ai-evals
-- [083. LLM Golden Set Build](#083-llm-golden-set-build)
-- [084. LLM Regression Gate](#084-llm-regression-gate)
-- [085. Judge Calibration](#085-judge-calibration)
-- [086. Hallucination Probe Suite](#086-hallucination-probe-suite)
-- [087. RAG Answer Faithfulness](#087-rag-answer-faithfulness)
-- [088. Tool Use Eval](#088-tool-use-eval)
-- [089. Prompt Injection Red Team](#089-adversarial-prompt-redteam)
-- [090. Eval Data Dedup](#090-eval-data-dedup)
-- [091. Cost Quality Frontier](#091-cost-quality-frontier)
-- [092. Rubric-Driven Eval](#092-rubric-driven-eval)
+- [LLM Golden Set Build](#llm-golden-set-build) - Build an eval set from real failures and frequent tasks.
+- [LLM Regression Gate](#llm-regression-gate) - Compare old and new model or prompt outputs in PRs.
+- [Judge Calibration](#judge-calibration) - Measure LLM judge agreement against human labels.
+- [Hallucination Probe Suite](#hallucination-probe-suite) - Add negative cases for nonexistent files, fields, APIs, and sources.
+- [RAG Answer Faithfulness](#rag-answer-faithfulness) - Check that answers are supported by retrieved evidence.
+- [Tool Use Eval](#tool-use-eval) - Evaluate whether an agent selects, orders, and validates tools correctly.
+- [Prompt Injection Red Team](#adversarial-prompt-redteam) - Test prompt leakage, unauthorized tools, and instruction override attempts.
+- [Eval Data Dedup](#eval-data-dedup) - Remove duplicates, leakage, and near-identical eval samples.
+- [Cost Quality Frontier](#cost-quality-frontier) - Compare models by quality, latency, and cost to choose routing tiers.
+- [Rubric-Driven Eval](#rubric-driven-eval) - Replace binary scores with multi-dimensional rubrics for complex tasks.
 
 ### ai-ops
-- [093. Prompt Version Registry](#093-prompt-version-registry)
-- [094. RAG Chunking Experiment](#094-rag-chunking-experiment)
-- [095. Vector Index Refresh](#095-vector-index-refresh)
-- [096. Model Routing Policy](#096-model-routing-policy)
-- [097. LLM Timeout Budget](#097-llm-timeout-budget)
-- [098. Token Cost Attribution](#098-token-cost-attribution)
-- [099. RAG Prompt Injection Filter](#099-prompt-injection-filter)
-- [100. AI Output Schema Guard](#100-ai-output-schema-guard)
-- [101. Human Review Threshold](#101-human-review-threshold)
-- [102. AI Observability Traces](#102-ai-observability-traces)
+- [Prompt Version Registry](#prompt-version-registry) - Bind prompt versions to eval results and deployment history.
+- [RAG Chunking Experiment](#rag-chunking-experiment) - Compare chunk size, overlap, and metadata on retrieval and answer quality.
+- [Vector Index Refresh](#vector-index-refresh) - Verify document updates are indexed completely and can be rolled back.
+- [Model Routing Policy](#model-routing-policy) - Route by risk, cost, latency, and quality evidence.
+- [LLM Timeout Budget](#llm-timeout-budget) - Define timeout, retry, fallback, and user-visible error behavior.
+- [Token Cost Attribution](#token-cost-attribution) - Attribute model costs by user, feature, model, and request ID.
+- [RAG Prompt Injection Filter](#prompt-injection-filter) - Detect and isolate malicious instructions in retrieved documents.
+- [AI Output Schema Guard](#ai-output-schema-guard) - Validate structured AI output and fail or retry safely.
+- [Human Review Threshold](#human-review-threshold) - Escalate high-risk AI outputs based on confidence and policy rules.
+- [AI Observability Traces](#ai-observability-traces) - Trace prompts, retrieval, tools, models, scores, and request IDs.
 
 ### frontend
-- [103. Empty State System](#103-frontend-empty-states)
-- [104. Error Boundary Experience](#104-frontend-error-boundary)
-- [105. Loading Skeletons](#105-frontend-loading-skeletons)
-- [106. Form Validation](#106-frontend-form-validation)
-- [107. Data Table Density](#107-frontend-table-density)
-- [108. Command Palette](#108-frontend-command-palette)
-- [109. Navigation Map](#109-frontend-navigation-map)
-- [110. State Recovery](#110-frontend-state-recovery)
-- [111. Permission State UI](#111-frontend-permission-ui)
-- [112. Bulk Actions](#112-frontend-bulk-actions)
-- [113. Search Filter Experience](#113-frontend-search-filter)
-- [114. Realtime Update Prompts](#114-frontend-realtime-updates)
+- [Empty State System](#frontend-empty-states) - Design real empty states for lists, search, permissions, and first use.
+- [Error Boundary Experience](#frontend-error-boundary) - Add recoverable page and component fallback UI for crashes.
+- [Loading Skeletons](#frontend-loading-skeletons) - Replace layout-shifting spinners with stable skeleton states.
+- [Form Validation](#frontend-form-validation) - Cover inline, submit, server error, and dirty-state validation.
+- [Data Table Density](#frontend-table-density) - Improve columns, filters, sorting, pagination, and bulk actions.
+- [Command Palette](#frontend-command-palette) - Add a keyboard-first entry point for high-frequency actions.
+- [Navigation Map](#frontend-navigation-map) - Clarify primary navigation, breadcrumbs, and detail-page return paths.
+- [State Recovery](#frontend-state-recovery) - Restore filters and context after refresh, back, and deep links.
+- [Permission State UI](#frontend-permission-ui) - Separate unauthenticated, unauthorized, and missing-resource states.
+- [Bulk Actions](#frontend-bulk-actions) - Handle selection, confirm, undo, partial failure, and feedback.
+- [Search Filter Experience](#frontend-search-filter) - Unify search, filter chips, clear actions, and result counts.
+- [Realtime Update Prompts](#frontend-realtime-updates) - Handle background changes, conflicts, and refresh prompts.
 
 ### design
-- [115. Visual Hierarchy Pass](#115-design-visual-hierarchy)
-- [116. Design Token Audit](#116-design-token-audit)
-- [117. Component Variant Matrix](#117-design-component-variants)
-- [118. Dashboard Layout Pass](#118-design-dashboard-layout)
-- [119. Modal Discipline](#119-design-modal-discipline)
-- [120. Iconography System](#120-design-iconography)
-- [121. Color Contrast Pass](#121-design-color-contrast)
-- [122. Motion Rules](#122-design-motion-rules)
-- [123. Responsive Grid](#123-design-responsive-grid)
-- [124. Toolbar Usability](#124-design-toolbar-usability)
-- [125. Data Card System](#125-design-data-card-system)
-- [126. Brand Fit Pass](#126-design-brand-fit)
+- [Visual Hierarchy Pass](#design-visual-hierarchy) - Reorder headings, metadata, primary actions, and secondary actions.
+- [Design Token Audit](#design-token-audit) - Check colors, spacing, radii, and shadows against tokens.
+- [Component Variant Matrix](#design-component-variants) - Complete button, input, card, and modal state coverage.
+- [Dashboard Layout Pass](#design-dashboard-layout) - Make an operational dashboard easier to scan and compare.
+- [Modal Discipline](#design-modal-discipline) - Replace modal misuse with drawers, popovers, or pages where appropriate.
+- [Iconography System](#design-iconography) - Unify icon semantics for tools, statuses, and empty states.
+- [Color Contrast Pass](#design-color-contrast) - Fix low contrast text, icons, and state colors.
+- [Motion Rules](#design-motion-rules) - Define entry, exit, feedback, and reduced-motion behavior.
+- [Responsive Grid](#design-responsive-grid) - Define breakpoints, columns, and fixed-format constraints.
+- [Toolbar Usability](#design-toolbar-usability) - Improve icon buttons, tooltips, grouping, and disabled states.
+- [Data Card System](#design-data-card-system) - Define metric cards with value, trend, anomaly, and source states.
+- [Brand Fit Pass](#design-brand-fit) - Align the interface language with the product's audience and use case.
 
 ### mobile
-- [127. Mobile Bottom Navigation](#127-mobile-bottom-nav)
-- [128. Mobile Touch Targets](#128-mobile-touch-targets)
-- [129. Mobile Form Flow](#129-mobile-form-flow)
-- [130. Mobile Table Adaptation](#130-mobile-table-adaptation)
-- [131. Mobile Filter Drawer](#131-mobile-filter-drawer)
-- [132. Mobile Offline State](#132-mobile-offline-state)
-- [133. Mobile Image Performance](#133-mobile-image-performance)
-- [134. Mobile Safe Area](#134-mobile-safe-area)
-- [135. Mobile Gesture Conflicts](#135-mobile-gesture-conflicts)
-- [136. Mobile Login Flow](#136-mobile-login-flow)
-- [137. Mobile Onboarding](#137-mobile-onboarding)
-- [138. Mobile Device Matrix](#138-mobile-device-matrix)
+- [Mobile Bottom Navigation](#mobile-bottom-nav) - Design thumb-friendly mobile navigation for core paths.
+- [Mobile Touch Targets](#mobile-touch-targets) - Ensure buttons, checkboxes, and rows have usable tap areas.
+- [Mobile Form Flow](#mobile-form-flow) - Handle long forms, keyboard occlusion, and error positioning.
+- [Mobile Table Adaptation](#mobile-table-adaptation) - Convert wide tables into cards, horizontal scroll, or drill-downs.
+- [Mobile Filter Drawer](#mobile-filter-drawer) - Add mobile filters with apply, reset, count, and URL state.
+- [Mobile Offline State](#mobile-offline-state) - Show offline, cached data, and retry paths clearly.
+- [Mobile Image Performance](#mobile-image-performance) - Optimize image sizes, lazy loading, placeholders, and formats.
+- [Mobile Safe Area](#mobile-safe-area) - Handle iOS notch, bottom bars, and sticky actions.
+- [Mobile Gesture Conflicts](#mobile-gesture-conflicts) - Resolve conflicts between swipe, drag, and scroll interactions.
+- [Mobile Login Flow](#mobile-login-flow) - Improve magic link, OTP, password manager, and autofill behavior.
+- [Mobile Onboarding](#mobile-onboarding) - Create a short, skippable, restorable first-run path.
+- [Mobile Device Matrix](#mobile-device-matrix) - Cover small screen, large screen, iOS, and Android key paths.
 
 ### docs
-- [139. Quickstart](#139-docs-quickstart)
-- [140. Install Troubleshooting](#140-docs-install-troubleshooting)
-- [141. API Examples](#141-docs-api-examples)
-- [142. Architecture Overview](#142-docs-architecture-overview)
-- [143. Contribution Guide](#143-docs-contribution-guide)
-- [144. Release Notes](#144-docs-release-notes)
-- [145. Environment Variables](#145-docs-env-vars)
-- [146. Operator Runbook](#146-docs-runbook)
-- [147. Architecture Decision Records](#147-docs-decision-records)
-- [148. Glossary](#148-docs-glossary)
-- [149. Screenshot Docs](#149-docs-screenshot-docs)
-- [150. Docs Lint Gate](#150-docs-docs-lint)
+- [Quickstart](#docs-quickstart) - Write the shortest fresh-clone path that runs successfully in five minutes.
+- [Install Troubleshooting](#docs-install-troubleshooting) - Document common install failures, causes, and fixes.
+- [API Examples](#docs-api-examples) - Add minimal request, response, and error examples for core APIs.
+- [Architecture Overview](#docs-architecture-overview) - Explain module boundaries, data flow, and explicit non-goals.
+- [Contribution Guide](#docs-contribution-guide) - Document development, testing, commit, and PR review rules.
+- [Release Notes](#docs-release-notes) - Create user-facing change, migration, and breaking-change notes.
+- [Environment Variables](#docs-env-vars) - List env names, defaults, requiredness, and safety notes.
+- [Operator Runbook](#docs-runbook) - Document alerts, recovery, rollback, and data repair steps.
+- [Architecture Decision Records](#docs-decision-records) - Add ADR templates and indexes for major technical decisions.
+- [Glossary](#docs-glossary) - Unify product, engineering, and data-field terms.
+- [Screenshot Docs](#docs-screenshot-docs) - Add real screenshots and labels for UI workflows.
+- [Docs Lint Gate](#docs-docs-lint) - Add link, spelling, and executable code block checks.
+- [Weekly Changelog Coverage](#claude-weekly-changelog) - Ensure CHANGELOG.md includes an entry for every PR merged this week. Source-backed.
 
 ### product
-- [151. User Journeys](#151-product-user-journeys)
-- [152. PRD Skeleton](#152-product-prd-skeleton)
-- [153. Onboarding Metrics](#153-product-onboarding-metrics)
-- [154. Feature Prioritization](#154-product-feature-prioritization)
-- [155. Permission Model](#155-product-permission-model)
-- [156. Notification Strategy](#156-product-notification-strategy)
-- [157. Empty Data Policy](#157-product-empty-data-policy)
-- [158. Upgrade Path](#158-product-upgrade-path)
-- [159. Feedback Loop](#159-product-feedback-loop)
-- [160. Search Relevance](#160-product-search-relevance)
-- [161. Admin Workflows](#161-product-admin-workflows)
-- [162. Success Criteria](#162-product-success-criteria)
+- [User Journeys](#product-user-journeys) - Map persona tasks into pages, events, and success states.
+- [PRD Skeleton](#product-prd-skeleton) - Write goals, non-goals, constraints, and acceptance criteria.
+- [Onboarding Metrics](#product-onboarding-metrics) - Define activation events, dropoff points, and dashboard queries.
+- [Feature Prioritization](#product-feature-prioritization) - Split MVP and later work by impact, cost, and risk.
+- [Permission Model](#product-permission-model) - Map roles, resources, actions, and UI visibility.
+- [Notification Strategy](#product-notification-strategy) - Define triggers, channels, frequency, and unsubscribe behavior.
+- [Empty Data Policy](#product-empty-data-policy) - Choose blank, sample data, import, or CTA by user state.
+- [Upgrade Path](#product-upgrade-path) - Design limits, paywalls, trials, and upgrade conversion paths.
+- [Feedback Loop](#product-feedback-loop) - Collect, classify, track, and close user feedback.
+- [Search Relevance](#product-search-relevance) - Define query handling, ranking, typo tolerance, and no-result behavior.
+- [Admin Workflows](#product-admin-workflows) - Design review, undo, audit log, and bulk moderation flows.
+- [Success Criteria](#product-success-criteria) - Define quantitative and qualitative completion measures for a feature.
 
 ### qa
-- [163. Critical Path Tests](#163-qa-critical-paths)
-- [164. Regression Matrix](#164-qa-regression-matrix)
-- [165. Fixture Strategy](#165-qa-fixture-strategy)
-- [166. Visual Regression](#166-qa-visual-regression)
-- [167. API Contracts](#167-qa-api-contracts)
-- [168. Flaky Test Audit](#168-qa-flaky-test-audit)
-- [169. Error Injection](#169-qa-error-injection)
-- [170. Cross-Browser Coverage](#170-qa-cross-browser)
-- [171. Release Smoke](#171-qa-release-smoke)
-- [172. Data Migration Test](#172-qa-data-migration)
-- [173. Security Smoke](#173-qa-security-smoke)
-- [174. Bug Reproduction Template](#174-qa-bug-repro-template)
+- [Critical Path Tests](#qa-critical-paths) - Cover signup, create, edit, delete, export, and recovery flows.
+- [Regression Matrix](#qa-regression-matrix) - Build feature/browser/role/data-state regression coverage.
+- [Fixture Strategy](#qa-fixture-strategy) - Create deterministic seed, mock, factory, and cleanup patterns.
+- [Visual Regression](#qa-visual-regression) - Add screenshot diffs for critical pages with controlled thresholds.
+- [API Contracts](#qa-api-contracts) - Validate frontend/backend schema, error codes, and boundary values.
+- [Flaky Test Audit](#qa-flaky-test-audit) - Find unstable tests and fix waits, isolation, or fixtures.
+- [Error Injection](#qa-error-injection) - Simulate 500s, timeouts, network failure, and partial success.
+- [Cross-Browser Coverage](#qa-cross-browser) - Run critical flows across Chromium, Firefox, and WebKit.
+- [Release Smoke](#qa-release-smoke) - Define the smallest pre-release verification checklist.
+- [Data Migration Test](#qa-data-migration) - Verify counts, constraints, and rollback around data migration.
+- [Security Smoke](#qa-security-smoke) - Check auth, permission bypass, and sensitive info leakage.
+- [Bug Reproduction Template](#qa-bug-repro-template) - Standardize environment, steps, expected, actual, and evidence.
 
 ### accessibility
-- [175. Keyboard Navigation](#175-accessibility-keyboard-nav)
-- [176. Screen Reader Semantics](#176-accessibility-screen-reader)
-- [177. Focus Visible](#177-accessibility-focus-visible)
-- [178. Color Contrast](#178-accessibility-color-contrast)
-- [179. Accessible Form Errors](#179-accessibility-form-errors)
-- [180. Modal Focus Trap](#180-accessibility-modal-trap)
-- [181. Reduced Motion](#181-accessibility-reduced-motion)
-- [182. Alt Text Audit](#182-accessibility-alt-text)
-- [183. Heading Order](#183-accessibility-heading-order)
-- [184. Live Region Feedback](#184-accessibility-live-region)
-- [185. Touch Accessibility](#185-accessibility-touch-a11y)
-- [186. Accessibility Audit Report](#186-accessibility-audit-report)
+- [Keyboard Navigation](#accessibility-keyboard-nav) - Ensure the whole app works with Tab, Enter, and Escape.
+- [Screen Reader Semantics](#accessibility-screen-reader) - Check landmarks, labels, aria-live, and button names.
+- [Focus Visible](#accessibility-focus-visible) - Give every interactive element a clear focus state.
+- [Color Contrast](#accessibility-color-contrast) - Meet WCAG AA for text, icons, and state colors.
+- [Accessible Form Errors](#accessibility-form-errors) - Associate errors with fields so screen readers announce them.
+- [Modal Focus Trap](#accessibility-modal-trap) - Focus opens, cycles, closes, and returns correctly.
+- [Reduced Motion](#accessibility-reduced-motion) - Respect prefers-reduced-motion for all nonessential motion.
+- [Alt Text Audit](#accessibility-alt-text) - Separate decorative, content, and product images.
+- [Heading Order](#accessibility-heading-order) - Fix skipped headings and fake styled headings.
+- [Live Region Feedback](#accessibility-live-region) - Announce toasts, async completion, and errors accessibly.
+- [Touch Accessibility](#accessibility-touch-a11y) - Check tap targets, zoom, and orientation on mobile.
+- [Accessibility Audit Report](#accessibility-audit-report) - Produce prioritized issues, impact, fixes, and acceptance checks.
 
 ### performance
-- [187. LCP Optimization](#187-performance-lcp)
-- [188. CLS Fix](#188-performance-cls)
-- [189. INP Optimization](#189-performance-inp)
-- [190. Bundle Budget](#190-performance-bundle-budget)
-- [191. Code Splitting](#191-performance-code-splitting)
-- [192. Image Pipeline](#192-performance-image-pipeline)
-- [193. Font Loading](#193-performance-font-loading)
-- [194. API Waterfall](#194-performance-api-waterfall)
-- [195. Cache Strategy](#195-performance-cache-strategy)
-- [196. Memory Leak Audit](#196-performance-memory-leaks)
-- [197. Render Count Audit](#197-performance-render-count)
-- [198. Performance CI Gate](#198-performance-ci-gate)
+- [LCP Optimization](#performance-lcp) - Find and optimize the largest contentful paint element.
+- [CLS Fix](#performance-cls) - Reserve space for images, ads, and dynamic content.
+- [INP Optimization](#performance-inp) - Reduce long tasks and blocking interaction handlers.
+- [Bundle Budget](#performance-bundle-budget) - Set route and dependency size budgets in CI.
+- [Code Splitting](#performance-code-splitting) - Lazy-load low-frequency routes, charts, and editors.
+- [Image Pipeline](#performance-image-pipeline) - Use srcset, modern formats, lazy loading, and cache headers.
+- [Font Loading](#performance-font-loading) - Optimize font-display, subsets, and preload hints.
+- [API Waterfall](#performance-api-waterfall) - Remove serial requests and prefetch critical data.
+- [Cache Strategy](#performance-cache-strategy) - Define browser, CDN, and service-worker cache boundaries.
+- [Memory Leak Audit](#performance-memory-leaks) - Check long sessions, lists, subscriptions, and charts for leaks.
+- [Render Count Audit](#performance-render-count) - Find unnecessary React renders and expensive selectors.
+- [Performance CI Gate](#performance-ci-gate) - Add Lighthouse or trace thresholds to CI.
+- [Lighthouse And Core Web Vitals Gate](#explainx-lighthouse-core-web-vitals) - Improve Lighthouse and Core Web Vitals to explicit thresholds without regressions. Source-backed.
 
 ### workflow
-- [199. Goal Prompt Writer](#199-goal-meta-prompt-writer)
-- [200. Goal Continuation Audit](#200-goal-continuation-audit)
+- [Goal Prompt Writer](#goal-meta-prompt-writer) - Ask the agent to inspect a repo and write a precise goal prompt before execution.
+- [Goal Continuation Audit](#goal-continuation-audit) - Check that a long-running goal keeps its done_when and verification contract after compaction.
+- [Verifiable End-State Contract](#codex-verifiable-end-state) - Complete one objective only when a verifiable end state is met. Source-backed.
+- [Four Files Walkthrough](#hermes-four-files-walkthrough) - Create four note files across turns and verify each contains its number. Source-backed.
+
+### migration
+- [Visual Migration With Playwright](#codex-visual-migration-playwright) - Migrate a project while preserving screen output and checking it with Playwright. Source-backed.
+- [Feature Port With CI Green](#hermes-feature-port-ci-green) - Port a feature from another repo, include tests, and get CI green. Source-backed.
+- [Vue 2 To Vue 3 Visual And Unit Gate](#qiita-vue2-vue3-visual-unit) - Migrate listed Vue screens and stop only when visual and unit tests pass. Source-backed.
+
+### prototype
+- [PLAN.md Milestone Prototype](#codex-plan-milestone-prototype) - Implement a PLAN.md-driven prototype with tests at each milestone and browser verification. Source-backed.
+- [Canvas Puzzle PLAN.md Prototype](#qiita-canvas-puzzle-plan) - Implement PLAN.md milestones for a canvas puzzle prototype and prove e2e passes. Source-backed.
+
+### prompt-optimization
+- [Eval-Driven Prompt Optimization](#codex-eval-prompt-optimization) - Optimize prompts against an eval suite until the target score or pass rate is reached. Source-backed.
+- [Router Prompt Eval Score](#qiita-router-eval-score) - Improve a router prompt against an eval directory until the result score reaches a target. Source-backed.
+
+### testing
+- [Auth Tests And Lint Clean](#claude-auth-tests-lint) - Keep working until auth tests pass and the lint step is clean. Source-backed.
+- [Ruff Clean Source Tree](#hermes-ruff-src-clean) - Fix every lint error in src and prove ruff passes. Source-backed.
+- [TypeScript ESLint Coverage Gate](#explainx-typescript-eslint-coverage) - Resolve TypeScript errors, pass tests, clear ESLint warnings, and keep coverage above a threshold. Source-backed.
+
+### investigation
+- [Session Drift Report](#hermes-session-drift-report) - Investigate session ID drift during mid-run compression and write a report. Source-backed.
+
+### cli
+- [EXIF Rename CLI](#hermes-exif-rename-cli) - Build a small CLI that renames photos by EXIF date and test it on a photos folder. Source-backed.
+
+### refactor
+- [Auth Dependency Injection Refactor](#explainx-auth-di-refactor) - Refactor auth code to dependency injection while preserving tests, coverage, and public API. Source-backed.
 
 ## Examples
 
-<a id="001-api-contract-drift-audit"></a>
-### 001. API Contract Drift Audit
+<a id="api-contract-drift-audit"></a>
+### API Contract Drift Audit
 
 - Category: `backend-api`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Compare OpenAPI, implementation, and tests to find field or status-code drift.
 - Verification: `npx openapi-diff old.yaml new.yaml && pytest tests/api`
 
@@ -289,11 +322,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="002-idempotent-create-endpoint"></a>
-### 002. Idempotent Create Endpoint
+<a id="idempotent-create-endpoint"></a>
+### Idempotent Create Endpoint
 
 - Category: `backend-api`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add idempotency keys and replay-safe semantics to a create endpoint.
 - Verification: `pytest -k idempotency`
 
@@ -332,11 +366,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="003-api-error-taxonomy"></a>
-### 003. API Error Taxonomy
+<a id="api-error-taxonomy"></a>
+### API Error Taxonomy
 
 - Category: `backend-api`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Unify HTTP status codes, machine error codes, user messages, and logs.
 - Verification: `pytest -k error_response`
 
@@ -375,11 +410,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="004-pagination-consistency"></a>
-### 004. Pagination Consistency
+<a id="pagination-consistency"></a>
+### Pagination Consistency
 
 - Category: `backend-api`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Fix cursor or offset pagination so rows are not skipped, duplicated, or reordered.
 - Verification: `pytest -k pagination`
 
@@ -418,11 +454,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="005-request-validation-boundary"></a>
-### 005. Request Validation Boundary
+<a id="request-validation-boundary"></a>
+### Request Validation Boundary
 
 - Category: `backend-api`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Move input validation to the API boundary and reject unknown fields.
 - Verification: `pytest -k validation`
 
@@ -461,11 +498,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="006-api-rate-limit-policy"></a>
-### 006. API Rate Limit Policy
+<a id="api-rate-limit-policy"></a>
+### API Rate Limit Policy
 
 - Category: `backend-api`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Implement rate limit behavior, headers, and over-limit responses for critical routes.
 - Verification: `k6 run rate_limit.js`
 
@@ -504,11 +542,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="007-webhook-retry-contract"></a>
-### 007. Webhook Retry Contract
+<a id="webhook-retry-contract"></a>
+### Webhook Retry Contract
 
 - Category: `backend-api`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Define webhook signature verification, retry, dedupe, and failure observability.
 - Verification: `pytest -k webhook`
 
@@ -547,11 +586,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="008-backward-compatible-response"></a>
-### 008. Backward-Compatible Response
+<a id="backward-compatible-response"></a>
+### Backward-Compatible Response
 
 - Category: `backend-api`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add response fields without breaking old clients and document removal paths.
 - Verification: `pytest -k contract`
 
@@ -590,11 +630,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="009-grpc-timeout-propagation"></a>
-### 009. gRPC Timeout Propagation
+<a id="grpc-timeout-propagation"></a>
+### gRPC Timeout Propagation
 
 - Category: `backend-api`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Propagate deadlines across service calls and cancel work correctly.
 - Verification: `go test ./...`
 
@@ -633,11 +674,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="010-async-job-state-machine"></a>
-### 010. Async Job State Machine
+<a id="async-job-state-machine"></a>
+### Async Job State Machine
 
 - Category: `backend-api`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Make async job transitions explicit and tested across pending/running/succeeded/failed/canceled.
 - Verification: `pytest -k job_state`
 
@@ -676,11 +718,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="011-authz-resource-scope"></a>
-### 011. Resource-Level Authorization
+<a id="authz-resource-scope"></a>
+### Resource-Level Authorization
 
 - Category: `backend-api`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Prevent logged-in users from accessing resources they do not own.
 - Verification: `pytest -k authz`
 
@@ -719,11 +762,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="012-api-versioning-plan"></a>
-### 012. API Versioning Plan
+<a id="api-versioning-plan"></a>
+### API Versioning Plan
 
 - Category: `backend-api`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Create a v1/v2 coexistence plan with deprecation headers and migration tests.
 - Verification: `pytest -k api_version`
 
@@ -762,11 +806,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="013-db-migration-safety"></a>
-### 013. Database Migration Safety
+<a id="db-migration-safety"></a>
+### Database Migration Safety
 
 - Category: `backend-data`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Review a migration for rollback, online execution, and lock risk.
 - Verification: `npm run migrate:dry-run`
 
@@ -807,11 +852,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="014-transaction-boundary-audit"></a>
-### 014. Transaction Boundary Audit
+<a id="transaction-boundary-audit"></a>
+### Transaction Boundary Audit
 
 - Category: `backend-data`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Find missing or oversized transactions in multi-table write paths.
 - Verification: `pytest -k transaction`
 
@@ -852,11 +898,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="015-cache-invalidation-map"></a>
-### 015. Cache Invalidation Map
+<a id="cache-invalidation-map"></a>
+### Cache Invalidation Map
 
 - Category: `backend-data`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Map write paths to cache keys and fix stale reads.
 - Verification: `pytest -k cache`
 
@@ -897,11 +944,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="016-n-plus-one-query-fix"></a>
-### 016. N+1 Query Fix
+<a id="n-plus-one-query-fix"></a>
+### N+1 Query Fix
 
 - Category: `backend-data`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Reduce list endpoint query count with batching or preloading.
 - Verification: `pytest -k query_count`
 
@@ -942,11 +990,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="017-optimistic-locking-rollout"></a>
-### 017. Optimistic Locking Rollout
+<a id="optimistic-locking-rollout"></a>
+### Optimistic Locking Rollout
 
 - Category: `backend-data`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Add version checks and conflict responses for concurrent edits.
 - Verification: `pytest -k optimistic_lock`
 
@@ -987,11 +1036,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="018-soft-delete-integrity"></a>
-### 018. Soft Delete Integrity
+<a id="soft-delete-integrity"></a>
+### Soft Delete Integrity
 
 - Category: `backend-data`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Make queries, unique indexes, and restore flows respect soft deletion.
 - Verification: `pytest -k soft_delete`
 
@@ -1032,11 +1082,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="019-db-index-regression"></a>
-### 019. Index Regression Check
+<a id="db-index-regression"></a>
+### Index Regression Check
 
 - Category: `backend-data`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Add or adjust indexes and prove read gains do not create unacceptable write cost.
 - Verification: `pytest -k slow_query`
 
@@ -1077,11 +1128,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="020-outbox-pattern-adoption"></a>
-### 020. Outbox Reliable Events
+<a id="outbox-pattern-adoption"></a>
+### Outbox Reliable Events
 
 - Category: `backend-data`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Use an outbox table to prevent lost events after successful database commits.
 - Verification: `pytest -k outbox`
 
@@ -1122,11 +1174,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="021-read-replica-lag-guard"></a>
-### 021. Read Replica Lag Guard
+<a id="read-replica-lag-guard"></a>
+### Read Replica Lag Guard
 
 - Category: `backend-data`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Prevent write-after-read paths from hitting stale replicas.
 - Verification: `pytest -k replica_lag`
 
@@ -1167,11 +1220,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="022-schema-drift-detector"></a>
-### 022. Schema Drift Detector
+<a id="schema-drift-detector"></a>
+### Schema Drift Detector
 
 - Category: `backend-data`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Compare ORM models, migrations, and the live database schema.
 - Verification: `prisma migrate diff`
 
@@ -1212,11 +1266,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="023-ci-flaky-test-triage"></a>
-### 023. CI Flaky Test Triage
+<a id="ci-flaky-test-triage"></a>
+### CI Flaky Test Triage
 
 - Category: `devops-ci`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Identify flaky tests, separate real failures, and fix unstable waits or fixtures.
 - Verification: `gh run view --log`
 
@@ -1257,11 +1312,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="024-build-cache-correctness"></a>
-### 024. Build Cache Correctness
+<a id="build-cache-correctness"></a>
+### Build Cache Correctness
 
 - Category: `devops-ci`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Check whether CI cache keys cause stale dependencies or cross-branch pollution.
 - Verification: `npm ci && npm test`
 
@@ -1302,11 +1358,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="025-dependency-update-gate"></a>
-### 025. Dependency Update Gate
+<a id="dependency-update-gate"></a>
+### Dependency Update Gate
 
 - Category: `devops-ci`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add dependency upgrade checks for tests, licenses, and vulnerabilities.
 - Verification: `npm audit && npm test`
 
@@ -1347,11 +1404,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="026-monorepo-affected-tests"></a>
-### 026. Monorepo Affected Tests
+<a id="monorepo-affected-tests"></a>
+### Monorepo Affected Tests
 
 - Category: `devops-ci`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Run only affected tests without missing cross-package contracts.
 - Verification: `nx affected:test`
 
@@ -1392,11 +1450,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="027-release-note-from-diff"></a>
-### 027. Release Notes From Diff
+<a id="release-note-from-diff"></a>
+### Release Notes From Diff
 
 - Category: `devops-ci`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Generate user-facing release notes from commits, PR labels, and breaking changes.
 - Verification: `git log --oneline last..HEAD`
 
@@ -1437,11 +1496,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="028-artifact-provenance"></a>
-### 028. Artifact Provenance
+<a id="artifact-provenance"></a>
+### Artifact Provenance
 
 - Category: `devops-ci`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Trace a package or image back to the commit and workflow that produced it.
 - Verification: `gh run view`
 
@@ -1482,11 +1542,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="029-ci-permission-minimize"></a>
-### 029. CI Permission Minimization
+<a id="ci-permission-minimize"></a>
+### CI Permission Minimization
 
 - Category: `devops-ci`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Tighten GitHub Actions token permissions without breaking workflows.
 - Verification: `gh workflow run ci.yml`
 
@@ -1527,11 +1588,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="030-branch-protection-audit"></a>
-### 030. Branch Protection Audit
+<a id="branch-protection-audit"></a>
+### Branch Protection Audit
 
 - Category: `devops-ci`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Audit required checks, reviews, linear history, and admin bypasses.
 - Verification: `gh api repos/OWNER/REPO/branches/main/protection`
 
@@ -1572,11 +1634,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="031-release-rollback-drill"></a>
-### 031. Release Rollback Drill
+<a id="release-rollback-drill"></a>
+### Release Rollback Drill
 
 - Category: `devops-ci`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Create and test a rollback path for the latest release.
 - Verification: `npm run smoke`
 
@@ -1617,11 +1680,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="032-semantic-version-check"></a>
-### 032. Semantic Version Check
+<a id="semantic-version-check"></a>
+### Semantic Version Check
 
 - Category: `devops-ci`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Infer the correct semver bump from API, behavior, and changelog diffs.
 - Verification: `npm test`
 
@@ -1662,11 +1726,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="033-docker-image-slimming"></a>
-### 033. Docker Image Slimming
+<a id="docker-image-slimming"></a>
+### Docker Image Slimming
 
 - Category: `devops-runtime`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Reduce image size while keeping runtime dependencies and security scans green.
 - Verification: `docker build . && trivy image IMAGE`
 
@@ -1707,11 +1772,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="034-k8s-readiness-liveness"></a>
-### 034. Kubernetes Probe Repair
+<a id="k8s-readiness-liveness"></a>
+### Kubernetes Probe Repair
 
 - Category: `devops-runtime`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Separate startup, readiness, and liveness probes to avoid bad restarts.
 - Verification: `kubectl describe pod`
 
@@ -1752,11 +1818,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="035-terraform-plan-review"></a>
-### 035. Terraform Plan Review
+<a id="terraform-plan-review"></a>
+### Terraform Plan Review
 
 - Category: `devops-runtime`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Review infrastructure changes for deletes, replacements, and permission expansion.
 - Verification: `terraform plan -out=tfplan`
 
@@ -1797,11 +1864,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="036-helm-values-drift"></a>
-### 036. Helm Values Drift
+<a id="helm-values-drift"></a>
+### Helm Values Drift
 
 - Category: `devops-runtime`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Compare environment values to find hidden staging/prod differences.
 - Verification: `helm diff upgrade`
 
@@ -1842,11 +1910,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="037-autoscaling-thresholds"></a>
-### 037. Autoscaling Thresholds
+<a id="autoscaling-thresholds"></a>
+### Autoscaling Thresholds
 
 - Category: `devops-runtime`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Tune HPA or worker scaling thresholds against real load and queue depth.
 - Verification: `kubectl get hpa`
 
@@ -1887,11 +1956,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="038-runtime-config-validation"></a>
-### 038. Runtime Config Validation
+<a id="runtime-config-validation"></a>
+### Runtime Config Validation
 
 - Category: `devops-runtime`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Fail startup on missing or invalid environment and config values.
 - Verification: `docker run --env-file .env.example IMAGE`
 
@@ -1932,11 +2002,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="039-zero-downtime-migration"></a>
-### 039. Zero-Downtime Migration
+<a id="zero-downtime-migration"></a>
+### Zero-Downtime Migration
 
 - Category: `devops-runtime`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Plan and verify expand-migrate-contract deployment steps.
 - Verification: `npm run smoke`
 
@@ -1977,11 +2048,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="040-observability-minimum"></a>
-### 040. Observability Minimum
+<a id="observability-minimum"></a>
+### Observability Minimum
 
 - Category: `devops-runtime`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Add logs, metrics, traces, and alerts for a service's critical paths.
 - Verification: `npm test && curl localhost:PORT/metrics`
 
@@ -2022,11 +2094,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="041-incident-runbook-gap"></a>
-### 041. Incident Runbook Gap
+<a id="incident-runbook-gap"></a>
+### Incident Runbook Gap
 
 - Category: `devops-runtime`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Turn a recent incident timeline into missing runbook and alert updates.
 - Verification: `markdownlint docs/runbooks`
 
@@ -2067,11 +2140,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="042-queue-backpressure"></a>
-### 042. Queue Backpressure
+<a id="queue-backpressure"></a>
+### Queue Backpressure
 
 - Category: `devops-runtime`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Protect databases and external APIs when worker queues build up.
 - Verification: `pytest -k backpressure`
 
@@ -2112,11 +2186,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="043-sql-injection-audit"></a>
-### 043. SQL Injection Audit
+<a id="sql-injection-audit"></a>
+### SQL Injection Audit
 
 - Category: `security-appsec`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Replace SQL string concatenation with parameterized queries and tests.
 - Verification: `pytest -k injection`
 
@@ -2157,11 +2232,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="044-command-injection-audit"></a>
-### 044. Command Injection Audit
+<a id="command-injection-audit"></a>
+### Command Injection Audit
 
 - Category: `security-appsec`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Replace shell string execution with argument arrays and validation.
 - Verification: `pytest -k command_injection`
 
@@ -2202,11 +2278,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="045-ssrf-defense-review"></a>
-### 045. SSRF Defense Review
+<a id="ssrf-defense-review"></a>
+### SSRF Defense Review
 
 - Category: `security-appsec`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Add URL allowlists and DNS/IP checks for fetch or callback features.
 - Verification: `pytest -k ssrf`
 
@@ -2247,11 +2324,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="046-xss-output-encoding"></a>
-### 046. XSS Output Encoding
+<a id="xss-output-encoding"></a>
+### XSS Output Encoding
 
 - Category: `security-appsec`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Audit HTML and Markdown rendering for unsafe sinks and missing encoding.
 - Verification: `npm test -- xss`
 
@@ -2292,11 +2370,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="047-csrf-sensitive-action"></a>
-### 047. CSRF Sensitive Action
+<a id="csrf-sensitive-action"></a>
+### CSRF Sensitive Action
 
 - Category: `security-appsec`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Protect cookie-authenticated writes from cross-site requests.
 - Verification: `pytest -k csrf`
 
@@ -2337,11 +2416,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="048-auth-bypass-route-map"></a>
-### 048. Auth Bypass Route Map
+<a id="auth-bypass-route-map"></a>
+### Auth Bypass Route Map
 
 - Category: `security-appsec`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Enumerate routes and verify unauthenticated and unauthorized behavior.
 - Verification: `pytest -k auth`
 
@@ -2382,11 +2462,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="049-file-upload-security"></a>
-### 049. File Upload Security
+<a id="file-upload-security"></a>
+### File Upload Security
 
 - Category: `security-appsec`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Validate MIME, extension, size, scanning, and storage isolation.
 - Verification: `pytest -k upload_security`
 
@@ -2427,11 +2508,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="050-tenant-isolation-test"></a>
-### 050. Tenant Isolation Test
+<a id="tenant-isolation-test"></a>
+### Tenant Isolation Test
 
 - Category: `security-appsec`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Verify tenant IDs are enforced in queries, caches, and background jobs.
 - Verification: `pytest -k tenant`
 
@@ -2472,11 +2554,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="051-replay-attack-defense"></a>
-### 051. Replay Attack Defense
+<a id="replay-attack-defense"></a>
+### Replay Attack Defense
 
 - Category: `security-appsec`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Add nonce, timestamp, and expiration checks to signed requests.
 - Verification: `pytest -k replay`
 
@@ -2517,11 +2600,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="052-insecure-direct-object-ref"></a>
-### 052. IDOR Audit
+<a id="insecure-direct-object-ref"></a>
+### IDOR Audit
 
 - Category: `security-appsec`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Verify direct object ID access always checks ownership or scope.
 - Verification: `pytest -k idor`
 
@@ -2562,11 +2646,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="053-secret-scan-baseline"></a>
-### 053. Secret Scan Baseline
+<a id="secret-scan-baseline"></a>
+### Secret Scan Baseline
 
 - Category: `security-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Add secret scanning and triage historical findings safely.
 - Verification: `gitleaks detect`
 
@@ -2607,11 +2692,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="054-iam-least-privilege"></a>
-### 054. IAM Least Privilege
+<a id="iam-least-privilege"></a>
+### IAM Least Privilege
 
 - Category: `security-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Reduce cloud permissions to observed API usage and documented needs.
 - Verification: `terraform plan`
 
@@ -2652,11 +2738,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="055-github-actions-supply-chain"></a>
-### 055. GitHub Actions Supply Chain
+<a id="github-actions-supply-chain"></a>
+### GitHub Actions Supply Chain
 
 - Category: `security-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Pin third-party actions and review workflow permissions.
 - Verification: `rg "uses:" .github/workflows`
 
@@ -2697,11 +2784,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="056-container-vuln-triage"></a>
-### 056. Container Vulnerability Triage
+<a id="container-vuln-triage"></a>
+### Container Vulnerability Triage
 
 - Category: `security-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Prioritize image CVEs by exploitability and runtime exposure.
 - Verification: `trivy image IMAGE`
 
@@ -2742,11 +2830,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="057-audit-log-coverage"></a>
-### 057. Audit Log Coverage
+<a id="audit-log-coverage"></a>
+### Audit Log Coverage
 
 - Category: `security-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Add audit logs for login, permission changes, and sensitive data access.
 - Verification: `pytest -k audit_log`
 
@@ -2787,11 +2876,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="058-secret-rotation-drill"></a>
-### 058. Secret Rotation Drill
+<a id="secret-rotation-drill"></a>
+### Secret Rotation Drill
 
 - Category: `security-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Verify rotating a key does not interrupt the service.
 - Verification: `npm run smoke`
 
@@ -2832,11 +2922,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="059-dependency-confusion-guard"></a>
-### 059. Dependency Confusion Guard
+<a id="dependency-confusion-guard"></a>
+### Dependency Confusion Guard
 
 - Category: `security-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Lock private package scopes and registries to prevent wrong-source installs.
 - Verification: `npm ci`
 
@@ -2877,11 +2968,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="060-sbom-generation"></a>
-### 060. SBOM Generation
+<a id="sbom-generation"></a>
+### SBOM Generation
 
 - Category: `security-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Generate an SBOM and attach it to release artifacts.
 - Verification: `syft packages dir:.`
 
@@ -2922,11 +3014,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="061-prod-access-review"></a>
-### 061. Production Access Review
+<a id="prod-access-review"></a>
+### Production Access Review
 
 - Category: `security-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Inventory production access, approval paths, and audit evidence.
 - Verification: `terraform state list`
 
@@ -2967,11 +3060,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="062-backup-restore-security"></a>
-### 062. Backup Restore Security
+<a id="backup-restore-security"></a>
+### Backup Restore Security
 
 - Category: `security-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Verify encrypted backups and a restricted restore path.
 - Verification: `./scripts/restore-dry-run.sh`
 
@@ -3012,11 +3106,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="063-etl-contract-tests"></a>
-### 063. ETL Contract Tests
+<a id="etl-contract-tests"></a>
+### ETL Contract Tests
 
 - Category: `data-eng`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add schema and sample-data contracts between source and target tables.
 - Verification: `pytest tests/etl`
 
@@ -3055,11 +3150,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="064-data-quality-rules"></a>
-### 064. Data Quality Rules
+<a id="data-quality-rules"></a>
+### Data Quality Rules
 
 - Category: `data-eng`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Define null, uniqueness, range, and reference checks for key datasets.
 - Verification: `great_expectations checkpoint run main`
 
@@ -3098,11 +3194,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="065-backfill-safety-plan"></a>
-### 065. Backfill Safety Plan
+<a id="backfill-safety-plan"></a>
+### Backfill Safety Plan
 
 - Category: `data-eng`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Design a sharded, resumable, verifiable historical backfill.
 - Verification: `pytest -k backfill`
 
@@ -3141,11 +3238,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="066-incremental-load-watermark"></a>
-### 066. Incremental Load Watermark
+<a id="incremental-load-watermark"></a>
+### Incremental Load Watermark
 
 - Category: `data-eng`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Fix missing or duplicate rows in incremental sync logic.
 - Verification: `pytest -k watermark`
 
@@ -3184,11 +3282,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="067-late-arriving-data"></a>
-### 067. Late-Arriving Data
+<a id="late-arriving-data"></a>
+### Late-Arriving Data
 
 - Category: `data-eng`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Handle delayed events and metric corrections safely.
 - Verification: `pytest -k late_arrival`
 
@@ -3227,11 +3326,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="068-data-lineage-map"></a>
-### 068. Data Lineage Map
+<a id="data-lineage-map"></a>
+### Data Lineage Map
 
 - Category: `data-eng`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Map critical report fields from source to consumers.
 - Verification: `dbt docs generate`
 
@@ -3270,11 +3370,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="069-pii-classification"></a>
-### 069. PII Classification
+<a id="pii-classification"></a>
+### PII Classification
 
 - Category: `data-eng`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Classify sensitive fields and document masking rules.
 - Verification: `pytest -k pii`
 
@@ -3313,11 +3414,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="070-data-retention-enforcement"></a>
-### 070. Data Retention Enforcement
+<a id="data-retention-enforcement"></a>
+### Data Retention Enforcement
 
 - Category: `data-eng`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Verify expiration, archival, deletion, and audit behavior.
 - Verification: `pytest -k retention`
 
@@ -3356,11 +3458,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="071-warehouse-cost-audit"></a>
-### 071. Warehouse Cost Audit
+<a id="warehouse-cost-audit"></a>
+### Warehouse Cost Audit
 
 - Category: `data-eng`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Find expensive queries, duplicate tables, and unused scheduled jobs.
 - Verification: `dbt test`
 
@@ -3399,11 +3502,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="072-stream-processing-lag"></a>
-### 072. Stream Processing Lag
+<a id="stream-processing-lag"></a>
+### Stream Processing Lag
 
 - Category: `data-eng`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Diagnose Kafka/Flink/Spark lag and checkpoint bottlenecks.
 - Verification: `pytest -k stream_lag`
 
@@ -3442,11 +3546,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="073-metric-definition-lock"></a>
-### 073. Metric Definition Lock
+<a id="metric-definition-lock"></a>
+### Metric Definition Lock
 
 - Category: `data-analytics`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Turn core metric definitions into tested SQL or semantic-layer checks.
 - Verification: `dbt test`
 
@@ -3485,11 +3590,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="074-dashboard-trust-audit"></a>
-### 074. Dashboard Trust Audit
+<a id="dashboard-trust-audit"></a>
+### Dashboard Trust Audit
 
 - Category: `data-analytics`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Check filters, timezone, refresh cadence, permissions, and source reconciliation.
 - Verification: `dbt test && pytest tests/dashboard`
 
@@ -3528,11 +3634,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="075-ab-test-srm-check"></a>
-### 075. A/B Test SRM Check
+<a id="ab-test-srm-check"></a>
+### A/B Test SRM Check
 
 - Category: `data-analytics`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Detect sample ratio mismatch in experiment assignment.
 - Verification: `pytest -k srm`
 
@@ -3571,11 +3678,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="076-funnel-dropoff-diagnosis"></a>
-### 076. Funnel Dropoff Diagnosis
+<a id="funnel-dropoff-diagnosis"></a>
+### Funnel Dropoff Diagnosis
 
 - Category: `data-analytics`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Validate funnel events, step counts, and latency before interpreting dropoff.
 - Verification: `pytest -k funnel`
 
@@ -3614,11 +3722,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="077-cohort-retention-query"></a>
-### 077. Cohort Retention Query
+<a id="cohort-retention-query"></a>
+### Cohort Retention Query
 
 - Category: `data-analytics`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Create reusable retention SQL with hand-checked small samples.
 - Verification: `dbt test -s retention`
 
@@ -3657,11 +3766,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="078-revenue-reconciliation"></a>
-### 078. Revenue Reconciliation
+<a id="revenue-reconciliation"></a>
+### Revenue Reconciliation
 
 - Category: `data-analytics`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Reconcile payments, orders, refunds, and finance definitions.
 - Verification: `pytest -k revenue_reconciliation`
 
@@ -3700,11 +3810,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="079-event-taxonomy-cleanup"></a>
-### 079. Event Taxonomy Cleanup
+<a id="event-taxonomy-cleanup"></a>
+### Event Taxonomy Cleanup
 
 - Category: `data-analytics`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Deduplicate event names, properties, and version changes.
 - Verification: `pytest -k event_schema`
 
@@ -3743,11 +3854,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="080-anomaly-detection-baseline"></a>
-### 080. Anomaly Detection Baseline
+<a id="anomaly-detection-baseline"></a>
+### Anomaly Detection Baseline
 
 - Category: `data-analytics`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Backtest alert thresholds against historical metrics.
 - Verification: `pytest -k anomaly`
 
@@ -3786,11 +3898,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="081-attribution-window-review"></a>
-### 081. Attribution Window Review
+<a id="attribution-window-review"></a>
+### Attribution Window Review
 
 - Category: `data-analytics`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Verify campaign attribution windows and dedupe rules.
 - Verification: `dbt test -s attribution`
 
@@ -3829,11 +3942,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="082-self-serve-data-contract"></a>
-### 082. Self-Serve Data Contract
+<a id="self-serve-data-contract"></a>
+### Self-Serve Data Contract
 
 - Category: `data-analytics`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Define trusted datasets and usage limits for business users.
 - Verification: `dbt test -s semantic`
 
@@ -3872,11 +3986,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="083-llm-golden-set-build"></a>
-### 083. LLM Golden Set Build
+<a id="llm-golden-set-build"></a>
+### LLM Golden Set Build
 
 - Category: `ai-evals`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Build an eval set from real failures and frequent tasks.
 - Verification: `pytest evals`
 
@@ -3917,11 +4032,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="084-llm-regression-gate"></a>
-### 084. LLM Regression Gate
+<a id="llm-regression-gate"></a>
+### LLM Regression Gate
 
 - Category: `ai-evals`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Compare old and new model or prompt outputs in PRs.
 - Verification: `pytest evals`
 
@@ -3962,11 +4078,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="085-judge-calibration"></a>
-### 085. Judge Calibration
+<a id="judge-calibration"></a>
+### Judge Calibration
 
 - Category: `ai-evals`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Measure LLM judge agreement against human labels.
 - Verification: `pytest evals/judges`
 
@@ -4007,11 +4124,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="086-hallucination-probe-suite"></a>
-### 086. Hallucination Probe Suite
+<a id="hallucination-probe-suite"></a>
+### Hallucination Probe Suite
 
 - Category: `ai-evals`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Add negative cases for nonexistent files, fields, APIs, and sources.
 - Verification: `pytest evals/hallucination`
 
@@ -4052,11 +4170,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="087-rag-answer-faithfulness"></a>
-### 087. RAG Answer Faithfulness
+<a id="rag-answer-faithfulness"></a>
+### RAG Answer Faithfulness
 
 - Category: `ai-evals`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Check that answers are supported by retrieved evidence.
 - Verification: `pytest evals/rag`
 
@@ -4097,11 +4216,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="088-tool-use-eval"></a>
-### 088. Tool Use Eval
+<a id="tool-use-eval"></a>
+### Tool Use Eval
 
 - Category: `ai-evals`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Evaluate whether an agent selects, orders, and validates tools correctly.
 - Verification: `pytest evals/tool_use`
 
@@ -4142,11 +4262,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="089-adversarial-prompt-redteam"></a>
-### 089. Prompt Injection Red Team
+<a id="adversarial-prompt-redteam"></a>
+### Prompt Injection Red Team
 
 - Category: `ai-evals`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Test prompt leakage, unauthorized tools, and instruction override attempts.
 - Verification: `pytest evals/redteam`
 
@@ -4187,11 +4308,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="090-eval-data-dedup"></a>
-### 090. Eval Data Dedup
+<a id="eval-data-dedup"></a>
+### Eval Data Dedup
 
 - Category: `ai-evals`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Remove duplicates, leakage, and near-identical eval samples.
 - Verification: `python scripts/dedup_evals.py`
 
@@ -4232,11 +4354,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="091-cost-quality-frontier"></a>
-### 091. Cost Quality Frontier
+<a id="cost-quality-frontier"></a>
+### Cost Quality Frontier
 
 - Category: `ai-evals`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Compare models by quality, latency, and cost to choose routing tiers.
 - Verification: `pytest evals --record-costs`
 
@@ -4277,11 +4400,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="092-rubric-driven-eval"></a>
-### 092. Rubric-Driven Eval
+<a id="rubric-driven-eval"></a>
+### Rubric-Driven Eval
 
 - Category: `ai-evals`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Replace binary scores with multi-dimensional rubrics for complex tasks.
 - Verification: `pytest evals/rubrics`
 
@@ -4322,11 +4446,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="093-prompt-version-registry"></a>
-### 093. Prompt Version Registry
+<a id="prompt-version-registry"></a>
+### Prompt Version Registry
 
 - Category: `ai-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Bind prompt versions to eval results and deployment history.
 - Verification: `pytest tests/prompt_registry`
 
@@ -4367,11 +4492,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="094-rag-chunking-experiment"></a>
-### 094. RAG Chunking Experiment
+<a id="rag-chunking-experiment"></a>
+### RAG Chunking Experiment
 
 - Category: `ai-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Compare chunk size, overlap, and metadata on retrieval and answer quality.
 - Verification: `pytest evals/rag_chunking`
 
@@ -4412,11 +4538,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="095-vector-index-refresh"></a>
-### 095. Vector Index Refresh
+<a id="vector-index-refresh"></a>
+### Vector Index Refresh
 
 - Category: `ai-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Verify document updates are indexed completely and can be rolled back.
 - Verification: `pytest tests/index_refresh`
 
@@ -4457,11 +4584,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="096-model-routing-policy"></a>
-### 096. Model Routing Policy
+<a id="model-routing-policy"></a>
+### Model Routing Policy
 
 - Category: `ai-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Route by risk, cost, latency, and quality evidence.
 - Verification: `pytest tests/model_routing`
 
@@ -4502,11 +4630,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="097-llm-timeout-budget"></a>
-### 097. LLM Timeout Budget
+<a id="llm-timeout-budget"></a>
+### LLM Timeout Budget
 
 - Category: `ai-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Define timeout, retry, fallback, and user-visible error behavior.
 - Verification: `pytest tests/llm_timeouts`
 
@@ -4547,11 +4676,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="098-token-cost-attribution"></a>
-### 098. Token Cost Attribution
+<a id="token-cost-attribution"></a>
+### Token Cost Attribution
 
 - Category: `ai-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Attribute model costs by user, feature, model, and request ID.
 - Verification: `pytest tests/costs`
 
@@ -4592,11 +4722,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="099-prompt-injection-filter"></a>
-### 099. RAG Prompt Injection Filter
+<a id="prompt-injection-filter"></a>
+### RAG Prompt Injection Filter
 
 - Category: `ai-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Detect and isolate malicious instructions in retrieved documents.
 - Verification: `pytest evals/prompt_injection`
 
@@ -4637,11 +4768,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="100-ai-output-schema-guard"></a>
-### 100. AI Output Schema Guard
+<a id="ai-output-schema-guard"></a>
+### AI Output Schema Guard
 
 - Category: `ai-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Validate structured AI output and fail or retry safely.
 - Verification: `pytest tests/schema_guard`
 
@@ -4682,11 +4814,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="101-human-review-threshold"></a>
-### 101. Human Review Threshold
+<a id="human-review-threshold"></a>
+### Human Review Threshold
 
 - Category: `ai-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Escalate high-risk AI outputs based on confidence and policy rules.
 - Verification: `pytest tests/human_review`
 
@@ -4727,11 +4860,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="102-ai-observability-traces"></a>
-### 102. AI Observability Traces
+<a id="ai-observability-traces"></a>
+### AI Observability Traces
 
 - Category: `ai-ops`
 - Difficulty: `advanced`
+- Origin: `seed`
 - Intent: Trace prompts, retrieval, tools, models, scores, and request IDs.
 - Verification: `pytest tests/tracing`
 
@@ -4772,11 +4906,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="103-frontend-empty-states"></a>
-### 103. Empty State System
+<a id="frontend-empty-states"></a>
+### Empty State System
 
 - Category: `frontend`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Design real empty states for lists, search, permissions, and first use.
 - Verification: `npm run test -- EmptyState`
 
@@ -4817,11 +4952,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="104-frontend-error-boundary"></a>
-### 104. Error Boundary Experience
+<a id="frontend-error-boundary"></a>
+### Error Boundary Experience
 
 - Category: `frontend`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add recoverable page and component fallback UI for crashes.
 - Verification: `npm test -- ErrorBoundary`
 
@@ -4862,11 +4998,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="105-frontend-loading-skeletons"></a>
-### 105. Loading Skeletons
+<a id="frontend-loading-skeletons"></a>
+### Loading Skeletons
 
 - Category: `frontend`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Replace layout-shifting spinners with stable skeleton states.
 - Verification: `npm run lighthouse`
 
@@ -4907,11 +5044,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="106-frontend-form-validation"></a>
-### 106. Form Validation
+<a id="frontend-form-validation"></a>
+### Form Validation
 
 - Category: `frontend`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Cover inline, submit, server error, and dirty-state validation.
 - Verification: `npm test -- form`
 
@@ -4952,11 +5090,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="107-frontend-table-density"></a>
-### 107. Data Table Density
+<a id="frontend-table-density"></a>
+### Data Table Density
 
 - Category: `frontend`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Improve columns, filters, sorting, pagination, and bulk actions.
 - Verification: `npx playwright test table.spec.ts`
 
@@ -4997,11 +5136,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="108-frontend-command-palette"></a>
-### 108. Command Palette
+<a id="frontend-command-palette"></a>
+### Command Palette
 
 - Category: `frontend`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add a keyboard-first entry point for high-frequency actions.
 - Verification: `npx playwright test command-palette.spec.ts`
 
@@ -5042,11 +5182,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="109-frontend-navigation-map"></a>
-### 109. Navigation Map
+<a id="frontend-navigation-map"></a>
+### Navigation Map
 
 - Category: `frontend`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Clarify primary navigation, breadcrumbs, and detail-page return paths.
 - Verification: `npx playwright test navigation.spec.ts`
 
@@ -5087,11 +5228,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="110-frontend-state-recovery"></a>
-### 110. State Recovery
+<a id="frontend-state-recovery"></a>
+### State Recovery
 
 - Category: `frontend`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Restore filters and context after refresh, back, and deep links.
 - Verification: `npx playwright test state-recovery.spec.ts`
 
@@ -5132,11 +5274,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="111-frontend-permission-ui"></a>
-### 111. Permission State UI
+<a id="frontend-permission-ui"></a>
+### Permission State UI
 
 - Category: `frontend`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Separate unauthenticated, unauthorized, and missing-resource states.
 - Verification: `npx playwright test permissions.spec.ts`
 
@@ -5177,11 +5320,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="112-frontend-bulk-actions"></a>
-### 112. Bulk Actions
+<a id="frontend-bulk-actions"></a>
+### Bulk Actions
 
 - Category: `frontend`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Handle selection, confirm, undo, partial failure, and feedback.
 - Verification: `npx playwright test bulk-actions.spec.ts`
 
@@ -5222,11 +5366,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="113-frontend-search-filter"></a>
-### 113. Search Filter Experience
+<a id="frontend-search-filter"></a>
+### Search Filter Experience
 
 - Category: `frontend`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Unify search, filter chips, clear actions, and result counts.
 - Verification: `npx playwright test search-filter.spec.ts`
 
@@ -5267,11 +5412,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="114-frontend-realtime-updates"></a>
-### 114. Realtime Update Prompts
+<a id="frontend-realtime-updates"></a>
+### Realtime Update Prompts
 
 - Category: `frontend`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Handle background changes, conflicts, and refresh prompts.
 - Verification: `npx playwright test realtime.spec.ts`
 
@@ -5312,11 +5458,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="115-design-visual-hierarchy"></a>
-### 115. Visual Hierarchy Pass
+<a id="design-visual-hierarchy"></a>
+### Visual Hierarchy Pass
 
 - Category: `design`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Reorder headings, metadata, primary actions, and secondary actions.
 - Verification: `npx playwright test visual-hierarchy.spec.ts`
 
@@ -5357,11 +5504,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="116-design-token-audit"></a>
-### 116. Design Token Audit
+<a id="design-token-audit"></a>
+### Design Token Audit
 
 - Category: `design`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Check colors, spacing, radii, and shadows against tokens.
 - Verification: `npm run lint:styles`
 
@@ -5402,11 +5550,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="117-design-component-variants"></a>
-### 117. Component Variant Matrix
+<a id="design-component-variants"></a>
+### Component Variant Matrix
 
 - Category: `design`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Complete button, input, card, and modal state coverage.
 - Verification: `npm run storybook:test`
 
@@ -5447,11 +5596,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="118-design-dashboard-layout"></a>
-### 118. Dashboard Layout Pass
+<a id="design-dashboard-layout"></a>
+### Dashboard Layout Pass
 
 - Category: `design`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Make an operational dashboard easier to scan and compare.
 - Verification: `npx playwright test dashboard.spec.ts`
 
@@ -5492,11 +5642,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="119-design-modal-discipline"></a>
-### 119. Modal Discipline
+<a id="design-modal-discipline"></a>
+### Modal Discipline
 
 - Category: `design`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Replace modal misuse with drawers, popovers, or pages where appropriate.
 - Verification: `npx playwright test modal.spec.ts`
 
@@ -5537,11 +5688,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="120-design-iconography"></a>
-### 120. Iconography System
+<a id="design-iconography"></a>
+### Iconography System
 
 - Category: `design`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Unify icon semantics for tools, statuses, and empty states.
 - Verification: `npm run lint:icons`
 
@@ -5582,11 +5734,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="121-design-color-contrast"></a>
-### 121. Color Contrast Pass
+<a id="design-color-contrast"></a>
+### Color Contrast Pass
 
 - Category: `design`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Fix low contrast text, icons, and state colors.
 - Verification: `npx axe http://localhost:3000`
 
@@ -5627,11 +5780,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="122-design-motion-rules"></a>
-### 122. Motion Rules
+<a id="design-motion-rules"></a>
+### Motion Rules
 
 - Category: `design`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Define entry, exit, feedback, and reduced-motion behavior.
 - Verification: `npx playwright test motion.spec.ts`
 
@@ -5672,11 +5826,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="123-design-responsive-grid"></a>
-### 123. Responsive Grid
+<a id="design-responsive-grid"></a>
+### Responsive Grid
 
 - Category: `design`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Define breakpoints, columns, and fixed-format constraints.
 - Verification: `npx playwright test responsive.spec.ts`
 
@@ -5717,11 +5872,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="124-design-toolbar-usability"></a>
-### 124. Toolbar Usability
+<a id="design-toolbar-usability"></a>
+### Toolbar Usability
 
 - Category: `design`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Improve icon buttons, tooltips, grouping, and disabled states.
 - Verification: `npx playwright test toolbar.spec.ts`
 
@@ -5762,11 +5918,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="125-design-data-card-system"></a>
-### 125. Data Card System
+<a id="design-data-card-system"></a>
+### Data Card System
 
 - Category: `design`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Define metric cards with value, trend, anomaly, and source states.
 - Verification: `npm run storybook:test`
 
@@ -5807,11 +5964,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="126-design-brand-fit"></a>
-### 126. Brand Fit Pass
+<a id="design-brand-fit"></a>
+### Brand Fit Pass
 
 - Category: `design`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Align the interface language with the product's audience and use case.
 - Verification: `npx playwright test brand.spec.ts`
 
@@ -5852,11 +6010,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="127-mobile-bottom-nav"></a>
-### 127. Mobile Bottom Navigation
+<a id="mobile-bottom-nav"></a>
+### Mobile Bottom Navigation
 
 - Category: `mobile`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Design thumb-friendly mobile navigation for core paths.
 - Verification: `npx playwright test --project=mobile navigation.spec.ts`
 
@@ -5897,11 +6056,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="128-mobile-touch-targets"></a>
-### 128. Mobile Touch Targets
+<a id="mobile-touch-targets"></a>
+### Mobile Touch Targets
 
 - Category: `mobile`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Ensure buttons, checkboxes, and rows have usable tap areas.
 - Verification: `npx playwright test --project=mobile touch.spec.ts`
 
@@ -5942,11 +6102,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="129-mobile-form-flow"></a>
-### 129. Mobile Form Flow
+<a id="mobile-form-flow"></a>
+### Mobile Form Flow
 
 - Category: `mobile`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Handle long forms, keyboard occlusion, and error positioning.
 - Verification: `npx playwright test --project=mobile form.spec.ts`
 
@@ -5987,11 +6148,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="130-mobile-table-adaptation"></a>
-### 130. Mobile Table Adaptation
+<a id="mobile-table-adaptation"></a>
+### Mobile Table Adaptation
 
 - Category: `mobile`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Convert wide tables into cards, horizontal scroll, or drill-downs.
 - Verification: `npx playwright test --project=mobile table.spec.ts`
 
@@ -6032,11 +6194,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="131-mobile-filter-drawer"></a>
-### 131. Mobile Filter Drawer
+<a id="mobile-filter-drawer"></a>
+### Mobile Filter Drawer
 
 - Category: `mobile`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add mobile filters with apply, reset, count, and URL state.
 - Verification: `npx playwright test --project=mobile filter.spec.ts`
 
@@ -6077,11 +6240,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="132-mobile-offline-state"></a>
-### 132. Mobile Offline State
+<a id="mobile-offline-state"></a>
+### Mobile Offline State
 
 - Category: `mobile`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Show offline, cached data, and retry paths clearly.
 - Verification: `npx playwright test --project=mobile offline.spec.ts`
 
@@ -6122,11 +6286,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="133-mobile-image-performance"></a>
-### 133. Mobile Image Performance
+<a id="mobile-image-performance"></a>
+### Mobile Image Performance
 
 - Category: `mobile`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Optimize image sizes, lazy loading, placeholders, and formats.
 - Verification: `npm run lighthouse:mobile`
 
@@ -6167,11 +6332,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="134-mobile-safe-area"></a>
-### 134. Mobile Safe Area
+<a id="mobile-safe-area"></a>
+### Mobile Safe Area
 
 - Category: `mobile`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Handle iOS notch, bottom bars, and sticky actions.
 - Verification: `npx playwright test --project=mobile safe-area.spec.ts`
 
@@ -6212,11 +6378,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="135-mobile-gesture-conflicts"></a>
-### 135. Mobile Gesture Conflicts
+<a id="mobile-gesture-conflicts"></a>
+### Mobile Gesture Conflicts
 
 - Category: `mobile`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Resolve conflicts between swipe, drag, and scroll interactions.
 - Verification: `npx playwright test --project=mobile gestures.spec.ts`
 
@@ -6257,11 +6424,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="136-mobile-login-flow"></a>
-### 136. Mobile Login Flow
+<a id="mobile-login-flow"></a>
+### Mobile Login Flow
 
 - Category: `mobile`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Improve magic link, OTP, password manager, and autofill behavior.
 - Verification: `npx playwright test --project=mobile login.spec.ts`
 
@@ -6302,11 +6470,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="137-mobile-onboarding"></a>
-### 137. Mobile Onboarding
+<a id="mobile-onboarding"></a>
+### Mobile Onboarding
 
 - Category: `mobile`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Create a short, skippable, restorable first-run path.
 - Verification: `npx playwright test --project=mobile onboarding.spec.ts`
 
@@ -6347,11 +6516,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="138-mobile-device-matrix"></a>
-### 138. Mobile Device Matrix
+<a id="mobile-device-matrix"></a>
+### Mobile Device Matrix
 
 - Category: `mobile`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Cover small screen, large screen, iOS, and Android key paths.
 - Verification: `npx playwright test --project=mobile`
 
@@ -6392,11 +6562,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="139-docs-quickstart"></a>
-### 139. Quickstart
+<a id="docs-quickstart"></a>
+### Quickstart
 
 - Category: `docs`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Write the shortest fresh-clone path that runs successfully in five minutes.
 - Verification: `markdownlint README.md`
 
@@ -6437,11 +6608,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="140-docs-install-troubleshooting"></a>
-### 140. Install Troubleshooting
+<a id="docs-install-troubleshooting"></a>
+### Install Troubleshooting
 
 - Category: `docs`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Document common install failures, causes, and fixes.
 - Verification: `markdownlint docs`
 
@@ -6482,11 +6654,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="141-docs-api-examples"></a>
-### 141. API Examples
+<a id="docs-api-examples"></a>
+### API Examples
 
 - Category: `docs`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add minimal request, response, and error examples for core APIs.
 - Verification: `pytest -k docs_api_examples`
 
@@ -6527,11 +6700,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="142-docs-architecture-overview"></a>
-### 142. Architecture Overview
+<a id="docs-architecture-overview"></a>
+### Architecture Overview
 
 - Category: `docs`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Explain module boundaries, data flow, and explicit non-goals.
 - Verification: `markdownlint docs/architecture.md`
 
@@ -6572,11 +6746,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="143-docs-contribution-guide"></a>
-### 143. Contribution Guide
+<a id="docs-contribution-guide"></a>
+### Contribution Guide
 
 - Category: `docs`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Document development, testing, commit, and PR review rules.
 - Verification: `markdownlint CONTRIBUTING.md`
 
@@ -6617,11 +6792,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="144-docs-release-notes"></a>
-### 144. Release Notes
+<a id="docs-release-notes"></a>
+### Release Notes
 
 - Category: `docs`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Create user-facing change, migration, and breaking-change notes.
 - Verification: `markdownlint CHANGELOG.md`
 
@@ -6662,11 +6838,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="145-docs-env-vars"></a>
-### 145. Environment Variables
+<a id="docs-env-vars"></a>
+### Environment Variables
 
 - Category: `docs`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: List env names, defaults, requiredness, and safety notes.
 - Verification: `pytest -k env_config`
 
@@ -6707,11 +6884,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="146-docs-runbook"></a>
-### 146. Operator Runbook
+<a id="docs-runbook"></a>
+### Operator Runbook
 
 - Category: `docs`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Document alerts, recovery, rollback, and data repair steps.
 - Verification: `markdownlint docs/runbooks`
 
@@ -6752,11 +6930,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="147-docs-decision-records"></a>
-### 147. Architecture Decision Records
+<a id="docs-decision-records"></a>
+### Architecture Decision Records
 
 - Category: `docs`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add ADR templates and indexes for major technical decisions.
 - Verification: `markdownlint docs/adr`
 
@@ -6797,11 +6976,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="148-docs-glossary"></a>
-### 148. Glossary
+<a id="docs-glossary"></a>
+### Glossary
 
 - Category: `docs`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Unify product, engineering, and data-field terms.
 - Verification: `markdownlint docs/glossary.md`
 
@@ -6842,11 +7022,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="149-docs-screenshot-docs"></a>
-### 149. Screenshot Docs
+<a id="docs-screenshot-docs"></a>
+### Screenshot Docs
 
 - Category: `docs`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add real screenshots and labels for UI workflows.
 - Verification: `markdownlint docs`
 
@@ -6887,11 +7068,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="150-docs-docs-lint"></a>
-### 150. Docs Lint Gate
+<a id="docs-docs-lint"></a>
+### Docs Lint Gate
 
 - Category: `docs`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add link, spelling, and executable code block checks.
 - Verification: `markdownlint . && lychee .`
 
@@ -6932,11 +7114,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="151-product-user-journeys"></a>
-### 151. User Journeys
+<a id="product-user-journeys"></a>
+### User Journeys
 
 - Category: `product`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Map persona tasks into pages, events, and success states.
 - Verification: `markdownlint docs/product`
 
@@ -6977,11 +7160,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="152-product-prd-skeleton"></a>
-### 152. PRD Skeleton
+<a id="product-prd-skeleton"></a>
+### PRD Skeleton
 
 - Category: `product`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Write goals, non-goals, constraints, and acceptance criteria.
 - Verification: `markdownlint docs/prd.md`
 
@@ -7022,11 +7206,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="153-product-onboarding-metrics"></a>
-### 153. Onboarding Metrics
+<a id="product-onboarding-metrics"></a>
+### Onboarding Metrics
 
 - Category: `product`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Define activation events, dropoff points, and dashboard queries.
 - Verification: `pytest -k analytics_events`
 
@@ -7067,11 +7252,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="154-product-feature-prioritization"></a>
-### 154. Feature Prioritization
+<a id="product-feature-prioritization"></a>
+### Feature Prioritization
 
 - Category: `product`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Split MVP and later work by impact, cost, and risk.
 - Verification: `markdownlint docs/roadmap.md`
 
@@ -7112,11 +7298,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="155-product-permission-model"></a>
-### 155. Permission Model
+<a id="product-permission-model"></a>
+### Permission Model
 
 - Category: `product`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Map roles, resources, actions, and UI visibility.
 - Verification: `pytest -k permissions`
 
@@ -7157,11 +7344,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="156-product-notification-strategy"></a>
-### 156. Notification Strategy
+<a id="product-notification-strategy"></a>
+### Notification Strategy
 
 - Category: `product`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Define triggers, channels, frequency, and unsubscribe behavior.
 - Verification: `pytest -k notifications`
 
@@ -7202,11 +7390,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="157-product-empty-data-policy"></a>
-### 157. Empty Data Policy
+<a id="product-empty-data-policy"></a>
+### Empty Data Policy
 
 - Category: `product`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Choose blank, sample data, import, or CTA by user state.
 - Verification: `npx playwright test empty-data.spec.ts`
 
@@ -7247,11 +7436,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="158-product-upgrade-path"></a>
-### 158. Upgrade Path
+<a id="product-upgrade-path"></a>
+### Upgrade Path
 
 - Category: `product`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Design limits, paywalls, trials, and upgrade conversion paths.
 - Verification: `pytest -k entitlement`
 
@@ -7292,11 +7482,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="159-product-feedback-loop"></a>
-### 159. Feedback Loop
+<a id="product-feedback-loop"></a>
+### Feedback Loop
 
 - Category: `product`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Collect, classify, track, and close user feedback.
 - Verification: `markdownlint docs/feedback.md`
 
@@ -7337,11 +7528,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="160-product-search-relevance"></a>
-### 160. Search Relevance
+<a id="product-search-relevance"></a>
+### Search Relevance
 
 - Category: `product`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Define query handling, ranking, typo tolerance, and no-result behavior.
 - Verification: `pytest -k search_relevance`
 
@@ -7382,11 +7574,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="161-product-admin-workflows"></a>
-### 161. Admin Workflows
+<a id="product-admin-workflows"></a>
+### Admin Workflows
 
 - Category: `product`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Design review, undo, audit log, and bulk moderation flows.
 - Verification: `npx playwright test admin.spec.ts`
 
@@ -7427,11 +7620,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="162-product-success-criteria"></a>
-### 162. Success Criteria
+<a id="product-success-criteria"></a>
+### Success Criteria
 
 - Category: `product`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Define quantitative and qualitative completion measures for a feature.
 - Verification: `markdownlint docs/success.md`
 
@@ -7472,11 +7666,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="163-qa-critical-paths"></a>
-### 163. Critical Path Tests
+<a id="qa-critical-paths"></a>
+### Critical Path Tests
 
 - Category: `qa`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Cover signup, create, edit, delete, export, and recovery flows.
 - Verification: `npx playwright test critical-paths.spec.ts`
 
@@ -7517,11 +7712,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="164-qa-regression-matrix"></a>
-### 164. Regression Matrix
+<a id="qa-regression-matrix"></a>
+### Regression Matrix
 
 - Category: `qa`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Build feature/browser/role/data-state regression coverage.
 - Verification: `npx playwright test`
 
@@ -7562,11 +7758,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="165-qa-fixture-strategy"></a>
-### 165. Fixture Strategy
+<a id="qa-fixture-strategy"></a>
+### Fixture Strategy
 
 - Category: `qa`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Create deterministic seed, mock, factory, and cleanup patterns.
 - Verification: `pytest -k fixtures`
 
@@ -7607,11 +7804,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="166-qa-visual-regression"></a>
-### 166. Visual Regression
+<a id="qa-visual-regression"></a>
+### Visual Regression
 
 - Category: `qa`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add screenshot diffs for critical pages with controlled thresholds.
 - Verification: `npx playwright test visual.spec.ts`
 
@@ -7652,11 +7850,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="167-qa-api-contracts"></a>
-### 167. API Contracts
+<a id="qa-api-contracts"></a>
+### API Contracts
 
 - Category: `qa`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Validate frontend/backend schema, error codes, and boundary values.
 - Verification: `pytest -k contract`
 
@@ -7697,11 +7896,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="168-qa-flaky-test-audit"></a>
-### 168. Flaky Test Audit
+<a id="qa-flaky-test-audit"></a>
+### Flaky Test Audit
 
 - Category: `qa`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Find unstable tests and fix waits, isolation, or fixtures.
 - Verification: `pytest --count=20`
 
@@ -7742,11 +7942,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="169-qa-error-injection"></a>
-### 169. Error Injection
+<a id="qa-error-injection"></a>
+### Error Injection
 
 - Category: `qa`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Simulate 500s, timeouts, network failure, and partial success.
 - Verification: `npx playwright test error-injection.spec.ts`
 
@@ -7787,11 +7988,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="170-qa-cross-browser"></a>
-### 170. Cross-Browser Coverage
+<a id="qa-cross-browser"></a>
+### Cross-Browser Coverage
 
 - Category: `qa`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Run critical flows across Chromium, Firefox, and WebKit.
 - Verification: `npx playwright test --project=chromium --project=firefox --project=webkit`
 
@@ -7832,11 +8034,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="171-qa-release-smoke"></a>
-### 171. Release Smoke
+<a id="qa-release-smoke"></a>
+### Release Smoke
 
 - Category: `qa`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Define the smallest pre-release verification checklist.
 - Verification: `npm run smoke`
 
@@ -7877,11 +8080,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="172-qa-data-migration"></a>
-### 172. Data Migration Test
+<a id="qa-data-migration"></a>
+### Data Migration Test
 
 - Category: `qa`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Verify counts, constraints, and rollback around data migration.
 - Verification: `pytest -k migration`
 
@@ -7922,11 +8126,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="173-qa-security-smoke"></a>
-### 173. Security Smoke
+<a id="qa-security-smoke"></a>
+### Security Smoke
 
 - Category: `qa`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Check auth, permission bypass, and sensitive info leakage.
 - Verification: `pytest -k security_smoke`
 
@@ -7967,11 +8172,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="174-qa-bug-repro-template"></a>
-### 174. Bug Reproduction Template
+<a id="qa-bug-repro-template"></a>
+### Bug Reproduction Template
 
 - Category: `qa`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Standardize environment, steps, expected, actual, and evidence.
 - Verification: `markdownlint .github/ISSUE_TEMPLATE`
 
@@ -8012,11 +8218,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="175-accessibility-keyboard-nav"></a>
-### 175. Keyboard Navigation
+<a id="accessibility-keyboard-nav"></a>
+### Keyboard Navigation
 
 - Category: `accessibility`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Ensure the whole app works with Tab, Enter, and Escape.
 - Verification: `npx playwright test keyboard.spec.ts`
 
@@ -8057,11 +8264,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="176-accessibility-screen-reader"></a>
-### 176. Screen Reader Semantics
+<a id="accessibility-screen-reader"></a>
+### Screen Reader Semantics
 
 - Category: `accessibility`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Check landmarks, labels, aria-live, and button names.
 - Verification: `npx axe http://localhost:3000`
 
@@ -8102,11 +8310,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="177-accessibility-focus-visible"></a>
-### 177. Focus Visible
+<a id="accessibility-focus-visible"></a>
+### Focus Visible
 
 - Category: `accessibility`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Give every interactive element a clear focus state.
 - Verification: `npx playwright test focus.spec.ts`
 
@@ -8147,11 +8356,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="178-accessibility-color-contrast"></a>
-### 178. Color Contrast
+<a id="accessibility-color-contrast"></a>
+### Color Contrast
 
 - Category: `accessibility`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Meet WCAG AA for text, icons, and state colors.
 - Verification: `npx axe http://localhost:3000`
 
@@ -8192,11 +8402,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="179-accessibility-form-errors"></a>
-### 179. Accessible Form Errors
+<a id="accessibility-form-errors"></a>
+### Accessible Form Errors
 
 - Category: `accessibility`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Associate errors with fields so screen readers announce them.
 - Verification: `npx playwright test form-a11y.spec.ts`
 
@@ -8237,11 +8448,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="180-accessibility-modal-trap"></a>
-### 180. Modal Focus Trap
+<a id="accessibility-modal-trap"></a>
+### Modal Focus Trap
 
 - Category: `accessibility`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Focus opens, cycles, closes, and returns correctly.
 - Verification: `npx playwright test modal-a11y.spec.ts`
 
@@ -8282,11 +8494,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="181-accessibility-reduced-motion"></a>
-### 181. Reduced Motion
+<a id="accessibility-reduced-motion"></a>
+### Reduced Motion
 
 - Category: `accessibility`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Respect prefers-reduced-motion for all nonessential motion.
 - Verification: `npx playwright test reduced-motion.spec.ts`
 
@@ -8327,11 +8540,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="182-accessibility-alt-text"></a>
-### 182. Alt Text Audit
+<a id="accessibility-alt-text"></a>
+### Alt Text Audit
 
 - Category: `accessibility`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Separate decorative, content, and product images.
 - Verification: `npx axe http://localhost:3000`
 
@@ -8372,11 +8586,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="183-accessibility-heading-order"></a>
-### 183. Heading Order
+<a id="accessibility-heading-order"></a>
+### Heading Order
 
 - Category: `accessibility`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Fix skipped headings and fake styled headings.
 - Verification: `npx axe http://localhost:3000`
 
@@ -8417,11 +8632,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="184-accessibility-live-region"></a>
-### 184. Live Region Feedback
+<a id="accessibility-live-region"></a>
+### Live Region Feedback
 
 - Category: `accessibility`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Announce toasts, async completion, and errors accessibly.
 - Verification: `npx playwright test live-region.spec.ts`
 
@@ -8462,11 +8678,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="185-accessibility-touch-a11y"></a>
-### 185. Touch Accessibility
+<a id="accessibility-touch-a11y"></a>
+### Touch Accessibility
 
 - Category: `accessibility`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Check tap targets, zoom, and orientation on mobile.
 - Verification: `npx playwright test --project=mobile a11y.spec.ts`
 
@@ -8507,11 +8724,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="186-accessibility-audit-report"></a>
-### 186. Accessibility Audit Report
+<a id="accessibility-audit-report"></a>
+### Accessibility Audit Report
 
 - Category: `accessibility`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Produce prioritized issues, impact, fixes, and acceptance checks.
 - Verification: `npx axe http://localhost:3000 --save results.json`
 
@@ -8552,11 +8770,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="187-performance-lcp"></a>
-### 187. LCP Optimization
+<a id="performance-lcp"></a>
+### LCP Optimization
 
 - Category: `performance`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Find and optimize the largest contentful paint element.
 - Verification: `npm run lighthouse`
 
@@ -8597,11 +8816,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="188-performance-cls"></a>
-### 188. CLS Fix
+<a id="performance-cls"></a>
+### CLS Fix
 
 - Category: `performance`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Reserve space for images, ads, and dynamic content.
 - Verification: `npm run lighthouse`
 
@@ -8642,11 +8862,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="189-performance-inp"></a>
-### 189. INP Optimization
+<a id="performance-inp"></a>
+### INP Optimization
 
 - Category: `performance`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Reduce long tasks and blocking interaction handlers.
 - Verification: `npm run trace`
 
@@ -8687,11 +8908,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="190-performance-bundle-budget"></a>
-### 190. Bundle Budget
+<a id="performance-bundle-budget"></a>
+### Bundle Budget
 
 - Category: `performance`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Set route and dependency size budgets in CI.
 - Verification: `npm run analyze`
 
@@ -8732,11 +8954,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="191-performance-code-splitting"></a>
-### 191. Code Splitting
+<a id="performance-code-splitting"></a>
+### Code Splitting
 
 - Category: `performance`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Lazy-load low-frequency routes, charts, and editors.
 - Verification: `npm run analyze`
 
@@ -8777,11 +9000,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="192-performance-image-pipeline"></a>
-### 192. Image Pipeline
+<a id="performance-image-pipeline"></a>
+### Image Pipeline
 
 - Category: `performance`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Use srcset, modern formats, lazy loading, and cache headers.
 - Verification: `npm run lighthouse`
 
@@ -8822,11 +9046,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="193-performance-font-loading"></a>
-### 193. Font Loading
+<a id="performance-font-loading"></a>
+### Font Loading
 
 - Category: `performance`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Optimize font-display, subsets, and preload hints.
 - Verification: `npm run lighthouse`
 
@@ -8867,11 +9092,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="194-performance-api-waterfall"></a>
-### 194. API Waterfall
+<a id="performance-api-waterfall"></a>
+### API Waterfall
 
 - Category: `performance`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Remove serial requests and prefetch critical data.
 - Verification: `npx playwright test performance.spec.ts`
 
@@ -8912,11 +9138,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="195-performance-cache-strategy"></a>
-### 195. Cache Strategy
+<a id="performance-cache-strategy"></a>
+### Cache Strategy
 
 - Category: `performance`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Define browser, CDN, and service-worker cache boundaries.
 - Verification: `npx playwright test cache.spec.ts`
 
@@ -8957,11 +9184,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="196-performance-memory-leaks"></a>
-### 196. Memory Leak Audit
+<a id="performance-memory-leaks"></a>
+### Memory Leak Audit
 
 - Category: `performance`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Check long sessions, lists, subscriptions, and charts for leaks.
 - Verification: `npm run test:memory`
 
@@ -9002,11 +9230,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="197-performance-render-count"></a>
-### 197. Render Count Audit
+<a id="performance-render-count"></a>
+### Render Count Audit
 
 - Category: `performance`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Find unnecessary React renders and expensive selectors.
 - Verification: `npm run profile`
 
@@ -9047,11 +9276,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="198-performance-ci-gate"></a>
-### 198. Performance CI Gate
+<a id="performance-ci-gate"></a>
+### Performance CI Gate
 
 - Category: `performance`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Add Lighthouse or trace thresholds to CI.
 - Verification: `npm run lighthouse:ci`
 
@@ -9092,11 +9322,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="199-goal-meta-prompt-writer"></a>
-### 199. Goal Prompt Writer
+<a id="goal-meta-prompt-writer"></a>
+### Goal Prompt Writer
 
 - Category: `workflow`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Ask the agent to inspect a repo and write a precise goal prompt before execution.
 - Verification: `markdownlint generated-goal.md`
 
@@ -9137,11 +9368,12 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
-<a id="200-goal-continuation-audit"></a>
-### 200. Goal Continuation Audit
+<a id="goal-continuation-audit"></a>
+### Goal Continuation Audit
 
 - Category: `workflow`
 - Difficulty: `intermediate`
+- Origin: `seed`
 - Intent: Check that a long-running goal keeps its done_when and verification contract after compaction.
 - Verification: `rg -e "DONE WHEN" -e "VERIFY" -e "STOP RULES" progress-log.md`
 
@@ -9169,6 +9401,852 @@ DONE WHEN:
 
 VERIFY:
 - Run `rg -e "DONE WHEN" -e "VERIFY" -e "STOP RULES" progress-log.md` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="codex-verifiable-end-state"></a>
+### Verifiable End-State Contract
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Complete one objective only when a verifiable end state is met.
+- Verification: `manual status plus repo-local verification`
+- Source: [OpenAI Codex docs](https://developers.openai.com/codex/use-cases/follow-goals)
+
+```text
+/goal
+GOAL:
+Complete Verifiable End-State Contract for a coding-agent workflow repository: Complete one objective only when a verifiable end state is met.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `manual status plus repo-local verification`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Complete one objective only when a verifiable end state is met.
+- The verification command or evidence path succeeds: `manual status plus repo-local verification`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `manual status plus repo-local verification` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="codex-visual-migration-playwright"></a>
+### Visual Migration With Playwright
+
+- Category: `migration`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Migrate a project while preserving screen output and checking it with Playwright.
+- Verification: `npx playwright test`
+- Source: [OpenAI Codex docs](https://developers.openai.com/codex/use-cases/follow-goals)
+
+```text
+/goal
+GOAL:
+Complete Visual Migration With Playwright for a migration project: Migrate a project while preserving screen output and checking it with Playwright.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect legacy code, target implementation, compatibility tests, visual snapshots, and migration notes.
+- Establish a baseline by running or locating evidence for: `npx playwright test`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Preserve existing user-visible behavior unless the goal explicitly names a behavior change.
+- Keep compatibility evidence for the old and new paths until the migration is verified.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Migrate a project while preserving screen output and checking it with Playwright.
+- The verification command or evidence path succeeds: `npx playwright test`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `npx playwright test` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="codex-plan-milestone-prototype"></a>
+### PLAN.md Milestone Prototype
+
+- Category: `prototype`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Implement a PLAN.md-driven prototype with tests at each milestone and browser verification.
+- Verification: `npx playwright test`
+- Source: [OpenAI Codex docs](https://developers.openai.com/codex/use-cases/follow-goals)
+
+```text
+/goal
+GOAL:
+Complete PLAN.md Milestone Prototype for a prototype project: Implement a PLAN.md-driven prototype with tests at each milestone and browser verification.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect PLAN.md, milestones, app code, tests, browser checks, and demo notes.
+- Establish a baseline by running or locating evidence for: `npx playwright test`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Follow the stated PLAN.md or acceptance criteria instead of adding unrequested features.
+- Keep the prototype runnable and demonstrable at every completed milestone.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Implement a PLAN.md-driven prototype with tests at each milestone and browser verification.
+- The verification command or evidence path succeeds: `npx playwright test`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `npx playwright test` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="codex-eval-prompt-optimization"></a>
+### Eval-Driven Prompt Optimization
+
+- Category: `prompt-optimization`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Optimize prompts against an eval suite until the target score or pass rate is reached.
+- Verification: `python -m pytest evals`
+- Source: [OpenAI Codex docs](https://developers.openai.com/codex/use-cases/follow-goals)
+
+```text
+/goal
+GOAL:
+Complete Eval-Driven Prompt Optimization for an eval-backed prompt project: Optimize prompts against an eval suite until the target score or pass rate is reached.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect prompt files, eval cases, scoring reports, regressions, and failure examples.
+- Establish a baseline by running or locating evidence for: `python -m pytest evals`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not delete, weaken, or cherry-pick eval cases to improve the score.
+- Report representative failures as well as the final score.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Optimize prompts against an eval suite until the target score or pass rate is reached.
+- The verification command or evidence path succeeds: `python -m pytest evals`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `python -m pytest evals` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="claude-auth-tests-lint"></a>
+### Auth Tests And Lint Clean
+
+- Category: `testing`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Keep working until auth tests pass and the lint step is clean.
+- Verification: `npm test -- test/auth && npm run lint`
+- Source: [Claude Code docs](https://code.claude.com/docs/en/goal)
+
+```text
+/goal
+GOAL:
+Complete Auth Tests And Lint Clean for a project with failing or missing verification gates: Keep working until auth tests pass and the lint step is clean.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect test suites, lint config, CI logs, coverage reports, and failing output.
+- Establish a baseline by running or locating evidence for: `npm test -- test/auth && npm run lint`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not weaken lint, typecheck, or test rules to create a green result.
+- Fix production or fixture causes before changing expectations.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Keep working until auth tests pass and the lint step is clean.
+- The verification command or evidence path succeeds: `npm test -- test/auth && npm run lint`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `npm test -- test/auth && npm run lint` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="claude-weekly-changelog"></a>
+### Weekly Changelog Coverage
+
+- Category: `docs`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Ensure CHANGELOG.md includes an entry for every PR merged this week.
+- Verification: `git log --since='7 days ago' --merges && rg '^-' CHANGELOG.md`
+- Source: [Claude Code docs](https://code.claude.com/docs/en/goal)
+
+```text
+/goal
+GOAL:
+Complete Weekly Changelog Coverage for a developer-facing documentation site or repository: Ensure CHANGELOG.md includes an entry for every PR merged this week.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect README, docs, examples, runbooks, and lint configuration.
+- Establish a baseline by running or locating evidence for: `git log --since='7 days ago' --merges && rg '^-' CHANGELOG.md`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not invent APIs, flags, commands, or product behavior.
+- Mark unverified commands clearly instead of presenting guesses as facts.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Ensure CHANGELOG.md includes an entry for every PR merged this week.
+- The verification command or evidence path succeeds: `git log --since='7 days ago' --merges && rg '^-' CHANGELOG.md`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `git log --since='7 days ago' --merges && rg '^-' CHANGELOG.md` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="hermes-ruff-src-clean"></a>
+### Ruff Clean Source Tree
+
+- Category: `testing`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Fix every lint error in src and prove ruff passes.
+- Verification: `ruff check src/`
+- Source: [Hermes docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/goals)
+
+```text
+/goal
+GOAL:
+Complete Ruff Clean Source Tree for a project with failing or missing verification gates: Fix every lint error in src and prove ruff passes.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect test suites, lint config, CI logs, coverage reports, and failing output.
+- Establish a baseline by running or locating evidence for: `ruff check src/`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not weaken lint, typecheck, or test rules to create a green result.
+- Fix production or fixture causes before changing expectations.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Fix every lint error in src and prove ruff passes.
+- The verification command or evidence path succeeds: `ruff check src/`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `ruff check src/` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="hermes-feature-port-ci-green"></a>
+### Feature Port With CI Green
+
+- Category: `migration`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Port a feature from another repo, include tests, and get CI green.
+- Verification: `pytest && npm test`
+- Source: [Hermes docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/goals)
+
+```text
+/goal
+GOAL:
+Complete Feature Port With CI Green for a migration project: Port a feature from another repo, include tests, and get CI green.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect legacy code, target implementation, compatibility tests, visual snapshots, and migration notes.
+- Establish a baseline by running or locating evidence for: `pytest && npm test`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Preserve existing user-visible behavior unless the goal explicitly names a behavior change.
+- Keep compatibility evidence for the old and new paths until the migration is verified.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Port a feature from another repo, include tests, and get CI green.
+- The verification command or evidence path succeeds: `pytest && npm test`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `pytest && npm test` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="hermes-session-drift-report"></a>
+### Session Drift Report
+
+- Category: `investigation`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Investigate session ID drift during mid-run compression and write a report.
+- Verification: `test -f reports/session-drift.md`
+- Source: [Hermes docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/goals)
+
+```text
+/goal
+GOAL:
+Complete Session Drift Report for an investigation task: Investigate session ID drift during mid-run compression and write a report.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect logs, traces, reproduction notes, source paths, and the final report.
+- Establish a baseline by running or locating evidence for: `test -f reports/session-drift.md`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Separate observed evidence from hypotheses.
+- Do not patch production code until the root cause is reproduced or strongly evidenced.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Investigate session ID drift during mid-run compression and write a report.
+- The verification command or evidence path succeeds: `test -f reports/session-drift.md`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `test -f reports/session-drift.md` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="hermes-exif-rename-cli"></a>
+### EXIF Rename CLI
+
+- Category: `cli`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Build a small CLI that renames photos by EXIF date and test it on a photos folder.
+- Verification: `pytest tests/cli && ./rename-exif photos/ --dry-run`
+- Source: [Hermes docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/goals)
+
+```text
+/goal
+GOAL:
+Complete EXIF Rename CLI for a command-line tool: Build a small CLI that renames photos by EXIF date and test it on a photos folder.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect CLI entrypoints, argument parsing, filesystem behavior, dry-run mode, and fixtures.
+- Establish a baseline by running or locating evidence for: `pytest tests/cli && ./rename-exif photos/ --dry-run`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not perform destructive filesystem operations without a dry-run or explicit confirmation.
+- Keep command output deterministic enough for tests.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Build a small CLI that renames photos by EXIF date and test it on a photos folder.
+- The verification command or evidence path succeeds: `pytest tests/cli && ./rename-exif photos/ --dry-run`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `pytest tests/cli && ./rename-exif photos/ --dry-run` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="hermes-four-files-walkthrough"></a>
+### Four Files Walkthrough
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Create four note files across turns and verify each contains its number.
+- Verification: `for i in 1 2 3 4; do test "$(cat /tmp/note_$i.txt)" = "$i"; done`
+- Source: [Hermes docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/goals)
+
+```text
+/goal
+GOAL:
+Complete Four Files Walkthrough for a coding-agent workflow repository: Create four note files across turns and verify each contains its number.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `for i in 1 2 3 4; do test "$(cat /tmp/note_$i.txt)" = "$i"; done`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Create four note files across turns and verify each contains its number.
+- The verification command or evidence path succeeds: `for i in 1 2 3 4; do test "$(cat /tmp/note_$i.txt)" = "$i"; done`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `for i in 1 2 3 4; do test "$(cat /tmp/note_$i.txt)" = "$i"; done` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="explainx-typescript-eslint-coverage"></a>
+### TypeScript ESLint Coverage Gate
+
+- Category: `testing`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Resolve TypeScript errors, pass tests, clear ESLint warnings, and keep coverage above a threshold.
+- Verification: `npm run typecheck && npm test && npm run lint && npm run coverage`
+- Source: [ExplainX blog](https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026)
+
+```text
+/goal
+GOAL:
+Complete TypeScript ESLint Coverage Gate for a project with failing or missing verification gates: Resolve TypeScript errors, pass tests, clear ESLint warnings, and keep coverage above a threshold.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect test suites, lint config, CI logs, coverage reports, and failing output.
+- Establish a baseline by running or locating evidence for: `npm run typecheck && npm test && npm run lint && npm run coverage`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not weaken lint, typecheck, or test rules to create a green result.
+- Fix production or fixture causes before changing expectations.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Resolve TypeScript errors, pass tests, clear ESLint warnings, and keep coverage above a threshold.
+- The verification command or evidence path succeeds: `npm run typecheck && npm test && npm run lint && npm run coverage`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `npm run typecheck && npm test && npm run lint && npm run coverage` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="explainx-auth-di-refactor"></a>
+### Auth Dependency Injection Refactor
+
+- Category: `refactor`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Refactor auth code to dependency injection while preserving tests, coverage, and public API.
+- Verification: `npm test -- auth && npm run coverage`
+- Source: [ExplainX blog](https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026)
+
+```text
+/goal
+GOAL:
+Complete Auth Dependency Injection Refactor for a refactoring task: Refactor auth code to dependency injection while preserving tests, coverage, and public API.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect the target module, call sites, public API, tests, and compatibility notes.
+- Establish a baseline by running or locating evidence for: `npm test -- auth && npm run coverage`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not change public APIs, data formats, or user-visible behavior unless the goal requires it.
+- Keep behavior characterization tests before large internal changes.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Refactor auth code to dependency injection while preserving tests, coverage, and public API.
+- The verification command or evidence path succeeds: `npm test -- auth && npm run coverage`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `npm test -- auth && npm run coverage` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="explainx-npm-audit-clean"></a>
+### NPM Audit Clean Remediation
+
+- Category: `security-ops`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Patch npm audit vulnerabilities without breaking tests or public APIs.
+- Verification: `npm audit && npm test`
+- Source: [ExplainX blog](https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026)
+
+```text
+/goal
+GOAL:
+Complete NPM Audit Clean Remediation for a production operations environment: Patch npm audit vulnerabilities without breaking tests or public APIs.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect workflow permissions, cloud IAM, release artifacts, and audit evidence.
+- Establish a baseline by running or locating evidence for: `npm audit && npm test`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not print, copy, rotate, or exfiltrate real secrets.
+- Do not widen production permissions without a documented least-privilege reason.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Patch npm audit vulnerabilities without breaking tests or public APIs.
+- The verification command or evidence path succeeds: `npm audit && npm test`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `npm audit && npm test` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="explainx-lighthouse-core-web-vitals"></a>
+### Lighthouse And Core Web Vitals Gate
+
+- Category: `performance`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Improve Lighthouse and Core Web Vitals to explicit thresholds without regressions.
+- Verification: `npm run lighthouse`
+- Source: [ExplainX blog](https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026)
+
+```text
+/goal
+GOAL:
+Complete Lighthouse And Core Web Vitals Gate for a web application with measurable performance goals: Improve Lighthouse and Core Web Vitals to explicit thresholds without regressions.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect Lighthouse reports, bundles, traces, and critical routes.
+- Establish a baseline by running or locating evidence for: `npm run lighthouse`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not trade correctness, accessibility, or security for faster synthetic scores.
+- Compare before/after metrics on the same route and environment.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Improve Lighthouse and Core Web Vitals to explicit thresholds without regressions.
+- The verification command or evidence path succeeds: `npm run lighthouse`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `npm run lighthouse` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="qiita-vue2-vue3-visual-unit"></a>
+### Vue 2 To Vue 3 Visual And Unit Gate
+
+- Category: `migration`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Migrate listed Vue screens and stop only when visual and unit tests pass.
+- Verification: `pnpm test:visual && pnpm test:unit`
+- Source: [Qiita article](https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae)
+
+```text
+/goal
+GOAL:
+Complete Vue 2 To Vue 3 Visual And Unit Gate for a migration project: Migrate listed Vue screens and stop only when visual and unit tests pass.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect legacy code, target implementation, compatibility tests, visual snapshots, and migration notes.
+- Establish a baseline by running or locating evidence for: `pnpm test:visual && pnpm test:unit`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Preserve existing user-visible behavior unless the goal explicitly names a behavior change.
+- Keep compatibility evidence for the old and new paths until the migration is verified.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Migrate listed Vue screens and stop only when visual and unit tests pass.
+- The verification command or evidence path succeeds: `pnpm test:visual && pnpm test:unit`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `pnpm test:visual && pnpm test:unit` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="qiita-canvas-puzzle-plan"></a>
+### Canvas Puzzle PLAN.md Prototype
+
+- Category: `prototype`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Implement PLAN.md milestones for a canvas puzzle prototype and prove e2e passes.
+- Verification: `pnpm e2e`
+- Source: [Qiita article](https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae)
+
+```text
+/goal
+GOAL:
+Complete Canvas Puzzle PLAN.md Prototype for a prototype project: Implement PLAN.md milestones for a canvas puzzle prototype and prove e2e passes.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect PLAN.md, milestones, app code, tests, browser checks, and demo notes.
+- Establish a baseline by running or locating evidence for: `pnpm e2e`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Follow the stated PLAN.md or acceptance criteria instead of adding unrequested features.
+- Keep the prototype runnable and demonstrable at every completed milestone.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Implement PLAN.md milestones for a canvas puzzle prototype and prove e2e passes.
+- The verification command or evidence path succeeds: `pnpm e2e`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `pnpm e2e` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="qiita-router-eval-score"></a>
+### Router Prompt Eval Score
+
+- Category: `prompt-optimization`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Improve a router prompt against an eval directory until the result score reaches a target.
+- Verification: `python -m pytest evals/router`
+- Source: [Qiita article](https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae)
+
+```text
+/goal
+GOAL:
+Complete Router Prompt Eval Score for an eval-backed prompt project: Improve a router prompt against an eval directory until the result score reaches a target.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect prompt files, eval cases, scoring reports, regressions, and failure examples.
+- Establish a baseline by running or locating evidence for: `python -m pytest evals/router`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not delete, weaken, or cherry-pick eval cases to improve the score.
+- Report representative failures as well as the final score.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Improve a router prompt against an eval directory until the result score reaches a target.
+- The verification command or evidence path succeeds: `python -m pytest evals/router`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `python -m pytest evals/router` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 
