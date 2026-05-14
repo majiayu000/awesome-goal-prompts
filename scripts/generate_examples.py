@@ -529,6 +529,8 @@ def build_readme(entries: list[dict[str, str | None]]) -> str:
         "",
         "A curated list of `/goal` task contracts for coding agents.",
         "",
+        "Browse the live catalog: https://majiayu000.github.io/awesome-goal-prompts/",
+        "",
         "A good goal is not a wish. It is a runnable contract: one objective, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk.",
         "",
         "## Contents",
@@ -589,12 +591,12 @@ def main() -> None:
         entry["prompt"] = prompt_for(entry)
     (ROOT / "prompts").mkdir(exist_ok=True)
     (ROOT / "data").mkdir(exist_ok=True)
+    (ROOT / "docs").mkdir(exist_ok=True)
     (ROOT / "README.md").write_text(build_readme(entries), encoding="utf-8")
     (ROOT / "prompts" / "goal-examples.md").write_text(build_markdown(entries), encoding="utf-8")
-    (ROOT / "data" / "examples.json").write_text(
-        json.dumps(entries, indent=2, ensure_ascii=True) + "\n",
-        encoding="utf-8",
-    )
+    examples_json = json.dumps(entries, indent=2, ensure_ascii=True) + "\n"
+    (ROOT / "data" / "examples.json").write_text(examples_json, encoding="utf-8")
+    (ROOT / "docs" / "examples.json").write_text(examples_json, encoding="utf-8")
     print("generated goal catalog")
 
 

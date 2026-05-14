@@ -5,6 +5,8 @@
 
 A curated list of `/goal` task contracts for coding agents.
 
+Browse the live catalog: https://majiayu000.github.io/awesome-goal-prompts/
+
 A good goal is not a wish. It is a runnable contract: one objective, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk.
 
 ## Contents

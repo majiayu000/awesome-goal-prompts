@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A searchable catalog of /goal task contracts for coding agents.">
+    <meta name="theme-color" content="#121417">
+    <title>Awesome Goal Prompts</title>
+    <link rel="icon" href="assets/goal-map.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Awesome Goal Prompts home">
+        <span class="brand-mark">/g</span>
+        <span>
+          <strong>Awesome Goal Prompts</strong>
+          <small>Runnable task contracts for coding agents</small>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="Repository links">
+        <a href="https://github.com/majiayu000/awesome-goal-prompts">GitHub</a>
+        <a href="https://github.com/majiayu000/awesome-goal-prompts/blob/main/SOURCES.md">Sources</a>
+        <a href="https://github.com/majiayu000/awesome-goal-prompts/blob/main/CONTRIBUTING.md">Contribute</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Goal catalog</p>
+          <h1 id="page-title">Find a precise `/goal` prompt before the agent starts editing.</h1>
+          <p class="lede">Search by engineering problem, filter by risk, inspect the verification contract, then copy the full prompt into Codex, Claude Code, Hermes, or another coding agent.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#catalog">Browse catalog</a>
+            <a class="button ghost" href="https://github.com/majiayu000/awesome-goal-prompts/blob/main/templates/full-goal-template.md">Full template</a>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <img src="assets/goal-map.svg" alt="Diagram of a goal prompt contract from objective to verification.">
+        </figure>
+      </section>
+
+      <section id="catalog" class="catalog-shell" aria-label="Goal prompt browser">
+        <aside class="sidebar">
+          <div class="metric-grid" aria-label="Catalog statistics">
+            <div>
+              <span id="stat-total">0</span>
+              <small>examples</small>
+            </div>
+            <div>
+              <span id="stat-categories">0</span>
+              <small>categories</small>
+            </div>
+            <div>
+              <span id="stat-sourced">0</span>
+              <small>sourced</small>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="search-input">Search</label>
+            <input id="search-input" type="search" autocomplete="off" placeholder="auth, migration, Lighthouse">
+          </div>
+
+          <div class="field">
+            <label for="category-select">Category</label>
+            <select id="category-select"></select>
+          </div>
+
+          <div class="field">
+            <label for="difficulty-select">Difficulty</label>
+            <select id="difficulty-select">
+              <option value="all">All difficulties</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Origin</label>
+            <div class="segmented" role="group" aria-label="Origin filter">
+              <button class="segment active" type="button" data-origin="all">All</button>
+              <button class="segment" type="button" data-origin="source-backed">Sourced</button>
+              <button class="segment" type="button" data-origin="seed">Seed</button>
+            </div>
+          </div>
+
+          <div class="category-list" id="category-list" aria-label="Category shortcuts"></div>
+        </aside>
+
+        <section class="results-column" aria-label="Matching goals">
+          <div class="results-toolbar">
+            <p id="result-count">Loading examples...</p>
+            <button class="button small" id="reset-button" type="button">Reset</button>
+          </div>
+          <div id="results" class="results-list"></div>
+        </section>
+
+        <section class="detail-panel" aria-live="polite" aria-label="Selected goal prompt">
+          <div id="detail-empty" class="detail-empty">
+            <p>Select a goal to inspect the full contract.</p>
+          </div>
+          <article id="detail-card" class="detail-card hidden">
+            <div class="detail-head">
+              <div>
+                <p id="detail-meta" class="eyebrow"></p>
+                <h2 id="detail-title"></h2>
+              </div>
+              <button class="button small primary" id="copy-button" type="button">Copy</button>
+            </div>
+            <p id="detail-intent" class="detail-intent"></p>
+            <dl class="detail-facts">
+              <div>
+                <dt>Verify</dt>
+                <dd><code id="detail-verify"></code></dd>
+              </div>
+              <div id="source-row">
+                <dt>Source</dt>
+                <dd><a id="detail-source" href="#" target="_blank" rel="noreferrer"></a></dd>
+              </div>
+            </dl>
+            <pre><code id="detail-prompt"></code></pre>
+          </article>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
