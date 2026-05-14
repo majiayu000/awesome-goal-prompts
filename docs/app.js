@@ -55,6 +55,10 @@ function badge(text, extraClass) {
   return span;
 }
 
+function originLabel(origin) {
+  return origin === "source-backed" ? "sourced" : origin;
+}
+
 function setText(el, value) {
   el.textContent = value;
 }
@@ -154,7 +158,7 @@ function renderResults() {
     title.textContent = entry.title;
     titleRow.appendChild(title);
     if (entry.origin === "source-backed") {
-      titleRow.appendChild(badge("source", "source-backed"));
+      titleRow.appendChild(badge("sourced", "source-backed"));
     }
 
     const intent = document.createElement("p");
@@ -165,7 +169,7 @@ function renderResults() {
     badges.className = "badge-row";
     badges.appendChild(badge(entry.category));
     badges.appendChild(badge(entry.difficulty, entry.difficulty));
-    badges.appendChild(badge(entry.origin === "source-backed" ? "source-backed" : "seed"));
+    badges.appendChild(badge(originLabel(entry.origin)));
 
     button.appendChild(titleRow);
     button.appendChild(intent);
@@ -195,7 +199,7 @@ function renderDetail() {
 
   els.detailEmpty.classList.add("hidden");
   els.detailCard.classList.remove("hidden");
-  setText(els.detailMeta, `${entry.category} / ${entry.difficulty} / ${entry.origin}`);
+  setText(els.detailMeta, `${entry.category} / ${entry.difficulty} / ${originLabel(entry.origin)}`);
   setText(els.detailTitle, entry.title);
   setText(els.detailIntent, entry.intent);
   setText(els.detailVerify, entry.verify);

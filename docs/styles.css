@@ -1,17 +1,16 @@
 :root {
   color-scheme: light;
-  --ink: #121417;
-  --muted: #5a6470;
-  --line: #d9dfe4;
-  --paper: #f4f7f6;
+  --ink: #17191c;
+  --muted: #3f4850;
+  --line: #bfc8ce;
+  --paper: #edf1ef;
   --surface: #ffffff;
-  --surface-strong: #e9eef0;
-  --green: #38b26c;
-  --green-dark: #137241;
-  --red: #e24b3c;
-  --blue: #1f68e5;
-  --yellow: #ffc857;
-  --shadow: 0 18px 50px rgba(18, 20, 23, .12);
+  --surface-strong: #dfe6e3;
+  --green: #2f7d52;
+  --green-dark: #255f42;
+  --red: #9f4b43;
+  --blue: #275fba;
+  --yellow: #e8bc55;
 }
 
 * {
@@ -26,12 +25,12 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    linear-gradient(rgba(18, 20, 23, .045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(18, 20, 23, .045) 1px, transparent 1px),
+    linear-gradient(rgba(18, 20, 23, .07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 20, 23, .07) 1px, transparent 1px),
     var(--paper);
   background-size: 32px 32px;
   font-family: "Avenir Next", "Segoe UI", sans-serif;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.5;
   letter-spacing: 0;
 }
@@ -61,8 +60,8 @@ button {
   gap: 24px;
   padding: 14px 28px;
   border-bottom: 1px solid rgba(18, 20, 23, .14);
-  background: rgba(244, 247, 246, .92);
-  backdrop-filter: blur(18px);
+  background: rgba(237, 241, 239, .96);
+  backdrop-filter: blur(12px);
 }
 
 .brand {
@@ -83,8 +82,8 @@ button {
   border-radius: 8px;
   color: var(--ink);
   background: var(--yellow);
-  font-family: "SFMono-Regular", Consolas, monospace;
-  font-weight: 800;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-weight: 650;
 }
 
 .brand strong,
@@ -93,12 +92,13 @@ button {
 }
 
 .brand strong {
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 650;
 }
 
 .brand small {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .top-nav {
@@ -120,13 +120,13 @@ button {
   color: var(--ink);
   background: var(--surface);
   text-decoration: none;
-  transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+  transition: transform .16s ease, background .16s ease, border-color .16s ease;
 }
 
 .top-nav a:hover,
 .button:hover {
   transform: translateY(-1px);
-  box-shadow: 4px 4px 0 var(--ink);
+  background: #f7f9f8;
 }
 
 .button.primary {
@@ -161,9 +161,8 @@ button {
   margin: 0 0 12px;
   color: var(--red);
   font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 12px;
-  font-weight: 800;
-  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 650;
 }
 
 h1,
@@ -175,10 +174,10 @@ p {
 h1 {
   margin-bottom: 18px;
   max-width: 760px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 58px;
-  line-height: 1.02;
-  font-weight: 700;
+  font-family: "Avenir Next", "Segoe UI Variable Display", "Segoe UI", sans-serif;
+  font-size: 54px;
+  line-height: 1.06;
+  font-weight: 500;
   letter-spacing: 0;
 }
 
@@ -204,7 +203,6 @@ h1 {
   width: 100%;
   border: 2px solid var(--ink);
   border-radius: 8px;
-  box-shadow: var(--shadow);
 }
 
 .catalog-shell {
@@ -222,8 +220,7 @@ h1 {
 .detail-panel {
   border: 1px solid rgba(18, 20, 23, .18);
   border-radius: 8px;
-  background: rgba(255, 255, 255, .86);
-  box-shadow: 0 12px 34px rgba(18, 20, 23, .07);
+  background: rgba(255, 255, 255, .94);
 }
 
 .sidebar {
@@ -241,22 +238,20 @@ h1 {
 
 .metric-grid div {
   min-width: 0;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 10px;
-  background: var(--surface-strong);
+  border-bottom: 1px solid var(--line);
+  padding: 8px 0 10px;
 }
 
 .metric-grid span {
   display: block;
-  font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 22px;
-  font-weight: 800;
+  font-family: "Avenir Next", "Segoe UI Variable Display", "Segoe UI", sans-serif;
+  font-size: 24px;
+  font-weight: 560;
 }
 
 .metric-grid small {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .field {
@@ -268,8 +263,8 @@ h1 {
 label {
   color: var(--muted);
   font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 input,
@@ -327,8 +322,8 @@ a:focus-visible {
   border-radius: 8px;
   padding: 6px 8px;
   color: #25313a;
-  background: #f8fafb;
-  font-size: 12px;
+  background: #f4f6f5;
+  font-size: 13px;
 }
 
 .chip.active {
@@ -355,24 +350,26 @@ a:focus-visible {
   margin: 0;
   color: var(--muted);
   font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .results-list {
   display: grid;
-  gap: 10px;
+  gap: 0;
   max-height: 860px;
   overflow: auto;
-  padding: 12px;
+  padding: 0 12px 12px;
 }
 
 .result-card {
   display: grid;
   gap: 8px;
   width: 100%;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 13px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-left: 4px solid transparent;
+  border-radius: 0;
+  padding: 16px 14px 16px 12px;
   color: var(--ink);
   background: var(--surface);
   text-align: left;
@@ -380,8 +377,11 @@ a:focus-visible {
 
 .result-card:hover,
 .result-card.active {
-  border-color: var(--ink);
-  box-shadow: 4px 4px 0 var(--ink);
+  background: #f8faf9;
+}
+
+.result-card.active {
+  border-left-color: var(--blue);
 }
 
 .result-title {
@@ -389,13 +389,14 @@ a:focus-visible {
   align-items: start;
   justify-content: space-between;
   gap: 10px;
-  font-weight: 800;
+  font-family: "Avenir Next", "Segoe UI Variable Display", "Segoe UI", sans-serif;
+  font-weight: 540;
 }
 
 .result-intent {
   margin: 0;
-  color: #37424d;
-  font-size: 14px;
+  color: #303941;
+  font-size: 15px;
 }
 
 .badge-row {
@@ -406,21 +407,21 @@ a:focus-visible {
 
 .badge {
   border-radius: 8px;
-  padding: 3px 6px;
+  padding: 4px 7px;
   color: #26313d;
-  background: #ecf0f3;
+  background: #dfe6e9;
   font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .badge.source-backed {
-  color: #071e12;
-  background: #b7f2c6;
+  color: #0f2c1b;
+  background: #c5e7cf;
 }
 
 .badge.advanced {
   color: #2b0d08;
-  background: #ffd0c8;
+  background: #eac9c4;
 }
 
 .detail-panel {
@@ -453,9 +454,10 @@ a:focus-visible {
 
 .detail-head h2 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 34px;
-  line-height: 1.08;
+  font-family: "Avenir Next", "Segoe UI Variable Display", "Segoe UI", sans-serif;
+  font-size: 32px;
+  line-height: 1.12;
+  font-weight: 500;
   letter-spacing: 0;
 }
 
@@ -481,8 +483,8 @@ a:focus-visible {
 .detail-facts dt {
   color: var(--muted);
   font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .detail-facts dd {
@@ -504,7 +506,7 @@ pre {
   padding: 18px;
   color: #e9f3ee;
   background: #111418;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.55;
   white-space: pre-wrap;
 }
