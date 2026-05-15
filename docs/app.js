@@ -19,6 +19,10 @@ function storeLang(lang) {
 }
 
 function detectInitialLang() {
+  const requested = new URLSearchParams(window.location.search).get("lang");
+  if (supportedLangs.includes(requested)) {
+    return requested;
+  }
   const saved = storedLang();
   if (supportedLangs.includes(saved)) {
     return saved;
