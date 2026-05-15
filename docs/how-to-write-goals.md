@@ -125,9 +125,9 @@ STOP RULES:
 - If part of the goal is impossible locally, mark that part incomplete with evidence and continue only on independent safe work.
 ```
 
-## Community Patterns Worth Keeping
+## Reusable Patterns Worth Keeping
 
-Community posts are useful for workflow patterns, but they are not authoritative product behavior. Keep them as source-backed inspiration and verify the actual tool you are using.
+These patterns are starting points, not ready-to-run goals. Keep the useful shape, then bind it to your repository's current files, commands, constraints, and verification evidence.
 
 | Pattern | Use it when | Catalog entry |
 | --- | --- | --- |

@@ -1318,8 +1318,7 @@ pre {
 
 .docs-hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
-  gap: 64px;
+  grid-template-columns: minmax(0, 920px);
   max-width: 1480px;
   margin: 0 auto;
   align-items: end;
@@ -1747,8 +1746,7 @@ pre {
   }
 
   .docs-hero__grid {
-    grid-template-columns: minmax(0, 1fr) 300px;
-    gap: 42px;
+    grid-template-columns: minmax(0, 920px);
   }
 }
 
