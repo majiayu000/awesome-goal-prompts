@@ -302,7 +302,77 @@ github-claude-long-goal-template|workflow|Long Goal With Constraints|Use a longe
 github-hermes-real-cli-loop|goal-maintenance|Real CLI Goal Loop|Verify a real CLI goal loop where the second judge round confirms completion.|live judge round-trip|https://github.com/NousResearch/hermes-agent/pull/18262|NousResearch/hermes-agent PR 18262|github-pr|print hello, Ralph loop
 github-hermes-file-verification|goal-maintenance|Verify File Creation|Verify that a requested file was actually created instead of trusting the agent claim.|find and read_file evidence|https://github.com/NousResearch/hermes-agent/issues/18421|NousResearch/hermes-agent issue 18421|github-issue|/home/ubuntu/ml-resumo.md
 github-hermes-goal-queue|goal-maintenance|Queue Follow-Up Goals|Promote queued follow-up goals: fix tests, run full tests, then produce coverage.|queue promotion evidence|https://github.com/NousResearch/hermes-agent/issues/22617|NousResearch/hermes-agent issue 22617|github-issue|/goal Fix failing tests
+openhands-api-integration-tests|backend-api|API Integration Tests|Add end-to-end tests for product API endpoints with success and error cases.|jest integration tests with test database|https://docs.openhands.dev/openhands/usage/get-started/tutorials|OpenHands tutorial library|official-agent-task|Add integration tests for the /api/products endpoints
+claude-dev-database-migration|backend-data|Dev Database Migration Proof|Write a migration, run it against the dev database, and confirm the schema matches.|migration applied to dev DB and schema comparison|https://code.claude.com/docs/en/prompt-library|Claude Code prompt library|official-agent-task|write the migration, run it against the dev database, and confirm the schema matches
+github-accessibility-html-wcag|accessibility|HTML WCAG Instruction Audit|Audit HTML changes against WCAG guidance and prove the Lighthouse accessibility audit passes.|Lighthouse accessibility audit|https://docs.github.com/en/copilot/tutorials/customization-library/custom-instructions/accessibility-auditor|GitHub Copilot accessibility auditor|official-agent-task|generate accessible, inclusive HTML that follows WCAG guidelines
+claude-reference-layout-design|design|Reference Layout Match|Build a settings page that follows an existing profile page layout instead of inventing a new pattern.|visual comparison against profile page|https://code.claude.com/docs/en/prompt-library|Claude Code prompt library|official-agent-task|add a settings page that follows the same layout as the profile page
+github-mobile-agent-task-handoff|mobile|Mobile Agent Task Handoff|Prepare and track a coding-agent task started from GitHub Mobile with review-ready evidence.|GitHub Mobile agent task creates a PR|https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/assign-copilot-to-an-issue|GitHub Copilot coding agent docs|official-agent-task|assign an issue to Copilot on GitHub Mobile
+openai-agent-trace-evals|ai-evals|Trace-Graded Agent Regression|Create trace-based evals that catch workflow regressions across tool calls and handoffs.|agent eval report with graded traces|https://platform.openai.com/docs/guides/agent-evals|OpenAI agent evals docs|official-workflow|trace grading functionality
+openai-agent-tracing-observability|ai-ops|Agent Trace Observability|Instrument agent runs so LLM generations, tool calls, handoffs, guardrails, and custom events are traceable.|trace dashboard shows spans for one agent run|https://openai.github.io/openai-agents-python/tracing/|OpenAI Agents SDK tracing docs|official-workflow|built-in tracing collects LLM generations, tool calls, handoffs, guardrails
+openhands-csv-processing-report|data-eng|CSV Processing Report|Create a data processing script that validates CSV input and generates an analysis report.|script output report and validation checks|https://docs.openhands.dev/openhands/usage/get-started/tutorials|OpenHands tutorial library|official-agent-task|Process CSV data and generate a report
+openhands-remote-agent-server-smoke|devops-runtime|Remote Agent Server Smoke|Deploy an isolated remote agent server and prove event streaming, workspace access, and command execution work.|remote server smoke run and websocket event evidence|https://docs.openhands.dev/sdk/guides/agent-server/overview|OpenHands remote agent server docs|official-workflow|Remote Agent Servers package the Software Agent SDK into containers
+openai-tool-guardrails-appsec|security-appsec|Tool Guardrails For AppSec|Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues.|guardrail tests trigger on unsafe tool input/output|https://openai.github.io/openai-agents-python/guardrails/|OpenAI Agents SDK guardrails docs|official-workflow|tool guardrails run on every custom function-tool invocation
 """.strip()
+
+
+RECIPES = [
+    {
+        "id": "all",
+        "label": "All contracts",
+        "label_zh": "全部契约",
+        "query": "",
+        "category": "all",
+        "origin": "all",
+    },
+    {
+        "id": "auth-red",
+        "label": "Auth tests + lint red",
+        "label_zh": "鉴权测试 + lint 红灯",
+        "query": "auth tests fail lint red",
+        "category": "testing",
+        "origin": "source-backed",
+    },
+    {
+        "id": "migration",
+        "label": "Migration with compatibility proof",
+        "label_zh": "带兼容性证明的迁移",
+        "query": "migration compatibility tests",
+        "category": "migration",
+        "origin": "source-backed",
+    },
+    {
+        "id": "security",
+        "label": "Security audit",
+        "label_zh": "安全审计",
+        "query": "security audit authorization injection",
+        "category": "security-appsec",
+        "origin": "all",
+    },
+    {
+        "id": "docs",
+        "label": "Docs and onboarding",
+        "label_zh": "文档与上手",
+        "query": "readme docs contribution quickstart",
+        "category": "docs",
+        "origin": "all",
+    },
+    {
+        "id": "accessibility",
+        "label": "Accessibility audit",
+        "label_zh": "无障碍审计",
+        "query": "a11y wcag accessibility",
+        "category": "accessibility",
+        "origin": "all",
+    },
+    {
+        "id": "agent-evals",
+        "label": "Agent evals",
+        "label_zh": "智能体评测",
+        "query": "agent evals trace grading",
+        "category": "ai-evals",
+        "origin": "all",
+    },
+]
 
 
 CATEGORY_CONTEXT = {
@@ -479,6 +549,7 @@ def parse_entries() -> list[dict[str, str | None]]:
                 "source_name": None,
                 "source_type": None,
                 "evidence": None,
+                "evidence_summary": None,
             }
         )
     for line in SOURCE_BACKED_ENTRIES.splitlines():
@@ -501,6 +572,7 @@ def parse_entries() -> list[dict[str, str | None]]:
                 "source_name": source_name,
                 "source_type": source_type,
                 "evidence": evidence,
+                "evidence_summary": evidence_summary(source_name, source_type, evidence, verify),
             }
         )
     slugs = [str(entry["slug"]) for entry in entries]
@@ -508,6 +580,10 @@ def parse_entries() -> list[dict[str, str | None]]:
         duplicates = sorted({slug for slug in slugs if slugs.count(slug) > 1})
         raise SystemExit(f"duplicate slugs: {', '.join(duplicates)}")
     return entries
+
+
+def evidence_summary(source_name: str, source_type: str, evidence: str, verify: str) -> str:
+    return f"{evidence}; source: {source_name}; type: {source_type}; verification: {verify}"
 
 
 def difficulty_for(category: str) -> str:
@@ -576,6 +652,8 @@ def source_line(entry: dict[str, str | None]) -> str | None:
             parts.append(f"- Source type: `{entry['source_type']}`")
         if entry.get("evidence"):
             parts.append(f"- Evidence: {entry['evidence']}")
+        if entry.get("evidence_summary"):
+            parts.append(f"- Evidence summary: {entry['evidence_summary']}")
         return "\n".join(parts)
     return None
 
@@ -641,12 +719,13 @@ def build_readme(entries: list[dict[str, str | None]]) -> str:
         "",
         "A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk.",
         "",
-        "Provenance is explicit: `source-backed` examples include a public URL, source type, and short evidence phrase; `seed` examples are reusable catalog patterns and are not claimed as collected from X, GitHub, or docs.",
+        "Provenance is explicit: `source-backed` examples include a public URL, source type, short evidence phrase, and evidence summary; `seed` examples are reusable catalog patterns and are not claimed as collected from X, GitHub, or docs.",
         "",
         "## Contents",
         "",
         "- [Goal Prompts](#goal-prompts)",
         "- [How To Write A Good Goal](#how-to-write-a-good-goal)",
+        "- [Catalog Health](#catalog-health)",
         "- [Templates](#templates)",
         "- [Quality Bar](#quality-bar)",
         "- [Sources And Caveats](#sources-and-caveats)",
@@ -671,18 +750,23 @@ def build_readme(entries: list[dict[str, str | None]]) -> str:
             "",
             "The short version: write one measurable goal, point at the real context, add hard constraints, define `DONE WHEN`, require fresh verification, and give the agent explicit stop rules for uncertainty or risk.",
             "",
+            "## Catalog Health",
+            "",
+            "The generated [catalog health report](docs/catalog-health.md) tracks source-backed coverage, source types, and search evaluation results.",
+            "",
             "## Templates",
             "",
             "- [Full template](templates/full-goal-template.md) for high-risk or multi-step work.",
             "- [Compact template](templates/compact-goal-template.md) for routine work.",
             "- [Structured JSON data](data/examples.json) for search, tooling, or site generation.",
+            "- [Start-here recipes](data/recipes.json) for common user entry points.",
             "- [Data schema](docs/schema.md) for provenance fields and source types.",
             "",
             "## Quality Bar",
             "",
             "- One example should cover one measurable goal.",
             "- The prompt must include verification that can run in a real repository or produce a concrete artifact.",
-            "- New externally sourced examples must include `source_name`, `source_url`, `source_type`, and `evidence` in `data/examples.json`.",
+            "- New externally sourced examples must include `source_name`, `source_url`, `source_type`, `evidence`, and generated `evidence_summary` in `data/examples.json`.",
             "- Do not add undocumented slash-command behavior, fake tool capabilities, or examples copied from private/non-verifiable sources.",
             "",
             "## Sources And Caveats",
@@ -713,8 +797,11 @@ def main() -> None:
     (ROOT / "README.md").write_text(build_readme(entries), encoding="utf-8")
     (ROOT / "prompts" / "goal-examples.md").write_text(build_markdown(entries), encoding="utf-8")
     examples_json = json.dumps(entries, indent=2, ensure_ascii=True) + "\n"
+    recipes_json = json.dumps(RECIPES, indent=2, ensure_ascii=True) + "\n"
     (ROOT / "data" / "examples.json").write_text(examples_json, encoding="utf-8")
     (ROOT / "docs" / "examples.json").write_text(examples_json, encoding="utf-8")
+    (ROOT / "data" / "recipes.json").write_text(recipes_json, encoding="utf-8")
+    (ROOT / "docs" / "recipes.json").write_text(recipes_json, encoding="utf-8")
     print("generated goal catalog")
 
 

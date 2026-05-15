@@ -11,7 +11,15 @@ This repository is based on public documentation, source inspection notes, and c
 - OpenAI Codex issue on Plan mode and goal continuation: https://github.com/openai/codex/issues/20656
 - OpenAI Codex issue on compaction and goal audit requirements: https://github.com/openai/codex/issues/19910
 - Claude Code goal docs: https://code.claude.com/docs/en/goal
+- Claude Code prompt library: https://code.claude.com/docs/en/prompt-library
 - Hermes Agent persistent goals docs: https://hermes-agent.nousresearch.com/docs/user-guide/features/goals
+- OpenAI Agents SDK tracing docs: https://openai.github.io/openai-agents-python/tracing/
+- OpenAI Agents SDK guardrails docs: https://openai.github.io/openai-agents-python/guardrails/
+- OpenAI agent evals docs: https://platform.openai.com/docs/guides/agent-evals
+- OpenHands tutorial library: https://docs.openhands.dev/openhands/usage/get-started/tutorials
+- OpenHands remote agent server docs: https://docs.openhands.dev/sdk/guides/agent-server/overview
+- GitHub Copilot coding agent docs: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/assign-copilot-to-an-issue
+- GitHub Copilot accessibility auditor: https://docs.github.com/en/copilot/tutorials/customization-library/custom-instructions/accessibility-auditor
 - Anthropic blog, Introduction to agentic coding: https://www.claude.com/blog/introduction-to-agentic-coding
 - Claude Code power user tips: https://support.claude.com/en/articles/14554000-claude-code-power-user-tips
 
@@ -25,6 +33,7 @@ Every source-backed entry now carries:
 - `source_url`: public URL
 - `source_type`: provenance class
 - `evidence`: a short phrase from, or tightly tied to, the source
+- `evidence_summary`: generated summary combining the evidence phrase, source label, source type, and verification path
 
 Use `data/examples.json` as the source of truth for the full URL list.
 

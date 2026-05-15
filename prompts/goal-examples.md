@@ -19,6 +19,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Async Job State Machine](#async-job-state-machine) - Make async job transitions explicit and tested across pending/running/succeeded/failed/canceled.
 - [Resource-Level Authorization](#authz-resource-scope) - Prevent logged-in users from accessing resources they do not own.
 - [API Versioning Plan](#api-versioning-plan) - Create a v1/v2 coexistence plan with deprecation headers and migration tests.
+- [API Integration Tests](#openhands-api-integration-tests) - Add end-to-end tests for product API endpoints with success and error cases. Source-backed.
 
 ### backend-data
 - [Database Migration Safety](#db-migration-safety) - Review a migration for rollback, online execution, and lock risk.
@@ -31,6 +32,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Outbox Reliable Events](#outbox-pattern-adoption) - Use an outbox table to prevent lost events after successful database commits.
 - [Read Replica Lag Guard](#read-replica-lag-guard) - Prevent write-after-read paths from hitting stale replicas.
 - [Schema Drift Detector](#schema-drift-detector) - Compare ORM models, migrations, and the live database schema.
+- [Dev Database Migration Proof](#claude-dev-database-migration) - Write a migration, run it against the dev database, and confirm the schema matches. Source-backed.
 
 ### devops-ci
 - [CI Flaky Test Triage](#ci-flaky-test-triage) - Identify flaky tests, separate real failures, and fix unstable waits or fixtures.
@@ -56,6 +58,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Observability Minimum](#observability-minimum) - Add logs, metrics, traces, and alerts for a service's critical paths.
 - [Incident Runbook Gap](#incident-runbook-gap) - Turn a recent incident timeline into missing runbook and alert updates.
 - [Queue Backpressure](#queue-backpressure) - Protect databases and external APIs when worker queues build up.
+- [Remote Agent Server Smoke](#openhands-remote-agent-server-smoke) - Deploy an isolated remote agent server and prove event streaming, workspace access, and command execution work. Source-backed.
 
 ### security-appsec
 - [SQL Injection Audit](#sql-injection-audit) - Replace SQL string concatenation with parameterized queries and tests.
@@ -68,6 +71,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Tenant Isolation Test](#tenant-isolation-test) - Verify tenant IDs are enforced in queries, caches, and background jobs.
 - [Replay Attack Defense](#replay-attack-defense) - Add nonce, timestamp, and expiration checks to signed requests.
 - [IDOR Audit](#insecure-direct-object-ref) - Verify direct object ID access always checks ownership or scope.
+- [Tool Guardrails For AppSec](#openai-tool-guardrails-appsec) - Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues. Source-backed.
 
 ### security-ops
 - [Secret Scan Baseline](#secret-scan-baseline) - Add secret scanning and triage historical findings safely.
@@ -93,6 +97,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Data Retention Enforcement](#data-retention-enforcement) - Verify expiration, archival, deletion, and audit behavior.
 - [Warehouse Cost Audit](#warehouse-cost-audit) - Find expensive queries, duplicate tables, and unused scheduled jobs.
 - [Stream Processing Lag](#stream-processing-lag) - Diagnose Kafka/Flink/Spark lag and checkpoint bottlenecks.
+- [CSV Processing Report](#openhands-csv-processing-report) - Create a data processing script that validates CSV input and generates an analysis report. Source-backed.
 
 ### data-analytics
 - [Metric Definition Lock](#metric-definition-lock) - Turn core metric definitions into tested SQL or semantic-layer checks.
@@ -118,6 +123,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Eval Data Dedup](#eval-data-dedup) - Remove duplicates, leakage, and near-identical eval samples.
 - [Cost Quality Frontier](#cost-quality-frontier) - Compare models by quality, latency, and cost to choose routing tiers.
 - [Rubric-Driven Eval](#rubric-driven-eval) - Replace binary scores with multi-dimensional rubrics for complex tasks.
+- [Trace-Graded Agent Regression](#openai-agent-trace-evals) - Create trace-based evals that catch workflow regressions across tool calls and handoffs. Source-backed.
 
 ### ai-ops
 - [Prompt Version Registry](#prompt-version-registry) - Bind prompt versions to eval results and deployment history.
@@ -130,6 +136,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [AI Output Schema Guard](#ai-output-schema-guard) - Validate structured AI output and fail or retry safely.
 - [Human Review Threshold](#human-review-threshold) - Escalate high-risk AI outputs based on confidence and policy rules.
 - [AI Observability Traces](#ai-observability-traces) - Trace prompts, retrieval, tools, models, scores, and request IDs.
+- [Agent Trace Observability](#openai-agent-tracing-observability) - Instrument agent runs so LLM generations, tool calls, handoffs, guardrails, and custom events are traceable. Source-backed.
 
 ### frontend
 - [Empty State System](#frontend-empty-states) - Design real empty states for lists, search, permissions, and first use.
@@ -164,6 +171,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Toolbar Usability](#design-toolbar-usability) - Improve icon buttons, tooltips, grouping, and disabled states.
 - [Data Card System](#design-data-card-system) - Define metric cards with value, trend, anomaly, and source states.
 - [Brand Fit Pass](#design-brand-fit) - Align the interface language with the product's audience and use case.
+- [Reference Layout Match](#claude-reference-layout-design) - Build a settings page that follows an existing profile page layout instead of inventing a new pattern. Source-backed.
 
 ### mobile
 - [Mobile Bottom Navigation](#mobile-bottom-nav) - Design thumb-friendly mobile navigation for core paths.
@@ -178,6 +186,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Mobile Login Flow](#mobile-login-flow) - Improve magic link, OTP, password manager, and autofill behavior.
 - [Mobile Onboarding](#mobile-onboarding) - Create a short, skippable, restorable first-run path.
 - [Mobile Device Matrix](#mobile-device-matrix) - Cover small screen, large screen, iOS, and Android key paths.
+- [Mobile Agent Task Handoff](#github-mobile-agent-task-handoff) - Prepare and track a coding-agent task started from GitHub Mobile with review-ready evidence. Source-backed.
 
 ### docs
 - [Quickstart](#docs-quickstart) - Write the shortest fresh-clone path that runs successfully in five minutes.
@@ -239,6 +248,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Live Region Feedback](#accessibility-live-region) - Announce toasts, async completion, and errors accessibly.
 - [Touch Accessibility](#accessibility-touch-a11y) - Check tap targets, zoom, and orientation on mobile.
 - [Accessibility Audit Report](#accessibility-audit-report) - Produce prioritized issues, impact, fixes, and acceptance checks.
+- [HTML WCAG Instruction Audit](#github-accessibility-html-wcag) - Audit HTML changes against WCAG guidance and prove the Lighthouse accessibility audit passes. Source-backed.
 
 ### performance
 - [LCP Optimization](#performance-lcp) - Find and optimize the largest contentful paint element.
@@ -9502,6 +9512,7 @@ STOP RULES:
 - Source: [OpenAI Codex docs](https://developers.openai.com/codex/use-cases/follow-goals)
 - Source type: `official-goal`
 - Evidence: verifiable stopping condition
+- Evidence summary: verifiable stopping condition; source: OpenAI Codex docs; type: official-goal; verification: manual status plus repo-local verification
 
 ```text
 /goal
@@ -9551,6 +9562,7 @@ STOP RULES:
 - Source: [OpenAI Codex docs](https://developers.openai.com/codex/use-cases/follow-goals)
 - Source type: `official-goal`
 - Evidence: visual migration
+- Evidence summary: visual migration; source: OpenAI Codex docs; type: official-goal; verification: npx playwright test
 
 ```text
 /goal
@@ -9600,6 +9612,7 @@ STOP RULES:
 - Source: [OpenAI Codex docs](https://developers.openai.com/codex/use-cases/follow-goals)
 - Source type: `official-goal`
 - Evidence: PLAN.md
+- Evidence summary: PLAN.md; source: OpenAI Codex docs; type: official-goal; verification: npx playwright test
 
 ```text
 /goal
@@ -9649,6 +9662,7 @@ STOP RULES:
 - Source: [OpenAI Codex docs](https://developers.openai.com/codex/use-cases/follow-goals)
 - Source type: `official-goal`
 - Evidence: eval suite
+- Evidence summary: eval suite; source: OpenAI Codex docs; type: official-goal; verification: python -m pytest evals
 
 ```text
 /goal
@@ -9698,6 +9712,7 @@ STOP RULES:
 - Source: [Claude Code docs](https://code.claude.com/docs/en/goal)
 - Source type: `official-goal`
 - Evidence: test/auth pass
+- Evidence summary: test/auth pass; source: Claude Code docs; type: official-goal; verification: npm test -- test/auth && npm run lint
 
 ```text
 /goal
@@ -9747,6 +9762,7 @@ STOP RULES:
 - Source: [Claude Code docs](https://code.claude.com/docs/en/goal)
 - Source type: `official-goal`
 - Evidence: CHANGELOG.md has an entry
+- Evidence summary: CHANGELOG.md has an entry; source: Claude Code docs; type: official-goal; verification: git log --since='7 days ago' --merges && rg '^-' CHANGELOG.md
 
 ```text
 /goal
@@ -9796,6 +9812,7 @@ STOP RULES:
 - Source: [Hermes docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/goals)
 - Source type: `official-goal`
 - Evidence: ruff check
+- Evidence summary: ruff check; source: Hermes docs; type: official-goal; verification: ruff check src/
 
 ```text
 /goal
@@ -9845,6 +9862,7 @@ STOP RULES:
 - Source: [Hermes docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/goals)
 - Source type: `official-goal`
 - Evidence: CI green
+- Evidence summary: CI green; source: Hermes docs; type: official-goal; verification: pytest && npm test
 
 ```text
 /goal
@@ -9894,6 +9912,7 @@ STOP RULES:
 - Source: [Hermes docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/goals)
 - Source type: `official-goal`
 - Evidence: write up a report
+- Evidence summary: write up a report; source: Hermes docs; type: official-goal; verification: test -f reports/session-drift.md
 
 ```text
 /goal
@@ -9943,6 +9962,7 @@ STOP RULES:
 - Source: [Hermes docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/goals)
 - Source type: `official-goal`
 - Evidence: photos/ folder
+- Evidence summary: photos/ folder; source: Hermes docs; type: official-goal; verification: pytest tests/cli && ./rename-exif photos/ --dry-run
 
 ```text
 /goal
@@ -9992,6 +10012,7 @@ STOP RULES:
 - Source: [Hermes docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/goals)
 - Source type: `official-goal`
 - Evidence: Create four files
+- Evidence summary: Create four files; source: Hermes docs; type: official-goal; verification: for i in 1 2 3 4; do test "$(cat /tmp/note_$i.txt)" = "$i"; done
 
 ```text
 /goal
@@ -10041,6 +10062,7 @@ STOP RULES:
 - Source: [ExplainX blog](https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026)
 - Source type: `third-party-tutorial`
 - Evidence: TypeScript errors resolved
+- Evidence summary: TypeScript errors resolved; source: ExplainX blog; type: third-party-tutorial; verification: npm run typecheck && npm test && npm run lint && npm run coverage
 
 ```text
 /goal
@@ -10090,6 +10112,7 @@ STOP RULES:
 - Source: [ExplainX blog](https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026)
 - Source type: `third-party-tutorial`
 - Evidence: auth.ts dependency injection
+- Evidence summary: auth.ts dependency injection; source: ExplainX blog; type: third-party-tutorial; verification: npm test -- auth && npm run coverage
 
 ```text
 /goal
@@ -10139,6 +10162,7 @@ STOP RULES:
 - Source: [ExplainX blog](https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026)
 - Source type: `third-party-tutorial`
 - Evidence: npm audit vulnerabilities patched
+- Evidence summary: npm audit vulnerabilities patched; source: ExplainX blog; type: third-party-tutorial; verification: npm audit && npm test
 
 ```text
 /goal
@@ -10188,6 +10212,7 @@ STOP RULES:
 - Source: [ExplainX blog](https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026)
 - Source type: `third-party-tutorial`
 - Evidence: Lighthouse performance score >95
+- Evidence summary: Lighthouse performance score >95; source: ExplainX blog; type: third-party-tutorial; verification: npm run lighthouse
 
 ```text
 /goal
@@ -10237,6 +10262,7 @@ STOP RULES:
 - Source: [Qiita article](https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae)
 - Source type: `third-party-tutorial`
 - Evidence: pnpm test:visual
+- Evidence summary: pnpm test:visual; source: Qiita article; type: third-party-tutorial; verification: pnpm test:visual && pnpm test:unit
 
 ```text
 /goal
@@ -10286,6 +10312,7 @@ STOP RULES:
 - Source: [Qiita article](https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae)
 - Source type: `third-party-tutorial`
 - Evidence: canvas puzzle
+- Evidence summary: canvas puzzle; source: Qiita article; type: third-party-tutorial; verification: pnpm e2e
 
 ```text
 /goal
@@ -10335,6 +10362,7 @@ STOP RULES:
 - Source: [Qiita article](https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae)
 - Source type: `third-party-tutorial`
 - Evidence: router prompt
+- Evidence summary: router prompt; source: Qiita article; type: third-party-tutorial; verification: python -m pytest evals/router
 
 ```text
 /goal
@@ -10384,6 +10412,7 @@ STOP RULES:
 - Source: [OpenAI Codex slash commands](https://developers.openai.com/codex/cli/slash-commands#set-an-experimental-goal-with-goal)
 - Source type: `official-goal`
 - Evidence: Finish the migration
+- Evidence summary: Finish the migration; source: OpenAI Codex slash commands; type: official-goal; verification: repo-local migration tests
 
 ```text
 /goal
@@ -10433,6 +10462,7 @@ STOP RULES:
 - Source: [OpenAI Codex blog](https://developers.openai.com/blog/run-long-horizon-tasks-with-codex)
 - Source type: `official-workflow`
 - Evidence: verification steps
+- Evidence summary: verification steps; source: OpenAI Codex blog; type: official-workflow; verification: tests, lint, and typecheck per milestone
 
 ```text
 /goal
@@ -10482,6 +10512,7 @@ STOP RULES:
 - Source: [Claude Code docs](https://code.claude.com/docs/en/goal)
 - Source type: `official-goal`
 - Evidence: new API
+- Evidence summary: new API; source: Claude Code docs; type: official-goal; verification: compile call sites && tests pass
 
 ```text
 /goal
@@ -10531,6 +10562,7 @@ STOP RULES:
 - Source: [Claude Code docs](https://code.claude.com/docs/en/goal)
 - Source type: `official-goal`
 - Evidence: acceptance criteria
+- Evidence summary: acceptance criteria; source: Claude Code docs; type: official-goal; verification: acceptance criteria review
 
 ```text
 /goal
@@ -10580,6 +10612,7 @@ STOP RULES:
 - Source: [Claude Code docs](https://code.claude.com/docs/en/goal)
 - Source type: `official-goal`
 - Evidence: size budget
+- Evidence summary: size budget; source: Claude Code docs; type: official-goal; verification: module size budget && tests pass
 
 ```text
 /goal
@@ -10629,6 +10662,7 @@ STOP RULES:
 - Source: [Claude Code docs](https://code.claude.com/docs/en/goal)
 - Source type: `official-goal`
 - Evidence: queue is empty
+- Evidence summary: queue is empty; source: Claude Code docs; type: official-goal; verification: issue queue empty
 
 ```text
 /goal
@@ -10678,6 +10712,7 @@ STOP RULES:
 - Source: [Hermes docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/goals)
 - Source type: `official-goal`
 - Evidence: scripts/run_tests.sh passes
+- Evidence summary: scripts/run_tests.sh passes; source: Hermes docs; type: official-goal; verification: scripts/run_tests.sh
 
 ```text
 /goal
@@ -10727,6 +10762,7 @@ STOP RULES:
 - Source: [Cursor product page](https://cursor.com/en-US/product)
 - Source type: `official-agent-task`
 - Evidence: Analyze Tab vs Agent Usage Patterns
+- Evidence summary: Analyze Tab vs Agent Usage Patterns; source: Cursor product page; type: official-agent-task; verification: analysis files and tests shown
 
 ```text
 /goal
@@ -10774,6 +10810,7 @@ STOP RULES:
 - Source: [Cursor product page](https://cursor.com/en-US/product)
 - Source type: `official-agent-task`
 - Evidence: Chart tooltips freeze
+- Evidence summary: Chart tooltips freeze; source: Cursor product page; type: official-agent-task; verification: frontend diff plus interaction verification
 
 ```text
 /goal
@@ -10823,6 +10860,7 @@ STOP RULES:
 - Source: [GitHub Copilot docs](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/start-copilot-sessions)
 - Source type: `official-agent-task`
 - Evidence: user friendly message
+- Evidence summary: user friendly message; source: GitHub Copilot docs; type: official-agent-task; verification: pushed code changes
 
 ```text
 /goal
@@ -10872,6 +10910,7 @@ STOP RULES:
 - Source: [Google Jules sessions docs](https://jules.google/docs/api/reference/sessions/)
 - Source type: `official-agent-task`
 - Evidence: Add auth tests
+- Evidence summary: Add auth tests; source: Google Jules sessions docs; type: official-agent-task; verification: session completed with PR output
 
 ```text
 /goal
@@ -10921,6 +10960,7 @@ STOP RULES:
 - Source: [OpenHands tutorials](https://docs.openhands.dev/openhands/usage/get-started/tutorials)
 - Source type: `official-agent-task`
 - Evidence: Target coverage: 80%
+- Evidence summary: Target coverage: 80%; source: OpenHands tutorials; type: official-agent-task; verification: coverage target evidence
 
 ```text
 /goal
@@ -10970,6 +11010,7 @@ STOP RULES:
 - Source: [Devin advanced capabilities](https://docs.devin.ai/product-guides/advanced-mode)
 - Source type: `official-agent-task`
 - Evidence: below 50% coverage
+- Evidence summary: below 50% coverage; source: Devin advanced capabilities; type: official-agent-task; verification: separate PR per module
 
 ```text
 /goal
@@ -11019,6 +11060,7 @@ STOP RULES:
 - Source: [Qiita Aochan0604](https://qiita.com/Aochan0604/items/8cc5f28901455097095c)
 - Source type: `third-party-tutorial`
 - Evidence: pnpm exec vitest run -t
+- Evidence summary: pnpm exec vitest run -t; source: Qiita Aochan0604; type: third-party-tutorial; verification: pnpm exec vitest run -t "increments score only on correct answer"
 
 ```text
 /goal
@@ -11068,6 +11110,7 @@ STOP RULES:
 - Source: [Qiita Aochan0604](https://qiita.com/Aochan0604/items/8cc5f28901455097095c)
 - Source type: `third-party-tutorial`
 - Evidence: pnpm exec vitest run exits 0
+- Evidence summary: pnpm exec vitest run exits 0; source: Qiita Aochan0604; type: third-party-tutorial; verification: pnpm exec vitest run
 
 ```text
 /goal
@@ -11117,6 +11160,7 @@ STOP RULES:
 - Source: [Qiita Aochan0604](https://qiita.com/Aochan0604/items/8cc5f28901455097095c)
 - Source type: `third-party-tutorial`
 - Evidence: .correct and .wrong
+- Evidence summary: .correct and .wrong; source: Qiita Aochan0604; type: third-party-tutorial; verification: pnpm exec vitest run && git status --short
 
 ```text
 /goal
@@ -11166,6 +11210,7 @@ STOP RULES:
 - Source: [J.D. Hodges blog](https://www.jdhodges.com/blog/codex-goal-feature-review/)
 - Source type: `third-party-review`
 - Evidence: read-only font-match
+- Evidence summary: read-only font-match; source: J.D. Hodges blog; type: third-party-review; verification: written report
 
 ```text
 /goal
@@ -11215,6 +11260,7 @@ STOP RULES:
 - Source: [J.D. Hodges blog](https://www.jdhodges.com/blog/codex-goal-feature-review/)
 - Source type: `third-party-review`
 - Evidence: coverage from 38% to 75%
+- Evidence summary: coverage from 38% to 75%; source: J.D. Hodges blog; type: third-party-review; verification: npm test
 
 ```text
 /goal
@@ -11264,6 +11310,7 @@ STOP RULES:
 - Source: [Apidog blog](https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/)
 - Source type: `third-party-tutorial`
 - Evidence: npm test exits 0
+- Evidence summary: npm test exits 0; source: Apidog blog; type: third-party-tutorial; verification: npm test
 
 ```text
 /goal
@@ -11313,6 +11360,7 @@ STOP RULES:
 - Source: [Apidog blog](https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/)
 - Source type: `third-party-tutorial`
 - Evidence: 10 distinct benchmarks
+- Evidence summary: 10 distinct benchmarks; source: Apidog blog; type: third-party-tutorial; verification: table covers 10 sources
 
 ```text
 /goal
@@ -11362,6 +11410,7 @@ STOP RULES:
 - Source: [Apidog blog](https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/)
 - Source type: `third-party-tutorial`
 - Evidence: dead code, unused dependencies
+- Evidence summary: dead code, unused dependencies; source: Apidog blog; type: third-party-tutorial; verification: each item has justification
 
 ```text
 /goal
@@ -11411,6 +11460,7 @@ STOP RULES:
 - Source: [Apidog blog](https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/)
 - Source type: `third-party-tutorial`
 - Evidence: README.md install/run/test
+- Evidence summary: README.md install/run/test; source: Apidog blog; type: third-party-tutorial; verification: commands and expected output documented
 
 ```text
 /goal
@@ -11460,6 +11510,7 @@ STOP RULES:
 - Source: [Apidog blog](https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/)
 - Source type: `third-party-tutorial`
 - Evidence: dark/light theme toggle
+- Evidence summary: dark/light theme toggle; source: Apidog blog; type: third-party-tutorial; verification: browser refresh verification
 
 ```text
 /goal
@@ -11509,6 +11560,7 @@ STOP RULES:
 - Source: [ExplainX blog](https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026)
 - Source type: `third-party-tutorial`
 - Evidence: All CI checks passing
+- Evidence summary: All CI checks passing; source: ExplainX blog; type: third-party-tutorial; verification: local CI rerun and remote CI
 
 ```text
 /goal
@@ -11558,6 +11610,7 @@ STOP RULES:
 - Source: [ExplainX blog](https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026)
 - Source type: `third-party-tutorial`
 - Evidence: Moment.js usage with Day.js
+- Evidence summary: Moment.js usage with Day.js; source: ExplainX blog; type: third-party-tutorial; verification: tests and edge-case output compare
 
 ```text
 /goal
@@ -11607,6 +11660,7 @@ STOP RULES:
 - Source: [ExplainX blog](https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026)
 - Source type: `third-party-tutorial`
 - Evidence: public functions ... JSDoc
+- Evidence summary: public functions ... JSDoc; source: ExplainX blog; type: third-party-tutorial; verification: docs coverage and broken link check
 
 ```text
 /goal
@@ -11656,6 +11710,7 @@ STOP RULES:
 - Source: [Udit Autoresearch](https://udit.co/projects/autoresearch)
 - Source type: `third-party-project`
 - Evidence: Increase test coverage to 95%
+- Evidence summary: Increase test coverage to 95%; source: Udit Autoresearch; type: third-party-project; verification: npm test -- --coverage
 
 ```text
 /goal
@@ -11705,6 +11760,7 @@ STOP RULES:
 - Source: [Udit Autoresearch](https://udit.co/projects/autoresearch)
 - Source type: `third-party-project`
 - Evidence: Reduce bundle size below 200KB
+- Evidence summary: Reduce bundle size below 200KB; source: Udit Autoresearch; type: third-party-project; verification: npm run build and size report
 
 ```text
 /goal
@@ -11754,6 +11810,7 @@ STOP RULES:
 - Source: [Udit Autoresearch](https://udit.co/projects/autoresearch)
 - Source type: `third-party-project`
 - Evidence: npm run bench
+- Evidence summary: npm run bench; source: Udit Autoresearch; type: third-party-project; verification: npm run bench
 
 ```text
 /goal
@@ -11803,6 +11860,7 @@ STOP RULES:
 - Source: [TheAIDaily](https://theaidaily.nl/zo-gebruik-je-claude-code-goal-slash-command/)
 - Source type: `third-party-tutorial`
 - Evidence: npm test exit code 0
+- Evidence summary: npm test exit code 0; source: TheAIDaily; type: third-party-tutorial; verification: npm test && npx tsc --noEmit
 
 ```text
 /goal
@@ -11852,6 +11910,7 @@ STOP RULES:
 - Source: [TheAIDaily](https://theaidaily.nl/zo-gebruik-je-claude-code-goal-slash-command/)
 - Source type: `third-party-tutorial`
 - Evidence: git status is clean
+- Evidence summary: git status is clean; source: TheAIDaily; type: third-party-tutorial; verification: git status --short && file length check
 
 ```text
 /goal
@@ -11901,6 +11960,7 @@ STOP RULES:
 - Source: [Cursor Forum](https://forum.cursor.com/t/add-autonomous-goal-mode-similar-to-claude-code-s-goal/160374)
 - Source type: `public-forum`
 - Evidence: React 19 until build passes
+- Evidence summary: React 19 until build passes; source: Cursor Forum; type: public-forum; verification: build passes
 
 ```text
 /goal
@@ -11950,6 +12010,7 @@ STOP RULES:
 - Source: [Cursor Forum](https://forum.cursor.com/t/add-autonomous-goal-mode-similar-to-claude-code-s-goal/160374)
 - Source type: `public-forum`
 - Evidence: go test -race
+- Evidence summary: go test -race; source: Cursor Forum; type: public-forum; verification: go test -race
 
 ```text
 /goal
@@ -11999,6 +12060,7 @@ STOP RULES:
 - Source: [@meta_alchemist on X](https://x.com/meta_alchemist/status/2054214497443995694)
 - Source type: `x-post`
 - Evidence: write me the /goal prompt for this
+- Evidence summary: write me the /goal prompt for this; source: @meta_alchemist on X; type: x-post; verification: generated goal prompt with clarified uncertainties
 
 ```text
 /goal
@@ -12048,6 +12110,7 @@ STOP RULES:
 - Source: [@sairahul1 on X](https://x.com/sairahul1/status/2054821159066386482)
 - Source type: `x-post`
 - Evidence: /goal all tests pass and lint is clean
+- Evidence summary: /goal all tests pass and lint is clean; source: @sairahul1 on X; type: x-post; verification: tests pass && lint clean
 
 ```text
 /goal
@@ -12097,6 +12160,7 @@ STOP RULES:
 - Source: [@KingBootoshi on X](https://x.com/KingBootoshi/status/2054837169748152645)
 - Source type: `x-post`
 - Evidence: /GOAL NEEDED AN ESCAPE HATCH
+- Evidence summary: /GOAL NEEDED AN ESCAPE HATCH; source: @KingBootoshi on X; type: x-post; verification: incomplete marker and rationale
 
 ```text
 /goal
@@ -12146,6 +12210,7 @@ STOP RULES:
 - Source: [@dhruvbaldawa on X](https://x.com/dhruvbaldawa/status/2053745268118733252)
 - Source type: `x-post`
 - Evidence: combine it with /goal
+- Evidence summary: combine it with /goal; source: @dhruvbaldawa on X; type: x-post; verification: AGENTS.md rules honored
 
 ```text
 /goal
@@ -12195,6 +12260,7 @@ STOP RULES:
 - Source: [@Michaelzsguo on X](https://x.com/Michaelzsguo/status/2053508788431511637)
 - Source type: `x-post`
 - Evidence: done_when is intrinsic
+- Evidence summary: done_when is intrinsic; source: @Michaelzsguo on X; type: x-post; verification: done_when audit
 
 ```text
 /goal
@@ -12244,6 +12310,7 @@ STOP RULES:
 - Source: [@ivangdavila on X](https://x.com/ivangdavila/status/2053867892064616481)
 - Source type: `x-post`
 - Evidence: Use /plan mode to define the goal
+- Evidence summary: Use /plan mode to define the goal; source: @ivangdavila on X; type: x-post; verification: plan completed against checklist
 
 ```text
 /goal
@@ -12293,6 +12360,7 @@ STOP RULES:
 - Source: [@Arslandev97 on X](https://x.com/Arslandev97/status/2054781760194711978)
 - Source type: `x-post`
 - Evidence: Set a clear goal. Make it measurable.
+- Evidence summary: Set a clear goal. Make it measurable.; source: @Arslandev97 on X; type: x-post; verification: proof and limits present
 
 ```text
 /goal
@@ -12342,6 +12410,7 @@ STOP RULES:
 - Source: [@LenaWithAI on X](https://x.com/LenaWithAI/status/2054845479502930372)
 - Source type: `x-post`
 - Evidence: runs until tests pass and lint is clean
+- Evidence summary: runs until tests pass and lint is clean; source: @LenaWithAI on X; type: x-post; verification: tests pass && lint clean
 
 ```text
 /goal
@@ -12391,6 +12460,7 @@ STOP RULES:
 - Source: [Reddit r/codex](https://www.reddit.com/r/codex/comments/1t7b3x1/goal_in_the_codex_app_is_amazing/)
 - Source type: `public-forum`
 - Evidence: 210 task backlog
+- Evidence summary: 210 task backlog; source: Reddit r/codex; type: public-forum; verification: backlog cleared
 
 ```text
 /goal
@@ -12440,6 +12510,7 @@ STOP RULES:
 - Source: [Reddit r/WebAfterAI](https://www.reddit.com/r/WebAfterAI/comments/1t6lgsb/openai_just_dropped_goal_in_codex_set_a_goal_and/)
 - Source type: `public-forum`
 - Evidence: /goal ship the 18 features
+- Evidence summary: /goal ship the 18 features; source: Reddit r/WebAfterAI; type: public-forum; verification: CI green
 
 ```text
 /goal
@@ -12489,6 +12560,7 @@ STOP RULES:
 - Source: [Reddit r/ClaudeCode](https://www.reddit.com/r/ClaudeCode/comments/1taty8a/claude_code_just_shipped_a_run_until_done_mode/)
 - Source type: `public-forum`
 - Evidence: all tests pass and the PR is ready
+- Evidence summary: all tests pass and the PR is ready; source: Reddit r/ClaudeCode; type: public-forum; verification: tests pass
 
 ```text
 /goal
@@ -12538,6 +12610,7 @@ STOP RULES:
 - Source: [Reddit r/ClaudeAI](https://www.reddit.com/r/ClaudeAI/comments/1taelgl/what_improved_my_claude_code_workflow_stop/)
 - Source type: `public-forum`
 - Evidence: billing page shows an empty state
+- Evidence summary: billing page shows an empty state; source: Reddit r/ClaudeAI; type: public-forum; verification: npm test
 
 ```text
 /goal
@@ -12587,6 +12660,7 @@ STOP RULES:
 - Source: [Reddit r/ClaudeCode](https://www.reddit.com/r/ClaudeCode/comments/1pe5nnw/update_1_creating_a_claude_code_flywheel/)
 - Source type: `public-forum`
 - Evidence: continually improve my RAG based document chat
+- Evidence summary: continually improve my RAG based document chat; source: Reddit r/ClaudeCode; type: public-forum; verification: Playwright tests and metric review
 
 ```text
 /goal
@@ -12636,6 +12710,7 @@ STOP RULES:
 - Source: [HN Playwright Skill](https://news.ycombinator.com/item?id=45642911)
 - Source type: `public-forum`
 - Evidence: console error when you click the button
+- Evidence summary: console error when you click the button; source: HN Playwright Skill; type: public-forum; verification: Playwright interaction
 
 ```text
 /goal
@@ -12685,6 +12760,7 @@ STOP RULES:
 - Source: [HN You Should Write An Agent](https://news.ycombinator.com/item?id=45840088)
 - Source type: `public-forum`
 - Evidence: fetch ten reviews
+- Evidence summary: fetch ten reviews; source: HN You Should Write An Agent; type: public-forum; verification: JSON files written
 
 ```text
 /goal
@@ -12734,6 +12810,7 @@ STOP RULES:
 - Source: [HN Astro](https://news.ycombinator.com/item?id=47355676)
 - Source type: `public-forum`
 - Evidence: isolated git worktree and opens a PR
+- Evidence summary: isolated git worktree and opens a PR; source: HN Astro; type: public-forum; verification: PR output
 
 ```text
 /goal
@@ -12783,6 +12860,7 @@ STOP RULES:
 - Source: [VideoHighlight YouTube summary](https://videohighlight.com/v/AJpK3YTTKZ4)
 - Source type: `video-summary`
 - Evidence: replace a sidebar with chat history
+- Evidence summary: replace a sidebar with chat history; source: VideoHighlight YouTube summary; type: video-summary; verification: tests and build
 
 ```text
 /goal
@@ -12832,6 +12910,7 @@ STOP RULES:
 - Source: [Pogovet YouTube summary](https://pogovet.com/youtube/codex-just-became-the-best-long-running-agentic-harness)
 - Source type: `video-summary`
 - Evidence: 2D combat game Rift Salvage
+- Evidence summary: 2D combat game Rift Salvage; source: Pogovet YouTube summary; type: video-summary; verification: browser verification
 
 ```text
 /goal
@@ -12881,6 +12960,7 @@ STOP RULES:
 - Source: [jthack/claude-goal](https://github.com/jthack/claude-goal)
 - Source type: `tool-readme`
 - Evidence: find and fix the flaky auth tests
+- Evidence summary: find and fix the flaky auth tests; source: jthack/claude-goal; type: tool-readme; verification: python3 -m pytest tests
 
 ```text
 /goal
@@ -12930,6 +13010,7 @@ STOP RULES:
 - Source: [jailbreak-autoresearch docs](https://github.com/davidondrej/jailbreak-autoresearch/blob/main/docs-slash-goal.md)
 - Source type: `tool-readme`
 - Evidence: Migrate this project from Pydantic v1 to v2
+- Evidence summary: Migrate this project from Pydantic v1 to v2; source: jailbreak-autoresearch docs; type: tool-readme; verification: pytest -q
 
 ```text
 /goal
@@ -12979,6 +13060,7 @@ STOP RULES:
 - Source: [openai/codex issue 21176](https://github.com/openai/codex/issues/21176)
 - Source type: `github-issue`
 - Evidence: review the plan ImplementationPlan.md
+- Evidence summary: review the plan ImplementationPlan.md; source: openai/codex issue 21176; type: github-issue; verification: fresh plan review has no new gaps
 
 ```text
 /goal
@@ -13028,6 +13110,7 @@ STOP RULES:
 - Source: [openai/codex discussion 21764](https://github.com/openai/codex/discussions/21764)
 - Source type: `github-discussion`
 - Evidence: Build the Meta0 LifeOS ontology boundary artifact
+- Evidence summary: Build the Meta0 LifeOS ontology boundary artifact; source: openai/codex discussion 21764; type: github-discussion; verification: get_goal and thread_goals evidence
 
 ```text
 /goal
@@ -13077,6 +13160,7 @@ STOP RULES:
 - Source: [openai/codex issue 22049](https://github.com/openai/codex/issues/22049)
 - Source type: `github-issue`
 - Evidence: Complete a long-running task until final verification passes
+- Evidence summary: Complete a long-running task until final verification passes; source: openai/codex issue 22049; type: github-issue; verification: final verification
 
 ```text
 /goal
@@ -13126,6 +13210,7 @@ STOP RULES:
 - Source: [openai/codex PR 21860](https://github.com/openai/codex/pull/21860)
 - Source type: `github-pr`
 - Evidence: /goal improve benchmark coverage
+- Evidence summary: /goal improve benchmark coverage; source: openai/codex PR 21860; type: github-pr; verification: cargo test -p codex-tui goal_slash_command -- --nocapture
 
 ```text
 /goal
@@ -13175,6 +13260,7 @@ STOP RULES:
 - Source: [openai/codex PR 22045](https://github.com/openai/codex/pull/22045)
 - Source type: `github-pr`
 - Evidence: completion audits before calling update_goal
+- Evidence summary: completion audits before calling update_goal; source: openai/codex PR 22045; type: github-pr; verification: focused coverage and evals
 
 ```text
 /goal
@@ -13224,6 +13310,7 @@ STOP RULES:
 - Source: [openai/codex issue 22090](https://github.com/openai/codex/issues/22090)
 - Source type: `github-issue`
 - Evidence: uses stale permission context
+- Evidence summary: uses stale permission context; source: openai/codex issue 22090; type: github-issue; verification: cargo check focused crates
 
 ```text
 /goal
@@ -13273,6 +13360,7 @@ STOP RULES:
 - Source: [tolibear/goalbuddy](https://github.com/tolibear/goalbuddy)
 - Source type: `tool-readme`
 - Evidence: prints the exact /goal command
+- Evidence summary: prints the exact /goal command; source: tolibear/goalbuddy; type: tool-readme; verification: board, receipts, and verify files
 
 ```text
 /goal
@@ -13322,6 +13410,7 @@ STOP RULES:
 - Source: [anthropics/claude-code issue 58348](https://github.com/anthropics/claude-code/issues/58348)
 - Source type: `github-issue`
 - Evidence: /goal Fix bugs #1-#6
+- Evidence summary: /goal Fix bugs #1-#6; source: anthropics/claude-code issue 58348; type: github-issue; verification: no unsatisfied skill loop
 
 ```text
 /goal
@@ -13371,6 +13460,7 @@ STOP RULES:
 - Source: [anthropics/claude-code issue 58192](https://github.com/anthropics/claude-code/issues/58192)
 - Source type: `github-issue`
 - Evidence: Goal: <several lines of overarching aim>
+- Evidence summary: Goal: <several lines of overarching aim>; source: anthropics/claude-code issue 58192; type: github-issue; verification: stop hook evaluates cleanly
 
 ```text
 /goal
@@ -13420,6 +13510,7 @@ STOP RULES:
 - Source: [NousResearch/hermes-agent PR 18262](https://github.com/NousResearch/hermes-agent/pull/18262)
 - Source type: `github-pr`
 - Evidence: print hello, Ralph loop
+- Evidence summary: print hello, Ralph loop; source: NousResearch/hermes-agent PR 18262; type: github-pr; verification: live judge round-trip
 
 ```text
 /goal
@@ -13469,6 +13560,7 @@ STOP RULES:
 - Source: [NousResearch/hermes-agent issue 18421](https://github.com/NousResearch/hermes-agent/issues/18421)
 - Source type: `github-issue`
 - Evidence: /home/ubuntu/ml-resumo.md
+- Evidence summary: /home/ubuntu/ml-resumo.md; source: NousResearch/hermes-agent issue 18421; type: github-issue; verification: find and read_file evidence
 
 ```text
 /goal
@@ -13518,6 +13610,7 @@ STOP RULES:
 - Source: [NousResearch/hermes-agent issue 22617](https://github.com/NousResearch/hermes-agent/issues/22617)
 - Source type: `github-issue`
 - Evidence: /goal Fix failing tests
+- Evidence summary: /goal Fix failing tests; source: NousResearch/hermes-agent issue 22617; type: github-issue; verification: queue promotion evidence
 
 ```text
 /goal
@@ -13543,6 +13636,502 @@ DONE WHEN:
 
 VERIFY:
 - Run `queue promotion evidence` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openhands-api-integration-tests"></a>
+### API Integration Tests
+
+- Category: `backend-api`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Add end-to-end tests for product API endpoints with success and error cases.
+- Verification: `jest integration tests with test database`
+- Source: [OpenHands tutorial library](https://docs.openhands.dev/openhands/usage/get-started/tutorials)
+- Source type: `official-agent-task`
+- Evidence: Add integration tests for the /api/products endpoints
+- Evidence summary: Add integration tests for the /api/products endpoints; source: OpenHands tutorial library; type: official-agent-task; verification: jest integration tests with test database
+
+```text
+/goal
+GOAL:
+Complete API Integration Tests for a backend API service: Add end-to-end tests for product API endpoints with success and error cases.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect API routes, OpenAPI specs, handlers, middleware, and API tests.
+- Establish a baseline by running or locating evidence for: `jest integration tests with test database`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Add end-to-end tests for product API endpoints with success and error cases.
+- The verification command or evidence path succeeds: `jest integration tests with test database`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `jest integration tests with test database` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="claude-dev-database-migration"></a>
+### Dev Database Migration Proof
+
+- Category: `backend-data`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Write a migration, run it against the dev database, and confirm the schema matches.
+- Verification: `migration applied to dev DB and schema comparison`
+- Source: [Claude Code prompt library](https://code.claude.com/docs/en/prompt-library)
+- Source type: `official-agent-task`
+- Evidence: write the migration, run it against the dev database, and confirm the schema matches
+- Evidence summary: write the migration, run it against the dev database, and confirm the schema matches; source: Claude Code prompt library; type: official-agent-task; verification: migration applied to dev DB and schema comparison
+
+```text
+/goal
+GOAL:
+Complete Dev Database Migration Proof for a data-backed backend service: Write a migration, run it against the dev database, and confirm the schema matches.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect schema files, migrations, models, repositories, and data tests.
+- Establish a baseline by running or locating evidence for: `migration applied to dev DB and schema comparison`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not destroy or rewrite data without a dry-run, rollback, and row-count/checksum evidence.
+- Do not hide database errors behind warnings or silent fallbacks.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Write a migration, run it against the dev database, and confirm the schema matches.
+- The verification command or evidence path succeeds: `migration applied to dev DB and schema comparison`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `migration applied to dev DB and schema comparison` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-accessibility-html-wcag"></a>
+### HTML WCAG Instruction Audit
+
+- Category: `accessibility`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Audit HTML changes against WCAG guidance and prove the Lighthouse accessibility audit passes.
+- Verification: `Lighthouse accessibility audit`
+- Source: [GitHub Copilot accessibility auditor](https://docs.github.com/en/copilot/tutorials/customization-library/custom-instructions/accessibility-auditor)
+- Source type: `official-agent-task`
+- Evidence: generate accessible, inclusive HTML that follows WCAG guidelines
+- Evidence summary: generate accessible, inclusive HTML that follows WCAG guidelines; source: GitHub Copilot accessibility auditor; type: official-agent-task; verification: Lighthouse accessibility audit
+
+```text
+/goal
+GOAL:
+Complete HTML WCAG Instruction Audit for a web or mobile interface: Audit HTML changes against WCAG guidance and prove the Lighthouse accessibility audit passes.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect interactive elements, semantics, focus management, and a11y reports.
+- Establish a baseline by running or locating evidence for: `Lighthouse accessibility audit`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not hide controls from assistive technology to silence audit findings.
+- Keep keyboard, focus, semantic, and visual checks together.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Audit HTML changes against WCAG guidance and prove the Lighthouse accessibility audit passes.
+- The verification command or evidence path succeeds: `Lighthouse accessibility audit`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `Lighthouse accessibility audit` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="claude-reference-layout-design"></a>
+### Reference Layout Match
+
+- Category: `design`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Build a settings page that follows an existing profile page layout instead of inventing a new pattern.
+- Verification: `visual comparison against profile page`
+- Source: [Claude Code prompt library](https://code.claude.com/docs/en/prompt-library)
+- Source type: `official-agent-task`
+- Evidence: add a settings page that follows the same layout as the profile page
+- Evidence summary: add a settings page that follows the same layout as the profile page; source: Claude Code prompt library; type: official-agent-task; verification: visual comparison against profile page
+
+```text
+/goal
+GOAL:
+Complete Reference Layout Match for a product UI codebase: Build a settings page that follows an existing profile page layout instead of inventing a new pattern.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect design tokens, component variants, layouts, visual states, and screenshots.
+- Establish a baseline by running or locating evidence for: `visual comparison against profile page`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not replace the app with a landing-page style redesign.
+- Preserve domain workflows and use existing design tokens where they exist.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Build a settings page that follows an existing profile page layout instead of inventing a new pattern.
+- The verification command or evidence path succeeds: `visual comparison against profile page`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `visual comparison against profile page` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-mobile-agent-task-handoff"></a>
+### Mobile Agent Task Handoff
+
+- Category: `mobile`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Prepare and track a coding-agent task started from GitHub Mobile with review-ready evidence.
+- Verification: `GitHub Mobile agent task creates a PR`
+- Source: [GitHub Copilot coding agent docs](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/assign-copilot-to-an-issue)
+- Source type: `official-agent-task`
+- Evidence: assign an issue to Copilot on GitHub Mobile
+- Evidence summary: assign an issue to Copilot on GitHub Mobile; source: GitHub Copilot coding agent docs; type: official-agent-task; verification: GitHub Mobile agent task creates a PR
+
+```text
+/goal
+GOAL:
+Complete Mobile Agent Task Handoff for a mobile or responsive application: Prepare and track a coding-agent task started from GitHub Mobile with review-ready evidence.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect mobile routes, forms, gestures, device matrix, and viewport tests.
+- Establish a baseline by running or locating evidence for: `GitHub Mobile agent task creates a PR`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not optimize only desktop behavior.
+- Keep touch targets, safe areas, and keyboard overlap in scope.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Prepare and track a coding-agent task started from GitHub Mobile with review-ready evidence.
+- The verification command or evidence path succeeds: `GitHub Mobile agent task creates a PR`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `GitHub Mobile agent task creates a PR` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openai-agent-trace-evals"></a>
+### Trace-Graded Agent Regression
+
+- Category: `ai-evals`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Create trace-based evals that catch workflow regressions across tool calls and handoffs.
+- Verification: `agent eval report with graded traces`
+- Source: [OpenAI agent evals docs](https://platform.openai.com/docs/guides/agent-evals)
+- Source type: `official-workflow`
+- Evidence: trace grading functionality
+- Evidence summary: trace grading functionality; source: OpenAI agent evals docs; type: official-workflow; verification: agent eval report with graded traces
+
+```text
+/goal
+GOAL:
+Complete Trace-Graded Agent Regression for an AI evaluation project: Create trace-based evals that catch workflow regressions across tool calls and handoffs.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect eval datasets, rubrics, model outputs, judge code, and regression reports.
+- Establish a baseline by running or locating evidence for: `agent eval report with graded traces`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not tune prompts against hidden labels or delete failing eval cases to improve the score.
+- Keep before/after eval evidence and representative failures.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Create trace-based evals that catch workflow regressions across tool calls and handoffs.
+- The verification command or evidence path succeeds: `agent eval report with graded traces`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `agent eval report with graded traces` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openai-agent-tracing-observability"></a>
+### Agent Trace Observability
+
+- Category: `ai-ops`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Instrument agent runs so LLM generations, tool calls, handoffs, guardrails, and custom events are traceable.
+- Verification: `trace dashboard shows spans for one agent run`
+- Source: [OpenAI Agents SDK tracing docs](https://openai.github.io/openai-agents-python/tracing/)
+- Source type: `official-workflow`
+- Evidence: built-in tracing collects LLM generations, tool calls, handoffs, guardrails
+- Evidence summary: built-in tracing collects LLM generations, tool calls, handoffs, guardrails; source: OpenAI Agents SDK tracing docs; type: official-workflow; verification: trace dashboard shows spans for one agent run
+
+```text
+/goal
+GOAL:
+Complete Agent Trace Observability for an AI application runtime: Instrument agent runs so LLM generations, tool calls, handoffs, guardrails, and custom events are traceable.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect prompts, retrieval code, routing policies, tracing, and cost logs.
+- Establish a baseline by running or locating evidence for: `trace dashboard shows spans for one agent run`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not silently fall back to a lower-quality model for user-visible critical paths.
+- Keep request IDs, cost evidence, and schema validation errors visible.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Instrument agent runs so LLM generations, tool calls, handoffs, guardrails, and custom events are traceable.
+- The verification command or evidence path succeeds: `trace dashboard shows spans for one agent run`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `trace dashboard shows spans for one agent run` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openhands-csv-processing-report"></a>
+### CSV Processing Report
+
+- Category: `data-eng`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Create a data processing script that validates CSV input and generates an analysis report.
+- Verification: `script output report and validation checks`
+- Source: [OpenHands tutorial library](https://docs.openhands.dev/openhands/usage/get-started/tutorials)
+- Source type: `official-agent-task`
+- Evidence: Process CSV data and generate a report
+- Evidence summary: Process CSV data and generate a report; source: OpenHands tutorial library; type: official-agent-task; verification: script output report and validation checks
+
+```text
+/goal
+GOAL:
+Complete CSV Processing Report for a data pipeline project: Create a data processing script that validates CSV input and generates an analysis report.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect ETL jobs, schemas, source contracts, transformations, and data quality tests.
+- Establish a baseline by running or locating evidence for: `script output report and validation checks`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Create a data processing script that validates CSV input and generates an analysis report.
+- The verification command or evidence path succeeds: `script output report and validation checks`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `script output report and validation checks` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openhands-remote-agent-server-smoke"></a>
+### Remote Agent Server Smoke
+
+- Category: `devops-runtime`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Deploy an isolated remote agent server and prove event streaming, workspace access, and command execution work.
+- Verification: `remote server smoke run and websocket event evidence`
+- Source: [OpenHands remote agent server docs](https://docs.openhands.dev/sdk/guides/agent-server/overview)
+- Source type: `official-workflow`
+- Evidence: Remote Agent Servers package the Software Agent SDK into containers
+- Evidence summary: Remote Agent Servers package the Software Agent SDK into containers; source: OpenHands remote agent server docs; type: official-workflow; verification: remote server smoke run and websocket event evidence
+
+```text
+/goal
+GOAL:
+Complete Remote Agent Server Smoke for a deployed service: Deploy an isolated remote agent server and prove event streaming, workspace access, and command execution work.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect Dockerfiles, deployment manifests, runtime config, and health checks.
+- Establish a baseline by running or locating evidence for: `remote server smoke run and websocket event evidence`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not deploy to production automatically; stop with a verified plan if live credentials are required.
+- Keep rollback and health-check evidence attached to the final output.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Deploy an isolated remote agent server and prove event streaming, workspace access, and command execution work.
+- The verification command or evidence path succeeds: `remote server smoke run and websocket event evidence`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `remote server smoke run and websocket event evidence` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openai-tool-guardrails-appsec"></a>
+### Tool Guardrails For AppSec
+
+- Category: `security-appsec`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues.
+- Verification: `guardrail tests trigger on unsafe tool input/output`
+- Source: [OpenAI Agents SDK guardrails docs](https://openai.github.io/openai-agents-python/guardrails/)
+- Source type: `official-workflow`
+- Evidence: tool guardrails run on every custom function-tool invocation
+- Evidence summary: tool guardrails run on every custom function-tool invocation; source: OpenAI Agents SDK guardrails docs; type: official-workflow; verification: guardrail tests trigger on unsafe tool input/output
+
+```text
+/goal
+GOAL:
+Complete Tool Guardrails For AppSec for an application with security-sensitive code paths: Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect auth, input handling, rendering, upload, and boundary tests.
+- Establish a baseline by running or locating evidence for: `guardrail tests trigger on unsafe tool input/output`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not bypass authentication, authorization, validation, or audit checks.
+- Do not use eval, unsafe HTML injection, shell string concatenation, or string-built SQL.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues.
+- The verification command or evidence path succeeds: `guardrail tests trigger on unsafe tool input/output`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `guardrail tests trigger on unsafe tool input/output` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 

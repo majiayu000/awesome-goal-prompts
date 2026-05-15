@@ -1,0 +1,57 @@
+[
+  {
+    "query": "auth tests fail lint red",
+    "expected": "claude-auth-tests-lint",
+    "max_rank": 1
+  },
+  {
+    "query": "auth lint",
+    "expected": "claude-auth-tests-lint",
+    "max_rank": 3
+  },
+  {
+    "query": "database migration schema",
+    "expected": "claude-dev-database-migration",
+    "max_rank": 3
+  },
+  {
+    "query": "a11y wcag accessibility",
+    "expected": "github-accessibility-html-wcag",
+    "max_rank": 3
+  },
+  {
+    "query": "agent evals trace grading",
+    "expected": "openai-agent-trace-evals",
+    "max_rank": 3
+  },
+  {
+    "query": "agent tracing observability",
+    "expected": "openai-agent-tracing-observability",
+    "max_rank": 3
+  },
+  {
+    "query": "security guardrails tool calls",
+    "expected": "openai-tool-guardrails-appsec",
+    "max_rank": 3
+  },
+  {
+    "query": "backend api integration tests",
+    "expected": "openhands-api-integration-tests",
+    "max_rank": 3
+  },
+  {
+    "query": "mobile github issue agent",
+    "expected": "github-mobile-agent-task-handoff",
+    "max_rank": 3
+  },
+  {
+    "query": "remote agent server smoke",
+    "expected": "openhands-remote-agent-server-smoke",
+    "max_rank": 3
+  },
+  {
+    "query": "docs quickstart onboarding",
+    "expected": "docs-quickstart",
+    "max_rank": 5
+  }
+]

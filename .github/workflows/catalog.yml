@@ -1,0 +1,45 @@
+name: Catalog quality
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Regenerate catalog
+        run: python3 scripts/generate_examples.py
+
+      - name: Regenerate health report
+        run: python3 scripts/generate_catalog_health.py
+
+      - name: Evaluate search quality
+        run: python3 scripts/evaluate_search.py
+
+      - name: Check page JavaScript
+        run: node --check docs/app.js
+
+      - name: Check generated files are committed
+        run: git diff --exit-code
+
+      - name: Check whitespace
+        run: git diff --check

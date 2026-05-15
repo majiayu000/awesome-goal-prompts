@@ -9,12 +9,13 @@ Browse the live catalog: https://majiayu000.github.io/awesome-goal-prompts/
 
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk.
 
-Provenance is explicit: `source-backed` examples include a public URL, source type, and short evidence phrase; `seed` examples are reusable catalog patterns and are not claimed as collected from X, GitHub, or docs.
+Provenance is explicit: `source-backed` examples include a public URL, source type, short evidence phrase, and evidence summary; `seed` examples are reusable catalog patterns and are not claimed as collected from X, GitHub, or docs.
 
 ## Contents
 
 - [Goal Prompts](#goal-prompts)
 - [How To Write A Good Goal](#how-to-write-a-good-goal)
+- [Catalog Health](#catalog-health)
 - [Templates](#templates)
 - [Quality Bar](#quality-bar)
 - [Sources And Caveats](#sources-and-caveats)
@@ -37,6 +38,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Async Job State Machine](prompts/goal-examples.md#async-job-state-machine) - Make async job transitions explicit and tested across pending/running/succeeded/failed/canceled.
 - [Resource-Level Authorization](prompts/goal-examples.md#authz-resource-scope) - Prevent logged-in users from accessing resources they do not own.
 - [API Versioning Plan](prompts/goal-examples.md#api-versioning-plan) - Create a v1/v2 coexistence plan with deprecation headers and migration tests.
+- [API Integration Tests](prompts/goal-examples.md#openhands-api-integration-tests) - Add end-to-end tests for product API endpoints with success and error cases. _(source-backed)_
 
 ### backend-data
 - [Database Migration Safety](prompts/goal-examples.md#db-migration-safety) - Review a migration for rollback, online execution, and lock risk.
@@ -49,6 +51,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Outbox Reliable Events](prompts/goal-examples.md#outbox-pattern-adoption) - Use an outbox table to prevent lost events after successful database commits.
 - [Read Replica Lag Guard](prompts/goal-examples.md#read-replica-lag-guard) - Prevent write-after-read paths from hitting stale replicas.
 - [Schema Drift Detector](prompts/goal-examples.md#schema-drift-detector) - Compare ORM models, migrations, and the live database schema.
+- [Dev Database Migration Proof](prompts/goal-examples.md#claude-dev-database-migration) - Write a migration, run it against the dev database, and confirm the schema matches. _(source-backed)_
 
 ### devops-ci
 - [CI Flaky Test Triage](prompts/goal-examples.md#ci-flaky-test-triage) - Identify flaky tests, separate real failures, and fix unstable waits or fixtures.
@@ -74,6 +77,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Observability Minimum](prompts/goal-examples.md#observability-minimum) - Add logs, metrics, traces, and alerts for a service's critical paths.
 - [Incident Runbook Gap](prompts/goal-examples.md#incident-runbook-gap) - Turn a recent incident timeline into missing runbook and alert updates.
 - [Queue Backpressure](prompts/goal-examples.md#queue-backpressure) - Protect databases and external APIs when worker queues build up.
+- [Remote Agent Server Smoke](prompts/goal-examples.md#openhands-remote-agent-server-smoke) - Deploy an isolated remote agent server and prove event streaming, workspace access, and command execution work. _(source-backed)_
 
 ### security-appsec
 - [SQL Injection Audit](prompts/goal-examples.md#sql-injection-audit) - Replace SQL string concatenation with parameterized queries and tests.
@@ -86,6 +90,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Tenant Isolation Test](prompts/goal-examples.md#tenant-isolation-test) - Verify tenant IDs are enforced in queries, caches, and background jobs.
 - [Replay Attack Defense](prompts/goal-examples.md#replay-attack-defense) - Add nonce, timestamp, and expiration checks to signed requests.
 - [IDOR Audit](prompts/goal-examples.md#insecure-direct-object-ref) - Verify direct object ID access always checks ownership or scope.
+- [Tool Guardrails For AppSec](prompts/goal-examples.md#openai-tool-guardrails-appsec) - Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues. _(source-backed)_
 
 ### security-ops
 - [Secret Scan Baseline](prompts/goal-examples.md#secret-scan-baseline) - Add secret scanning and triage historical findings safely.
@@ -111,6 +116,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Data Retention Enforcement](prompts/goal-examples.md#data-retention-enforcement) - Verify expiration, archival, deletion, and audit behavior.
 - [Warehouse Cost Audit](prompts/goal-examples.md#warehouse-cost-audit) - Find expensive queries, duplicate tables, and unused scheduled jobs.
 - [Stream Processing Lag](prompts/goal-examples.md#stream-processing-lag) - Diagnose Kafka/Flink/Spark lag and checkpoint bottlenecks.
+- [CSV Processing Report](prompts/goal-examples.md#openhands-csv-processing-report) - Create a data processing script that validates CSV input and generates an analysis report. _(source-backed)_
 
 ### data-analytics
 - [Metric Definition Lock](prompts/goal-examples.md#metric-definition-lock) - Turn core metric definitions into tested SQL or semantic-layer checks.
@@ -136,6 +142,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Eval Data Dedup](prompts/goal-examples.md#eval-data-dedup) - Remove duplicates, leakage, and near-identical eval samples.
 - [Cost Quality Frontier](prompts/goal-examples.md#cost-quality-frontier) - Compare models by quality, latency, and cost to choose routing tiers.
 - [Rubric-Driven Eval](prompts/goal-examples.md#rubric-driven-eval) - Replace binary scores with multi-dimensional rubrics for complex tasks.
+- [Trace-Graded Agent Regression](prompts/goal-examples.md#openai-agent-trace-evals) - Create trace-based evals that catch workflow regressions across tool calls and handoffs. _(source-backed)_
 
 ### ai-ops
 - [Prompt Version Registry](prompts/goal-examples.md#prompt-version-registry) - Bind prompt versions to eval results and deployment history.
@@ -148,6 +155,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [AI Output Schema Guard](prompts/goal-examples.md#ai-output-schema-guard) - Validate structured AI output and fail or retry safely.
 - [Human Review Threshold](prompts/goal-examples.md#human-review-threshold) - Escalate high-risk AI outputs based on confidence and policy rules.
 - [AI Observability Traces](prompts/goal-examples.md#ai-observability-traces) - Trace prompts, retrieval, tools, models, scores, and request IDs.
+- [Agent Trace Observability](prompts/goal-examples.md#openai-agent-tracing-observability) - Instrument agent runs so LLM generations, tool calls, handoffs, guardrails, and custom events are traceable. _(source-backed)_
 
 ### frontend
 - [Empty State System](prompts/goal-examples.md#frontend-empty-states) - Design real empty states for lists, search, permissions, and first use.
@@ -182,6 +190,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Toolbar Usability](prompts/goal-examples.md#design-toolbar-usability) - Improve icon buttons, tooltips, grouping, and disabled states.
 - [Data Card System](prompts/goal-examples.md#design-data-card-system) - Define metric cards with value, trend, anomaly, and source states.
 - [Brand Fit Pass](prompts/goal-examples.md#design-brand-fit) - Align the interface language with the product's audience and use case.
+- [Reference Layout Match](prompts/goal-examples.md#claude-reference-layout-design) - Build a settings page that follows an existing profile page layout instead of inventing a new pattern. _(source-backed)_
 
 ### mobile
 - [Mobile Bottom Navigation](prompts/goal-examples.md#mobile-bottom-nav) - Design thumb-friendly mobile navigation for core paths.
@@ -196,6 +205,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Mobile Login Flow](prompts/goal-examples.md#mobile-login-flow) - Improve magic link, OTP, password manager, and autofill behavior.
 - [Mobile Onboarding](prompts/goal-examples.md#mobile-onboarding) - Create a short, skippable, restorable first-run path.
 - [Mobile Device Matrix](prompts/goal-examples.md#mobile-device-matrix) - Cover small screen, large screen, iOS, and Android key paths.
+- [Mobile Agent Task Handoff](prompts/goal-examples.md#github-mobile-agent-task-handoff) - Prepare and track a coding-agent task started from GitHub Mobile with review-ready evidence. _(source-backed)_
 
 ### docs
 - [Quickstart](prompts/goal-examples.md#docs-quickstart) - Write the shortest fresh-clone path that runs successfully in five minutes.
@@ -257,6 +267,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md).
 - [Live Region Feedback](prompts/goal-examples.md#accessibility-live-region) - Announce toasts, async completion, and errors accessibly.
 - [Touch Accessibility](prompts/goal-examples.md#accessibility-touch-a11y) - Check tap targets, zoom, and orientation on mobile.
 - [Accessibility Audit Report](prompts/goal-examples.md#accessibility-audit-report) - Produce prioritized issues, impact, fixes, and acceptance checks.
+- [HTML WCAG Instruction Audit](prompts/goal-examples.md#github-accessibility-html-wcag) - Audit HTML changes against WCAG guidance and prove the Lighthouse accessibility audit passes. _(source-backed)_
 
 ### performance
 - [LCP Optimization](prompts/goal-examples.md#performance-lcp) - Find and optimize the largest contentful paint element.
@@ -377,18 +388,23 @@ Start with the tutorial: [How To Write A Good `/goal`](docs/how-to-write-goals.m
 
 The short version: write one measurable goal, point at the real context, add hard constraints, define `DONE WHEN`, require fresh verification, and give the agent explicit stop rules for uncertainty or risk.
 
+## Catalog Health
+
+The generated [catalog health report](docs/catalog-health.md) tracks source-backed coverage, source types, and search evaluation results.
+
 ## Templates
 
 - [Full template](templates/full-goal-template.md) for high-risk or multi-step work.
 - [Compact template](templates/compact-goal-template.md) for routine work.
 - [Structured JSON data](data/examples.json) for search, tooling, or site generation.
+- [Start-here recipes](data/recipes.json) for common user entry points.
 - [Data schema](docs/schema.md) for provenance fields and source types.
 
 ## Quality Bar
 
 - One example should cover one measurable goal.
 - The prompt must include verification that can run in a real repository or produce a concrete artifact.
-- New externally sourced examples must include `source_name`, `source_url`, `source_type`, and `evidence` in `data/examples.json`.
+- New externally sourced examples must include `source_name`, `source_url`, `source_type`, `evidence`, and generated `evidence_summary` in `data/examples.json`.
 - Do not add undocumented slash-command behavior, fake tool capabilities, or examples copied from private/non-verifiable sources.
 
 ## Sources And Caveats

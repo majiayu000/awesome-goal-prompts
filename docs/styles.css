@@ -582,6 +582,12 @@ body[data-lang="zh"] .guide__steps p {
   font-style: italic;
 }
 
+.recipe-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .recipe {
   min-height: 30px;
   border: 1px solid rgba(241, 236, 223, 0.18);

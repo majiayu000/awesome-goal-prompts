@@ -28,6 +28,7 @@ function detectInitialLang() {
 
 const state = {
   entries: [],
+  recipes: [],
   filtered: [],
   selected: null,
   category: "all",
@@ -45,7 +46,8 @@ const els = {
   sealTotal: document.querySelector("#seal-total"),
   search: document.querySelector("#search-input"),
   langButtons: Array.from(document.querySelectorAll("[data-lang-option]")),
-  recipeButtons: Array.from(document.querySelectorAll("[data-recipe]")),
+  recipeList: document.querySelector("#recipe-list"),
+  recipeButtons: [],
   difficultyButtons: Array.from(document.querySelectorAll("[data-difficulty]")),
   originButtons: Array.from(document.querySelectorAll("[data-origin]")),
   categoryList: document.querySelector("#category-list"),
@@ -467,29 +469,6 @@ function localizedLabel(group, value, fallback = "") {
   return labels[value] || defaultLabels[value] || fallback || titleCase(value);
 }
 
-const recipes = {
-  "auth-red": {
-    query: "auth tests fail lint red",
-    category: "testing",
-    origin: "source-backed",
-  },
-  "migration": {
-    query: "migration compatibility tests",
-    category: "migration",
-    origin: "source-backed",
-  },
-  "security": {
-    query: "security audit authorization injection",
-    category: "security-appsec",
-    origin: "all",
-  },
-  "docs": {
-    query: "readme docs contribution quickstart",
-    category: "docs",
-    origin: "all",
-  },
-};
-
 const queryAliases = {
   a11y: ["accessibility", "a11y", "wcag"],
   agent: ["agent", "agents", "codex", "claude", "hermes"],
@@ -497,15 +476,21 @@ const queryAliases = {
   auth: ["auth", "authentication", "authorization", "authz", "login", "permission"],
   bug: ["bug", "fix", "repair", "failure", "failing", "error", "regression"],
   ci: ["ci", "workflow", "actions", "pipeline", "check"],
+  database: ["database", "db", "schema", "migration", "sql"],
   docs: ["docs", "documentation", "readme", "guide", "runbook"],
+  evals: ["eval", "evals", "evaluation", "grading", "score"],
   fail: ["fail", "fails", "failing", "failure", "red", "error", "repair", "fix", "pass", "clean"],
   flaky: ["flaky", "unstable", "race", "intermittent"],
+  guardrails: ["guardrail", "guardrails", "safety", "policy", "security"],
   lint: ["lint", "eslint", "ruff", "format", "typecheck", "typescript"],
   migration: ["migration", "migrate", "port", "upgrade", "compatibility"],
+  mobile: ["mobile", "ios", "android", "github mobile"],
+  onboarding: ["onboarding", "quickstart", "docs", "guide", "contributor"],
   red: ["red", "failing", "failure", "error", "lint", "test", "clean"],
   refactor: ["refactor", "cleanup", "split", "standardize"],
   security: ["security", "auth", "authorization", "injection", "xss", "csrf", "ssrf", "secret"],
   tests: ["test", "tests", "testing", "suite", "vitest", "pytest", "playwright", "coverage"],
+  trace: ["trace", "tracing", "span", "spans", "observability"],
   typescript: ["typescript", "ts", "typecheck", "eslint"],
   安全: ["security", "auth", "authorization", "injection", "xss", "csrf", "ssrf", "secret"],
   鉴权: ["auth", "authentication", "authorization", "authz", "login", "permission"],
@@ -603,6 +588,7 @@ function searchableText(entry) {
     entry.source_name,
     entry.source_type,
     entry.evidence,
+    entry.evidence_summary,
     entry.prompt,
   ].map(normalize).join(" ");
 }
@@ -628,7 +614,7 @@ function searchScore(entry, query) {
   const title = normalize(entry.title);
   const intent = normalize(entry.intent);
   const verify = normalize(entry.verify);
-  const evidence = normalize(entry.evidence);
+  const evidence = normalize(`${entry.evidence || ""} ${entry.evidence_summary || ""}`);
   for (const group of groups) {
     if (termMatches(title, group)) score += 5;
     if (termMatches(intent, group)) score += 4;
@@ -733,6 +719,7 @@ function setLanguage(lang) {
   storeLang(lang);
   applyStaticCopy();
   if (state.entries.length > 0) {
+    renderRecipes();
     renderStats();
     applyFilters();
   }
@@ -871,6 +858,24 @@ function renderStats() {
   setText(els.sourced, padNumber(sourced));
   setText(els.advanced, padNumber(advanced));
   setText(els.sealTotal, `${padNumber(state.entries.length)} / ${padNumber(state.entries.length)}`);
+}
+
+function recipeLabel(recipe) {
+  return state.lang === "zh" ? recipe.label_zh || recipe.label : recipe.label;
+}
+
+function renderRecipes() {
+  const buttons = state.recipes.map((recipe) => {
+    const button = document.createElement("button");
+    button.className = recipe.id === state.recipe ? "recipe active" : "recipe";
+    button.type = "button";
+    button.dataset.recipe = recipe.id;
+    button.textContent = recipeLabel(recipe);
+    button.addEventListener("click", () => applyRecipe(recipe.id));
+    return button;
+  });
+  clearAndAppend(els.recipeList, buttons);
+  els.recipeButtons = buttons;
 }
 
 function renderCatalogHeader() {
@@ -1051,9 +1056,10 @@ function renderDetail() {
     els.detailSourceType.textContent = "";
   }
 
-  if (entry.evidence) {
+  const evidenceText = entry.evidence_summary || entry.evidence;
+  if (evidenceText) {
     els.evidenceRow.classList.remove("hidden");
-    els.detailEvidence.textContent = entry.evidence;
+    els.detailEvidence.textContent = evidenceText;
   } else {
     els.evidenceRow.classList.add("hidden");
     els.detailEvidence.textContent = "";
@@ -1177,7 +1183,7 @@ function applyRecipe(recipe) {
     resetFilters();
     return;
   }
-  const config = recipes[recipe];
+  const config = state.recipes.find((item) => item.id === recipe);
   if (!config) {
     return;
   }
@@ -1204,10 +1210,6 @@ function bindEvents() {
     button.addEventListener("click", () => setLanguage(button.dataset.langOption));
   }
 
-  for (const button of els.recipeButtons) {
-    button.addEventListener("click", () => applyRecipe(button.dataset.recipe));
-  }
-
   for (const button of els.difficultyButtons) {
     button.addEventListener("click", () => {
       setActiveRecipe("all");
@@ -1229,13 +1231,22 @@ function bindEvents() {
 
 async function loadExamples() {
   try {
-    const response = await fetch("examples.json", { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error(`Failed to load examples: ${response.status}`);
+    const [examplesResponse, recipesResponse] = await Promise.all([
+      fetch("examples.json", { cache: "no-store" }),
+      fetch("recipes.json", { cache: "no-store" }),
+    ]);
+    if (!examplesResponse.ok) {
+      throw new Error(`Failed to load examples: ${examplesResponse.status}`);
     }
-    const entries = await response.json();
+    if (!recipesResponse.ok) {
+      throw new Error(`Failed to load recipes: ${recipesResponse.status}`);
+    }
+    const entries = await examplesResponse.json();
+    const recipes = await recipesResponse.json();
     state.entries = entries;
+    state.recipes = recipes;
     state.filtered = entries;
+    renderRecipes();
     renderStats();
 
     const wanted = decodeURIComponent(window.location.hash.replace("#", ""));
