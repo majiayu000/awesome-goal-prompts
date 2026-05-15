@@ -1,10 +1,8 @@
-# Awesome Goal Prompts
+# Awesome Goal Prompts — Runnable Prompt Contracts for Claude Code, Codex & Cursor
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Catalog quality](https://github.com/majiayu000/awesome-goal-prompts/actions/workflows/catalog.yml/badge.svg)](https://github.com/majiayu000/awesome-goal-prompts/actions/workflows/catalog.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Searchable, source-backed `/goal` task contracts for coding agents.
+A curated catalog of **293** `/goal` prompt contracts for **Claude Code**, **OpenAI Codex**, **Cursor**, **Gemini CLI**, and other **coding agents** — source-backed, runnable, and search-tested in CI.
 
 **Live catalog:** https://majiayu000.github.io/awesome-goal-prompts/
 
@@ -12,7 +10,7 @@ A good goal is not a wish. It is a runnable contract: one goal, enough context t
 
 Current catalog: **293 task contracts**, including **93 source-backed examples** from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs.
 
-![The Contract Codex catalog UI](docs/assets/catalog-browser.png)
+![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
 
 ## Why This Exists
 
@@ -522,7 +520,3 @@ This repository does not claim that `/goal` behaves identically across Codex, Cl
 ## Contributing
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before adding examples. Keep descriptions short, source-backed when based on external material, and scoped to verifiable engineering work.
-
-## License
-
-MIT
