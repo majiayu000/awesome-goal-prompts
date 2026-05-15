@@ -2,7 +2,7 @@
   {
     "id": "all",
     "label": "All contracts",
-    "label_zh": "\u5168\u90e8\u5951\u7ea6",
+    "label_zh": "\u5168\u90e8\u793a\u4f8b",
     "query": "",
     "category": "all",
     "origin": "all"
@@ -10,7 +10,7 @@
   {
     "id": "auth-red",
     "label": "Auth tests + lint red",
-    "label_zh": "\u9274\u6743\u6d4b\u8bd5 + lint \u7ea2\u706f",
+    "label_zh": "\u9274\u6743\u6d4b\u8bd5 + lint \u5931\u8d25",
     "query": "auth tests fail lint red",
     "category": "testing",
     "origin": "source-backed"
@@ -18,7 +18,7 @@
   {
     "id": "migration",
     "label": "Migration with compatibility proof",
-    "label_zh": "\u5e26\u517c\u5bb9\u6027\u8bc1\u660e\u7684\u8fc1\u79fb",
+    "label_zh": "\u517c\u5bb9\u8fc1\u79fb",
     "query": "migration compatibility tests",
     "category": "migration",
     "origin": "source-backed"
@@ -34,7 +34,7 @@
   {
     "id": "docs",
     "label": "Docs and onboarding",
-    "label_zh": "\u6587\u6863\u4e0e\u4e0a\u624b",
+    "label_zh": "\u6587\u6863/\u4e0a\u624b",
     "query": "readme docs contribution quickstart",
     "category": "docs",
     "origin": "all"

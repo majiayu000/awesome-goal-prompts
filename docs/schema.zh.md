@@ -21,7 +21,7 @@
 - `source_type`：来源分类，否则为 `null`。
 - `evidence`：从来源中提取或与来源直接对应的证据短语，否则为 `null`。
 - `evidence_summary`：生成的来源说明，组合证据短语、来源名称、来源类型和验证路径。
-- `prompt`：生成后的 `/goal` 任务契约。
+- `prompt`：生成后的 `/goal` 任务说明。
 
 ## 来源规则
 

@@ -273,6 +273,7 @@ body[data-lang="zh"] .hero__title {
   font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", var(--serif);
   font-size: clamp(48px, 6vw, 90px);
   line-height: 1.05;
+  word-break: keep-all;
 }
 
 body[data-lang="zh"] .hero__manifesto,

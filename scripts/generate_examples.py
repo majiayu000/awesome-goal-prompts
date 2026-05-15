@@ -319,7 +319,7 @@ RECIPES = [
     {
         "id": "all",
         "label": "All contracts",
-        "label_zh": "全部契约",
+        "label_zh": "全部示例",
         "query": "",
         "category": "all",
         "origin": "all",
@@ -327,7 +327,7 @@ RECIPES = [
     {
         "id": "auth-red",
         "label": "Auth tests + lint red",
-        "label_zh": "鉴权测试 + lint 红灯",
+        "label_zh": "鉴权测试 + lint 失败",
         "query": "auth tests fail lint red",
         "category": "testing",
         "origin": "source-backed",
@@ -335,7 +335,7 @@ RECIPES = [
     {
         "id": "migration",
         "label": "Migration with compatibility proof",
-        "label_zh": "带兼容性证明的迁移",
+        "label_zh": "兼容迁移",
         "query": "migration compatibility tests",
         "category": "migration",
         "origin": "source-backed",
@@ -351,7 +351,7 @@ RECIPES = [
     {
         "id": "docs",
         "label": "Docs and onboarding",
-        "label_zh": "文档与上手",
+        "label_zh": "文档/上手",
         "query": "readme docs contribution quickstart",
         "category": "docs",
         "origin": "all",
