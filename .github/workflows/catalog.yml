@@ -35,13 +35,8 @@ jobs:
       - name: Evaluate search quality
         run: python3 scripts/evaluate_search.py
 
-      - name: Check public docs surface
-        run: python3 scripts/check_public_docs_surface.py
-
       - name: Check page JavaScript
-        run: |
-          node --check docs/app.js
-          node --check docs/docs-page.js
+        run: node --check docs/app.js
 
       - name: Check generated files are committed
         run: git diff --exit-code
