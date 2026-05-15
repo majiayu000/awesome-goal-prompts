@@ -10,40 +10,37 @@ const docs = [
     title_zh: "如何写好 /goal",
     summary: "A practical guide to turning a request into a verifiable task contract.",
     summary_zh: "把请求写成可验证任务契约的实用指南。",
-  },
-  {
-    id: "launch-kit",
-    glyph: "02",
-    path: "launch-kit.md",
-    title: "Launch Kit",
-    title_zh: "发布素材包",
-    summary: "Prepared launch copy, screenshots, posts, and checklist.",
-    summary_zh: "发布文案、截图、帖子草稿和检查清单。",
+    kicker: "Guide · /goal writing",
+    kicker_zh: "指南 · /goal 写作",
   },
   {
     id: "schema",
-    glyph: "03",
+    glyph: "02",
     path: "schema.md",
     title: "Data Schema",
     title_zh: "数据结构",
     summary: "Catalog fields, provenance rules, recipe fields, and search eval fields.",
     summary_zh: "目录字段、来源规则、recipe 字段和搜索评测字段。",
+    kicker: "Reference · Catalog data",
+    kicker_zh: "参考 · 目录数据",
   },
   {
     id: "catalog-health",
-    glyph: "04",
+    glyph: "03",
     path: "catalog-health.md",
     title: "Catalog Health",
     title_zh: "目录健康报告",
     summary: "Generated coverage, provenance, and search evaluation status.",
     summary_zh: "生成的覆盖率、来源和搜索评测状态。",
+    kicker: "Report · Catalog quality",
+    kicker_zh: "报告 · 目录质量",
   },
 ];
 
 const copy = {
   en: {
     pageTitle: "Docs · The Contract Codex",
-    metaDescription: "The Contract Codex documentation: goal writing guide, launch kit, data schema, and catalog health.",
+    metaDescription: "The Contract Codex documentation: goal writing guide, data schema, and catalog health.",
     homeAria: "The Contract Codex home",
     repoLinksAria: "Repository links",
     languageAria: "Language",
@@ -55,9 +52,9 @@ const copy = {
     navSources: "Sources",
     navContribute: "Contribute",
     navGithub: "GitHub",
-    docsEyebrow: "§ Documents · Local archive",
-    docsTitle: "Read the docs without leaving the catalog.",
-    docsCopy: "The guide, launch kit, schema, and health report are rendered from this repository's Pages files. No GitHub blob redirect, no raw markdown detour.",
+    docsEyebrow: "§ Documents · Goal guide",
+    docsTitle: "Write better /goal contracts inside the catalog.",
+    docsCopy: "Read the writing guide, data schema, and catalog health report without leaving the site. This page is limited to public product documentation.",
     docsStatsAria: "Documentation statistics",
     docsLedgerGuides: "Guides",
     docsLedgerSource: "Source",
@@ -68,13 +65,12 @@ const copy = {
     docsShelfTitle: "Document Index",
     docsLoading: "Loading document...",
     docsFailed: "Unable to load this document.",
-    docsSourceNote: "Rendered from Pages markdown",
     footerText: "The Contract Codex · MIT License · 2026",
     footerBack: "Back to catalog",
   },
   zh: {
     pageTitle: "文档 · 契约典籍",
-    metaDescription: "契约典籍文档：goal 写作指南、发布素材包、数据结构和目录健康报告。",
+    metaDescription: "契约典籍文档：goal 写作指南、数据结构和目录健康报告。",
     homeAria: "契约典籍首页",
     repoLinksAria: "仓库链接",
     languageAria: "语言",
@@ -86,9 +82,9 @@ const copy = {
     navSources: "来源",
     navContribute: "贡献",
     navGithub: "GitHub",
-    docsEyebrow: "§ 文档 · 站内档案",
-    docsTitle: "不离开目录，也能阅读文档。",
-    docsCopy: "指南、发布素材包、数据结构和健康报告都从本站 Pages 文件渲染。不跳 GitHub blob，也不展示 raw markdown。",
+    docsEyebrow: "§ 文档 · Goal 指南",
+    docsTitle: "在目录里写好 /goal 契约。",
+    docsCopy: "写作指南、数据结构和目录健康报告都可以在站内阅读。这里只展示公开产品文档。",
     docsStatsAria: "文档统计",
     docsLedgerGuides: "文档",
     docsLedgerSource: "来源",
@@ -99,7 +95,6 @@ const copy = {
     docsShelfTitle: "文档索引",
     docsLoading: "正在载入文档...",
     docsFailed: "无法载入这份文档。",
-    docsSourceNote: "由 Pages markdown 渲染",
     footerText: "契约典籍 · MIT License · 2026",
     footerBack: "返回目录",
   },
@@ -168,6 +163,10 @@ function docTitle(doc) {
 
 function docSummary(doc) {
   return state.lang === "zh" ? doc.summary_zh || doc.summary : doc.summary;
+}
+
+function docKicker(doc) {
+  return state.lang === "zh" ? doc.kicker_zh || doc.kicker : doc.kicker;
 }
 
 function setText(el, value) {
@@ -259,7 +258,7 @@ function renderDocList() {
 }
 
 function updateDocumentMeta(doc) {
-  setText(els.kicker, `${t("docsSourceNote")} · ${doc.path}`);
+  setText(els.kicker, docKicker(doc));
   setText(els.title, docTitle(doc));
   setText(els.summary, docSummary(doc));
 }
