@@ -1,0 +1,99 @@
+name: Propose a new /goal contract
+description: Suggest a runnable /goal task contract worth adding to the catalog.
+title: "[contract] <one-line behavior or outcome>"
+labels: ["contract:proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to propose a new task contract. Keep the focus on **runnable** goals
+        with one measurable outcome and a verification command — not vague wishes.
+        Source-backed proposals are strongly preferred; see `SOURCES.md`.
+  - type: dropdown
+    id: example_type
+    attributes:
+      label: Example type
+      options:
+        - Source-backed (you have a public URL)
+        - Seed (catalog pattern, no external citation)
+      default: 0
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Suggested category
+      options:
+        - accessibility
+        - ai-evals
+        - ai-ops
+        - backend-api
+        - backend-data
+        - cli
+        - data-analytics
+        - data-eng
+        - design
+        - devops-ci
+        - devops-runtime
+        - docs
+        - frontend
+        - goal-maintenance
+        - greenfield-build
+        - investigation
+        - maintenance
+        - migration
+        - mobile
+        - orchestration
+        - performance
+        - product
+        - prompt-optimization
+        - prototype
+        - qa
+        - refactor
+        - research
+        - security-appsec
+        - security-ops
+        - testing
+        - workflow
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: GOAL (one measurable behavior, artifact, score, or passing command)
+      placeholder: e.g. "Fix the auth module until auth tests pass and lint is clean, public API unchanged."
+    validations:
+      required: true
+  - type: textarea
+    id: verify
+    attributes:
+      label: VERIFY (the command that proves DONE)
+      placeholder: e.g. "npm test -- test/auth && npm run lint"
+    validations:
+      required: true
+  - type: input
+    id: source_url
+    attributes:
+      label: Source URL (required for source-backed)
+      placeholder: https://...
+  - type: input
+    id: source_type
+    attributes:
+      label: Source type
+      placeholder: github-issue | github-pr | tool-readme | official-goal | public-forum | ...
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence phrase
+      description: Quote the public sentence that anchors this contract.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checks
+      options:
+        - label: I have searched existing contracts and this is not a duplicate.
+          required: true
+        - label: This goal has explicit stop rules for secrets / production / destructive ops.
+          required: true
+        - label: For source-backed proposals, the URL is public and verifiable.
+          required: false

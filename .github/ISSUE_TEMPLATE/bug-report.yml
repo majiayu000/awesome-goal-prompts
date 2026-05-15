@@ -1,0 +1,46 @@
+name: Bug report
+description: Catalog content is wrong, the live site is broken, or a contract does not work as written.
+title: "[bug] <one-line description>"
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where is the bug?
+      options:
+        - Live catalog UI (majiayu000.github.io/awesome-goal-prompts)
+        - Contract content (a /goal is wrong, broken, or misleading)
+        - Repository files (README, scripts, CI)
+        - Documentation site (docs.html)
+    validations:
+      required: true
+  - type: input
+    id: contract_id
+    attributes:
+      label: Contract slug or No. (if applicable)
+      placeholder: e.g. api-contract-drift-audit or No. 001
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      placeholder: |
+        1. Go to ...
+        2. Click ...
+        3. Observe ...
+  - type: input
+    id: env
+    attributes:
+      label: Browser / OS (for UI bugs)
+      placeholder: e.g. Chrome 129 on macOS 14
