@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The Contract Codex documentation: goal writing guide, launch kit, data schema, and catalog health.">
+    <meta name="theme-color" content="#16140f">
+    <title>Docs · The Contract Codex</title>
+    <link rel="icon" href="assets/goal-map.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="docs-page.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="The Contract Codex home" data-i18n-aria="homeAria">
+        <span class="brand-mark">/g</span>
+        <span>
+          <strong data-i18n="brandName">The Contract Codex</strong>
+          <small data-i18n="brandSub">V1 · Awesome Goal Prompts</small>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="Repository links" data-i18n-aria="repoLinksAria">
+        <a href="./#catalog" data-i18n="navCatalog">Catalog</a>
+        <a href="./#write-goal" data-i18n="navWrite">Write /goal</a>
+        <a href="docs.html" data-i18n="navDocs">Docs</a>
+        <a href="https://github.com/majiayu000/awesome-goal-prompts/blob/main/SOURCES.md" data-i18n="navSources">Sources</a>
+        <a href="https://github.com/majiayu000/awesome-goal-prompts/blob/main/CONTRIBUTING.md" data-i18n="navContribute">Contribute</a>
+        <div class="lang-toggle" role="group" aria-label="Language" data-i18n-aria="languageAria">
+          <button class="lang-btn" type="button" data-lang-option="en">EN</button>
+          <button class="lang-btn" type="button" data-lang-option="zh">中</button>
+        </div>
+        <a class="nav-cta" href="https://github.com/majiayu000/awesome-goal-prompts" data-i18n="navGithub">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="docs-shell">
+      <section class="docs-hero" aria-labelledby="docs-title">
+        <div class="docs-hero__grid">
+          <div>
+            <p class="eyebrow"><span class="dot"></span> <span data-i18n="docsEyebrow">§ Documents · Local archive</span></p>
+            <h1 id="docs-title" class="docs-hero__title" data-i18n="docsTitle">Read the docs without leaving the catalog.</h1>
+            <p class="docs-hero__copy" data-i18n="docsCopy">The guide, launch kit, schema, and health report are rendered from this repository's Pages files. No GitHub blob redirect, no raw markdown detour.</p>
+          </div>
+          <dl class="docs-ledger" aria-label="Documentation statistics" data-i18n-aria="docsStatsAria">
+            <div>
+              <dt>i.</dt>
+              <dd><span data-i18n="docsLedgerGuides">Guides</span><strong id="docs-count">0</strong></dd>
+            </div>
+            <div>
+              <dt>ii.</dt>
+              <dd><span data-i18n="docsLedgerSource">Source</span><strong>MD</strong></dd>
+            </div>
+            <div>
+              <dt>iii.</dt>
+              <dd><span data-i18n="docsLedgerRoute">Route</span><strong>HTML</strong></dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="docs-main" aria-label="Documentation browser" data-i18n-aria="docsBrowserAria">
+        <aside class="docs-nav" aria-label="Documentation index" data-i18n-aria="docsIndexAria">
+          <div class="rail__head">
+            <p class="eyebrow" data-i18n="docsShelfEyebrow">§ II · Docs</p>
+            <h2 data-i18n="docsShelfTitle">Document Index</h2>
+          </div>
+          <div class="docs-list" id="doc-list"></div>
+        </aside>
+
+        <article class="doc-paper" aria-live="polite">
+          <header class="doc-paper__head">
+            <p class="doc-kicker" id="doc-kicker">Documentation</p>
+            <h2 id="doc-title">Loading...</h2>
+            <p id="doc-summary"></p>
+          </header>
+          <div class="doc-render" id="doc-content">
+            <p class="doc-loading" data-i18n="docsLoading">Loading document...</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="footer__seal">/g</span>
+      <span data-i18n="footerText">The Contract Codex · MIT License · 2026</span>
+      <a href="./" data-i18n="footerBack">Back to catalog</a>
+    </footer>
+  </body>
+</html>
