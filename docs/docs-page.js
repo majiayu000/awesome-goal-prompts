@@ -6,6 +6,7 @@ const docs = [
     id: "how-to-write",
     glyph: "01",
     path: "how-to-write-goals.md",
+    path_zh: "how-to-write-goals.zh.md",
     title: "How To Write A Good /goal",
     title_zh: "如何写好 /goal",
     summary: "A practical guide to turning a request into a verifiable task contract.",
@@ -17,6 +18,7 @@ const docs = [
     id: "schema",
     glyph: "02",
     path: "schema.md",
+    path_zh: "schema.zh.md",
     title: "Data Schema",
     title_zh: "数据结构",
     summary: "Catalog fields, provenance rules, recipe fields, and search eval fields.",
@@ -28,6 +30,7 @@ const docs = [
     id: "catalog-health",
     glyph: "03",
     path: "catalog-health.md",
+    path_zh: "catalog-health.zh.md",
     title: "Catalog Health",
     title_zh: "目录健康报告",
     summary: "Generated coverage, provenance, and search evaluation status.",
@@ -52,9 +55,9 @@ const copy = {
     navSources: "Sources",
     navContribute: "Contribute",
     navGithub: "GitHub",
-    docsEyebrow: "§ Documents · Goal guide",
-    docsTitle: "Write better /goal contracts inside the catalog.",
-    docsCopy: "Read the writing guide, data schema, and catalog health report without leaving the site. This page is limited to public product documentation.",
+    docsEyebrow: "§ Documentation",
+    docsTitle: "How to write a verifiable /goal.",
+    docsCopy: "A public reference for writing task contracts, understanding the catalog schema, and checking catalog quality.",
     docsStatsAria: "Documentation statistics",
     docsLedgerGuides: "Guides",
     docsLedgerSource: "Source",
@@ -82,9 +85,9 @@ const copy = {
     navSources: "来源",
     navContribute: "贡献",
     navGithub: "GitHub",
-    docsEyebrow: "§ 文档 · Goal 指南",
-    docsTitle: "在目录里写好 /goal 契约。",
-    docsCopy: "写作指南、数据结构和目录健康报告都可以在站内阅读。这里只展示公开产品文档。",
+    docsEyebrow: "§ 文档",
+    docsTitle: "如何写出可验证的 /goal。",
+    docsCopy: "这里整理公开文档：如何写任务契约、目录数据如何组织、以及目录质量如何检查。",
     docsStatsAria: "文档统计",
     docsLedgerGuides: "文档",
     docsLedgerSource: "来源",
@@ -169,6 +172,10 @@ function docKicker(doc) {
   return state.lang === "zh" ? doc.kicker_zh || doc.kicker : doc.kicker;
 }
 
+function docPath(doc) {
+  return state.lang === "zh" ? doc.path_zh || doc.path : doc.path;
+}
+
 function setText(el, value) {
   if (el) {
     el.textContent = value;
@@ -211,7 +218,7 @@ function setLanguage(lang) {
   storeLang(lang);
   applyStaticCopy();
   renderDocList();
-  updateDocumentMeta(activeDoc());
+  selectDoc(state.current, false);
 }
 
 function slugify(value) {
@@ -289,15 +296,16 @@ async function selectDoc(id, updateHash) {
 }
 
 async function loadMarkdown(doc) {
-  if (state.cache.has(doc.path)) {
-    return state.cache.get(doc.path);
+  const path = docPath(doc);
+  if (state.cache.has(path)) {
+    return state.cache.get(path);
   }
-  const response = await fetch(doc.path, { cache: "no-store" });
+  const response = await fetch(path, { cache: "no-store" });
   if (!response.ok) {
     throw new Error(`${response.status} ${response.statusText}`);
   }
   const markdown = await response.text();
-  state.cache.set(doc.path, markdown);
+  state.cache.set(path, markdown);
   return markdown;
 }
 
