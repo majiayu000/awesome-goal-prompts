@@ -80,9 +80,33 @@ button {
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
-summary:focus-visible {
+summary:focus-visible,
+details:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.entry:focus-visible {
+  outline: none;
+  background: var(--ink-2);
+  padding-inline: 14px;
+  box-shadow: inset 3px 0 0 var(--accent), 0 0 0 2px var(--accent);
+  position: relative;
+  z-index: 1;
+}
+
+.pill:focus-visible {
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 .topbar {

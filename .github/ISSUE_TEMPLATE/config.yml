@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Contribution guide
+    url: https://github.com/majiayu000/awesome-goal-prompts/blob/main/CONTRIBUTING.md
+    about: How to add /goal contracts, source-backed examples, and pass catalog quality gates.
+  - name: Sources index
+    url: https://github.com/majiayu000/awesome-goal-prompts/blob/main/SOURCES.md
+    about: The provenance list for source-backed contracts.
+  - name: Live catalog
+    url: https://majiayu000.github.io/awesome-goal-prompts/
+    about: Browse the searchable Contract Codex before filing an issue.
