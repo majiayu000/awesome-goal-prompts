@@ -8,7 +8,7 @@ A curated catalog of **293** `/goal` prompt contracts for **Claude Code**, **Ope
 
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk. This repo turns that contract shape into a catalog you can search, inspect, adapt, and copy.
 
-Current catalog: **293 task contracts**, including **93 source-backed examples** from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs.
+Of those, **93** are source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs; the rest are reusable seed patterns.
 
 ![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
 

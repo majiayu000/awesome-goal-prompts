@@ -29,7 +29,7 @@
 
 ## Source Types
 
-See `SOURCES.md` for the canonical source type definitions.
+See `SOURCES.md` for the canonical source type definitions. The source badges shown in the GitHub Pages UI also come from these fields.
 
 ## Recipe Fields
 
@@ -45,3 +45,5 @@ See `SOURCES.md` for the canonical source type definitions.
 - `query`: Natural-language user query to test.
 - `expected`: Entry id that should be discoverable.
 - `max_rank`: Maximum accepted rank for the expected entry.
+
+CI runs these cases to prevent search changes from silently degrading catalog discoverability.

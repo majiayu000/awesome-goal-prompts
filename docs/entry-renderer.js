@@ -18,6 +18,7 @@ function renderResults() {
     const link = document.createElement("a");
     link.href = `#${entry.slug}`;
     link.className = state.selected && state.selected.id === entry.id ? "entry active" : "entry";
+    link.dataset.entryId = String(entry.id);
     link.setAttribute("aria-label", `${t("entryNumberPrefix")} ${padNumber(index)}: ${entry.title}`);
     link.addEventListener("click", (event) => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) {

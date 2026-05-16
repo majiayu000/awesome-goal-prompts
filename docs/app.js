@@ -432,7 +432,9 @@ function renderCategoryShortcuts() {
 
   const all = document.createElement("button");
   all.type = "button";
-  all.className = state.category === "all" ? "rail__cat active" : "rail__cat";
+  const allActive = state.category === "all";
+  all.className = allActive ? "rail__cat active" : "rail__cat";
+  all.setAttribute("aria-pressed", allActive ? "true" : "false");
   const allGlyph = document.createElement("span");
   allGlyph.className = "rail__glyph";
   allGlyph.textContent = "*";
@@ -455,7 +457,9 @@ function renderCategoryShortcuts() {
   for (const category of unique(state.entries.map((entry) => entry.category))) {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = state.category === category ? "rail__cat active" : "rail__cat";
+    const active = state.category === category;
+    button.className = active ? "rail__cat active" : "rail__cat";
+    button.setAttribute("aria-pressed", active ? "true" : "false");
 
     const glyph = document.createElement("span");
     glyph.className = "rail__glyph";
@@ -485,16 +489,39 @@ function renderCategoryShortcuts() {
 
 function selectEntry(entry, updateHash) {
   state.selected = entry;
-  renderResults();
+  updateActiveEntryClass();
   renderDetail();
   if (entry && updateHash) {
     history.replaceState(null, "", `#${entry.slug}`);
   }
 }
 
+function updateActiveEntryClass() {
+  const selectedId = state.selected ? String(state.selected.id) : null;
+  for (const link of els.results.querySelectorAll(".entry")) {
+    link.classList.toggle("active", link.dataset.entryId === selectedId);
+  }
+}
+
+function isSafeHttpUrl(value) {
+  if (typeof value !== "string") {
+    return false;
+  }
+  try {
+    const url = new URL(value, window.location.href);
+    return url.protocol === "https:" || url.protocol === "http:";
+  } catch (_) {
+    return false;
+  }
+}
+
 function renderDetail() {
   const entry = state.selected;
   setText(els.copy, t("copyGoal"));
+
+  for (const details of els.detailCard.querySelectorAll("details")) {
+    details.open = false;
+  }
 
   if (!entry) {
     els.detailEmpty.classList.remove("hidden");
@@ -524,7 +551,7 @@ function renderDetail() {
   renderVerifyList(els.detailVerifyList, verify);
   renderPlainList(els.detailStop, stopRules, "!");
 
-  if (entry.source_url && entry.source_name) {
+  if (entry.source_url && entry.source_name && isSafeHttpUrl(entry.source_url)) {
     els.sourceRow.classList.remove("hidden");
     els.detailSource.href = entry.source_url;
     els.detailSource.textContent = entry.source_name;
@@ -554,7 +581,9 @@ function renderDetail() {
 
 function setActiveButtons(buttons, activeValue, dataKey) {
   for (const button of buttons) {
-    button.classList.toggle("active", button.dataset[dataKey] === activeValue);
+    const active = button.dataset[dataKey] === activeValue;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active ? "true" : "false");
   }
 }
 
@@ -683,9 +712,25 @@ function applyRecipe(recipe) {
 }
 
 function bindEvents() {
-  els.search.addEventListener("input", () => {
+  let searchTimer = null;
+  let composing = false;
+  const runSearch = () => {
     setActiveRecipe("all");
     applyFilters();
+  };
+  els.search.addEventListener("compositionstart", () => {
+    composing = true;
+  });
+  els.search.addEventListener("compositionend", () => {
+    composing = false;
+    runSearch();
+  });
+  els.search.addEventListener("input", () => {
+    if (composing) {
+      return;
+    }
+    window.clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(runSearch, 200);
   });
   els.reset.addEventListener("click", resetFilters);
   els.copy.addEventListener("click", copySelected);
@@ -718,8 +763,8 @@ function bindEvents() {
 async function loadExamples() {
   try {
     const [examplesResponse, recipesResponse] = await Promise.all([
-      fetch("examples.json", { cache: "no-store" }),
-      fetch("recipes.json", { cache: "no-store" }),
+      fetch("examples.json"),
+      fetch("recipes.json"),
     ]);
     if (!examplesResponse.ok) {
       throw new Error(`Failed to load examples: ${examplesResponse.status}`);

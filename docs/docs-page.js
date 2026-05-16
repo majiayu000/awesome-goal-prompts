@@ -252,22 +252,32 @@ async function selectDoc(id, updateHash) {
   renderDocList();
   updateDocumentMeta(doc);
   if (updateHash) {
-    history.replaceState(null, "", `#${doc.id}`);
+    const target = `#${doc.id}`;
+    if (window.location.hash === target) {
+      history.replaceState(null, "", target);
+    } else {
+      history.pushState(null, "", target);
+    }
   }
 
-  setText(els.content, t("docsLoading"));
+  els.content.setAttribute("aria-busy", "true");
   els.content.classList.add("is-loading");
+  const loading = document.createElement("p");
+  loading.className = "doc-loading";
+  loading.textContent = t("docsLoading");
+  clearAndAppend(els.content, [loading]);
 
   try {
     const markdown = await loadMarkdown(doc);
-    els.content.classList.remove("is-loading");
     clearAndAppend(els.content, [renderMarkdown(markdown)]);
   } catch (error) {
-    els.content.classList.remove("is-loading");
     const message = document.createElement("p");
     message.className = "doc-error";
     message.textContent = `${t("docsFailed")} ${error.message}`;
     clearAndAppend(els.content, [message]);
+  } finally {
+    els.content.classList.remove("is-loading");
+    els.content.setAttribute("aria-busy", "false");
   }
 }
 
@@ -276,7 +286,7 @@ async function loadMarkdown(doc) {
   if (state.cache.has(path)) {
     return state.cache.get(path);
   }
-  const response = await fetch(path, { cache: "no-store" });
+  const response = await fetch(path);
   if (!response.ok) {
     throw new Error(`${response.status} ${response.statusText}`);
   }
@@ -314,9 +324,9 @@ function renderMarkdown(markdown) {
       continue;
     }
 
-    const heading = line.match(/^(#{1,4})\s+(.+)$/);
+    const heading = line.match(/^(#{1,6})\s+(.+)$/);
     if (heading) {
-      const level = Math.min(heading[1].length + 1, 5);
+      const level = heading[1].length;
       const el = document.createElement(`h${level}`);
       el.id = slugify(heading[2]);
       appendInline(el, heading[2]);
@@ -476,7 +486,7 @@ function appendRichText(parent, text) {
       const strong = document.createElement("strong");
       strong.textContent = match[2];
       parent.appendChild(strong);
-    } else {
+    } else if (isSafeLinkUrl(match[4])) {
       const link = document.createElement("a");
       link.href = match[4];
       link.textContent = match[3];
@@ -485,11 +495,25 @@ function appendRichText(parent, text) {
         link.rel = "noreferrer";
       }
       parent.appendChild(link);
+    } else {
+      appendPlainText(parent, match[3]);
     }
     last = match.index + match[0].length;
     match = pattern.exec(text);
   }
   appendPlainText(parent, text.slice(last));
+}
+
+function isSafeLinkUrl(value) {
+  if (typeof value !== "string" || value.length === 0) {
+    return false;
+  }
+  try {
+    const url = new URL(value, window.location.href);
+    return url.protocol === "https:" || url.protocol === "http:" || url.protocol === "mailto:";
+  } catch (_) {
+    return false;
+  }
 }
 
 function appendPlainText(parent, text) {
