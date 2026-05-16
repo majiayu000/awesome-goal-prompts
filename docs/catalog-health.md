@@ -1,7 +1,5 @@
 # Catalog Health
 
-Generated on: 2026-05-15
-
 ## Summary
 
 - Total entries: 293

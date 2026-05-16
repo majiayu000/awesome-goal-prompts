@@ -1,0 +1,55 @@
+[[recipes]]
+id = "all"
+label = "All contracts"
+label_zh = "全部示例"
+query = ""
+category = "all"
+origin = "all"
+
+[[recipes]]
+id = "auth-red"
+label = "Auth tests + lint red"
+label_zh = "鉴权测试 + lint 失败"
+query = "auth tests fail lint red"
+category = "testing"
+origin = "source-backed"
+
+[[recipes]]
+id = "migration"
+label = "Migration with compatibility proof"
+label_zh = "兼容迁移"
+query = "migration compatibility tests"
+category = "migration"
+origin = "source-backed"
+
+[[recipes]]
+id = "security"
+label = "Security audit"
+label_zh = "安全审计"
+query = "security audit authorization injection"
+category = "security-appsec"
+origin = "all"
+
+[[recipes]]
+id = "docs"
+label = "Docs and onboarding"
+label_zh = "文档/上手"
+query = "readme docs contribution quickstart"
+category = "docs"
+origin = "all"
+
+[[recipes]]
+id = "accessibility"
+label = "Accessibility audit"
+label_zh = "无障碍审计"
+query = "a11y wcag accessibility"
+category = "accessibility"
+origin = "all"
+
+[[recipes]]
+id = "agent-evals"
+label = "Agent evals"
+label_zh = "智能体评测"
+query = "agent evals trace grading"
+category = "ai-evals"
+origin = "all"

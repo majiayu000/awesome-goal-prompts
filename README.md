@@ -2,13 +2,15 @@
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-A curated catalog of **293** `/goal` prompt contracts for **Claude Code**, **OpenAI Codex**, **Cursor**, **Gemini CLI**, and other **coding agents** — source-backed, runnable, and search-tested in CI.
+A curated catalog of <!-- generated:total-start -->**293**<!-- generated:total-end --> `/goal` prompt contracts for **Claude Code**, **OpenAI Codex**, **Cursor**, **Gemini CLI**, and other **coding agents** — source-backed, runnable, and search-tested in CI.
 
 **Live catalog:** https://majiayu000.github.io/awesome-goal-prompts/
 
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk. This repo turns that contract shape into a catalog you can search, inspect, adapt, and copy.
 
+<!-- generated:stats-start -->
 Of those, **93** are source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs; the rest are reusable seed patterns.
+<!-- generated:stats-end -->
 
 ![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
 
@@ -129,6 +131,7 @@ STOP RULES:
 
 Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md), and the searchable UI lives in the [GitHub Pages catalog](https://majiayu000.github.io/awesome-goal-prompts/).
 
+<!-- generated:catalog-start -->
 ### backend-api
 - [API Contract Drift Audit](prompts/goal-examples.md#api-contract-drift-audit) - Compare OpenAPI, implementation, and tests to find field or status-code drift.
 - [Idempotent Create Endpoint](prompts/goal-examples.md#idempotent-create-endpoint) - Add idempotency keys and replay-safe semantics to a create endpoint.
@@ -485,6 +488,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 
 ### orchestration
 - [DAG Agent Dispatch](prompts/goal-examples.md#hn-dag-agent-dispatch) - Split a goal into a dependency graph and dispatch independent agents into isolated worktrees. _(source-backed)_
+<!-- generated:catalog-end -->
 
 ## How To Write A Good Goal
 

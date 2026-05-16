@@ -1,0 +1,278 @@
+[categories.backend-api]
+context = "a backend API service"
+inspect = "API routes, OpenAPI specs, handlers, middleware, and API tests"
+difficulty = "intermediate"
+constraints = []
+
+[categories.backend-data]
+context = "a data-backed backend service"
+inspect = "schema files, migrations, models, repositories, and data tests"
+difficulty = "advanced"
+constraints = [
+  "Do not destroy or rewrite data without a dry-run, rollback, and row-count/checksum evidence.",
+  "Do not hide database errors behind warnings or silent fallbacks.",
+]
+
+[categories.devops-ci]
+context = "a repository with CI/CD automation"
+inspect = "workflow files, build scripts, package manifests, and recent CI logs"
+difficulty = "intermediate"
+constraints = [
+  "Do not weaken tests, remove required checks, or bypass branch protection.",
+  "Keep workflow permissions as narrow as the task allows.",
+]
+
+[categories.devops-runtime]
+context = "a deployed service"
+inspect = "Dockerfiles, deployment manifests, runtime config, and health checks"
+difficulty = "advanced"
+constraints = [
+  "Do not deploy to production automatically; stop with a verified plan if live credentials are required.",
+  "Keep rollback and health-check evidence attached to the final output.",
+]
+
+[categories.security-appsec]
+context = "an application with security-sensitive code paths"
+inspect = "auth, input handling, rendering, upload, and boundary tests"
+difficulty = "advanced"
+constraints = [
+  "Do not bypass authentication, authorization, validation, or audit checks.",
+  "Do not use eval, unsafe HTML injection, shell string concatenation, or string-built SQL.",
+]
+
+[categories.security-ops]
+context = "a production operations environment"
+inspect = "workflow permissions, cloud IAM, release artifacts, and audit evidence"
+difficulty = "advanced"
+constraints = [
+  "Do not print, copy, rotate, or exfiltrate real secrets.",
+  "Do not widen production permissions without a documented least-privilege reason.",
+]
+
+[categories.data-eng]
+context = "a data pipeline project"
+inspect = "ETL jobs, schemas, source contracts, transformations, and data quality tests"
+difficulty = "intermediate"
+constraints = []
+
+[categories.data-analytics]
+context = "an analytics or BI project"
+inspect = "metric SQL, event schemas, dashboard definitions, and validation queries"
+difficulty = "intermediate"
+constraints = []
+
+[categories.ai-evals]
+context = "an AI evaluation project"
+inspect = "eval datasets, rubrics, model outputs, judge code, and regression reports"
+difficulty = "advanced"
+constraints = [
+  "Do not tune prompts against hidden labels or delete failing eval cases to improve the score.",
+  "Keep before/after eval evidence and representative failures.",
+]
+
+[categories.ai-ops]
+context = "an AI application runtime"
+inspect = "prompts, retrieval code, routing policies, tracing, and cost logs"
+difficulty = "advanced"
+constraints = [
+  "Do not silently fall back to a lower-quality model for user-visible critical paths.",
+  "Keep request IDs, cost evidence, and schema validation errors visible.",
+]
+
+[categories.frontend]
+context = "a web frontend application"
+inspect = "routes, components, state, stories, tests, and screenshots"
+difficulty = "intermediate"
+constraints = [
+  "Do not change unrelated routes or rewrite the design system.",
+  "Preserve existing accessibility and keyboard behavior unless the goal explicitly improves it.",
+]
+
+[categories.design]
+context = "a product UI codebase"
+inspect = "design tokens, component variants, layouts, visual states, and screenshots"
+difficulty = "intermediate"
+constraints = [
+  "Do not replace the app with a landing-page style redesign.",
+  "Preserve domain workflows and use existing design tokens where they exist.",
+]
+
+[categories.mobile]
+context = "a mobile or responsive application"
+inspect = "mobile routes, forms, gestures, device matrix, and viewport tests"
+difficulty = "intermediate"
+constraints = [
+  "Do not optimize only desktop behavior.",
+  "Keep touch targets, safe areas, and keyboard overlap in scope.",
+]
+
+[categories.docs]
+context = "a developer-facing documentation site or repository"
+inspect = "README, docs, examples, runbooks, and lint configuration"
+difficulty = "intermediate"
+constraints = [
+  "Do not invent APIs, flags, commands, or product behavior.",
+  "Mark unverified commands clearly instead of presenting guesses as facts.",
+]
+
+[categories.product]
+context = "a product planning and implementation repo"
+inspect = "PRDs, analytics events, permission models, and acceptance criteria"
+difficulty = "intermediate"
+constraints = [
+  "Do not implement new product scope unless it is in the stated acceptance criteria.",
+  "Separate product decisions from engineering assumptions.",
+]
+
+[categories.qa]
+context = "a product with automated and manual QA coverage"
+inspect = "test suites, fixtures, bug templates, and release checklists"
+difficulty = "intermediate"
+constraints = [
+  "Do not delete or weaken failing tests to make the suite pass.",
+  "Reproduce failures before changing production code.",
+]
+
+[categories.accessibility]
+context = "a web or mobile interface"
+inspect = "interactive elements, semantics, focus management, and a11y reports"
+difficulty = "intermediate"
+constraints = [
+  "Do not hide controls from assistive technology to silence audit findings.",
+  "Keep keyboard, focus, semantic, and visual checks together.",
+]
+
+[categories.performance]
+context = "a web application with measurable performance goals"
+inspect = "Lighthouse reports, bundles, traces, and critical routes"
+difficulty = "intermediate"
+constraints = [
+  "Do not trade correctness, accessibility, or security for faster synthetic scores.",
+  "Compare before/after metrics on the same route and environment.",
+]
+
+[categories.workflow]
+context = "a coding-agent workflow repository"
+inspect = "goal text, progress logs, branch state, and verification artifacts"
+difficulty = "intermediate"
+constraints = [
+  "Do not claim a goal is complete without a current audit of the stated contract.",
+  "Pause if the goal text, branch state, or permissions are inconsistent.",
+]
+
+[categories.migration]
+context = "a migration project"
+inspect = "legacy code, target implementation, compatibility tests, visual snapshots, and migration notes"
+difficulty = "advanced"
+constraints = [
+  "Preserve existing user-visible behavior unless the goal explicitly names a behavior change.",
+  "Keep compatibility evidence for the old and new paths until the migration is verified.",
+]
+
+[categories.prototype]
+context = "a prototype project"
+inspect = "PLAN.md, milestones, app code, tests, browser checks, and demo notes"
+difficulty = "intermediate"
+constraints = [
+  "Follow the stated PLAN.md or acceptance criteria instead of adding unrequested features.",
+  "Keep the prototype runnable and demonstrable at every completed milestone.",
+]
+
+[categories.prompt-optimization]
+context = "an eval-backed prompt project"
+inspect = "prompt files, eval cases, scoring reports, regressions, and failure examples"
+difficulty = "intermediate"
+constraints = [
+  "Do not delete, weaken, or cherry-pick eval cases to improve the score.",
+  "Report representative failures as well as the final score.",
+]
+
+[categories.testing]
+context = "a project with failing or missing verification gates"
+inspect = "test suites, lint config, CI logs, coverage reports, and failing output"
+difficulty = "intermediate"
+constraints = [
+  "Do not weaken lint, typecheck, or test rules to create a green result.",
+  "Fix production or fixture causes before changing expectations.",
+]
+
+[categories.investigation]
+context = "an investigation task"
+inspect = "logs, traces, reproduction notes, source paths, and the final report"
+difficulty = "intermediate"
+constraints = [
+  "Separate observed evidence from hypotheses.",
+  "Do not patch production code until the root cause is reproduced or strongly evidenced.",
+]
+
+[categories.cli]
+context = "a command-line tool"
+inspect = "CLI entrypoints, argument parsing, filesystem behavior, dry-run mode, and fixtures"
+difficulty = "intermediate"
+constraints = [
+  "Do not perform destructive filesystem operations without a dry-run or explicit confirmation.",
+  "Keep command output deterministic enough for tests.",
+]
+
+[categories.refactor]
+context = "a refactoring task"
+inspect = "the target module, call sites, public API, tests, and compatibility notes"
+difficulty = "intermediate"
+constraints = [
+  "Do not change public APIs, data formats, or user-visible behavior unless the goal requires it.",
+  "Keep behavior characterization tests before large internal changes.",
+]
+
+[categories.research]
+context = "a research task"
+inspect = "source lists, citation notes, evidence files, and acceptance criteria"
+difficulty = "intermediate"
+constraints = [
+  "Do not present unsourced claims as facts.",
+  "Keep direct quotes short and attach a public URL for every external claim.",
+]
+
+[categories.maintenance]
+context = "a repository maintenance task"
+inspect = "dead code, dependencies, file structure, scripts, and PR notes"
+difficulty = "intermediate"
+constraints = [
+  "Do not delete files, dependencies, or scripts without evidence that they are unused.",
+  "Keep every proposed removal tied to a specific verification step.",
+]
+
+[categories.backlog]
+context = "a backlog execution task"
+inspect = "roadmaps, backlog files, issue queues, acceptance criteria, and CI evidence"
+difficulty = "intermediate"
+constraints = [
+  "Do not expand the backlog while executing it.",
+  "Keep each finished item tied to its original acceptance criteria.",
+]
+
+[categories.orchestration]
+context = "an agent orchestration task"
+inspect = "plans, worktrees, subtask ownership, PRs, and coordination notes"
+difficulty = "intermediate"
+constraints = [
+  "Keep subtask ownership explicit and avoid overlapping write scopes.",
+  "Do not merge or deploy automatically unless the goal explicitly allows it.",
+]
+
+[categories.goal-maintenance]
+context = "a goal-management workflow"
+inspect = "active goals, done conditions, audit logs, and continuation state"
+difficulty = "intermediate"
+constraints = [
+  "Do not mark a goal complete without auditing the current done condition.",
+  "Keep goal edits and completion reasons visible in the final output.",
+]
+
+[categories.greenfield-build]
+context = "a greenfield implementation task"
+inspect = "product requirements, milestones, tests, and verification notes"
+difficulty = "intermediate"
+constraints = [
+  "Keep implementation tied to the stated product requirements.",
+  "Do not ship a demo-only path without tests or runnable verification.",
+]

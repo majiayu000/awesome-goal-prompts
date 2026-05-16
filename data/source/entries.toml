@@ -1,0 +1,2715 @@
+[[entries]]
+id = "api-contract-drift-audit"
+category = "backend-api"
+title = "API Contract Drift Audit"
+intent = "Compare OpenAPI, implementation, and tests to find field or status-code drift."
+verify = "npx openapi-diff old.yaml new.yaml && pytest tests/api"
+origin = "seed"
+
+[[entries]]
+id = "idempotent-create-endpoint"
+category = "backend-api"
+title = "Idempotent Create Endpoint"
+intent = "Add idempotency keys and replay-safe semantics to a create endpoint."
+verify = "pytest -k idempotency"
+origin = "seed"
+
+[[entries]]
+id = "api-error-taxonomy"
+category = "backend-api"
+title = "API Error Taxonomy"
+intent = "Unify HTTP status codes, machine error codes, user messages, and logs."
+verify = "pytest -k error_response"
+origin = "seed"
+
+[[entries]]
+id = "pagination-consistency"
+category = "backend-api"
+title = "Pagination Consistency"
+intent = "Fix cursor or offset pagination so rows are not skipped, duplicated, or reordered."
+verify = "pytest -k pagination"
+origin = "seed"
+
+[[entries]]
+id = "request-validation-boundary"
+category = "backend-api"
+title = "Request Validation Boundary"
+intent = "Move input validation to the API boundary and reject unknown fields."
+verify = "pytest -k validation"
+origin = "seed"
+
+[[entries]]
+id = "api-rate-limit-policy"
+category = "backend-api"
+title = "API Rate Limit Policy"
+intent = "Implement rate limit behavior, headers, and over-limit responses for critical routes."
+verify = "k6 run rate_limit.js"
+origin = "seed"
+
+[[entries]]
+id = "webhook-retry-contract"
+category = "backend-api"
+title = "Webhook Retry Contract"
+intent = "Define webhook signature verification, retry, dedupe, and failure observability."
+verify = "pytest -k webhook"
+origin = "seed"
+
+[[entries]]
+id = "backward-compatible-response"
+category = "backend-api"
+title = "Backward-Compatible Response"
+intent = "Add response fields without breaking old clients and document removal paths."
+verify = "pytest -k contract"
+origin = "seed"
+
+[[entries]]
+id = "grpc-timeout-propagation"
+category = "backend-api"
+title = "gRPC Timeout Propagation"
+intent = "Propagate deadlines across service calls and cancel work correctly."
+verify = "go test ./..."
+origin = "seed"
+
+[[entries]]
+id = "async-job-state-machine"
+category = "backend-api"
+title = "Async Job State Machine"
+intent = "Make async job transitions explicit and tested across pending/running/succeeded/failed/canceled."
+verify = "pytest -k job_state"
+origin = "seed"
+
+[[entries]]
+id = "authz-resource-scope"
+category = "backend-api"
+title = "Resource-Level Authorization"
+intent = "Prevent logged-in users from accessing resources they do not own."
+verify = "pytest -k authz"
+origin = "seed"
+
+[[entries]]
+id = "api-versioning-plan"
+category = "backend-api"
+title = "API Versioning Plan"
+intent = "Create a v1/v2 coexistence plan with deprecation headers and migration tests."
+verify = "pytest -k api_version"
+origin = "seed"
+
+[[entries]]
+id = "db-migration-safety"
+category = "backend-data"
+title = "Database Migration Safety"
+intent = "Review a migration for rollback, online execution, and lock risk."
+verify = "npm run migrate:dry-run"
+origin = "seed"
+
+[[entries]]
+id = "transaction-boundary-audit"
+category = "backend-data"
+title = "Transaction Boundary Audit"
+intent = "Find missing or oversized transactions in multi-table write paths."
+verify = "pytest -k transaction"
+origin = "seed"
+
+[[entries]]
+id = "cache-invalidation-map"
+category = "backend-data"
+title = "Cache Invalidation Map"
+intent = "Map write paths to cache keys and fix stale reads."
+verify = "pytest -k cache"
+origin = "seed"
+
+[[entries]]
+id = "n-plus-one-query-fix"
+category = "backend-data"
+title = "N+1 Query Fix"
+intent = "Reduce list endpoint query count with batching or preloading."
+verify = "pytest -k query_count"
+origin = "seed"
+
+[[entries]]
+id = "optimistic-locking-rollout"
+category = "backend-data"
+title = "Optimistic Locking Rollout"
+intent = "Add version checks and conflict responses for concurrent edits."
+verify = "pytest -k optimistic_lock"
+origin = "seed"
+
+[[entries]]
+id = "soft-delete-integrity"
+category = "backend-data"
+title = "Soft Delete Integrity"
+intent = "Make queries, unique indexes, and restore flows respect soft deletion."
+verify = "pytest -k soft_delete"
+origin = "seed"
+
+[[entries]]
+id = "db-index-regression"
+category = "backend-data"
+title = "Index Regression Check"
+intent = "Add or adjust indexes and prove read gains do not create unacceptable write cost."
+verify = "pytest -k slow_query"
+origin = "seed"
+
+[[entries]]
+id = "outbox-pattern-adoption"
+category = "backend-data"
+title = "Outbox Reliable Events"
+intent = "Use an outbox table to prevent lost events after successful database commits."
+verify = "pytest -k outbox"
+origin = "seed"
+
+[[entries]]
+id = "read-replica-lag-guard"
+category = "backend-data"
+title = "Read Replica Lag Guard"
+intent = "Prevent write-after-read paths from hitting stale replicas."
+verify = "pytest -k replica_lag"
+origin = "seed"
+
+[[entries]]
+id = "schema-drift-detector"
+category = "backend-data"
+title = "Schema Drift Detector"
+intent = "Compare ORM models, migrations, and the live database schema."
+verify = "prisma migrate diff"
+origin = "seed"
+
+[[entries]]
+id = "ci-flaky-test-triage"
+category = "devops-ci"
+title = "CI Flaky Test Triage"
+intent = "Identify flaky tests, separate real failures, and fix unstable waits or fixtures."
+verify = "gh run view --log"
+origin = "seed"
+
+[[entries]]
+id = "build-cache-correctness"
+category = "devops-ci"
+title = "Build Cache Correctness"
+intent = "Check whether CI cache keys cause stale dependencies or cross-branch pollution."
+verify = "npm ci && npm test"
+origin = "seed"
+
+[[entries]]
+id = "dependency-update-gate"
+category = "devops-ci"
+title = "Dependency Update Gate"
+intent = "Add dependency upgrade checks for tests, licenses, and vulnerabilities."
+verify = "npm audit && npm test"
+origin = "seed"
+
+[[entries]]
+id = "monorepo-affected-tests"
+category = "devops-ci"
+title = "Monorepo Affected Tests"
+intent = "Run only affected tests without missing cross-package contracts."
+verify = "nx affected:test"
+origin = "seed"
+
+[[entries]]
+id = "release-note-from-diff"
+category = "devops-ci"
+title = "Release Notes From Diff"
+intent = "Generate user-facing release notes from commits, PR labels, and breaking changes."
+verify = "git log --oneline last..HEAD"
+origin = "seed"
+
+[[entries]]
+id = "artifact-provenance"
+category = "devops-ci"
+title = "Artifact Provenance"
+intent = "Trace a package or image back to the commit and workflow that produced it."
+verify = "gh run view"
+origin = "seed"
+
+[[entries]]
+id = "ci-permission-minimize"
+category = "devops-ci"
+title = "CI Permission Minimization"
+intent = "Tighten GitHub Actions token permissions without breaking workflows."
+verify = "gh workflow run ci.yml"
+origin = "seed"
+
+[[entries]]
+id = "branch-protection-audit"
+category = "devops-ci"
+title = "Branch Protection Audit"
+intent = "Audit required checks, reviews, linear history, and admin bypasses."
+verify = "gh api repos/OWNER/REPO/branches/main/protection"
+origin = "seed"
+
+[[entries]]
+id = "release-rollback-drill"
+category = "devops-ci"
+title = "Release Rollback Drill"
+intent = "Create and test a rollback path for the latest release."
+verify = "npm run smoke"
+origin = "seed"
+
+[[entries]]
+id = "semantic-version-check"
+category = "devops-ci"
+title = "Semantic Version Check"
+intent = "Infer the correct semver bump from API, behavior, and changelog diffs."
+verify = "npm test"
+origin = "seed"
+
+[[entries]]
+id = "docker-image-slimming"
+category = "devops-runtime"
+title = "Docker Image Slimming"
+intent = "Reduce image size while keeping runtime dependencies and security scans green."
+verify = "docker build . && trivy image IMAGE"
+origin = "seed"
+
+[[entries]]
+id = "k8s-readiness-liveness"
+category = "devops-runtime"
+title = "Kubernetes Probe Repair"
+intent = "Separate startup, readiness, and liveness probes to avoid bad restarts."
+verify = "kubectl describe pod"
+origin = "seed"
+
+[[entries]]
+id = "terraform-plan-review"
+category = "devops-runtime"
+title = "Terraform Plan Review"
+intent = "Review infrastructure changes for deletes, replacements, and permission expansion."
+verify = "terraform plan -out=tfplan"
+origin = "seed"
+
+[[entries]]
+id = "helm-values-drift"
+category = "devops-runtime"
+title = "Helm Values Drift"
+intent = "Compare environment values to find hidden staging/prod differences."
+verify = "helm diff upgrade"
+origin = "seed"
+
+[[entries]]
+id = "autoscaling-thresholds"
+category = "devops-runtime"
+title = "Autoscaling Thresholds"
+intent = "Tune HPA or worker scaling thresholds against real load and queue depth."
+verify = "kubectl get hpa"
+origin = "seed"
+
+[[entries]]
+id = "runtime-config-validation"
+category = "devops-runtime"
+title = "Runtime Config Validation"
+intent = "Fail startup on missing or invalid environment and config values."
+verify = "docker run --env-file .env.example IMAGE"
+origin = "seed"
+
+[[entries]]
+id = "zero-downtime-migration"
+category = "devops-runtime"
+title = "Zero-Downtime Migration"
+intent = "Plan and verify expand-migrate-contract deployment steps."
+verify = "npm run smoke"
+origin = "seed"
+
+[[entries]]
+id = "observability-minimum"
+category = "devops-runtime"
+title = "Observability Minimum"
+intent = "Add logs, metrics, traces, and alerts for a service's critical paths."
+verify = "npm test && curl localhost:PORT/metrics"
+origin = "seed"
+
+[[entries]]
+id = "incident-runbook-gap"
+category = "devops-runtime"
+title = "Incident Runbook Gap"
+intent = "Turn a recent incident timeline into missing runbook and alert updates."
+verify = "markdownlint docs/runbooks"
+origin = "seed"
+
+[[entries]]
+id = "queue-backpressure"
+category = "devops-runtime"
+title = "Queue Backpressure"
+intent = "Protect databases and external APIs when worker queues build up."
+verify = "pytest -k backpressure"
+origin = "seed"
+
+[[entries]]
+id = "sql-injection-audit"
+category = "security-appsec"
+title = "SQL Injection Audit"
+intent = "Replace SQL string concatenation with parameterized queries and tests."
+verify = "pytest -k injection"
+origin = "seed"
+
+[[entries]]
+id = "command-injection-audit"
+category = "security-appsec"
+title = "Command Injection Audit"
+intent = "Replace shell string execution with argument arrays and validation."
+verify = "pytest -k command_injection"
+origin = "seed"
+
+[[entries]]
+id = "ssrf-defense-review"
+category = "security-appsec"
+title = "SSRF Defense Review"
+intent = "Add URL allowlists and DNS/IP checks for fetch or callback features."
+verify = "pytest -k ssrf"
+origin = "seed"
+
+[[entries]]
+id = "xss-output-encoding"
+category = "security-appsec"
+title = "XSS Output Encoding"
+intent = "Audit HTML and Markdown rendering for unsafe sinks and missing encoding."
+verify = "npm test -- xss"
+origin = "seed"
+
+[[entries]]
+id = "csrf-sensitive-action"
+category = "security-appsec"
+title = "CSRF Sensitive Action"
+intent = "Protect cookie-authenticated writes from cross-site requests."
+verify = "pytest -k csrf"
+origin = "seed"
+
+[[entries]]
+id = "auth-bypass-route-map"
+category = "security-appsec"
+title = "Auth Bypass Route Map"
+intent = "Enumerate routes and verify unauthenticated and unauthorized behavior."
+verify = "pytest -k auth"
+origin = "seed"
+
+[[entries]]
+id = "file-upload-security"
+category = "security-appsec"
+title = "File Upload Security"
+intent = "Validate MIME, extension, size, scanning, and storage isolation."
+verify = "pytest -k upload_security"
+origin = "seed"
+
+[[entries]]
+id = "tenant-isolation-test"
+category = "security-appsec"
+title = "Tenant Isolation Test"
+intent = "Verify tenant IDs are enforced in queries, caches, and background jobs."
+verify = "pytest -k tenant"
+origin = "seed"
+
+[[entries]]
+id = "replay-attack-defense"
+category = "security-appsec"
+title = "Replay Attack Defense"
+intent = "Add nonce, timestamp, and expiration checks to signed requests."
+verify = "pytest -k replay"
+origin = "seed"
+
+[[entries]]
+id = "insecure-direct-object-ref"
+category = "security-appsec"
+title = "IDOR Audit"
+intent = "Verify direct object ID access always checks ownership or scope."
+verify = "pytest -k idor"
+origin = "seed"
+
+[[entries]]
+id = "secret-scan-baseline"
+category = "security-ops"
+title = "Secret Scan Baseline"
+intent = "Add secret scanning and triage historical findings safely."
+verify = "gitleaks detect"
+origin = "seed"
+
+[[entries]]
+id = "iam-least-privilege"
+category = "security-ops"
+title = "IAM Least Privilege"
+intent = "Reduce cloud permissions to observed API usage and documented needs."
+verify = "terraform plan"
+origin = "seed"
+
+[[entries]]
+id = "github-actions-supply-chain"
+category = "security-ops"
+title = "GitHub Actions Supply Chain"
+intent = "Pin third-party actions and review workflow permissions."
+verify = "rg \"uses:\" .github/workflows"
+origin = "seed"
+
+[[entries]]
+id = "container-vuln-triage"
+category = "security-ops"
+title = "Container Vulnerability Triage"
+intent = "Prioritize image CVEs by exploitability and runtime exposure."
+verify = "trivy image IMAGE"
+origin = "seed"
+
+[[entries]]
+id = "audit-log-coverage"
+category = "security-ops"
+title = "Audit Log Coverage"
+intent = "Add audit logs for login, permission changes, and sensitive data access."
+verify = "pytest -k audit_log"
+origin = "seed"
+
+[[entries]]
+id = "secret-rotation-drill"
+category = "security-ops"
+title = "Secret Rotation Drill"
+intent = "Verify rotating a key does not interrupt the service."
+verify = "npm run smoke"
+origin = "seed"
+
+[[entries]]
+id = "dependency-confusion-guard"
+category = "security-ops"
+title = "Dependency Confusion Guard"
+intent = "Lock private package scopes and registries to prevent wrong-source installs."
+verify = "npm ci"
+origin = "seed"
+
+[[entries]]
+id = "sbom-generation"
+category = "security-ops"
+title = "SBOM Generation"
+intent = "Generate an SBOM and attach it to release artifacts."
+verify = "syft packages dir:."
+origin = "seed"
+
+[[entries]]
+id = "prod-access-review"
+category = "security-ops"
+title = "Production Access Review"
+intent = "Inventory production access, approval paths, and audit evidence."
+verify = "terraform state list"
+origin = "seed"
+
+[[entries]]
+id = "backup-restore-security"
+category = "security-ops"
+title = "Backup Restore Security"
+intent = "Verify encrypted backups and a restricted restore path."
+verify = "./scripts/restore-dry-run.sh"
+origin = "seed"
+
+[[entries]]
+id = "etl-contract-tests"
+category = "data-eng"
+title = "ETL Contract Tests"
+intent = "Add schema and sample-data contracts between source and target tables."
+verify = "pytest tests/etl"
+origin = "seed"
+
+[[entries]]
+id = "data-quality-rules"
+category = "data-eng"
+title = "Data Quality Rules"
+intent = "Define null, uniqueness, range, and reference checks for key datasets."
+verify = "great_expectations checkpoint run main"
+origin = "seed"
+
+[[entries]]
+id = "backfill-safety-plan"
+category = "data-eng"
+title = "Backfill Safety Plan"
+intent = "Design a sharded, resumable, verifiable historical backfill."
+verify = "pytest -k backfill"
+origin = "seed"
+
+[[entries]]
+id = "incremental-load-watermark"
+category = "data-eng"
+title = "Incremental Load Watermark"
+intent = "Fix missing or duplicate rows in incremental sync logic."
+verify = "pytest -k watermark"
+origin = "seed"
+
+[[entries]]
+id = "late-arriving-data"
+category = "data-eng"
+title = "Late-Arriving Data"
+intent = "Handle delayed events and metric corrections safely."
+verify = "pytest -k late_arrival"
+origin = "seed"
+
+[[entries]]
+id = "data-lineage-map"
+category = "data-eng"
+title = "Data Lineage Map"
+intent = "Map critical report fields from source to consumers."
+verify = "dbt docs generate"
+origin = "seed"
+
+[[entries]]
+id = "pii-classification"
+category = "data-eng"
+title = "PII Classification"
+intent = "Classify sensitive fields and document masking rules."
+verify = "pytest -k pii"
+origin = "seed"
+
+[[entries]]
+id = "data-retention-enforcement"
+category = "data-eng"
+title = "Data Retention Enforcement"
+intent = "Verify expiration, archival, deletion, and audit behavior."
+verify = "pytest -k retention"
+origin = "seed"
+
+[[entries]]
+id = "warehouse-cost-audit"
+category = "data-eng"
+title = "Warehouse Cost Audit"
+intent = "Find expensive queries, duplicate tables, and unused scheduled jobs."
+verify = "dbt test"
+origin = "seed"
+
+[[entries]]
+id = "stream-processing-lag"
+category = "data-eng"
+title = "Stream Processing Lag"
+intent = "Diagnose Kafka/Flink/Spark lag and checkpoint bottlenecks."
+verify = "pytest -k stream_lag"
+origin = "seed"
+
+[[entries]]
+id = "metric-definition-lock"
+category = "data-analytics"
+title = "Metric Definition Lock"
+intent = "Turn core metric definitions into tested SQL or semantic-layer checks."
+verify = "dbt test"
+origin = "seed"
+
+[[entries]]
+id = "dashboard-trust-audit"
+category = "data-analytics"
+title = "Dashboard Trust Audit"
+intent = "Check filters, timezone, refresh cadence, permissions, and source reconciliation."
+verify = "dbt test && pytest tests/dashboard"
+origin = "seed"
+
+[[entries]]
+id = "ab-test-srm-check"
+category = "data-analytics"
+title = "A/B Test SRM Check"
+intent = "Detect sample ratio mismatch in experiment assignment."
+verify = "pytest -k srm"
+origin = "seed"
+
+[[entries]]
+id = "funnel-dropoff-diagnosis"
+category = "data-analytics"
+title = "Funnel Dropoff Diagnosis"
+intent = "Validate funnel events, step counts, and latency before interpreting dropoff."
+verify = "pytest -k funnel"
+origin = "seed"
+
+[[entries]]
+id = "cohort-retention-query"
+category = "data-analytics"
+title = "Cohort Retention Query"
+intent = "Create reusable retention SQL with hand-checked small samples."
+verify = "dbt test -s retention"
+origin = "seed"
+
+[[entries]]
+id = "revenue-reconciliation"
+category = "data-analytics"
+title = "Revenue Reconciliation"
+intent = "Reconcile payments, orders, refunds, and finance definitions."
+verify = "pytest -k revenue_reconciliation"
+origin = "seed"
+
+[[entries]]
+id = "event-taxonomy-cleanup"
+category = "data-analytics"
+title = "Event Taxonomy Cleanup"
+intent = "Deduplicate event names, properties, and version changes."
+verify = "pytest -k event_schema"
+origin = "seed"
+
+[[entries]]
+id = "anomaly-detection-baseline"
+category = "data-analytics"
+title = "Anomaly Detection Baseline"
+intent = "Backtest alert thresholds against historical metrics."
+verify = "pytest -k anomaly"
+origin = "seed"
+
+[[entries]]
+id = "attribution-window-review"
+category = "data-analytics"
+title = "Attribution Window Review"
+intent = "Verify campaign attribution windows and dedupe rules."
+verify = "dbt test -s attribution"
+origin = "seed"
+
+[[entries]]
+id = "self-serve-data-contract"
+category = "data-analytics"
+title = "Self-Serve Data Contract"
+intent = "Define trusted datasets and usage limits for business users."
+verify = "dbt test -s semantic"
+origin = "seed"
+
+[[entries]]
+id = "llm-golden-set-build"
+category = "ai-evals"
+title = "LLM Golden Set Build"
+intent = "Build an eval set from real failures and frequent tasks."
+verify = "pytest evals"
+origin = "seed"
+
+[[entries]]
+id = "llm-regression-gate"
+category = "ai-evals"
+title = "LLM Regression Gate"
+intent = "Compare old and new model or prompt outputs in PRs."
+verify = "pytest evals"
+origin = "seed"
+
+[[entries]]
+id = "judge-calibration"
+category = "ai-evals"
+title = "Judge Calibration"
+intent = "Measure LLM judge agreement against human labels."
+verify = "pytest evals/judges"
+origin = "seed"
+
+[[entries]]
+id = "hallucination-probe-suite"
+category = "ai-evals"
+title = "Hallucination Probe Suite"
+intent = "Add negative cases for nonexistent files, fields, APIs, and sources."
+verify = "pytest evals/hallucination"
+origin = "seed"
+
+[[entries]]
+id = "rag-answer-faithfulness"
+category = "ai-evals"
+title = "RAG Answer Faithfulness"
+intent = "Check that answers are supported by retrieved evidence."
+verify = "pytest evals/rag"
+origin = "seed"
+
+[[entries]]
+id = "tool-use-eval"
+category = "ai-evals"
+title = "Tool Use Eval"
+intent = "Evaluate whether an agent selects, orders, and validates tools correctly."
+verify = "pytest evals/tool_use"
+origin = "seed"
+
+[[entries]]
+id = "adversarial-prompt-redteam"
+category = "ai-evals"
+title = "Prompt Injection Red Team"
+intent = "Test prompt leakage, unauthorized tools, and instruction override attempts."
+verify = "pytest evals/redteam"
+origin = "seed"
+
+[[entries]]
+id = "eval-data-dedup"
+category = "ai-evals"
+title = "Eval Data Dedup"
+intent = "Remove duplicates, leakage, and near-identical eval samples."
+verify = "python scripts/dedup_evals.py"
+origin = "seed"
+
+[[entries]]
+id = "cost-quality-frontier"
+category = "ai-evals"
+title = "Cost Quality Frontier"
+intent = "Compare models by quality, latency, and cost to choose routing tiers."
+verify = "pytest evals --record-costs"
+origin = "seed"
+
+[[entries]]
+id = "rubric-driven-eval"
+category = "ai-evals"
+title = "Rubric-Driven Eval"
+intent = "Replace binary scores with multi-dimensional rubrics for complex tasks."
+verify = "pytest evals/rubrics"
+origin = "seed"
+
+[[entries]]
+id = "prompt-version-registry"
+category = "ai-ops"
+title = "Prompt Version Registry"
+intent = "Bind prompt versions to eval results and deployment history."
+verify = "pytest tests/prompt_registry"
+origin = "seed"
+
+[[entries]]
+id = "rag-chunking-experiment"
+category = "ai-ops"
+title = "RAG Chunking Experiment"
+intent = "Compare chunk size, overlap, and metadata on retrieval and answer quality."
+verify = "pytest evals/rag_chunking"
+origin = "seed"
+
+[[entries]]
+id = "vector-index-refresh"
+category = "ai-ops"
+title = "Vector Index Refresh"
+intent = "Verify document updates are indexed completely and can be rolled back."
+verify = "pytest tests/index_refresh"
+origin = "seed"
+
+[[entries]]
+id = "model-routing-policy"
+category = "ai-ops"
+title = "Model Routing Policy"
+intent = "Route by risk, cost, latency, and quality evidence."
+verify = "pytest tests/model_routing"
+origin = "seed"
+
+[[entries]]
+id = "llm-timeout-budget"
+category = "ai-ops"
+title = "LLM Timeout Budget"
+intent = "Define timeout, retry, fallback, and user-visible error behavior."
+verify = "pytest tests/llm_timeouts"
+origin = "seed"
+
+[[entries]]
+id = "token-cost-attribution"
+category = "ai-ops"
+title = "Token Cost Attribution"
+intent = "Attribute model costs by user, feature, model, and request ID."
+verify = "pytest tests/costs"
+origin = "seed"
+
+[[entries]]
+id = "prompt-injection-filter"
+category = "ai-ops"
+title = "RAG Prompt Injection Filter"
+intent = "Detect and isolate malicious instructions in retrieved documents."
+verify = "pytest evals/prompt_injection"
+origin = "seed"
+
+[[entries]]
+id = "ai-output-schema-guard"
+category = "ai-ops"
+title = "AI Output Schema Guard"
+intent = "Validate structured AI output and fail or retry safely."
+verify = "pytest tests/schema_guard"
+origin = "seed"
+
+[[entries]]
+id = "human-review-threshold"
+category = "ai-ops"
+title = "Human Review Threshold"
+intent = "Escalate high-risk AI outputs based on confidence and policy rules."
+verify = "pytest tests/human_review"
+origin = "seed"
+
+[[entries]]
+id = "ai-observability-traces"
+category = "ai-ops"
+title = "AI Observability Traces"
+intent = "Trace prompts, retrieval, tools, models, scores, and request IDs."
+verify = "pytest tests/tracing"
+origin = "seed"
+
+[[entries]]
+id = "frontend-empty-states"
+category = "frontend"
+title = "Empty State System"
+intent = "Design real empty states for lists, search, permissions, and first use."
+verify = "npm run test -- EmptyState"
+origin = "seed"
+
+[[entries]]
+id = "frontend-error-boundary"
+category = "frontend"
+title = "Error Boundary Experience"
+intent = "Add recoverable page and component fallback UI for crashes."
+verify = "npm test -- ErrorBoundary"
+origin = "seed"
+
+[[entries]]
+id = "frontend-loading-skeletons"
+category = "frontend"
+title = "Loading Skeletons"
+intent = "Replace layout-shifting spinners with stable skeleton states."
+verify = "npm run lighthouse"
+origin = "seed"
+
+[[entries]]
+id = "frontend-form-validation"
+category = "frontend"
+title = "Form Validation"
+intent = "Cover inline, submit, server error, and dirty-state validation."
+verify = "npm test -- form"
+origin = "seed"
+
+[[entries]]
+id = "frontend-table-density"
+category = "frontend"
+title = "Data Table Density"
+intent = "Improve columns, filters, sorting, pagination, and bulk actions."
+verify = "npx playwright test table.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "frontend-command-palette"
+category = "frontend"
+title = "Command Palette"
+intent = "Add a keyboard-first entry point for high-frequency actions."
+verify = "npx playwright test command-palette.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "frontend-navigation-map"
+category = "frontend"
+title = "Navigation Map"
+intent = "Clarify primary navigation, breadcrumbs, and detail-page return paths."
+verify = "npx playwright test navigation.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "frontend-state-recovery"
+category = "frontend"
+title = "State Recovery"
+intent = "Restore filters and context after refresh, back, and deep links."
+verify = "npx playwright test state-recovery.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "frontend-permission-ui"
+category = "frontend"
+title = "Permission State UI"
+intent = "Separate unauthenticated, unauthorized, and missing-resource states."
+verify = "npx playwright test permissions.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "frontend-bulk-actions"
+category = "frontend"
+title = "Bulk Actions"
+intent = "Handle selection, confirm, undo, partial failure, and feedback."
+verify = "npx playwright test bulk-actions.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "frontend-search-filter"
+category = "frontend"
+title = "Search Filter Experience"
+intent = "Unify search, filter chips, clear actions, and result counts."
+verify = "npx playwright test search-filter.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "frontend-realtime-updates"
+category = "frontend"
+title = "Realtime Update Prompts"
+intent = "Handle background changes, conflicts, and refresh prompts."
+verify = "npx playwright test realtime.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "design-visual-hierarchy"
+category = "design"
+title = "Visual Hierarchy Pass"
+intent = "Reorder headings, metadata, primary actions, and secondary actions."
+verify = "npx playwright test visual-hierarchy.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "design-token-audit"
+category = "design"
+title = "Design Token Audit"
+intent = "Check colors, spacing, radii, and shadows against tokens."
+verify = "npm run lint:styles"
+origin = "seed"
+
+[[entries]]
+id = "design-component-variants"
+category = "design"
+title = "Component Variant Matrix"
+intent = "Complete button, input, card, and modal state coverage."
+verify = "npm run storybook:test"
+origin = "seed"
+
+[[entries]]
+id = "design-dashboard-layout"
+category = "design"
+title = "Dashboard Layout Pass"
+intent = "Make an operational dashboard easier to scan and compare."
+verify = "npx playwright test dashboard.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "design-modal-discipline"
+category = "design"
+title = "Modal Discipline"
+intent = "Replace modal misuse with drawers, popovers, or pages where appropriate."
+verify = "npx playwright test modal.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "design-iconography"
+category = "design"
+title = "Iconography System"
+intent = "Unify icon semantics for tools, statuses, and empty states."
+verify = "npm run lint:icons"
+origin = "seed"
+
+[[entries]]
+id = "design-color-contrast"
+category = "design"
+title = "Color Contrast Pass"
+intent = "Fix low contrast text, icons, and state colors."
+verify = "npx axe http://localhost:3000"
+origin = "seed"
+
+[[entries]]
+id = "design-motion-rules"
+category = "design"
+title = "Motion Rules"
+intent = "Define entry, exit, feedback, and reduced-motion behavior."
+verify = "npx playwright test motion.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "design-responsive-grid"
+category = "design"
+title = "Responsive Grid"
+intent = "Define breakpoints, columns, and fixed-format constraints."
+verify = "npx playwright test responsive.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "design-toolbar-usability"
+category = "design"
+title = "Toolbar Usability"
+intent = "Improve icon buttons, tooltips, grouping, and disabled states."
+verify = "npx playwright test toolbar.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "design-data-card-system"
+category = "design"
+title = "Data Card System"
+intent = "Define metric cards with value, trend, anomaly, and source states."
+verify = "npm run storybook:test"
+origin = "seed"
+
+[[entries]]
+id = "design-brand-fit"
+category = "design"
+title = "Brand Fit Pass"
+intent = "Align the interface language with the product's audience and use case."
+verify = "npx playwright test brand.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "mobile-bottom-nav"
+category = "mobile"
+title = "Mobile Bottom Navigation"
+intent = "Design thumb-friendly mobile navigation for core paths."
+verify = "npx playwright test --project=mobile navigation.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "mobile-touch-targets"
+category = "mobile"
+title = "Mobile Touch Targets"
+intent = "Ensure buttons, checkboxes, and rows have usable tap areas."
+verify = "npx playwright test --project=mobile touch.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "mobile-form-flow"
+category = "mobile"
+title = "Mobile Form Flow"
+intent = "Handle long forms, keyboard occlusion, and error positioning."
+verify = "npx playwright test --project=mobile form.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "mobile-table-adaptation"
+category = "mobile"
+title = "Mobile Table Adaptation"
+intent = "Convert wide tables into cards, horizontal scroll, or drill-downs."
+verify = "npx playwright test --project=mobile table.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "mobile-filter-drawer"
+category = "mobile"
+title = "Mobile Filter Drawer"
+intent = "Add mobile filters with apply, reset, count, and URL state."
+verify = "npx playwright test --project=mobile filter.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "mobile-offline-state"
+category = "mobile"
+title = "Mobile Offline State"
+intent = "Show offline, cached data, and retry paths clearly."
+verify = "npx playwright test --project=mobile offline.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "mobile-image-performance"
+category = "mobile"
+title = "Mobile Image Performance"
+intent = "Optimize image sizes, lazy loading, placeholders, and formats."
+verify = "npm run lighthouse:mobile"
+origin = "seed"
+
+[[entries]]
+id = "mobile-safe-area"
+category = "mobile"
+title = "Mobile Safe Area"
+intent = "Handle iOS notch, bottom bars, and sticky actions."
+verify = "npx playwright test --project=mobile safe-area.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "mobile-gesture-conflicts"
+category = "mobile"
+title = "Mobile Gesture Conflicts"
+intent = "Resolve conflicts between swipe, drag, and scroll interactions."
+verify = "npx playwright test --project=mobile gestures.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "mobile-login-flow"
+category = "mobile"
+title = "Mobile Login Flow"
+intent = "Improve magic link, OTP, password manager, and autofill behavior."
+verify = "npx playwright test --project=mobile login.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "mobile-onboarding"
+category = "mobile"
+title = "Mobile Onboarding"
+intent = "Create a short, skippable, restorable first-run path."
+verify = "npx playwright test --project=mobile onboarding.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "mobile-device-matrix"
+category = "mobile"
+title = "Mobile Device Matrix"
+intent = "Cover small screen, large screen, iOS, and Android key paths."
+verify = "npx playwright test --project=mobile"
+origin = "seed"
+
+[[entries]]
+id = "docs-quickstart"
+category = "docs"
+title = "Quickstart"
+intent = "Write the shortest fresh-clone path that runs successfully in five minutes."
+verify = "markdownlint README.md"
+origin = "seed"
+
+[[entries]]
+id = "docs-install-troubleshooting"
+category = "docs"
+title = "Install Troubleshooting"
+intent = "Document common install failures, causes, and fixes."
+verify = "markdownlint docs"
+origin = "seed"
+
+[[entries]]
+id = "docs-api-examples"
+category = "docs"
+title = "API Examples"
+intent = "Add minimal request, response, and error examples for core APIs."
+verify = "pytest -k docs_api_examples"
+origin = "seed"
+
+[[entries]]
+id = "docs-architecture-overview"
+category = "docs"
+title = "Architecture Overview"
+intent = "Explain module boundaries, data flow, and explicit non-goals."
+verify = "markdownlint docs/architecture.md"
+origin = "seed"
+
+[[entries]]
+id = "docs-contribution-guide"
+category = "docs"
+title = "Contribution Guide"
+intent = "Document development, testing, commit, and PR review rules."
+verify = "markdownlint CONTRIBUTING.md"
+origin = "seed"
+
+[[entries]]
+id = "docs-release-notes"
+category = "docs"
+title = "Release Notes"
+intent = "Create user-facing change, migration, and breaking-change notes."
+verify = "markdownlint CHANGELOG.md"
+origin = "seed"
+
+[[entries]]
+id = "docs-env-vars"
+category = "docs"
+title = "Environment Variables"
+intent = "List env names, defaults, requiredness, and safety notes."
+verify = "pytest -k env_config"
+origin = "seed"
+
+[[entries]]
+id = "docs-runbook"
+category = "docs"
+title = "Operator Runbook"
+intent = "Document alerts, recovery, rollback, and data repair steps."
+verify = "markdownlint docs/runbooks"
+origin = "seed"
+
+[[entries]]
+id = "docs-decision-records"
+category = "docs"
+title = "Architecture Decision Records"
+intent = "Add ADR templates and indexes for major technical decisions."
+verify = "markdownlint docs/adr"
+origin = "seed"
+
+[[entries]]
+id = "docs-glossary"
+category = "docs"
+title = "Glossary"
+intent = "Unify product, engineering, and data-field terms."
+verify = "markdownlint docs/glossary.md"
+origin = "seed"
+
+[[entries]]
+id = "docs-screenshot-docs"
+category = "docs"
+title = "Screenshot Docs"
+intent = "Add real screenshots and labels for UI workflows."
+verify = "markdownlint docs"
+origin = "seed"
+
+[[entries]]
+id = "docs-docs-lint"
+category = "docs"
+title = "Docs Lint Gate"
+intent = "Add link, spelling, and executable code block checks."
+verify = "markdownlint . && lychee ."
+origin = "seed"
+
+[[entries]]
+id = "product-user-journeys"
+category = "product"
+title = "User Journeys"
+intent = "Map persona tasks into pages, events, and success states."
+verify = "markdownlint docs/product"
+origin = "seed"
+
+[[entries]]
+id = "product-prd-skeleton"
+category = "product"
+title = "PRD Skeleton"
+intent = "Write goals, non-goals, constraints, and acceptance criteria."
+verify = "markdownlint docs/prd.md"
+origin = "seed"
+
+[[entries]]
+id = "product-onboarding-metrics"
+category = "product"
+title = "Onboarding Metrics"
+intent = "Define activation events, dropoff points, and dashboard queries."
+verify = "pytest -k analytics_events"
+origin = "seed"
+
+[[entries]]
+id = "product-feature-prioritization"
+category = "product"
+title = "Feature Prioritization"
+intent = "Split MVP and later work by impact, cost, and risk."
+verify = "markdownlint docs/roadmap.md"
+origin = "seed"
+
+[[entries]]
+id = "product-permission-model"
+category = "product"
+title = "Permission Model"
+intent = "Map roles, resources, actions, and UI visibility."
+verify = "pytest -k permissions"
+origin = "seed"
+
+[[entries]]
+id = "product-notification-strategy"
+category = "product"
+title = "Notification Strategy"
+intent = "Define triggers, channels, frequency, and unsubscribe behavior."
+verify = "pytest -k notifications"
+origin = "seed"
+
+[[entries]]
+id = "product-empty-data-policy"
+category = "product"
+title = "Empty Data Policy"
+intent = "Choose blank, sample data, import, or CTA by user state."
+verify = "npx playwright test empty-data.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "product-upgrade-path"
+category = "product"
+title = "Upgrade Path"
+intent = "Design limits, paywalls, trials, and upgrade conversion paths."
+verify = "pytest -k entitlement"
+origin = "seed"
+
+[[entries]]
+id = "product-feedback-loop"
+category = "product"
+title = "Feedback Loop"
+intent = "Collect, classify, track, and close user feedback."
+verify = "markdownlint docs/feedback.md"
+origin = "seed"
+
+[[entries]]
+id = "product-search-relevance"
+category = "product"
+title = "Search Relevance"
+intent = "Define query handling, ranking, typo tolerance, and no-result behavior."
+verify = "pytest -k search_relevance"
+origin = "seed"
+
+[[entries]]
+id = "product-admin-workflows"
+category = "product"
+title = "Admin Workflows"
+intent = "Design review, undo, audit log, and bulk moderation flows."
+verify = "npx playwright test admin.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "product-success-criteria"
+category = "product"
+title = "Success Criteria"
+intent = "Define quantitative and qualitative completion measures for a feature."
+verify = "markdownlint docs/success.md"
+origin = "seed"
+
+[[entries]]
+id = "qa-critical-paths"
+category = "qa"
+title = "Critical Path Tests"
+intent = "Cover signup, create, edit, delete, export, and recovery flows."
+verify = "npx playwright test critical-paths.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "qa-regression-matrix"
+category = "qa"
+title = "Regression Matrix"
+intent = "Build feature/browser/role/data-state regression coverage."
+verify = "npx playwright test"
+origin = "seed"
+
+[[entries]]
+id = "qa-fixture-strategy"
+category = "qa"
+title = "Fixture Strategy"
+intent = "Create deterministic seed, mock, factory, and cleanup patterns."
+verify = "pytest -k fixtures"
+origin = "seed"
+
+[[entries]]
+id = "qa-visual-regression"
+category = "qa"
+title = "Visual Regression"
+intent = "Add screenshot diffs for critical pages with controlled thresholds."
+verify = "npx playwright test visual.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "qa-api-contracts"
+category = "qa"
+title = "API Contracts"
+intent = "Validate frontend/backend schema, error codes, and boundary values."
+verify = "pytest -k contract"
+origin = "seed"
+
+[[entries]]
+id = "qa-flaky-test-audit"
+category = "qa"
+title = "Flaky Test Audit"
+intent = "Find unstable tests and fix waits, isolation, or fixtures."
+verify = "pytest --count=20"
+origin = "seed"
+
+[[entries]]
+id = "qa-error-injection"
+category = "qa"
+title = "Error Injection"
+intent = "Simulate 500s, timeouts, network failure, and partial success."
+verify = "npx playwright test error-injection.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "qa-cross-browser"
+category = "qa"
+title = "Cross-Browser Coverage"
+intent = "Run critical flows across Chromium, Firefox, and WebKit."
+verify = "npx playwright test --project=chromium --project=firefox --project=webkit"
+origin = "seed"
+
+[[entries]]
+id = "qa-release-smoke"
+category = "qa"
+title = "Release Smoke"
+intent = "Define the smallest pre-release verification checklist."
+verify = "npm run smoke"
+origin = "seed"
+
+[[entries]]
+id = "qa-data-migration"
+category = "qa"
+title = "Data Migration Test"
+intent = "Verify counts, constraints, and rollback around data migration."
+verify = "pytest -k migration"
+origin = "seed"
+
+[[entries]]
+id = "qa-security-smoke"
+category = "qa"
+title = "Security Smoke"
+intent = "Check auth, permission bypass, and sensitive info leakage."
+verify = "pytest -k security_smoke"
+origin = "seed"
+
+[[entries]]
+id = "qa-bug-repro-template"
+category = "qa"
+title = "Bug Reproduction Template"
+intent = "Standardize environment, steps, expected, actual, and evidence."
+verify = "markdownlint .github/ISSUE_TEMPLATE"
+origin = "seed"
+
+[[entries]]
+id = "accessibility-keyboard-nav"
+category = "accessibility"
+title = "Keyboard Navigation"
+intent = "Ensure the whole app works with Tab, Enter, and Escape."
+verify = "npx playwright test keyboard.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "accessibility-screen-reader"
+category = "accessibility"
+title = "Screen Reader Semantics"
+intent = "Check landmarks, labels, aria-live, and button names."
+verify = "npx axe http://localhost:3000"
+origin = "seed"
+
+[[entries]]
+id = "accessibility-focus-visible"
+category = "accessibility"
+title = "Focus Visible"
+intent = "Give every interactive element a clear focus state."
+verify = "npx playwright test focus.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "accessibility-color-contrast"
+category = "accessibility"
+title = "Color Contrast"
+intent = "Meet WCAG AA for text, icons, and state colors."
+verify = "npx axe http://localhost:3000"
+origin = "seed"
+
+[[entries]]
+id = "accessibility-form-errors"
+category = "accessibility"
+title = "Accessible Form Errors"
+intent = "Associate errors with fields so screen readers announce them."
+verify = "npx playwright test form-a11y.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "accessibility-modal-trap"
+category = "accessibility"
+title = "Modal Focus Trap"
+intent = "Focus opens, cycles, closes, and returns correctly."
+verify = "npx playwright test modal-a11y.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "accessibility-reduced-motion"
+category = "accessibility"
+title = "Reduced Motion"
+intent = "Respect prefers-reduced-motion for all nonessential motion."
+verify = "npx playwright test reduced-motion.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "accessibility-alt-text"
+category = "accessibility"
+title = "Alt Text Audit"
+intent = "Separate decorative, content, and product images."
+verify = "npx axe http://localhost:3000"
+origin = "seed"
+
+[[entries]]
+id = "accessibility-heading-order"
+category = "accessibility"
+title = "Heading Order"
+intent = "Fix skipped headings and fake styled headings."
+verify = "npx axe http://localhost:3000"
+origin = "seed"
+
+[[entries]]
+id = "accessibility-live-region"
+category = "accessibility"
+title = "Live Region Feedback"
+intent = "Announce toasts, async completion, and errors accessibly."
+verify = "npx playwright test live-region.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "accessibility-touch-a11y"
+category = "accessibility"
+title = "Touch Accessibility"
+intent = "Check tap targets, zoom, and orientation on mobile."
+verify = "npx playwright test --project=mobile a11y.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "accessibility-audit-report"
+category = "accessibility"
+title = "Accessibility Audit Report"
+intent = "Produce prioritized issues, impact, fixes, and acceptance checks."
+verify = "npx axe http://localhost:3000 --save results.json"
+origin = "seed"
+
+[[entries]]
+id = "performance-lcp"
+category = "performance"
+title = "LCP Optimization"
+intent = "Find and optimize the largest contentful paint element."
+verify = "npm run lighthouse"
+origin = "seed"
+
+[[entries]]
+id = "performance-cls"
+category = "performance"
+title = "CLS Fix"
+intent = "Reserve space for images, ads, and dynamic content."
+verify = "npm run lighthouse"
+origin = "seed"
+
+[[entries]]
+id = "performance-inp"
+category = "performance"
+title = "INP Optimization"
+intent = "Reduce long tasks and blocking interaction handlers."
+verify = "npm run trace"
+origin = "seed"
+
+[[entries]]
+id = "performance-bundle-budget"
+category = "performance"
+title = "Bundle Budget"
+intent = "Set route and dependency size budgets in CI."
+verify = "npm run analyze"
+origin = "seed"
+
+[[entries]]
+id = "performance-code-splitting"
+category = "performance"
+title = "Code Splitting"
+intent = "Lazy-load low-frequency routes, charts, and editors."
+verify = "npm run analyze"
+origin = "seed"
+
+[[entries]]
+id = "performance-image-pipeline"
+category = "performance"
+title = "Image Pipeline"
+intent = "Use srcset, modern formats, lazy loading, and cache headers."
+verify = "npm run lighthouse"
+origin = "seed"
+
+[[entries]]
+id = "performance-font-loading"
+category = "performance"
+title = "Font Loading"
+intent = "Optimize font-display, subsets, and preload hints."
+verify = "npm run lighthouse"
+origin = "seed"
+
+[[entries]]
+id = "performance-api-waterfall"
+category = "performance"
+title = "API Waterfall"
+intent = "Remove serial requests and prefetch critical data."
+verify = "npx playwright test performance.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "performance-cache-strategy"
+category = "performance"
+title = "Cache Strategy"
+intent = "Define browser, CDN, and service-worker cache boundaries."
+verify = "npx playwright test cache.spec.ts"
+origin = "seed"
+
+[[entries]]
+id = "performance-memory-leaks"
+category = "performance"
+title = "Memory Leak Audit"
+intent = "Check long sessions, lists, subscriptions, and charts for leaks."
+verify = "npm run test:memory"
+origin = "seed"
+
+[[entries]]
+id = "performance-render-count"
+category = "performance"
+title = "Render Count Audit"
+intent = "Find unnecessary React renders and expensive selectors."
+verify = "npm run profile"
+origin = "seed"
+
+[[entries]]
+id = "performance-ci-gate"
+category = "performance"
+title = "Performance CI Gate"
+intent = "Add Lighthouse or trace thresholds to CI."
+verify = "npm run lighthouse:ci"
+origin = "seed"
+
+[[entries]]
+id = "goal-meta-prompt-writer"
+category = "workflow"
+title = "Goal Prompt Writer"
+intent = "Ask the agent to inspect a repo and write a precise goal prompt before execution."
+verify = "markdownlint generated-goal.md"
+origin = "seed"
+
+[[entries]]
+id = "goal-continuation-audit"
+category = "workflow"
+title = "Goal Continuation Audit"
+intent = "Check that a long-running goal keeps its done_when and verification contract after compaction."
+verify = "rg -e \"DONE WHEN\" -e \"VERIFY\" -e \"STOP RULES\" progress-log.md"
+origin = "seed"
+
+[[entries]]
+id = "codex-verifiable-end-state"
+category = "workflow"
+title = "Verifiable End-State Contract"
+intent = "Complete one goal only when a verifiable end state is met."
+verify = "manual status plus repo-local verification"
+origin = "source-backed"
+source_url = "https://developers.openai.com/codex/use-cases/follow-goals"
+source_name = "OpenAI Codex docs"
+source_type = "official-goal"
+evidence = "verifiable stopping condition"
+
+[[entries]]
+id = "codex-visual-migration-playwright"
+category = "migration"
+title = "Visual Migration With Playwright"
+intent = "Migrate a project while preserving screen output and checking it with Playwright."
+verify = "npx playwright test"
+origin = "source-backed"
+source_url = "https://developers.openai.com/codex/use-cases/follow-goals"
+source_name = "OpenAI Codex docs"
+source_type = "official-goal"
+evidence = "visual migration"
+
+[[entries]]
+id = "codex-plan-milestone-prototype"
+category = "prototype"
+title = "PLAN.md Milestone Prototype"
+intent = "Implement a PLAN.md-driven prototype with tests at each milestone and browser verification."
+verify = "npx playwright test"
+origin = "source-backed"
+source_url = "https://developers.openai.com/codex/use-cases/follow-goals"
+source_name = "OpenAI Codex docs"
+source_type = "official-goal"
+evidence = "PLAN.md"
+
+[[entries]]
+id = "codex-eval-prompt-optimization"
+category = "prompt-optimization"
+title = "Eval-Driven Prompt Optimization"
+intent = "Optimize prompts against an eval suite until the target score or pass rate is reached."
+verify = "python -m pytest evals"
+origin = "source-backed"
+source_url = "https://developers.openai.com/codex/use-cases/follow-goals"
+source_name = "OpenAI Codex docs"
+source_type = "official-goal"
+evidence = "eval suite"
+
+[[entries]]
+id = "claude-auth-tests-lint"
+category = "testing"
+title = "Auth Tests And Lint Clean"
+intent = "Keep working until auth tests pass and the lint step is clean."
+verify = "npm test -- test/auth && npm run lint"
+origin = "source-backed"
+source_url = "https://code.claude.com/docs/en/goal"
+source_name = "Claude Code docs"
+source_type = "official-goal"
+evidence = "test/auth pass"
+
+[[entries]]
+id = "claude-weekly-changelog"
+category = "docs"
+title = "Weekly Changelog Coverage"
+intent = "Ensure CHANGELOG.md includes an entry for every PR merged this week."
+verify = "git log --since='7 days ago' --merges && rg '^-' CHANGELOG.md"
+origin = "source-backed"
+source_url = "https://code.claude.com/docs/en/goal"
+source_name = "Claude Code docs"
+source_type = "official-goal"
+evidence = "CHANGELOG.md has an entry"
+
+[[entries]]
+id = "hermes-ruff-src-clean"
+category = "testing"
+title = "Ruff Clean Source Tree"
+intent = "Fix every lint error in src and prove ruff passes."
+verify = "ruff check src/"
+origin = "source-backed"
+source_url = "https://hermes-agent.nousresearch.com/docs/user-guide/features/goals"
+source_name = "Hermes docs"
+source_type = "official-goal"
+evidence = "ruff check"
+
+[[entries]]
+id = "hermes-feature-port-ci-green"
+category = "migration"
+title = "Feature Port With CI Green"
+intent = "Port a feature from another repo, include tests, and get CI green."
+verify = "pytest && npm test"
+origin = "source-backed"
+source_url = "https://hermes-agent.nousresearch.com/docs/user-guide/features/goals"
+source_name = "Hermes docs"
+source_type = "official-goal"
+evidence = "CI green"
+
+[[entries]]
+id = "hermes-session-drift-report"
+category = "investigation"
+title = "Session Drift Report"
+intent = "Investigate session ID drift during mid-run compression and write a report."
+verify = "test -f reports/session-drift.md"
+origin = "source-backed"
+source_url = "https://hermes-agent.nousresearch.com/docs/user-guide/features/goals"
+source_name = "Hermes docs"
+source_type = "official-goal"
+evidence = "write up a report"
+
+[[entries]]
+id = "hermes-exif-rename-cli"
+category = "cli"
+title = "EXIF Rename CLI"
+intent = "Build a small CLI that renames photos by EXIF date and test it on a photos folder."
+verify = "pytest tests/cli && ./rename-exif photos/ --dry-run"
+origin = "source-backed"
+source_url = "https://hermes-agent.nousresearch.com/docs/user-guide/features/goals"
+source_name = "Hermes docs"
+source_type = "official-goal"
+evidence = "photos/ folder"
+
+[[entries]]
+id = "hermes-four-files-walkthrough"
+category = "workflow"
+title = "Four Files Walkthrough"
+intent = "Create four note files across turns and verify each contains its number."
+verify = "for i in 1 2 3 4; do test \"$(cat /tmp/note_$i.txt)\" = \"$i\"; done"
+origin = "source-backed"
+source_url = "https://hermes-agent.nousresearch.com/docs/user-guide/features/goals"
+source_name = "Hermes docs"
+source_type = "official-goal"
+evidence = "Create four files"
+
+[[entries]]
+id = "explainx-typescript-eslint-coverage"
+category = "testing"
+title = "TypeScript ESLint Coverage Gate"
+intent = "Resolve TypeScript errors, pass tests, clear ESLint warnings, and keep coverage above a threshold."
+verify = "npm run typecheck && npm test && npm run lint && npm run coverage"
+origin = "source-backed"
+source_url = "https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026"
+source_name = "ExplainX blog"
+source_type = "third-party-tutorial"
+evidence = "TypeScript errors resolved"
+
+[[entries]]
+id = "explainx-auth-di-refactor"
+category = "refactor"
+title = "Auth Dependency Injection Refactor"
+intent = "Refactor auth code to dependency injection while preserving tests, coverage, and public API."
+verify = "npm test -- auth && npm run coverage"
+origin = "source-backed"
+source_url = "https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026"
+source_name = "ExplainX blog"
+source_type = "third-party-tutorial"
+evidence = "auth.ts dependency injection"
+
+[[entries]]
+id = "explainx-npm-audit-clean"
+category = "security-ops"
+title = "NPM Audit Clean Remediation"
+intent = "Patch npm audit vulnerabilities without breaking tests or public APIs."
+verify = "npm audit && npm test"
+origin = "source-backed"
+source_url = "https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026"
+source_name = "ExplainX blog"
+source_type = "third-party-tutorial"
+evidence = "npm audit vulnerabilities patched"
+
+[[entries]]
+id = "explainx-lighthouse-core-web-vitals"
+category = "performance"
+title = "Lighthouse And Core Web Vitals Gate"
+intent = "Improve Lighthouse and Core Web Vitals to explicit thresholds without regressions."
+verify = "npm run lighthouse"
+origin = "source-backed"
+source_url = "https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026"
+source_name = "ExplainX blog"
+source_type = "third-party-tutorial"
+evidence = "Lighthouse performance score >95"
+
+[[entries]]
+id = "qiita-vue2-vue3-visual-unit"
+category = "migration"
+title = "Vue 2 To Vue 3 Visual And Unit Gate"
+intent = "Migrate listed Vue screens and stop only when visual and unit tests pass."
+verify = "pnpm test:visual && pnpm test:unit"
+origin = "source-backed"
+source_url = "https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae"
+source_name = "Qiita article"
+source_type = "third-party-tutorial"
+evidence = "pnpm test:visual"
+
+[[entries]]
+id = "qiita-canvas-puzzle-plan"
+category = "prototype"
+title = "Canvas Puzzle PLAN.md Prototype"
+intent = "Implement PLAN.md milestones for a canvas puzzle prototype and prove e2e passes."
+verify = "pnpm e2e"
+origin = "source-backed"
+source_url = "https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae"
+source_name = "Qiita article"
+source_type = "third-party-tutorial"
+evidence = "canvas puzzle"
+
+[[entries]]
+id = "qiita-router-eval-score"
+category = "prompt-optimization"
+title = "Router Prompt Eval Score"
+intent = "Improve a router prompt against an eval directory until the result score reaches a target."
+verify = "python -m pytest evals/router"
+origin = "source-backed"
+source_url = "https://qiita.com/y-morimatsu/items/a314e5bbfdc83616d3ae"
+source_name = "Qiita article"
+source_type = "third-party-tutorial"
+evidence = "router prompt"
+
+[[entries]]
+id = "openai-slash-finish-migration"
+category = "migration"
+title = "Finish Migration Keep Tests Green"
+intent = "Use `/goal` to complete a migration while keeping the relevant tests green."
+verify = "repo-local migration tests"
+origin = "source-backed"
+source_url = "https://developers.openai.com/codex/cli/slash-commands#set-an-experimental-goal-with-goal"
+source_name = "OpenAI Codex slash commands"
+source_type = "official-goal"
+evidence = "Finish the migration"
+
+[[entries]]
+id = "openai-long-horizon-design-tool"
+category = "greenfield-build"
+title = "Build Design Tool From Scratch"
+intent = "Run a long-horizon Codex task to build a design tool with milestone verification."
+verify = "tests, lint, and typecheck per milestone"
+origin = "source-backed"
+source_url = "https://developers.openai.com/blog/run-long-horizon-tasks-with-codex"
+source_name = "OpenAI Codex blog"
+source_type = "official-workflow"
+evidence = "verification steps"
+
+[[entries]]
+id = "claude-module-api-migration"
+category = "migration"
+title = "Module API Migration"
+intent = "Migrate a module to a new API while keeping call sites compiling and tests passing."
+verify = "compile call sites && tests pass"
+origin = "source-backed"
+source_url = "https://code.claude.com/docs/en/goal"
+source_name = "Claude Code docs"
+source_type = "official-goal"
+evidence = "new API"
+
+[[entries]]
+id = "claude-design-doc-acceptance"
+category = "product"
+title = "Design Doc Acceptance Complete"
+intent = "Implement a design document until every acceptance criterion is satisfied."
+verify = "acceptance criteria review"
+origin = "source-backed"
+source_url = "https://code.claude.com/docs/en/goal"
+source_name = "Claude Code docs"
+source_type = "official-goal"
+evidence = "acceptance criteria"
+
+[[entries]]
+id = "claude-split-oversized-file"
+category = "refactor"
+title = "Split Oversized File"
+intent = "Split an oversized source file into focused modules while preserving behavior."
+verify = "module size budget && tests pass"
+origin = "source-backed"
+source_url = "https://code.claude.com/docs/en/goal"
+source_name = "Claude Code docs"
+source_type = "official-goal"
+evidence = "size budget"
+
+[[entries]]
+id = "claude-clear-labeled-issues"
+category = "backlog"
+title = "Clear Labeled Issue Backlog"
+intent = "Work through a labeled issue queue until no matching issues remain."
+verify = "issue queue empty"
+origin = "source-backed"
+source_url = "https://code.claude.com/docs/en/goal"
+source_name = "Claude Code docs"
+source_type = "official-goal"
+evidence = "queue is empty"
+
+[[entries]]
+id = "hermes-cli-tests-pass"
+category = "testing"
+title = "Fix Hermes CLI Tests"
+intent = "Fix failing Hermes CLI tests until the project test script passes."
+verify = "scripts/run_tests.sh"
+origin = "source-backed"
+source_url = "https://hermes-agent.nousresearch.com/docs/user-guide/features/goals"
+source_name = "Hermes docs"
+source_type = "official-goal"
+evidence = "scripts/run_tests.sh passes"
+
+[[entries]]
+id = "cursor-usage-pattern-analysis"
+category = "data-analytics"
+title = "Analyze Product Usage Patterns"
+intent = "Analyze product usage patterns between tab view and agent panels."
+verify = "analysis files and tests shown"
+origin = "source-backed"
+source_url = "https://cursor.com/en-US/product"
+source_name = "Cursor product page"
+source_type = "official-agent-task"
+evidence = "Analyze Tab vs Agent Usage Patterns"
+
+[[entries]]
+id = "cursor-chart-tooltip-freeze"
+category = "frontend"
+title = "Fix Freezing Chart Tooltips"
+intent = "Debug and fix chart tooltips that freeze on hover."
+verify = "frontend diff plus interaction verification"
+origin = "source-backed"
+source_url = "https://cursor.com/en-US/product"
+source_name = "Cursor product page"
+source_type = "official-agent-task"
+evidence = "Chart tooltips freeze"
+
+[[entries]]
+id = "github-copilot-error-messages"
+category = "frontend"
+title = "Improve Common Error Messages"
+intent = "Use a cloud coding agent to implement user-friendly messages for common errors."
+verify = "pushed code changes"
+origin = "source-backed"
+source_url = "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/start-copilot-sessions"
+source_name = "GitHub Copilot docs"
+source_type = "official-agent-task"
+evidence = "user friendly message"
+
+[[entries]]
+id = "google-jules-auth-tests"
+category = "testing"
+title = "Add Authentication Tests"
+intent = "Create unit tests for an authentication module in a Jules session."
+verify = "session completed with PR output"
+origin = "source-backed"
+source_url = "https://jules.google/docs/api/reference/sessions/"
+source_name = "Google Jules sessions docs"
+source_type = "official-agent-task"
+evidence = "Add auth tests"
+
+[[entries]]
+id = "openhands-userservice-tests"
+category = "testing"
+title = "Add UserService Unit Tests"
+intent = "Add unit tests for UserService and raise target coverage to the documented threshold."
+verify = "coverage target evidence"
+origin = "source-backed"
+source_url = "https://docs.openhands.dev/openhands/usage/get-started/tutorials"
+source_name = "OpenHands tutorials"
+source_type = "official-agent-task"
+evidence = "Target coverage: 80%"
+
+[[entries]]
+id = "devin-parallel-coverage-recovery"
+category = "testing"
+title = "Parallel Test Coverage Recovery"
+intent = "Find low-coverage modules and open separate test-improvement PRs for each module."
+verify = "separate PR per module"
+origin = "source-backed"
+source_url = "https://docs.devin.ai/product-guides/advanced-mode"
+source_name = "Devin advanced capabilities"
+source_type = "official-agent-task"
+evidence = "below 50% coverage"
+
+[[entries]]
+id = "qiita-aochan-single-vitest-fix"
+category = "testing"
+title = "Single Vitest Case Fix"
+intent = "Fix a quiz application until one named Vitest case passes."
+verify = "pnpm exec vitest run -t \"increments score only on correct answer\""
+origin = "source-backed"
+source_url = "https://qiita.com/Aochan0604/items/8cc5f28901455097095c"
+source_name = "Qiita Aochan0604"
+source_type = "third-party-tutorial"
+evidence = "pnpm exec vitest run -t"
+
+[[entries]]
+id = "qiita-aochan-full-vitest-recovery"
+category = "testing"
+title = "Full Quiz Test Recovery"
+intent = "Repair the quiz app until the full Vitest suite exits cleanly."
+verify = "pnpm exec vitest run"
+origin = "source-backed"
+source_url = "https://qiita.com/Aochan0604/items/8cc5f28901455097095c"
+source_name = "Qiita Aochan0604"
+source_type = "third-party-tutorial"
+evidence = "pnpm exec vitest run exits 0"
+
+[[entries]]
+id = "qiita-aochan-visual-feedback"
+category = "frontend"
+title = "Visual Feedback With Test Guard"
+intent = "Add correct and wrong answer visual feedback while keeping tests green."
+verify = "pnpm exec vitest run && git status --short"
+origin = "source-backed"
+source_url = "https://qiita.com/Aochan0604/items/8cc5f28901455097095c"
+source_name = "Qiita Aochan0604"
+source_type = "third-party-tutorial"
+evidence = ".correct and .wrong"
+
+[[entries]]
+id = "jdhodges-read-only-font-match"
+category = "research"
+title = "Read-Only Font Match"
+intent = "Research font matches in read-only mode and produce a report without purchasing or downloading assets."
+verify = "written report"
+origin = "source-backed"
+source_url = "https://www.jdhodges.com/blog/codex-goal-feature-review/"
+source_name = "J.D. Hodges blog"
+source_type = "third-party-review"
+evidence = "read-only font-match"
+
+[[entries]]
+id = "jdhodges-auth-coverage-lift"
+category = "testing"
+title = "Auth Coverage Lift"
+intent = "Raise authentication code coverage from the documented baseline to the documented target within a scoped edit boundary."
+verify = "npm test"
+origin = "source-backed"
+source_url = "https://www.jdhodges.com/blog/codex-goal-feature-review/"
+source_name = "J.D. Hodges blog"
+source_type = "third-party-review"
+evidence = "coverage from 38% to 75%"
+
+[[entries]]
+id = "apidog-auth-test-repair"
+category = "testing"
+title = "Auth Test Repair Boundary"
+intent = "Fix failing auth tests while preserving the documented file boundary."
+verify = "npm test"
+origin = "source-backed"
+source_url = "https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/"
+source_name = "Apidog blog"
+source_type = "third-party-tutorial"
+evidence = "npm test exits 0"
+
+[[entries]]
+id = "apidog-benchmark-table"
+category = "research"
+title = "Public Benchmark Table"
+intent = "Collect distinct public benchmarks and build a date-sorted comparison table."
+verify = "table covers 10 sources"
+origin = "source-backed"
+source_url = "https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/"
+source_name = "Apidog blog"
+source_type = "third-party-tutorial"
+evidence = "10 distinct benchmarks"
+
+[[entries]]
+id = "apidog-repo-maintenance-audit"
+category = "maintenance"
+title = "Repo Maintenance Audit"
+intent = "Find dead code, unused dependencies, and stale files, then produce a PR-ready justification list."
+verify = "each item has justification"
+origin = "source-backed"
+source_url = "https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/"
+source_name = "Apidog blog"
+source_type = "third-party-tutorial"
+evidence = "dead code, unused dependencies"
+
+[[entries]]
+id = "apidog-contributor-readme"
+category = "docs"
+title = "Contributor README Rewrite"
+intent = "Rewrite README installation, run, test, and architecture guidance for new contributors."
+verify = "commands and expected output documented"
+origin = "source-backed"
+source_url = "https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/"
+source_name = "Apidog blog"
+source_type = "third-party-tutorial"
+evidence = "README.md install/run/test"
+
+[[entries]]
+id = "apidog-theme-toggle"
+category = "frontend"
+title = "Theme Toggle Persistence"
+intent = "Add a dark and light theme toggle that persists across refreshes."
+verify = "browser refresh verification"
+origin = "source-backed"
+source_url = "https://apidog.com/blog/goal-command-codex-claude-code-autonomous-agents/"
+source_name = "Apidog blog"
+source_type = "third-party-tutorial"
+evidence = "dark/light theme toggle"
+
+[[entries]]
+id = "explainx-ci-pipeline-green"
+category = "devops-ci"
+title = "CI Pipeline Green"
+intent = "Repair CI test, lint, typecheck, and security scan failures until checks pass."
+verify = "local CI rerun and remote CI"
+origin = "source-backed"
+source_url = "https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026"
+source_name = "ExplainX blog"
+source_type = "third-party-tutorial"
+evidence = "All CI checks passing"
+
+[[entries]]
+id = "explainx-moment-dayjs-migration"
+category = "migration"
+title = "Moment To Day.js Migration"
+intent = "Replace Moment.js with Day.js while preserving date output across edge cases."
+verify = "tests and edge-case output compare"
+origin = "source-backed"
+source_url = "https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026"
+source_name = "ExplainX blog"
+source_type = "third-party-tutorial"
+evidence = "Moment.js usage with Day.js"
+
+[[entries]]
+id = "explainx-public-api-jsdoc"
+category = "docs"
+title = "Public API Docs Coverage"
+intent = "Add JSDoc and examples for public functions while keeping documentation links valid."
+verify = "docs coverage and broken link check"
+origin = "source-backed"
+source_url = "https://explainx.ai/blog/goal-mode-ai-agents-complete-guide-2026"
+source_name = "ExplainX blog"
+source_type = "third-party-tutorial"
+evidence = "public functions ... JSDoc"
+
+[[entries]]
+id = "udit-coverage-autoresearch"
+category = "testing"
+title = "Coverage Autoresearch Loop"
+intent = "Iterate on tests until coverage reaches the documented target."
+verify = "npm test -- --coverage"
+origin = "source-backed"
+source_url = "https://udit.co/projects/autoresearch"
+source_name = "Udit Autoresearch"
+source_type = "third-party-project"
+evidence = "Increase test coverage to 95%"
+
+[[entries]]
+id = "udit-bundle-size-reduction"
+category = "performance"
+title = "Bundle Size Reduction"
+intent = "Iteratively reduce bundle size below the documented threshold."
+verify = "npm run build and size report"
+origin = "source-backed"
+source_url = "https://udit.co/projects/autoresearch"
+source_name = "Udit Autoresearch"
+source_type = "third-party-project"
+evidence = "Reduce bundle size below 200KB"
+
+[[entries]]
+id = "udit-benchmark-optimization"
+category = "performance"
+title = "Benchmark Optimization"
+intent = "Optimize performance against a benchmark command until the goal is reached."
+verify = "npm run bench"
+origin = "source-backed"
+source_url = "https://udit.co/projects/autoresearch"
+source_name = "Udit Autoresearch"
+source_type = "third-party-project"
+evidence = "npm run bench"
+
+[[entries]]
+id = "theaidaily-test-typescript-clean"
+category = "testing"
+title = "Test And TypeScript Clean"
+intent = "Keep working until tests exit cleanly and TypeScript errors are gone."
+verify = "npm test && npx tsc --noEmit"
+origin = "source-backed"
+source_url = "https://theaidaily.nl/zo-gebruik-je-claude-code-goal-slash-command/"
+source_name = "TheAIDaily"
+source_type = "third-party-tutorial"
+evidence = "npm test exit code 0"
+
+[[entries]]
+id = "theaidaily-clean-worktree-budget"
+category = "maintenance"
+title = "Clean Worktree File Budget"
+intent = "Keep the worktree clean and enforce a source file size budget."
+verify = "git status --short && file length check"
+origin = "source-backed"
+source_url = "https://theaidaily.nl/zo-gebruik-je-claude-code-goal-slash-command/"
+source_name = "TheAIDaily"
+source_type = "third-party-tutorial"
+evidence = "git status is clean"
+
+[[entries]]
+id = "cursor-forum-react19-migration"
+category = "migration"
+title = "React 19 Migration"
+intent = "Migrate a project to React 19 and continue until the build passes."
+verify = "build passes"
+origin = "source-backed"
+source_url = "https://forum.cursor.com/t/add-autonomous-goal-mode-similar-to-claude-code-s-goal/160374"
+source_name = "Cursor Forum"
+source_type = "public-forum"
+evidence = "React 19 until build passes"
+
+[[entries]]
+id = "cursor-forum-go-race-cleanup"
+category = "testing"
+title = "Go Race Cleanup"
+intent = "Eliminate data races detected by the Go race detector."
+verify = "go test -race"
+origin = "source-backed"
+source_url = "https://forum.cursor.com/t/add-autonomous-goal-mode-similar-to-claude-code-s-goal/160374"
+source_name = "Cursor Forum"
+source_type = "public-forum"
+evidence = "go test -race"
+
+[[entries]]
+id = "x-meta-goal-prompt-generator"
+category = "workflow"
+title = "Meta Goal Prompt Generator"
+intent = "Ask the agent to inspect the session, repo, history, and docs before writing the actual `/goal` prompt."
+verify = "generated goal prompt with clarified uncertainties"
+origin = "source-backed"
+source_url = "https://x.com/meta_alchemist/status/2054214497443995694"
+source_name = "@meta_alchemist on X"
+source_type = "x-post"
+evidence = "write me the /goal prompt for this"
+
+[[entries]]
+id = "x-tests-lint-completion"
+category = "testing"
+title = "Tests And Lint Completion"
+intent = "Run a `/goal` loop until all tests pass and lint is clean."
+verify = "tests pass && lint clean"
+origin = "source-backed"
+source_url = "https://x.com/sairahul1/status/2054821159066386482"
+source_name = "@sairahul1 on X"
+source_type = "x-post"
+evidence = "/goal all tests pass and lint is clean"
+
+[[entries]]
+id = "x-goal-escape-hatch"
+category = "goal-maintenance"
+title = "Goal Escape Hatch"
+intent = "Add an explicit incomplete state for impossible subtasks so a goal loop can stop safely."
+verify = "incomplete marker and rationale"
+origin = "source-backed"
+source_url = "https://x.com/KingBootoshi/status/2054837169748152645"
+source_name = "@KingBootoshi on X"
+source_type = "x-post"
+evidence = "/GOAL NEEDED AN ESCAPE HATCH"
+
+[[entries]]
+id = "x-agentsmd-goal-workflow"
+category = "workflow"
+title = "AGENTS.md Goal Workflow"
+intent = "Use AGENTS.md rules together with `/goal` so long-running work keeps repo-specific constraints."
+verify = "AGENTS.md rules honored"
+origin = "source-backed"
+source_url = "https://x.com/dhruvbaldawa/status/2053745268118733252"
+source_name = "@dhruvbaldawa on X"
+source_type = "x-post"
+evidence = "combine it with /goal"
+
+[[entries]]
+id = "x-goal-forge-done-when"
+category = "goal-maintenance"
+title = "Goal-Forge Done-When Loop"
+intent = "Write a GOAL.md-style contract where `done_when` controls completion instead of vague success claims."
+verify = "done_when audit"
+origin = "source-backed"
+source_url = "https://x.com/Michaelzsguo/status/2053508788431511637"
+source_name = "@Michaelzsguo on X"
+source_type = "x-post"
+evidence = "done_when is intrinsic"
+
+[[entries]]
+id = "x-plan-then-goal-execution"
+category = "workflow"
+title = "Plan-Then-Goal Execution"
+intent = "Use plan mode to define the work, then start a new goal session to implement the plan completely."
+verify = "plan completed against checklist"
+origin = "source-backed"
+source_url = "https://x.com/ivangdavila/status/2053867892064616481"
+source_name = "@ivangdavila on X"
+source_type = "x-post"
+evidence = "Use /plan mode to define the goal"
+
+[[entries]]
+id = "x-measurable-goal-structure"
+category = "workflow"
+title = "Measurable Goal Structure"
+intent = "Write goals with a clear target, proof requirement, and explicit limits."
+verify = "proof and limits present"
+origin = "source-backed"
+source_url = "https://x.com/Arslandev97/status/2054781760194711978"
+source_name = "@Arslandev97 on X"
+source_type = "x-post"
+evidence = "Set a clear goal. Make it measurable."
+
+[[entries]]
+id = "x-qa-engineer-simulation"
+category = "qa"
+title = "QA Engineer Simulation"
+intent = "Use `/goal` as a quality loop until tests pass and lint is clean."
+verify = "tests pass && lint clean"
+origin = "source-backed"
+source_url = "https://x.com/LenaWithAI/status/2054845479502930372"
+source_name = "@LenaWithAI on X"
+source_type = "x-post"
+evidence = "runs until tests pass and lint is clean"
+
+[[entries]]
+id = "reddit-trading-backlog-clearance"
+category = "backlog"
+title = "Clear Trading App Backlog"
+intent = "Generate a roadmap backlog for a trading app and then clear it with goals."
+verify = "backlog cleared"
+origin = "source-backed"
+source_url = "https://www.reddit.com/r/codex/comments/1t7b3x1/goal_in_the_codex_app_is_amazing/"
+source_name = "Reddit r/codex"
+source_type = "public-forum"
+evidence = "210 task backlog"
+
+[[entries]]
+id = "reddit-ship-backlog-features"
+category = "backlog"
+title = "Ship Backlog Features"
+intent = "Implement the feature list from BACKLOG.md until CI is green."
+verify = "CI green"
+origin = "source-backed"
+source_url = "https://www.reddit.com/r/WebAfterAI/comments/1t6lgsb/openai_just_dropped_goal_in_codex_set_a_goal_and/"
+source_name = "Reddit r/WebAfterAI"
+source_type = "public-forum"
+evidence = "/goal ship the 18 features"
+
+[[entries]]
+id = "reddit-tests-pass-pr-ready"
+category = "testing"
+title = "Tests Pass And PR Ready"
+intent = "Keep Claude Code working until tests pass and the PR is ready for review."
+verify = "tests pass"
+origin = "source-backed"
+source_url = "https://www.reddit.com/r/ClaudeCode/comments/1taty8a/claude_code_just_shipped_a_run_until_done_mode/"
+source_name = "Reddit r/ClaudeCode"
+source_type = "public-forum"
+evidence = "all tests pass and the PR is ready"
+
+[[entries]]
+id = "reddit-billing-empty-state"
+category = "investigation"
+title = "Billing Empty State Root Cause"
+intent = "Find why active subscriptions show an empty state without changing pricing or webhook code."
+verify = "npm test"
+origin = "source-backed"
+source_url = "https://www.reddit.com/r/ClaudeAI/comments/1taelgl/what_improved_my_claude_code_workflow_stop/"
+source_name = "Reddit r/ClaudeAI"
+source_type = "public-forum"
+evidence = "billing page shows an empty state"
+
+[[entries]]
+id = "reddit-rag-chat-flywheel"
+category = "prompt-optimization"
+title = "RAG Chat Flywheel"
+intent = "Iterate on code, tests, and metrics to improve a document-chat RAG system."
+verify = "Playwright tests and metric review"
+origin = "source-backed"
+source_url = "https://www.reddit.com/r/ClaudeCode/comments/1pe5nnw/update_1_creating_a_claude_code_flywheel/"
+source_name = "Reddit r/ClaudeCode"
+source_type = "public-forum"
+evidence = "continually improve my RAG based document chat"
+
+[[entries]]
+id = "hn-button-console-error-fix"
+category = "frontend"
+title = "Button Console Error Fix"
+intent = "Use browser automation to click a button, inspect console errors, fix the issue, and prove it."
+verify = "Playwright interaction"
+origin = "source-backed"
+source_url = "https://news.ycombinator.com/item?id=45642911"
+source_name = "HN Playwright Skill"
+source_type = "public-forum"
+evidence = "console error when you click the button"
+
+[[entries]]
+id = "hn-review-sentiment-json-agent"
+category = "research"
+title = "Review Sentiment JSON Agent"
+intent = "Fetch reviews with browser automation, classify sentiment, and write structured JSON output."
+verify = "JSON files written"
+origin = "source-backed"
+source_url = "https://news.ycombinator.com/item?id=45840088"
+source_name = "HN You Should Write An Agent"
+source_type = "public-forum"
+evidence = "fetch ten reviews"
+
+[[entries]]
+id = "hn-dag-agent-dispatch"
+category = "orchestration"
+title = "DAG Agent Dispatch"
+intent = "Split a goal into a dependency graph and dispatch independent agents into isolated worktrees."
+verify = "PR output"
+origin = "source-backed"
+source_url = "https://news.ycombinator.com/item?id=47355676"
+source_name = "HN Astro"
+source_type = "public-forum"
+evidence = "isolated git worktree and opens a PR"
+
+[[entries]]
+id = "video-nextjs-chat-sidebar"
+category = "frontend"
+title = "Next.js Chat History Sidebar"
+intent = "Replace a Next.js sidebar with chat history, then test, fix build issues, and push."
+verify = "tests and build"
+origin = "source-backed"
+source_url = "https://videohighlight.com/v/AJpK3YTTKZ4"
+source_name = "VideoHighlight YouTube summary"
+source_type = "video-summary"
+evidence = "replace a sidebar with chat history"
+
+[[entries]]
+id = "video-rift-salvage-game"
+category = "prototype"
+title = "Rift Salvage Game Goal"
+intent = "Build a 2D combat game prototype with assets, combat, boss logic, and browser verification."
+verify = "browser verification"
+origin = "source-backed"
+source_url = "https://pogovet.com/youtube/codex-just-became-the-best-long-running-agentic-harness"
+source_name = "Pogovet YouTube summary"
+source_type = "video-summary"
+evidence = "2D combat game Rift Salvage"
+
+[[entries]]
+id = "github-claude-goal-flaky-auth"
+category = "testing"
+title = "Flaky Auth Tests Goal"
+intent = "Use a Claude goal plugin example to find and fix flaky authentication tests."
+verify = "python3 -m pytest tests"
+origin = "source-backed"
+source_url = "https://github.com/jthack/claude-goal"
+source_name = "jthack/claude-goal"
+source_type = "tool-readme"
+evidence = "find and fix the flaky auth tests"
+
+[[entries]]
+id = "github-pydantic-v2-migration"
+category = "migration"
+title = "Pydantic V1 To V2 Migration"
+intent = "Migrate a project from Pydantic v1 to v2 while preserving API behavior."
+verify = "pytest -q"
+origin = "source-backed"
+source_url = "https://github.com/davidondrej/jailbreak-autoresearch/blob/main/docs-slash-goal.md"
+source_name = "jailbreak-autoresearch docs"
+source_type = "tool-readme"
+evidence = "Migrate this project from Pydantic v1 to v2"
+
+[[entries]]
+id = "github-review-plan-no-gaps"
+category = "goal-maintenance"
+title = "Review Plan Until No Gaps"
+intent = "Loop on implementation-plan review until a fresh review finds no remaining gaps."
+verify = "fresh plan review has no new gaps"
+origin = "source-backed"
+source_url = "https://github.com/openai/codex/issues/21176"
+source_name = "openai/codex issue 21176"
+source_type = "github-issue"
+evidence = "review the plan ImplementationPlan.md"
+
+[[entries]]
+id = "github-noninteractive-goal-creation"
+category = "workflow"
+title = "Non-Interactive Goal Creation"
+intent = "Create and confirm an active goal during non-interactive Codex execution before continuing."
+verify = "get_goal and thread_goals evidence"
+origin = "source-backed"
+source_url = "https://github.com/openai/codex/discussions/21764"
+source_name = "openai/codex discussion 21764"
+source_type = "github-discussion"
+evidence = "Build the Meta0 LifeOS ontology boundary artifact"
+
+[[entries]]
+id = "github-long-task-verification"
+category = "goal-maintenance"
+title = "Long Task Until Verification"
+intent = "Continue a long-running task until final verification passes rather than stopping on partial progress."
+verify = "final verification"
+origin = "source-backed"
+source_url = "https://github.com/openai/codex/issues/22049"
+source_name = "openai/codex issue 22049"
+source_type = "github-issue"
+evidence = "Complete a long-running task until final verification passes"
+
+[[entries]]
+id = "github-benchmark-coverage-goal"
+category = "testing"
+title = "Improve Benchmark Coverage"
+intent = "Use `/goal` to improve benchmark coverage and persist the command in history."
+verify = "cargo test -p codex-tui goal_slash_command -- --nocapture"
+origin = "source-backed"
+source_url = "https://github.com/openai/codex/pull/21860"
+source_name = "openai/codex PR 21860"
+source_type = "github-pr"
+evidence = "/goal improve benchmark coverage"
+
+[[entries]]
+id = "github-completion-audit-before-done"
+category = "goal-maintenance"
+title = "Completion Audit Before Done"
+intent = "Audit completion criteria before calling the goal complete."
+verify = "focused coverage and evals"
+origin = "source-backed"
+source_url = "https://github.com/openai/codex/pull/22045"
+source_name = "openai/codex PR 22045"
+source_type = "github-pr"
+evidence = "completion audits before calling update_goal"
+
+[[entries]]
+id = "github-goal-permission-context"
+category = "goal-maintenance"
+title = "Goal Permission Context Sync"
+intent = "Ensure goal continuation uses the current permission context after approval mode changes."
+verify = "cargo check focused crates"
+origin = "source-backed"
+source_url = "https://github.com/openai/codex/issues/22090"
+source_name = "openai/codex issue 22090"
+source_type = "github-issue"
+evidence = "uses stale permission context"
+
+[[entries]]
+id = "github-goalbuddy-workspace"
+category = "workflow"
+title = "Prep A Goal Workspace"
+intent = "Prepare a goal workspace with board, notes, receipts, and an exact `/goal` command."
+verify = "board, receipts, and verify files"
+origin = "source-backed"
+source_url = "https://github.com/tolibear/goalbuddy"
+source_name = "tolibear/goalbuddy"
+source_type = "tool-readme"
+evidence = "prints the exact /goal command"
+
+[[entries]]
+id = "github-claude-batch-bugs"
+category = "testing"
+title = "Batch Fix Bugs"
+intent = "Use a Claude Code goal to fix a numbered batch of bugs without looping on missing skills."
+verify = "no unsatisfied skill loop"
+origin = "source-backed"
+source_url = "https://github.com/anthropics/claude-code/issues/58348"
+source_name = "anthropics/claude-code issue 58348"
+source_type = "github-issue"
+evidence = "/goal Fix bugs #1-#6"
+
+[[entries]]
+id = "github-claude-long-goal-template"
+category = "workflow"
+title = "Long Goal With Constraints"
+intent = "Use a longer goal template with repo path, constraints, plan pointer, and execution order."
+verify = "stop hook evaluates cleanly"
+origin = "source-backed"
+source_url = "https://github.com/anthropics/claude-code/issues/58192"
+source_name = "anthropics/claude-code issue 58192"
+source_type = "github-issue"
+evidence = "Goal: <several lines of overarching aim>"
+
+[[entries]]
+id = "github-hermes-real-cli-loop"
+category = "goal-maintenance"
+title = "Real CLI Goal Loop"
+intent = "Verify a real CLI goal loop where the second judge round confirms completion."
+verify = "live judge round-trip"
+origin = "source-backed"
+source_url = "https://github.com/NousResearch/hermes-agent/pull/18262"
+source_name = "NousResearch/hermes-agent PR 18262"
+source_type = "github-pr"
+evidence = "print hello, Ralph loop"
+
+[[entries]]
+id = "github-hermes-file-verification"
+category = "goal-maintenance"
+title = "Verify File Creation"
+intent = "Verify that a requested file was actually created instead of trusting the agent claim."
+verify = "find and read_file evidence"
+origin = "source-backed"
+source_url = "https://github.com/NousResearch/hermes-agent/issues/18421"
+source_name = "NousResearch/hermes-agent issue 18421"
+source_type = "github-issue"
+evidence = "/home/ubuntu/ml-resumo.md"
+
+[[entries]]
+id = "github-hermes-goal-queue"
+category = "goal-maintenance"
+title = "Queue Follow-Up Goals"
+intent = "Promote queued follow-up goals: fix tests, run full tests, then produce coverage."
+verify = "queue promotion evidence"
+origin = "source-backed"
+source_url = "https://github.com/NousResearch/hermes-agent/issues/22617"
+source_name = "NousResearch/hermes-agent issue 22617"
+source_type = "github-issue"
+evidence = "/goal Fix failing tests"
+
+[[entries]]
+id = "openhands-api-integration-tests"
+category = "backend-api"
+title = "API Integration Tests"
+intent = "Add end-to-end tests for product API endpoints with success and error cases."
+verify = "jest integration tests with test database"
+origin = "source-backed"
+source_url = "https://docs.openhands.dev/openhands/usage/get-started/tutorials"
+source_name = "OpenHands tutorial library"
+source_type = "official-agent-task"
+evidence = "Add integration tests for the /api/products endpoints"
+
+[[entries]]
+id = "claude-dev-database-migration"
+category = "backend-data"
+title = "Dev Database Migration Proof"
+intent = "Write a migration, run it against the dev database, and confirm the schema matches."
+verify = "migration applied to dev DB and schema comparison"
+origin = "source-backed"
+source_url = "https://code.claude.com/docs/en/prompt-library"
+source_name = "Claude Code prompt library"
+source_type = "official-agent-task"
+evidence = "write the migration, run it against the dev database, and confirm the schema matches"
+
+[[entries]]
+id = "github-accessibility-html-wcag"
+category = "accessibility"
+title = "HTML WCAG Instruction Audit"
+intent = "Audit HTML changes against WCAG guidance and prove the Lighthouse accessibility audit passes."
+verify = "Lighthouse accessibility audit"
+origin = "source-backed"
+source_url = "https://docs.github.com/en/copilot/tutorials/customization-library/custom-instructions/accessibility-auditor"
+source_name = "GitHub Copilot accessibility auditor"
+source_type = "official-agent-task"
+evidence = "generate accessible, inclusive HTML that follows WCAG guidelines"
+
+[[entries]]
+id = "claude-reference-layout-design"
+category = "design"
+title = "Reference Layout Match"
+intent = "Build a settings page that follows an existing profile page layout instead of inventing a new pattern."
+verify = "visual comparison against profile page"
+origin = "source-backed"
+source_url = "https://code.claude.com/docs/en/prompt-library"
+source_name = "Claude Code prompt library"
+source_type = "official-agent-task"
+evidence = "add a settings page that follows the same layout as the profile page"
+
+[[entries]]
+id = "github-mobile-agent-task-handoff"
+category = "mobile"
+title = "Mobile Agent Task Handoff"
+intent = "Prepare and track a coding-agent task started from GitHub Mobile with review-ready evidence."
+verify = "GitHub Mobile agent task creates a PR"
+origin = "source-backed"
+source_url = "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/assign-copilot-to-an-issue"
+source_name = "GitHub Copilot coding agent docs"
+source_type = "official-agent-task"
+evidence = "assign an issue to Copilot on GitHub Mobile"
+
+[[entries]]
+id = "openai-agent-trace-evals"
+category = "ai-evals"
+title = "Trace-Graded Agent Regression"
+intent = "Create trace-based evals that catch workflow regressions across tool calls and handoffs."
+verify = "agent eval report with graded traces"
+origin = "source-backed"
+source_url = "https://platform.openai.com/docs/guides/agent-evals"
+source_name = "OpenAI agent evals docs"
+source_type = "official-workflow"
+evidence = "trace grading functionality"
+
+[[entries]]
+id = "openai-agent-tracing-observability"
+category = "ai-ops"
+title = "Agent Trace Observability"
+intent = "Instrument agent runs so LLM generations, tool calls, handoffs, guardrails, and custom events are traceable."
+verify = "trace dashboard shows spans for one agent run"
+origin = "source-backed"
+source_url = "https://openai.github.io/openai-agents-python/tracing/"
+source_name = "OpenAI Agents SDK tracing docs"
+source_type = "official-workflow"
+evidence = "built-in tracing collects LLM generations, tool calls, handoffs, guardrails"
+
+[[entries]]
+id = "openhands-csv-processing-report"
+category = "data-eng"
+title = "CSV Processing Report"
+intent = "Create a data processing script that validates CSV input and generates an analysis report."
+verify = "script output report and validation checks"
+origin = "source-backed"
+source_url = "https://docs.openhands.dev/openhands/usage/get-started/tutorials"
+source_name = "OpenHands tutorial library"
+source_type = "official-agent-task"
+evidence = "Process CSV data and generate a report"
+
+[[entries]]
+id = "openhands-remote-agent-server-smoke"
+category = "devops-runtime"
+title = "Remote Agent Server Smoke"
+intent = "Deploy an isolated remote agent server and prove event streaming, workspace access, and command execution work."
+verify = "remote server smoke run and websocket event evidence"
+origin = "source-backed"
+source_url = "https://docs.openhands.dev/sdk/guides/agent-server/overview"
+source_name = "OpenHands remote agent server docs"
+source_type = "official-workflow"
+evidence = "Remote Agent Servers package the Software Agent SDK into containers"
+
+[[entries]]
+id = "openai-tool-guardrails-appsec"
+category = "security-appsec"
+title = "Tool Guardrails For AppSec"
+intent = "Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues."
+verify = "guardrail tests trigger on unsafe tool input/output"
+origin = "source-backed"
+source_url = "https://openai.github.io/openai-agents-python/guardrails/"
+source_name = "OpenAI Agents SDK guardrails docs"
+source_type = "official-workflow"
+evidence = "tool guardrails run on every custom function-tool invocation"

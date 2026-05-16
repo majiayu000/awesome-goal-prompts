@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import json
 from collections import Counter, defaultdict
-from datetime import date
 from pathlib import Path
 
 from catalog_search import ranked
@@ -83,8 +82,6 @@ def main() -> None:
 
     lines = [
         "# Catalog Health",
-        "",
-        f"Generated on: {date.today().isoformat()}",
         "",
         "## Summary",
         "",
