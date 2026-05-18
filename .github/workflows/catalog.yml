@@ -26,6 +26,9 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Validate source data
+        run: python3 scripts/validate_data.py
+
       - name: Regenerate catalog
         run: python3 scripts/generate_examples.py
 
