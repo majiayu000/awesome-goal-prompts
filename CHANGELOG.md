@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.2 - 2026-05-18
+
+Release metadata fix.
+
+- Updated the GitHub Pages JSON-LD dataset version to `0.1.2` so public structured metadata matches the latest release.
+
 ## v0.1.1 - 2026-05-18
 
 Post-launch catalog polish and maintainer workflow hardening.
