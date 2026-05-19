@@ -969,6 +969,8 @@ body[data-lang="zh"] .guide__steps p {
 
 .panel__actions {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 8px;
 }
 
@@ -982,6 +984,7 @@ body[data-lang="zh"] .guide__steps p {
   font-size: 10.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  white-space: nowrap;
   transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
 }
 
@@ -1102,6 +1105,82 @@ body[data-lang="zh"] .guide__steps p {
 
 .contract__rule::after {
   display: none;
+}
+
+.repo-copy {
+  display: grid;
+  gap: 14px;
+  margin: 0 0 16px;
+  border: 1px solid rgba(22, 20, 15, 0.12);
+  border-radius: 8px;
+  padding: 14px;
+  background:
+    linear-gradient(135deg, rgba(232, 181, 102, 0.13), rgba(143, 183, 170, 0.10)),
+    rgba(255, 255, 255, 0.42);
+}
+
+.repo-copy__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.repo-copy__head span {
+  color: rgba(22, 20, 15, 0.48);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.repo-copy__head h3 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.repo-copy__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.repo-copy label {
+  display: grid;
+  gap: 5px;
+}
+
+.repo-copy label span {
+  color: rgba(22, 20, 15, 0.62);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.repo-copy input {
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid rgba(22, 20, 15, 0.18);
+  border-radius: 6px;
+  padding: 8px 9px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.50);
+  outline: 0;
+}
+
+.repo-copy input:focus {
+  border-color: rgba(22, 20, 15, 0.56);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.repo-copy input::placeholder {
+  color: rgba(22, 20, 15, 0.42);
 }
 
 .contract__section {
@@ -2059,6 +2138,15 @@ pre {
   .panel__actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+
+  .repo-copy__head,
+  .repo-copy__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .repo-copy__head {
+    display: grid;
   }
 
   .contract__masthead {

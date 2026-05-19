@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="i18n.js" defer></script>
     <script src="entry-renderer.js" defer></script>
+    <script src="repo-copy.js" defer></script>
     <script src="app.js" defer></script>
   </head>
   <body>
@@ -196,7 +197,8 @@
               <span data-i18n="contractIssued">Contract · Issued</span>
               <div class="panel__actions">
                 <button class="btn btn--ghost" id="validate-button" type="button" data-i18n="verifyButton">Verify</button>
-                <button class="btn btn--filled" id="copy-button" type="button" data-i18n="copyGoal">Copy /goal</button>
+                <button class="btn btn--ghost" id="copy-button" type="button" data-i18n="copyOriginal">Copy original</button>
+                <button class="btn btn--filled" id="copy-repo-button" type="button" data-i18n="copyForRepo">Copy for my repo</button>
               </div>
             </div>
             <div class="contract__body">
@@ -212,6 +214,31 @@
                 </div>
               </div>
               <div class="contract__rule" aria-hidden="true"></div>
+
+              <section class="repo-copy" aria-labelledby="repo-copy-title">
+                <div class="repo-copy__head">
+                  <span data-i18n="repoCopyEyebrow">Make it runnable</span>
+                  <h3 id="repo-copy-title" data-i18n="repoCopyTitle">Copy for your repo</h3>
+                </div>
+                <div class="repo-copy__grid">
+                  <label>
+                    <span data-i18n="projectType">Project type</span>
+                    <input id="adapter-type" type="text" autocomplete="off" placeholder="Node/TypeScript repo" data-i18n-placeholder="projectTypePlaceholder">
+                  </label>
+                  <label>
+                    <span data-i18n="targetModule">Target module</span>
+                    <input id="adapter-module" type="text" autocomplete="off" placeholder="auth module" data-i18n-placeholder="targetModulePlaceholder">
+                  </label>
+                  <label>
+                    <span data-i18n="verificationCommand">Verification command</span>
+                    <input id="adapter-verify" type="text" autocomplete="off" placeholder="npm test -- test/auth && npm run lint" data-i18n-placeholder="verificationCommandPlaceholder">
+                  </label>
+                  <label>
+                    <span data-i18n="extraConstraint">Extra constraint</span>
+                    <input id="adapter-constraint" type="text" autocomplete="off" placeholder="Public API must remain unchanged" data-i18n-placeholder="extraConstraintPlaceholder">
+                  </label>
+                </div>
+              </section>
 
               <section class="contract__section">
                 <h3><span>§</span> <span data-i18n="objective">Goal</span> <small>I</small></h3>
@@ -265,29 +292,6 @@
               <details class="raw-prompt">
                 <summary data-i18n="fullPrompt">Full prompt</summary>
                 <pre><code id="detail-prompt"></code></pre>
-              </details>
-
-              <details class="adapter">
-                <summary data-i18n="adaptPrompt">Adapt this prompt</summary>
-                <div class="adapter__grid">
-                  <label>
-                    <span data-i18n="projectType">Project type</span>
-                    <input id="adapter-type" type="text" autocomplete="off" placeholder="Node/TypeScript repo" data-i18n-placeholder="projectTypePlaceholder">
-                  </label>
-                  <label>
-                    <span data-i18n="targetModule">Target module</span>
-                    <input id="adapter-module" type="text" autocomplete="off" placeholder="auth module" data-i18n-placeholder="targetModulePlaceholder">
-                  </label>
-                  <label>
-                    <span data-i18n="verificationCommand">Verification command</span>
-                    <input id="adapter-verify" type="text" autocomplete="off" placeholder="npm test -- test/auth && npm run lint" data-i18n-placeholder="verificationCommandPlaceholder">
-                  </label>
-                  <label>
-                    <span data-i18n="extraConstraint">Extra constraint</span>
-                    <input id="adapter-constraint" type="text" autocomplete="off" placeholder="Public API must remain unchanged" data-i18n-placeholder="extraConstraintPlaceholder">
-                  </label>
-                </div>
-                <button class="btn btn--filled adapter__copy" id="copy-adapted-button" type="button" data-i18n="copyAdapted">Copy adapted /goal</button>
               </details>
 
               <footer class="contract__footer">

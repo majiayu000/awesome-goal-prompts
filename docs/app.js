@@ -85,7 +85,7 @@ const els = {
   adapterModule: document.querySelector("#adapter-module"),
   adapterVerify: document.querySelector("#adapter-verify"),
   adapterConstraint: document.querySelector("#adapter-constraint"),
-  copyAdapted: document.querySelector("#copy-adapted-button"),
+  copyAdapted: document.querySelector("#copy-repo-button"),
   validate: document.querySelector("#validate-button"),
   copy: document.querySelector("#copy-button"),
   toast: document.querySelector("#toast"),
@@ -517,7 +517,8 @@ function isSafeHttpUrl(value) {
 
 function renderDetail() {
   const entry = state.selected;
-  setText(els.copy, t("copyGoal"));
+  setText(els.copy, t("copyOriginal"));
+  setText(els.copyAdapted, t("copyForRepo"));
 
   for (const details of els.detailCard.querySelectorAll("details")) {
     details.open = false;
@@ -546,6 +547,7 @@ function renderDetail() {
   setText(els.detailDone, done);
   setText(els.detailVerify, entry.verify);
   setText(els.detailPrompt, entry.prompt);
+  syncRepoCopyPlaceholders(entry);
   renderPlainList(els.detailContext, context, "§");
   renderPlainList(els.detailConstraints, constraints, "§");
   renderVerifyList(els.detailVerifyList, verify);
@@ -612,13 +614,13 @@ async function copySelected() {
     setText(els.copy, t("copied"));
     showToast(t("contractCopied"));
     window.setTimeout(() => {
-      setText(els.copy, t("copyGoal"));
+      setText(els.copy, t("copyOriginal"));
     }, 1400);
   } catch (error) {
     setText(els.copy, t("selectText"));
     showToast(t("clipboardUnavailable"));
     window.setTimeout(() => {
-      setText(els.copy, t("copyGoal"));
+      setText(els.copy, t("copyOriginal"));
     }, 1800);
   }
 }
@@ -630,66 +632,6 @@ function copyVerify() {
   navigator.clipboard.writeText(state.selected.verify)
     .then(() => showToast(t("verifyCopied")))
     .catch(() => showToast(t("selectVerifyText")));
-}
-
-function adapterValue(input, fallback) {
-  const value = input && input.value.trim();
-  return value || fallback;
-}
-
-function buildAdaptedPrompt(entry) {
-  const projectType = adapterValue(els.adapterType, "the current repository");
-  const targetModule = adapterValue(els.adapterModule, entry.category);
-  const verify = adapterValue(els.adapterVerify, entry.verify);
-  const extraConstraint = adapterValue(els.adapterConstraint, "Keep public behavior unchanged unless the goal explicitly requires it.");
-
-  return `/goal
-
-GOAL:
-Complete ${entry.title} for ${projectType}, focused on ${targetModule}: ${entry.intent}
-
-CONTEXT:
-- Read the nearest AGENTS.md/CLAUDE.md and the relevant project docs before editing.
-- Inspect the ${targetModule} implementation, tests, configuration, and latest failing output.
-- Establish a baseline with: \`${verify}\`.
-
-CONSTRAINTS:
-- Keep the scope limited to ${targetModule}; do not make unrelated refactors.
-- Do not weaken, delete, or skip tests, lint, typecheck, or verification rules.
-- ${extraConstraint}
-
-DONE WHEN:
-- The selected goal is satisfied: ${entry.intent}
-- The verification command passes: \`${verify}\`.
-- The final diff is limited to files needed for this goal.
-
-VERIFY:
-- Run \`${verify}\` or the closest repo-local equivalent.
-- Run any repo-local typecheck or build command if this task touches compiled code.
-- Include fresh command output in the final response.
-
-OUTPUT:
-- Root cause or implementation summary.
-- Changed files.
-- Verification commands and results.
-- Remaining risk.
-
-STOP RULES:
-- Stop if the fix requires secrets, production access, destructive data operations, or a product/security decision.
-- Stop after three failed fix attempts on the same symptom and reassess the root cause.
-- Do not mark the goal complete until DONE WHEN is true in the current repository state.`;
-}
-
-async function copyAdaptedPrompt() {
-  if (!state.selected) {
-    return;
-  }
-  try {
-    await navigator.clipboard.writeText(buildAdaptedPrompt(state.selected));
-    showToast(t("adaptedCopied"));
-  } catch (error) {
-    showToast(t("clipboardUnavailable"));
-  }
 }
 
 function applyRecipe(recipe) {
