@@ -20,6 +20,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Resource-Level Authorization](#authz-resource-scope) - Prevent logged-in users from accessing resources they do not own.
 - [API Versioning Plan](#api-versioning-plan) - Create a v1/v2 coexistence plan with deprecation headers and migration tests.
 - [API Integration Tests](#openhands-api-integration-tests) - Add end-to-end tests for product API endpoints with success and error cases. Source-backed.
+- [User Preferences API](#openhands-user-preferences-api) - Add GET, PUT, and PATCH endpoints for user preferences with validation, service logic, OpenAPI docs, and tests. Source-backed.
 
 ### backend-data
 - [Database Migration Safety](#db-migration-safety) - Review a migration for rollback, online execution, and lock risk.
@@ -33,6 +34,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Read Replica Lag Guard](#read-replica-lag-guard) - Prevent write-after-read paths from hitting stale replicas.
 - [Schema Drift Detector](#schema-drift-detector) - Compare ORM models, migrations, and the live database schema.
 - [Dev Database Migration Proof](#claude-dev-database-migration) - Write a migration, run it against the dev database, and confirm the schema matches. Source-backed.
+- [Slow Query Optimization Report](#openhands-slow-query-optimization) - Analyze slow query logs, explain bottlenecks, recommend indexes or rewrites, and produce prioritized SQL changes. Source-backed.
 
 ### devops-ci
 - [CI Flaky Test Triage](#ci-flaky-test-triage) - Identify flaky tests, separate real failures, and fix unstable waits or fixtures.
@@ -72,6 +74,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Replay Attack Defense](#replay-attack-defense) - Add nonce, timestamp, and expiration checks to signed requests.
 - [IDOR Audit](#insecure-direct-object-ref) - Verify direct object ID access always checks ownership or scope.
 - [Tool Guardrails For AppSec](#openai-tool-guardrails-appsec) - Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues. Source-backed.
+- [Security PR Review](#openhands-security-pr-review) - Review a pull request for input validation, authentication, injection, XSS, and secrets risks with file-level fixes. Source-backed.
 
 ### security-ops
 - [Secret Scan Baseline](#secret-scan-baseline) - Add secret scanning and triage historical findings safely.
@@ -98,6 +101,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Warehouse Cost Audit](#warehouse-cost-audit) - Find expensive queries, duplicate tables, and unused scheduled jobs.
 - [Stream Processing Lag](#stream-processing-lag) - Diagnose Kafka/Flink/Spark lag and checkpoint bottlenecks.
 - [CSV Processing Report](#openhands-csv-processing-report) - Create a data processing script that validates CSV input and generates an analysis report. Source-backed.
+- [Rate-Limited Web Scraper](#openhands-rate-limited-web-scraper) - Build a scraper that extracts product data across paginated pages while respecting rate limits and logging progress. Source-backed.
 
 ### data-analytics
 - [Metric Definition Lock](#metric-definition-lock) - Turn core metric definitions into tested SQL or semantic-layer checks.
@@ -204,6 +208,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Weekly Changelog Coverage](#claude-weekly-changelog) - Ensure CHANGELOG.md includes an entry for every PR merged this week. Source-backed.
 - [Contributor README Rewrite](#apidog-contributor-readme) - Rewrite README installation, run, test, and architecture guidance for new contributors. Source-backed.
 - [Public API Docs Coverage](#explainx-public-api-jsdoc) - Add JSDoc and examples for public functions while keeping documentation links valid. Source-backed.
+- [Payment Retry Logic Diagram](#claude-payment-retry-diagram) - Explain payment retry behavior as a browsable HTML page with a diagram for developer or support review. Source-backed.
 
 ### product
 - [User Journeys](#product-user-journeys) - Map persona tasks into pages, events, and success states.
@@ -219,6 +224,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Admin Workflows](#product-admin-workflows) - Design review, undo, audit log, and bulk moderation flows.
 - [Success Criteria](#product-success-criteria) - Define quantitative and qualitative completion measures for a feature.
 - [Design Doc Acceptance Complete](#claude-design-doc-acceptance) - Implement a design document until every acceptance criterion is satisfied. Source-backed.
+- [Feature Flag System](#openhands-feature-flag-system) - Implement boolean, percentage, and user-based feature flags with service logic, API middleware, a React hook, docs, and tests. Source-backed.
 
 ### qa
 - [Critical Path Tests](#qa-critical-paths) - Cover signup, create, edit, delete, export, and recovery flows.
@@ -266,6 +272,8 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Lighthouse And Core Web Vitals Gate](#explainx-lighthouse-core-web-vitals) - Improve Lighthouse and Core Web Vitals to explicit thresholds without regressions. Source-backed.
 - [Bundle Size Reduction](#udit-bundle-size-reduction) - Iteratively reduce bundle size below the documented threshold. Source-backed.
 - [Benchmark Optimization](#udit-benchmark-optimization) - Optimize performance against a benchmark command until the goal is reached. Source-backed.
+- [Order Service Performance Review](#openhands-orderservice-performance-review) - Inspect service code for N+1 queries, missing indexes, inefficient loops, missing caches, and unnecessary fetching. Source-backed.
+- [Node Memory Leak Fix](#openhands-node-memory-leak-fix) - Investigate a growing-memory Node.js process, isolate the leak source, fix it, and add monitoring for recurrence. Source-backed.
 
 ### workflow
 - [Goal Prompt Writer](#goal-meta-prompt-writer) - Ask the agent to inspect a repo and write a precise goal prompt before execution.
@@ -324,6 +332,8 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 ### investigation
 - [Session Drift Report](#hermes-session-drift-report) - Investigate session ID drift during mid-run compression and write a report. Source-backed.
 - [Billing Empty State Root Cause](#reddit-billing-empty-state) - Find why active subscriptions show an empty state without changing pricing or webhook code. Source-backed.
+- [Checkout Crash Regression Fix](#openhands-checkout-crash-regression) - Reproduce a checkout crash from a stack trace, identify the root cause, fix it, and add a regression test. Source-backed.
+- [Build Log Failure Diagnosis](#claude-build-log-diagnosis) - Use a provided build log to explain why the build fails and identify the smallest verified fix path. Source-backed.
 
 ### cli
 - [EXIF Rename CLI](#hermes-exif-rename-cli) - Build a small CLI that renames photos by EXIF date and test it on a photos folder. Source-backed.
@@ -14132,6 +14142,502 @@ DONE WHEN:
 
 VERIFY:
 - Run `guardrail tests trigger on unsafe tool input/output` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openhands-slow-query-optimization"></a>
+### Slow Query Optimization Report
+
+- Category: `backend-data`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Analyze slow query logs, explain bottlenecks, recommend indexes or rewrites, and produce prioritized SQL changes.
+- Verification: `EXPLAIN plans and reports/query_optimization.md`
+- Source: [OpenHands tutorial library](https://docs.openhands.dev/openhands/usage/get-started/tutorials)
+- Source type: `official-agent-task`
+- Evidence: Analyze our slow query log and identify optimization opportunities
+- Evidence summary: Analyze our slow query log and identify optimization opportunities; source: OpenHands tutorial library; type: official-agent-task; verification: EXPLAIN plans and reports/query_optimization.md
+
+```text
+/goal
+GOAL:
+Complete Slow Query Optimization Report for a data-backed backend service: Analyze slow query logs, explain bottlenecks, recommend indexes or rewrites, and produce prioritized SQL changes.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect schema files, migrations, models, repositories, and data tests.
+- Establish a baseline by running or locating evidence for: `EXPLAIN plans and reports/query_optimization.md`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not destroy or rewrite data without a dry-run, rollback, and row-count/checksum evidence.
+- Do not hide database errors behind warnings or silent fallbacks.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Analyze slow query logs, explain bottlenecks, recommend indexes or rewrites, and produce prioritized SQL changes.
+- The verification command or evidence path succeeds: `EXPLAIN plans and reports/query_optimization.md`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `EXPLAIN plans and reports/query_optimization.md` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openhands-rate-limited-web-scraper"></a>
+### Rate-Limited Web Scraper
+
+- Category: `data-eng`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Build a scraper that extracts product data across paginated pages while respecting rate limits and logging progress.
+- Verification: `scraper smoke run and products.json schema check`
+- Source: [OpenHands tutorial library](https://docs.openhands.dev/openhands/usage/get-started/tutorials)
+- Source type: `official-agent-task`
+- Evidence: Create a web scraper to extract product information
+- Evidence summary: Create a web scraper to extract product information; source: OpenHands tutorial library; type: official-agent-task; verification: scraper smoke run and products.json schema check
+
+```text
+/goal
+GOAL:
+Complete Rate-Limited Web Scraper for a data pipeline project: Build a scraper that extracts product data across paginated pages while respecting rate limits and logging progress.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect ETL jobs, schemas, source contracts, transformations, and data quality tests.
+- Establish a baseline by running or locating evidence for: `scraper smoke run and products.json schema check`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Build a scraper that extracts product data across paginated pages while respecting rate limits and logging progress.
+- The verification command or evidence path succeeds: `scraper smoke run and products.json schema check`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `scraper smoke run and products.json schema check` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openhands-security-pr-review"></a>
+### Security PR Review
+
+- Category: `security-appsec`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Review a pull request for input validation, authentication, injection, XSS, and secrets risks with file-level fixes.
+- Verification: `Markdown PR review with severity, affected lines, and suggested fixes`
+- Source: [OpenHands tutorial library](https://docs.openhands.dev/openhands/usage/get-started/tutorials)
+- Source type: `official-agent-task`
+- Evidence: Review this pull request for security issues
+- Evidence summary: Review this pull request for security issues; source: OpenHands tutorial library; type: official-agent-task; verification: Markdown PR review with severity, affected lines, and suggested fixes
+
+```text
+/goal
+GOAL:
+Complete Security PR Review for an application with security-sensitive code paths: Review a pull request for input validation, authentication, injection, XSS, and secrets risks with file-level fixes.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect auth, input handling, rendering, upload, and boundary tests.
+- Establish a baseline by running or locating evidence for: `Markdown PR review with severity, affected lines, and suggested fixes`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not bypass authentication, authorization, validation, or audit checks.
+- Do not use eval, unsafe HTML injection, shell string concatenation, or string-built SQL.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Review a pull request for input validation, authentication, injection, XSS, and secrets risks with file-level fixes.
+- The verification command or evidence path succeeds: `Markdown PR review with severity, affected lines, and suggested fixes`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `Markdown PR review with severity, affected lines, and suggested fixes` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openhands-orderservice-performance-review"></a>
+### Order Service Performance Review
+
+- Category: `performance`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Inspect service code for N+1 queries, missing indexes, inefficient loops, missing caches, and unnecessary fetching.
+- Verification: `performance review report with impact and optimized code paths`
+- Source: [OpenHands tutorial library](https://docs.openhands.dev/openhands/usage/get-started/tutorials)
+- Source type: `official-agent-task`
+- Evidence: Review the OrderService class for performance issues
+- Evidence summary: Review the OrderService class for performance issues; source: OpenHands tutorial library; type: official-agent-task; verification: performance review report with impact and optimized code paths
+
+```text
+/goal
+GOAL:
+Complete Order Service Performance Review for a web application with measurable performance goals: Inspect service code for N+1 queries, missing indexes, inefficient loops, missing caches, and unnecessary fetching.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect Lighthouse reports, bundles, traces, and critical routes.
+- Establish a baseline by running or locating evidence for: `performance review report with impact and optimized code paths`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not trade correctness, accessibility, or security for faster synthetic scores.
+- Compare before/after metrics on the same route and environment.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Inspect service code for N+1 queries, missing indexes, inefficient loops, missing caches, and unnecessary fetching.
+- The verification command or evidence path succeeds: `performance review report with impact and optimized code paths`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `performance review report with impact and optimized code paths` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openhands-checkout-crash-regression"></a>
+### Checkout Crash Regression Fix
+
+- Category: `investigation`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Reproduce a checkout crash from a stack trace, identify the root cause, fix it, and add a regression test.
+- Verification: `crash reproduction test and checkout regression test`
+- Source: [OpenHands tutorial library](https://docs.openhands.dev/openhands/usage/get-started/tutorials)
+- Source type: `official-agent-task`
+- Evidence: Fix the crash in the checkout process
+- Evidence summary: Fix the crash in the checkout process; source: OpenHands tutorial library; type: official-agent-task; verification: crash reproduction test and checkout regression test
+
+```text
+/goal
+GOAL:
+Complete Checkout Crash Regression Fix for an investigation task: Reproduce a checkout crash from a stack trace, identify the root cause, fix it, and add a regression test.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect logs, traces, reproduction notes, source paths, and the final report.
+- Establish a baseline by running or locating evidence for: `crash reproduction test and checkout regression test`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Separate observed evidence from hypotheses.
+- Do not patch production code until the root cause is reproduced or strongly evidenced.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Reproduce a checkout crash from a stack trace, identify the root cause, fix it, and add a regression test.
+- The verification command or evidence path succeeds: `crash reproduction test and checkout regression test`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `crash reproduction test and checkout regression test` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openhands-node-memory-leak-fix"></a>
+### Node Memory Leak Fix
+
+- Category: `performance`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Investigate a growing-memory Node.js process, isolate the leak source, fix it, and add monitoring for recurrence.
+- Verification: `heap comparison or load test plus monitoring evidence`
+- Source: [OpenHands tutorial library](https://docs.openhands.dev/openhands/usage/get-started/tutorials)
+- Source type: `official-agent-task`
+- Evidence: Investigate and fix the memory leak in our Node.js application
+- Evidence summary: Investigate and fix the memory leak in our Node.js application; source: OpenHands tutorial library; type: official-agent-task; verification: heap comparison or load test plus monitoring evidence
+
+```text
+/goal
+GOAL:
+Complete Node Memory Leak Fix for a web application with measurable performance goals: Investigate a growing-memory Node.js process, isolate the leak source, fix it, and add monitoring for recurrence.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect Lighthouse reports, bundles, traces, and critical routes.
+- Establish a baseline by running or locating evidence for: `heap comparison or load test plus monitoring evidence`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not trade correctness, accessibility, or security for faster synthetic scores.
+- Compare before/after metrics on the same route and environment.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Investigate a growing-memory Node.js process, isolate the leak source, fix it, and add monitoring for recurrence.
+- The verification command or evidence path succeeds: `heap comparison or load test plus monitoring evidence`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `heap comparison or load test plus monitoring evidence` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openhands-user-preferences-api"></a>
+### User Preferences API
+
+- Category: `backend-api`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Add GET, PUT, and PATCH endpoints for user preferences with validation, service logic, OpenAPI docs, and tests.
+- Verification: `unit and integration tests plus OpenAPI endpoint documentation`
+- Source: [OpenHands tutorial library](https://docs.openhands.dev/openhands/usage/get-started/tutorials)
+- Source type: `official-agent-task`
+- Evidence: Add a user preferences API endpoint
+- Evidence summary: Add a user preferences API endpoint; source: OpenHands tutorial library; type: official-agent-task; verification: unit and integration tests plus OpenAPI endpoint documentation
+
+```text
+/goal
+GOAL:
+Complete User Preferences API for a backend API service: Add GET, PUT, and PATCH endpoints for user preferences with validation, service logic, OpenAPI docs, and tests.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect API routes, OpenAPI specs, handlers, middleware, and API tests.
+- Establish a baseline by running or locating evidence for: `unit and integration tests plus OpenAPI endpoint documentation`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Add GET, PUT, and PATCH endpoints for user preferences with validation, service logic, OpenAPI docs, and tests.
+- The verification command or evidence path succeeds: `unit and integration tests plus OpenAPI endpoint documentation`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `unit and integration tests plus OpenAPI endpoint documentation` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openhands-feature-flag-system"></a>
+### Feature Flag System
+
+- Category: `product`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Implement boolean, percentage, and user-based feature flags with service logic, API middleware, a React hook, docs, and tests.
+- Verification: `feature flag service, hook, middleware, and rollout tests`
+- Source: [OpenHands tutorial library](https://docs.openhands.dev/openhands/usage/get-started/tutorials)
+- Source type: `official-agent-task`
+- Evidence: Implement a feature flag system for our application
+- Evidence summary: Implement a feature flag system for our application; source: OpenHands tutorial library; type: official-agent-task; verification: feature flag service, hook, middleware, and rollout tests
+
+```text
+/goal
+GOAL:
+Complete Feature Flag System for a product planning and implementation repo: Implement boolean, percentage, and user-based feature flags with service logic, API middleware, a React hook, docs, and tests.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect PRDs, analytics events, permission models, and acceptance criteria.
+- Establish a baseline by running or locating evidence for: `feature flag service, hook, middleware, and rollout tests`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not implement new product scope unless it is in the stated acceptance criteria.
+- Separate product decisions from engineering assumptions.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Implement boolean, percentage, and user-based feature flags with service logic, API middleware, a React hook, docs, and tests.
+- The verification command or evidence path succeeds: `feature flag service, hook, middleware, and rollout tests`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `feature flag service, hook, middleware, and rollout tests` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="claude-build-log-diagnosis"></a>
+### Build Log Failure Diagnosis
+
+- Category: `investigation`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Use a provided build log to explain why the build fails and identify the smallest verified fix path.
+- Verification: `failing build command reproduced or build.log root-cause report`
+- Source: [Claude Code prompt library](https://code.claude.com/docs/en/prompt-library)
+- Source type: `official-agent-task`
+- Evidence: why is the build failing? @build.log
+- Evidence summary: why is the build failing? @build.log; source: Claude Code prompt library; type: official-agent-task; verification: failing build command reproduced or build.log root-cause report
+
+```text
+/goal
+GOAL:
+Complete Build Log Failure Diagnosis for an investigation task: Use a provided build log to explain why the build fails and identify the smallest verified fix path.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect logs, traces, reproduction notes, source paths, and the final report.
+- Establish a baseline by running or locating evidence for: `failing build command reproduced or build.log root-cause report`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Separate observed evidence from hypotheses.
+- Do not patch production code until the root cause is reproduced or strongly evidenced.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Use a provided build log to explain why the build fails and identify the smallest verified fix path.
+- The verification command or evidence path succeeds: `failing build command reproduced or build.log root-cause report`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `failing build command reproduced or build.log root-cause report` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="claude-payment-retry-diagram"></a>
+### Payment Retry Logic Diagram
+
+- Category: `docs`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Explain payment retry behavior as a browsable HTML page with a diagram for developer or support review.
+- Verification: `HTML page opens locally and diagram matches the retry code path`
+- Source: [Claude Code prompt library](https://code.claude.com/docs/en/prompt-library)
+- Source type: `official-agent-task`
+- Evidence: explain how the payment retry logic works as an HTML page with a diagram
+- Evidence summary: explain how the payment retry logic works as an HTML page with a diagram; source: Claude Code prompt library; type: official-agent-task; verification: HTML page opens locally and diagram matches the retry code path
+
+```text
+/goal
+GOAL:
+Complete Payment Retry Logic Diagram for a developer-facing documentation site or repository: Explain payment retry behavior as a browsable HTML page with a diagram for developer or support review.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect README, docs, examples, runbooks, and lint configuration.
+- Establish a baseline by running or locating evidence for: `HTML page opens locally and diagram matches the retry code path`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not invent APIs, flags, commands, or product behavior.
+- Mark unverified commands clearly instead of presenting guesses as facts.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Explain payment retry behavior as a browsable HTML page with a diagram for developer or support review.
+- The verification command or evidence path succeeds: `HTML page opens locally and diagram matches the retry code path`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `HTML page opens locally and diagram matches the retry code path` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 

@@ -53,5 +53,20 @@
     "query": "docs quickstart onboarding",
     "expected": "docs-quickstart",
     "max_rank": 5
+  },
+  {
+    "query": "feature flag percentage react hook",
+    "expected": "openhands-feature-flag-system",
+    "max_rank": 3
+  },
+  {
+    "query": "checkout crash root cause regression",
+    "expected": "openhands-checkout-crash-regression",
+    "max_rank": 3
+  },
+  {
+    "query": "slow query log optimization report",
+    "expected": "openhands-slow-query-optimization",
+    "max_rank": 3
   }
 ]

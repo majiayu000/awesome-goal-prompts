@@ -2,14 +2,14 @@
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-A curated catalog of <!-- generated:total-start -->**293**<!-- generated:total-end --> `/goal` prompt contracts for **Claude Code**, **OpenAI Codex**, **Cursor**, **Gemini CLI**, and other **coding agents** — source-backed, runnable, and search-tested in CI.
+A curated catalog of <!-- generated:total-start -->**303**<!-- generated:total-end --> `/goal` prompt contracts for **Claude Code**, **OpenAI Codex**, **Cursor**, **Gemini CLI**, and other **coding agents** — source-backed, runnable, and search-tested in CI.
 
 **Live catalog:** https://majiayu000.github.io/awesome-goal-prompts/
 
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk. This repo turns that contract shape into a catalog you can search, inspect, adapt, and copy.
 
 <!-- generated:stats-start -->
-Of those, **93** are source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs; the rest are reusable seed patterns.
+Of those, **103** are source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs; the rest are reusable seed patterns.
 <!-- generated:stats-end -->
 
 ![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
@@ -146,6 +146,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Resource-Level Authorization](prompts/goal-examples.md#authz-resource-scope) - Prevent logged-in users from accessing resources they do not own.
 - [API Versioning Plan](prompts/goal-examples.md#api-versioning-plan) - Create a v1/v2 coexistence plan with deprecation headers and migration tests.
 - [API Integration Tests](prompts/goal-examples.md#openhands-api-integration-tests) - Add end-to-end tests for product API endpoints with success and error cases. _(source-backed)_
+- [User Preferences API](prompts/goal-examples.md#openhands-user-preferences-api) - Add GET, PUT, and PATCH endpoints for user preferences with validation, service logic, OpenAPI docs, and tests. _(source-backed)_
 
 ### backend-data
 - [Database Migration Safety](prompts/goal-examples.md#db-migration-safety) - Review a migration for rollback, online execution, and lock risk.
@@ -159,6 +160,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Read Replica Lag Guard](prompts/goal-examples.md#read-replica-lag-guard) - Prevent write-after-read paths from hitting stale replicas.
 - [Schema Drift Detector](prompts/goal-examples.md#schema-drift-detector) - Compare ORM models, migrations, and the live database schema.
 - [Dev Database Migration Proof](prompts/goal-examples.md#claude-dev-database-migration) - Write a migration, run it against the dev database, and confirm the schema matches. _(source-backed)_
+- [Slow Query Optimization Report](prompts/goal-examples.md#openhands-slow-query-optimization) - Analyze slow query logs, explain bottlenecks, recommend indexes or rewrites, and produce prioritized SQL changes. _(source-backed)_
 
 ### devops-ci
 - [CI Flaky Test Triage](prompts/goal-examples.md#ci-flaky-test-triage) - Identify flaky tests, separate real failures, and fix unstable waits or fixtures.
@@ -198,6 +200,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Replay Attack Defense](prompts/goal-examples.md#replay-attack-defense) - Add nonce, timestamp, and expiration checks to signed requests.
 - [IDOR Audit](prompts/goal-examples.md#insecure-direct-object-ref) - Verify direct object ID access always checks ownership or scope.
 - [Tool Guardrails For AppSec](prompts/goal-examples.md#openai-tool-guardrails-appsec) - Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues. _(source-backed)_
+- [Security PR Review](prompts/goal-examples.md#openhands-security-pr-review) - Review a pull request for input validation, authentication, injection, XSS, and secrets risks with file-level fixes. _(source-backed)_
 
 ### security-ops
 - [Secret Scan Baseline](prompts/goal-examples.md#secret-scan-baseline) - Add secret scanning and triage historical findings safely.
@@ -224,6 +227,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Warehouse Cost Audit](prompts/goal-examples.md#warehouse-cost-audit) - Find expensive queries, duplicate tables, and unused scheduled jobs.
 - [Stream Processing Lag](prompts/goal-examples.md#stream-processing-lag) - Diagnose Kafka/Flink/Spark lag and checkpoint bottlenecks.
 - [CSV Processing Report](prompts/goal-examples.md#openhands-csv-processing-report) - Create a data processing script that validates CSV input and generates an analysis report. _(source-backed)_
+- [Rate-Limited Web Scraper](prompts/goal-examples.md#openhands-rate-limited-web-scraper) - Build a scraper that extracts product data across paginated pages while respecting rate limits and logging progress. _(source-backed)_
 
 ### data-analytics
 - [Metric Definition Lock](prompts/goal-examples.md#metric-definition-lock) - Turn core metric definitions into tested SQL or semantic-layer checks.
@@ -330,6 +334,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Weekly Changelog Coverage](prompts/goal-examples.md#claude-weekly-changelog) - Ensure CHANGELOG.md includes an entry for every PR merged this week. _(source-backed)_
 - [Contributor README Rewrite](prompts/goal-examples.md#apidog-contributor-readme) - Rewrite README installation, run, test, and architecture guidance for new contributors. _(source-backed)_
 - [Public API Docs Coverage](prompts/goal-examples.md#explainx-public-api-jsdoc) - Add JSDoc and examples for public functions while keeping documentation links valid. _(source-backed)_
+- [Payment Retry Logic Diagram](prompts/goal-examples.md#claude-payment-retry-diagram) - Explain payment retry behavior as a browsable HTML page with a diagram for developer or support review. _(source-backed)_
 
 ### product
 - [User Journeys](prompts/goal-examples.md#product-user-journeys) - Map persona tasks into pages, events, and success states.
@@ -345,6 +350,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Admin Workflows](prompts/goal-examples.md#product-admin-workflows) - Design review, undo, audit log, and bulk moderation flows.
 - [Success Criteria](prompts/goal-examples.md#product-success-criteria) - Define quantitative and qualitative completion measures for a feature.
 - [Design Doc Acceptance Complete](prompts/goal-examples.md#claude-design-doc-acceptance) - Implement a design document until every acceptance criterion is satisfied. _(source-backed)_
+- [Feature Flag System](prompts/goal-examples.md#openhands-feature-flag-system) - Implement boolean, percentage, and user-based feature flags with service logic, API middleware, a React hook, docs, and tests. _(source-backed)_
 
 ### qa
 - [Critical Path Tests](prompts/goal-examples.md#qa-critical-paths) - Cover signup, create, edit, delete, export, and recovery flows.
@@ -392,6 +398,8 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Lighthouse And Core Web Vitals Gate](prompts/goal-examples.md#explainx-lighthouse-core-web-vitals) - Improve Lighthouse and Core Web Vitals to explicit thresholds without regressions. _(source-backed)_
 - [Bundle Size Reduction](prompts/goal-examples.md#udit-bundle-size-reduction) - Iteratively reduce bundle size below the documented threshold. _(source-backed)_
 - [Benchmark Optimization](prompts/goal-examples.md#udit-benchmark-optimization) - Optimize performance against a benchmark command until the goal is reached. _(source-backed)_
+- [Order Service Performance Review](prompts/goal-examples.md#openhands-orderservice-performance-review) - Inspect service code for N+1 queries, missing indexes, inefficient loops, missing caches, and unnecessary fetching. _(source-backed)_
+- [Node Memory Leak Fix](prompts/goal-examples.md#openhands-node-memory-leak-fix) - Investigate a growing-memory Node.js process, isolate the leak source, fix it, and add monitoring for recurrence. _(source-backed)_
 
 ### workflow
 - [Goal Prompt Writer](prompts/goal-examples.md#goal-meta-prompt-writer) - Ask the agent to inspect a repo and write a precise goal prompt before execution.
@@ -450,6 +458,8 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 ### investigation
 - [Session Drift Report](prompts/goal-examples.md#hermes-session-drift-report) - Investigate session ID drift during mid-run compression and write a report. _(source-backed)_
 - [Billing Empty State Root Cause](prompts/goal-examples.md#reddit-billing-empty-state) - Find why active subscriptions show an empty state without changing pricing or webhook code. _(source-backed)_
+- [Checkout Crash Regression Fix](prompts/goal-examples.md#openhands-checkout-crash-regression) - Reproduce a checkout crash from a stack trace, identify the root cause, fix it, and add a regression test. _(source-backed)_
+- [Build Log Failure Diagnosis](prompts/goal-examples.md#claude-build-log-diagnosis) - Use a provided build log to explain why the build fails and identify the smallest verified fix path. _(source-backed)_
 
 ### cli
 - [EXIF Rename CLI](prompts/goal-examples.md#hermes-exif-rename-cli) - Build a small CLI that renames photos by EXIF date and test it on a photos folder. _(source-backed)_
