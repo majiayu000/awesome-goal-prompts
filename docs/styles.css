@@ -762,7 +762,7 @@ body[data-lang="zh"] .guide__steps p {
 .entry {
   position: relative;
   display: grid;
-  grid-template-columns: 58px minmax(0, 1fr) 48px;
+  grid-template-columns: 74px minmax(0, 1fr) 48px;
   gap: 16px;
   width: 100%;
   min-height: 138px;
@@ -810,7 +810,8 @@ body[data-lang="zh"] .guide__steps p {
 
 .entry__no {
   display: inline-flex;
-  width: 46px;
+  width: fit-content;
+  min-width: 64px;
   min-height: 32px;
   align-items: center;
   justify-content: center;
@@ -820,6 +821,7 @@ body[data-lang="zh"] .guide__steps p {
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.06em;
+  white-space: nowrap;
 }
 
 .entry__content {
@@ -2059,7 +2061,7 @@ pre {
   }
 
   .entry {
-    grid-template-columns: 50px minmax(0, 1fr);
+    grid-template-columns: 70px minmax(0, 1fr);
   }
 
   .entry__action {
