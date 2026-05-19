@@ -33,6 +33,7 @@ function renderResults() {
     no.textContent = `${t("entryNumberPrefix")} ${padNumber(index)}`;
 
     const content = document.createElement("span");
+    content.className = "entry__content";
     const title = document.createElement("span");
     title.className = "entry__title";
     title.textContent = entry.title;
@@ -57,7 +58,7 @@ function renderResults() {
 
     const action = document.createElement("span");
     action.className = "entry__action";
-    action.textContent = "/";
+    action.textContent = "View";
 
     link.appendChild(no);
     link.appendChild(content);
