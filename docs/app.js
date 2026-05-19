@@ -81,11 +81,6 @@ const els = {
   detailSourceType: document.querySelector("#detail-source-type"),
   detailEvidence: document.querySelector("#detail-evidence"),
   detailPrompt: document.querySelector("#detail-prompt"),
-  adapterType: document.querySelector("#adapter-type"),
-  adapterModule: document.querySelector("#adapter-module"),
-  adapterVerify: document.querySelector("#adapter-verify"),
-  adapterConstraint: document.querySelector("#adapter-constraint"),
-  copyAdapted: document.querySelector("#copy-repo-button"),
   validate: document.querySelector("#validate-button"),
   copy: document.querySelector("#copy-button"),
   toast: document.querySelector("#toast"),
@@ -518,7 +513,6 @@ function isSafeHttpUrl(value) {
 function renderDetail() {
   const entry = state.selected;
   setText(els.copy, t("copyOriginal"));
-  setText(els.copyAdapted, t("copyForRepo"));
 
   for (const details of els.detailCard.querySelectorAll("details")) {
     details.open = false;
@@ -547,7 +541,6 @@ function renderDetail() {
   setText(els.detailDone, done);
   setText(els.detailVerify, entry.verify);
   setText(els.detailPrompt, entry.prompt);
-  syncRepoCopyPlaceholders(entry);
   renderPlainList(els.detailContext, context, "§");
   renderPlainList(els.detailConstraints, constraints, "§");
   renderVerifyList(els.detailVerifyList, verify);
@@ -677,7 +670,6 @@ function bindEvents() {
   els.reset.addEventListener("click", resetFilters);
   els.copy.addEventListener("click", copySelected);
   els.validate.addEventListener("click", copyVerify);
-  els.copyAdapted.addEventListener("click", copyAdaptedPrompt);
 
   for (const button of els.langButtons) {
     button.addEventListener("click", () => setLanguage(button.dataset.langOption));
