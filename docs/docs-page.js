@@ -16,69 +16,6 @@ const docs = [
   },
 ];
 
-const copy = {
-  en: {
-    pageTitle: "Docs · The Contract Codex",
-    metaDescription: "The Contract Codex documentation: a practical guide to writing verifiable /goal task contracts.",
-    homeAria: "The Contract Codex home",
-    repoLinksAria: "Repository links",
-    languageAria: "Language",
-    brandName: "The Contract Codex",
-    brandSub: "V1 · Awesome Goal Prompts",
-    navCatalog: "Catalog",
-    navWrite: "Write /goal",
-    navDocs: "Docs",
-    navSources: "Sources",
-    navContribute: "Contribute",
-    navGithub: "GitHub",
-    docsEyebrow: "§ Documentation",
-    docsTitle: "How to write a verifiable /goal.",
-    docsCopy: "A practical guide for turning vague coding requests into verifiable task contracts.",
-    docsStatsAria: "Documentation statistics",
-    docsLedgerGuides: "Guides",
-    docsLedgerSource: "Source",
-    docsLedgerRoute: "Route",
-    docsBrowserAria: "Documentation browser",
-    docsIndexAria: "Documentation index",
-    docsShelfEyebrow: "§ II · Docs",
-    docsShelfTitle: "Document Index",
-    docsLoading: "Loading document...",
-    docsFailed: "Unable to load this document.",
-    footerText: "The Contract Codex · MIT License · 2026",
-    footerBack: "Back to catalog",
-  },
-  zh: {
-    pageTitle: "文档 · Goal Prompt 示例库",
-    metaDescription: "Goal Prompt 示例库文档：如何写出可验证的 /goal 任务说明。",
-    homeAria: "Goal Prompt 示例库首页",
-    repoLinksAria: "仓库链接",
-    languageAria: "语言",
-    brandName: "Goal Prompt 示例库",
-    brandSub: "V1 · Awesome Goal Prompts",
-    navCatalog: "目录",
-    navWrite: "写好 /goal",
-    navDocs: "文档",
-    navSources: "来源",
-    navContribute: "贡献",
-    navGithub: "GitHub",
-    docsEyebrow: "§ 文档",
-    docsTitle: "怎么写一个可验证的 /goal。",
-    docsCopy: "把模糊的编程需求，改成目标、上下文、约束、验收和停止条件都清楚的任务说明。",
-    docsStatsAria: "文档统计",
-    docsLedgerGuides: "文档",
-    docsLedgerSource: "来源",
-    docsLedgerRoute: "路由",
-    docsBrowserAria: "文档浏览器",
-    docsIndexAria: "文档索引",
-    docsShelfEyebrow: "§ II · 文档",
-    docsShelfTitle: "文档索引",
-    docsLoading: "正在加载文档...",
-    docsFailed: "无法加载这份文档。",
-    footerText: "Goal Prompt 示例库 · MIT License · 2026",
-    footerBack: "返回目录",
-  },
-};
-
 const state = {
   lang: detectInitialLang(),
   current: "",
@@ -128,14 +65,6 @@ function detectInitialLang() {
   return normalize(navigator.language).startsWith("zh") ? "zh" : "en";
 }
 
-function activeCopy() {
-  return copy[state.lang] || copy.en;
-}
-
-function t(key) {
-  return activeCopy()[key] || copy.en[key] || key;
-}
-
 function docTitle(doc) {
   return state.lang === "zh" ? doc.title_zh || doc.title : doc.title;
 }
@@ -165,11 +94,11 @@ function clearAndAppend(el, children) {
 function applyStaticCopy() {
   document.documentElement.lang = state.lang === "zh" ? "zh-CN" : "en";
   document.body.dataset.lang = state.lang;
-  document.title = t("pageTitle");
+  document.title = t("docsPageTitle");
 
   const description = document.querySelector('meta[name="description"]');
   if (description) {
-    description.content = t("metaDescription");
+    description.content = t("docsMetaDescription");
   }
 
   for (const el of document.querySelectorAll("[data-i18n]")) {
