@@ -1,10 +1,10 @@
 [[recipes]]
 id = "all"
-label = "All contracts"
-label_zh = "全部示例"
+label = "Source-backed contracts"
+label_zh = "有公开来源"
 query = ""
 category = "all"
-origin = "all"
+origin = "source-backed"
 
 [[recipes]]
 id = "auth-red"
@@ -28,7 +28,7 @@ label = "Security audit"
 label_zh = "安全审计"
 query = "security audit authorization injection"
 category = "security-appsec"
-origin = "all"
+origin = "source-backed"
 
 [[recipes]]
 id = "docs"
@@ -36,7 +36,7 @@ label = "Docs and onboarding"
 label_zh = "文档/上手"
 query = "readme docs contribution quickstart"
 category = "docs"
-origin = "all"
+origin = "source-backed"
 
 [[recipes]]
 id = "accessibility"
@@ -44,7 +44,7 @@ label = "Accessibility audit"
 label_zh = "无障碍审计"
 query = "a11y wcag accessibility"
 category = "accessibility"
-origin = "all"
+origin = "source-backed"
 
 [[recipes]]
 id = "agent-evals"
@@ -52,4 +52,4 @@ label = "Agent evals"
 label_zh = "智能体评测"
 query = "agent evals trace grading"
 category = "ai-evals"
-origin = "all"
+origin = "source-backed"

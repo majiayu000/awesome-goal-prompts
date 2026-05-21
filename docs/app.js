@@ -40,7 +40,7 @@ const state = {
   selected: null,
   category: "all",
   difficulty: "all",
-  origin: "all",
+  origin: "source-backed",
   recipe: "all",
   lang: detectInitialLang(),
 };
@@ -388,13 +388,14 @@ function applyFilters() {
 
 function renderStats() {
   const sourced = state.entries.filter((entry) => entry.origin === "source-backed").length;
+  const seed = state.entries.length - sourced;
   const advanced = state.entries.filter((entry) => entry.difficulty === "advanced").length;
   const categories = unique(state.entries.map((entry) => entry.category)).length;
-  setText(els.total, String(state.entries.length));
+  setText(els.total, String(sourced));
   setText(els.categories, String(categories));
-  setText(els.sourced, padNumber(sourced));
+  setText(els.sourced, padNumber(seed));
   setText(els.advanced, padNumber(advanced));
-  setText(els.sealTotal, `${padNumber(state.entries.length)} / ${padNumber(state.entries.length)}`);
+  setText(els.sealTotal, `${padNumber(sourced)} / ${padNumber(state.entries.length)}`);
 }
 
 function recipeLabel(recipe) {
@@ -416,13 +417,22 @@ function renderRecipes() {
 }
 
 function renderCatalogHeader() {
-  const label = state.category === "all" ? t("allContracts") : categoryLabel(state.category);
+  let label = state.category === "all" ? t("allContracts") : categoryLabel(state.category);
+  if (state.category === "all" && state.origin === "source-backed") {
+    label = t("sourceBackedContracts");
+  } else if (state.category === "all" && state.origin === "seed") {
+    label = t("seedPatterns");
+  }
   setText(els.categoryTitle, label);
   setText(els.resultCount, formatContractsCount(state.filtered.length, state.entries.length));
 }
 
 function renderCategoryShortcuts() {
-  const counts = countBy(state.entries, "category");
+  const scopedEntries = state.entries.filter((entry) => {
+    return (state.origin === "all" || entry.origin === state.origin)
+      && (state.difficulty === "all" || entry.difficulty === state.difficulty);
+  });
+  const counts = countBy(scopedEntries, "category");
   const buttons = [];
 
   const all = document.createElement("button");
@@ -435,10 +445,13 @@ function renderCategoryShortcuts() {
   allGlyph.textContent = "*";
   const allName = document.createElement("span");
   allName.className = "rail__name";
-  allName.textContent = t("allContracts");
+  allName.textContent = state.origin === "source-backed" ? t("sourceBackedContracts") : t("allContracts");
+  if (state.origin === "seed") {
+    allName.textContent = t("seedPatterns");
+  }
   const allCount = document.createElement("span");
   allCount.className = "rail__count";
-  allCount.textContent = String(state.entries.length);
+  allCount.textContent = String(scopedEntries.length);
   all.appendChild(allGlyph);
   all.appendChild(allName);
   all.appendChild(allCount);
@@ -449,7 +462,7 @@ function renderCategoryShortcuts() {
   });
   buttons.push(all);
 
-  for (const category of unique(state.entries.map((entry) => entry.category))) {
+  for (const category of unique(scopedEntries.map((entry) => entry.category))) {
     const button = document.createElement("button");
     button.type = "button";
     const active = state.category === category;
@@ -591,10 +604,10 @@ function resetFilters() {
   els.search.value = "";
   state.category = "all";
   state.difficulty = "all";
-  state.origin = "all";
+  state.origin = "source-backed";
   setActiveRecipe("all");
   setActiveButtons(els.difficultyButtons, "all", "difficulty");
-  setActiveButtons(els.originButtons, "all", "origin");
+  setActiveButtons(els.originButtons, state.origin, "origin");
   applyFilters();
 }
 
@@ -715,7 +728,12 @@ async function loadExamples() {
     renderStats();
 
     const wanted = decodeURIComponent(window.location.hash.replace("#", ""));
-    state.selected = entries.find((entry) => entry.slug === wanted) || entries[0] || null;
+    const linkedEntry = entries.find((entry) => entry.slug === wanted);
+    if (linkedEntry) {
+      state.origin = linkedEntry.origin;
+      setActiveButtons(els.originButtons, state.origin, "origin");
+    }
+    state.selected = linkedEntry || entries.find((entry) => entry.origin === state.origin) || entries[0] || null;
     applyFilters();
   } catch (error) {
     setText(els.resultCount, t("loadContractsFailed"));

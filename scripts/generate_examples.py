@@ -142,13 +142,11 @@ def source_line(entry: dict[str, str | None]) -> str | None:
     return None
 
 
-def build_markdown(entries: list[dict[str, str | None]]) -> str:
+def build_markdown(entries: list[dict[str, str | None]], title: str, description: list[str]) -> str:
     lines = [
-        "# Goal Prompt Examples",
+        f"# {title}",
         "",
-        "Each example is a complete `/goal` task contract. Replace placeholder commands, paths, and project names with your repository's real values before running.",
-        "",
-        "These examples intentionally use only the documented `/goal <goal>` form. They do not rely on unofficial subcommands.",
+        *description,
         "",
         "## Index",
         "",
@@ -189,6 +187,19 @@ def build_markdown(entries: list[dict[str, str | None]]) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
+def build_index_markdown(entries: list[dict[str, str | None]], title: str, description: list[str]) -> str:
+    lines = [f"# {title}", "", *description, "", "## Index", ""]
+    for category, category_entries in by_category(entries).items():
+        lines.append(f"### {category}")
+        for entry in category_entries:
+            lines.append(f'<a id="{entry["slug"]}"></a>')
+            lines.append(
+                f"- [{entry['title']}](goal-examples.md#{entry['slug']}) - {entry['intent']}"
+            )
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
 MARKER_PATTERN = re.compile(
     r"<!-- generated:(\w+)-start -->(.*?)<!-- generated:\1-end -->",
     re.DOTALL,
@@ -214,22 +225,24 @@ def replace_markers(text: str, sections: dict[str, str]) -> str:
 
 def build_stats_section(entries: list[dict[str, str | None]]) -> str:
     source_backed = sum(1 for entry in entries if entry["origin"] == "source-backed")
+    seed = len(entries) - source_backed
     body = (
-        f"Of those, **{source_backed}** are source-backed examples drawn from "
-        "official docs, public GitHub threads, tutorials, forum posts, and tool "
-        "READMEs; the rest are reusable seed patterns."
+        f"The public catalog starts with **{source_backed}** source-backed examples drawn from "
+        "official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. "
+        f"The other **{seed}** reusable seed patterns are kept in "
+        "[Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples."
     )
     return f"\n{body}\n"
 
 
 def build_catalog_section(entries: list[dict[str, str | None]]) -> str:
     lines: list[str] = []
-    for category, category_entries in by_category(entries).items():
+    source_entries = [entry for entry in entries if entry["origin"] == "source-backed"]
+    for category, category_entries in by_category(source_entries).items():
         lines.append(f"### {category}")
         for entry in category_entries:
-            marker = " _(source-backed)_" if entry["origin"] == "source-backed" else ""
             lines.append(
-                f"- [{entry['title']}](prompts/goal-examples.md#{entry['slug']}) - {entry['intent']}{marker}"
+                f"- [{entry['title']}](prompts/source-backed-goals.md#{entry['slug']}) - {entry['intent']}"
             )
         lines.append("")
     body = "\n".join(lines).rstrip()
@@ -242,7 +255,9 @@ def build_total_section(entries: list[dict[str, str | None]]) -> str:
 
 def build_json_ld(entries: list[dict[str, str | None]]) -> str:
     total = len(entries)
-    source_backed = sum(1 for entry in entries if entry["origin"] == "source-backed")
+    source_entries = [entry for entry in entries if entry["origin"] == "source-backed"]
+    source_backed = len(source_entries)
+    seed = total - source_backed
     site_url = "https://majiayu000.github.io/awesome-goal-prompts/"
     creator = {"@type": "Person", "name": "majiayu000", "url": "https://github.com/majiayu000"}
     keywords = [
@@ -278,9 +293,8 @@ def build_json_ld(entries: list[dict[str, str | None]]) -> str:
                 "name": "Awesome Goal Prompts",
                 "alternateName": "The Contract Codex",
                 "description": (
-                    f"{total} runnable /goal task contracts for coding agents, including "
-                    f"{source_backed} source-backed examples from official docs, GitHub "
-                    "threads, tutorials, forum posts, and tool READMEs."
+                    f"{source_backed} source-backed /goal task contracts for coding agents, "
+                    f"plus {seed} reusable seed patterns in the extended library."
                 ),
                 "url": site_url,
                 "keywords": keywords,
@@ -294,16 +308,16 @@ def build_json_ld(entries: list[dict[str, str | None]]) -> str:
             {
                 "@type": "ItemList",
                 "@id": f"{site_url}#contracts",
-                "name": "Goal Prompt Contracts",
-                "description": f"All {total} task contracts in the Awesome Goal Prompts catalog.",
-                "numberOfItems": total,
+                "name": "Source-Backed Goal Prompt Contracts",
+                "description": f"{source_backed} source-backed task contracts in the primary catalog.",
+                "numberOfItems": source_backed,
                 "itemListOrder": "https://schema.org/ItemListOrderAscending",
                 "itemListElement": [
                     {
                         "@type": "ListItem", "position": index, "url": f"{site_url}#{entry['slug']}",
                         "name": entry["title"], "description": entry["intent"],
                     }
-                    for index, entry in enumerate(entries, start=1)
+                    for index, entry in enumerate(source_entries, start=1)
                 ],
             },
         ],
@@ -314,16 +328,17 @@ def build_json_ld(entries: list[dict[str, str | None]]) -> str:
 def update_static_metadata(entries: list[dict[str, str | None]]) -> None:
     total = len(entries)
     source_backed = sum(1 for entry in entries if entry["origin"] == "source-backed")
+    seed = total - source_backed
     index_path = ROOT / "docs" / "index.html"
     index_text = index_path.read_text(encoding="utf-8")
     description = (
-        f"A searchable catalog of {total} runnable /goal task contracts for coding agents, "
-        f"including {source_backed} source-backed examples."
+        f"{source_backed} source-backed /goal contracts for coding agents, "
+        f"plus {seed} reusable seed patterns in the extended library."
     )
     short_description = (
-        f"A searchable catalog of {total} runnable /goal task contracts for coding agents."
+        f"{source_backed} source-backed /goal contracts for coding agents."
     )
-    image_alt = f"The Contract Codex - a catalog of {total} runnable goal contracts for coding agents."
+    image_alt = f"The Contract Codex - {source_backed} source-backed goal contracts for coding agents."
     replacements = {
         r'<meta property="og:description" content="[^"]*">': (
             f'<meta property="og:description" content="{description}">'
@@ -370,7 +385,33 @@ def main() -> None:
     (ROOT / "prompts").mkdir(exist_ok=True)
     (ROOT / "data").mkdir(exist_ok=True)
     (ROOT / "docs").mkdir(exist_ok=True)
-    (ROOT / "prompts" / "goal-examples.md").write_text(build_markdown(entries), encoding="utf-8")
+    common_description = [
+        "Each example is a complete `/goal` task contract. Replace placeholder commands, paths, and project names with your repository's real values before running.",
+        "",
+        "These examples intentionally use only the documented `/goal <goal>` form. They do not rely on unofficial subcommands.",
+    ]
+    source_entries = [entry for entry in entries if entry["origin"] == "source-backed"]
+    seed_entries = [entry for entry in entries if entry["origin"] == "seed"]
+    (ROOT / "prompts" / "goal-examples.md").write_text(
+        build_markdown(entries, "Goal Prompt Examples", common_description),
+        encoding="utf-8",
+    )
+    (ROOT / "prompts" / "source-backed-goals.md").write_text(
+        build_index_markdown(
+            source_entries,
+            "Source-Backed Goal Contracts",
+            ["These source-backed contracts are the primary catalog. Follow each link for the full prompt body in the complete archive."],
+        ),
+        encoding="utf-8",
+    )
+    (ROOT / "prompts" / "seed-patterns.md").write_text(
+        build_index_markdown(
+            seed_entries,
+            "Seed Goal Patterns",
+            ["These reusable patterns are not presented as collected from public sources. Prefer source-backed contracts first when credibility matters."],
+        ),
+        encoding="utf-8",
+    )
     examples_json = json.dumps(entries, indent=2, ensure_ascii=True) + "\n"
     recipes_json = json.dumps(recipes, indent=2, ensure_ascii=True) + "\n"
     (ROOT / "data" / "examples.json").write_text(examples_json, encoding="utf-8")

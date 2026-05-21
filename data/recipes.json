@@ -1,11 +1,11 @@
 [
   {
     "id": "all",
-    "label": "All contracts",
-    "label_zh": "\u5168\u90e8\u793a\u4f8b",
+    "label": "Source-backed contracts",
+    "label_zh": "\u6709\u516c\u5f00\u6765\u6e90",
     "query": "",
     "category": "all",
-    "origin": "all"
+    "origin": "source-backed"
   },
   {
     "id": "auth-red",
@@ -29,7 +29,7 @@
     "label_zh": "\u5b89\u5168\u5ba1\u8ba1",
     "query": "security audit authorization injection",
     "category": "security-appsec",
-    "origin": "all"
+    "origin": "source-backed"
   },
   {
     "id": "docs",
@@ -37,7 +37,7 @@
     "label_zh": "\u6587\u6863/\u4e0a\u624b",
     "query": "readme docs contribution quickstart",
     "category": "docs",
-    "origin": "all"
+    "origin": "source-backed"
   },
   {
     "id": "accessibility",
@@ -45,7 +45,7 @@
     "label_zh": "\u65e0\u969c\u788d\u5ba1\u8ba1",
     "query": "a11y wcag accessibility",
     "category": "accessibility",
-    "origin": "all"
+    "origin": "source-backed"
   },
   {
     "id": "agent-evals",
@@ -53,6 +53,6 @@
     "label_zh": "\u667a\u80fd\u4f53\u8bc4\u6d4b",
     "query": "agent evals trace grading",
     "category": "ai-evals",
-    "origin": "all"
+    "origin": "source-backed"
   }
 ]
