@@ -240,6 +240,126 @@ def build_total_section(entries: list[dict[str, str | None]]) -> str:
     return f"**{len(entries)}**"
 
 
+def build_json_ld(entries: list[dict[str, str | None]]) -> str:
+    total = len(entries)
+    source_backed = sum(1 for entry in entries if entry["origin"] == "source-backed")
+    site_url = "https://majiayu000.github.io/awesome-goal-prompts/"
+    creator = {"@type": "Person", "name": "majiayu000", "url": "https://github.com/majiayu000"}
+    keywords = [
+        "coding agents",
+        "prompt engineering",
+        "AI agents",
+        "Claude Code",
+        "Codex",
+        "Hermes",
+        "task contracts",
+        "goal prompts",
+    ]
+    graph = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": f"{site_url}#website",
+                "url": site_url,
+                "name": "The Contract Codex · Awesome Goal Prompts",
+                "description": "A searchable catalog of runnable /goal task contracts for coding agents.",
+                "inLanguage": ["en", "zh-CN"],
+                "publisher": creator,
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": f"{site_url}?q={{search_term_string}}",
+                    "query-input": "required name=search_term_string",
+                },
+            },
+            {
+                "@type": "Dataset",
+                "@id": f"{site_url}#dataset",
+                "name": "Awesome Goal Prompts",
+                "alternateName": "The Contract Codex",
+                "description": (
+                    f"{total} runnable /goal task contracts for coding agents, including "
+                    f"{source_backed} source-backed examples from official docs, GitHub "
+                    "threads, tutorials, forum posts, and tool READMEs."
+                ),
+                "url": site_url,
+                "keywords": keywords,
+                "license": "https://github.com/majiayu000/awesome-goal-prompts/blob/main/LICENSE",
+                "isAccessibleForFree": True,
+                "creator": creator,
+                "codeRepository": "https://github.com/majiayu000/awesome-goal-prompts",
+                "version": "0.1.2",
+                "inLanguage": ["en", "zh-CN"],
+            },
+            {
+                "@type": "ItemList",
+                "@id": f"{site_url}#contracts",
+                "name": "Goal Prompt Contracts",
+                "description": f"All {total} task contracts in the Awesome Goal Prompts catalog.",
+                "numberOfItems": total,
+                "itemListOrder": "https://schema.org/ItemListOrderAscending",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem", "position": index, "url": f"{site_url}#{entry['slug']}",
+                        "name": entry["title"], "description": entry["intent"],
+                    }
+                    for index, entry in enumerate(entries, start=1)
+                ],
+            },
+        ],
+    }
+    return json.dumps(graph, ensure_ascii=False, separators=(",", ":"))
+
+
+def update_static_metadata(entries: list[dict[str, str | None]]) -> None:
+    total = len(entries)
+    source_backed = sum(1 for entry in entries if entry["origin"] == "source-backed")
+    index_path = ROOT / "docs" / "index.html"
+    index_text = index_path.read_text(encoding="utf-8")
+    description = (
+        f"A searchable catalog of {total} runnable /goal task contracts for coding agents, "
+        f"including {source_backed} source-backed examples."
+    )
+    short_description = (
+        f"A searchable catalog of {total} runnable /goal task contracts for coding agents."
+    )
+    image_alt = f"The Contract Codex - a catalog of {total} runnable goal contracts for coding agents."
+    replacements = {
+        r'<meta property="og:description" content="[^"]*">': (
+            f'<meta property="og:description" content="{description}">'
+        ),
+        r'<meta property="og:image:alt" content="[^"]*">': (
+            f'<meta property="og:image:alt" content="{image_alt}">'
+        ),
+        r'<meta name="twitter:description" content="[^"]*">': (
+            f'<meta name="twitter:description" content="{short_description}">'
+        ),
+        r'<meta name="twitter:image:alt" content="[^"]*">': (
+            f'<meta name="twitter:image:alt" content="{image_alt}">'
+        ),
+        r'<script type="application/ld\+json">.*?</script>': (
+            f'<script type="application/ld+json">{build_json_ld(entries)}</script>'
+        ),
+    }
+    for pattern, replacement in replacements.items():
+        index_text, count = re.subn(pattern, replacement, index_text, count=1, flags=re.DOTALL)
+        if count != 1:
+            raise SystemExit(f"failed to update docs/index.html metadata for pattern: {pattern}")
+    index_path.write_text(index_text, encoding="utf-8")
+
+    docs_path = ROOT / "docs" / "docs.html"
+    docs_text = docs_path.read_text(encoding="utf-8")
+    docs_text, count = re.subn(
+        r'<meta property="og:image:alt" content="[^"]*">',
+        f'<meta property="og:image:alt" content="{image_alt}">',
+        docs_text,
+        count=1,
+    )
+    if count != 1:
+        raise SystemExit("failed to update docs/docs.html image alt metadata")
+    docs_path.write_text(docs_text, encoding="utf-8")
+
+
 def main() -> None:
     categories = load_categories()
     recipes = load_recipes()
@@ -257,6 +377,7 @@ def main() -> None:
     (ROOT / "docs" / "examples.json").write_text(examples_json, encoding="utf-8")
     (ROOT / "data" / "recipes.json").write_text(recipes_json, encoding="utf-8")
     (ROOT / "docs" / "recipes.json").write_text(recipes_json, encoding="utf-8")
+    update_static_metadata(entries)
 
     readme_path = ROOT / "README.md"
     readme_text = readme_path.read_text(encoding="utf-8")

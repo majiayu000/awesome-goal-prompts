@@ -114,6 +114,39 @@ def main() -> None:
     ]
 
     (ROOT / "docs" / "catalog-health.md").write_text("\n".join(lines), encoding="utf-8")
+    zh_lines = [
+        "# 目录健康报告",
+        "",
+        "## 概览",
+        "",
+        f"- 条目总数：{total}",
+        f"- 有公开来源的条目：{len(source_backed)}",
+        f"- Seed 条目：{by_origin.get('seed', 0)}",
+        f"- 分类数：{len(by_category)}",
+        f"- 搜索评测：{len(cases) - eval_failures}/{len(cases)} 通过",
+        f"- 缺少来源摘要的 source-backed 条目：{len(short_evidence)}",
+        f"- 缺少来源字段的 source-backed 条目：{len(missing_source_fields)}",
+        "",
+        "## 分类覆盖率",
+        "",
+        *table(["分类", "有公开来源", "总数", "覆盖率"], category_rows),
+        "",
+        "## 来源类型分布",
+        "",
+        *table(["来源类型", "数量"], source_type_rows),
+        "",
+        "## 搜索评测",
+        "",
+        *table(["查询", "期望条目", "排名", "要求", "状态"], eval_rows),
+        "",
+        "## 维护建议",
+        "",
+        "- 优先给覆盖率低的分类补充真实 source-backed 条目。",
+        "- 搜索评测要贴近用户真实输入，不要只测精确标题。",
+        "- 没有公开 URL 和证据短语时，不要把 seed 条目标成 source-backed。",
+        "",
+    ]
+    (ROOT / "docs" / "catalog-health.zh.md").write_text("\n".join(zh_lines), encoding="utf-8")
     print("generated catalog health")
 
 

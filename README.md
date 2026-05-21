@@ -1,10 +1,12 @@
-# Awesome Goal Prompts — Runnable Prompt Contracts for Claude Code, Codex & Cursor
+# Awesome Goal Prompts — Coding Agent Rescue Contracts
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-A curated catalog of <!-- generated:total-start -->**314**<!-- generated:total-end --> `/goal` prompt contracts for **Claude Code**, **OpenAI Codex**, **Cursor**, **Gemini CLI**, and other **coding agents** — source-backed, runnable, and search-tested in CI.
+When Claude Code, Codex, Cursor, or another coding agent starts making broad edits, paste a contract that says exactly what to inspect, what not to touch, how to verify, and when to stop.
 
-**Live catalog:** https://majiayu000.github.io/awesome-goal-prompts/
+This repo keeps <!-- generated:total-start -->**314**<!-- generated:total-end --> runnable `/goal` contracts for engineering work. Start with the 10 rescue prompts below; use the full catalog only when you need a specific task shape.
+
+**Search the full catalog:** https://majiayu000.github.io/awesome-goal-prompts/
 
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk. This repo turns that contract shape into a catalog you can search, inspect, adapt, and copy.
 
@@ -16,110 +18,37 @@ Of those, **114** are source-backed examples drawn from official docs, public Gi
 
 ## Why This Exists
 
-Most prompt lists stop at catchy instructions. This catalog keeps the parts that make long-running coding-agent work auditable:
+Most prompt lists stop at catchy instructions. This catalog is for the moment after an agent starts drifting: the task is real, the repo has constraints, and "try harder" is not enough. Each contract gives the agent a narrow job, required context, explicit boundaries, proof, and stop rules.
 
 - **Source-backed where possible:** external examples keep a public URL, source type, evidence phrase, and generated evidence summary.
 - **Runnable by design:** every prompt includes `GOAL`, `CONTEXT`, `CONSTRAINTS`, `DONE WHEN`, `VERIFY`, `OUTPUT`, and `STOP RULES`.
 - **Search quality is tested:** representative user queries must retrieve the expected contract in CI.
 - **Seed entries are labeled:** reusable patterns are useful, but they are not presented as collected from public sources.
 
-## Try Three Contracts
+## Start With Ten Rescue Prompts
 
-### Auth Tests And Lint Clean
+These are the front door. Each one is source-backed, tied to a common coding-agent failure mode, and links to the full copyable prompt.
 
-Use when an auth module is failing tests and lint at the same time.
+| If the agent is failing at... | Copy this contract | Before | After |
+| --- | --- | --- | --- |
+| Auth tests and lint are both red | [Auth Tests And Lint Clean](prompts/goal-examples.md#claude-auth-tests-lint) | "Fix auth" invites API churn. | Auth behavior is preserved; tests and lint prove the fix. |
+| CI has mixed test, lint, and typecheck failures | [CI Pipeline Green](prompts/goal-examples.md#explainx-ci-pipeline-green) | The agent chases one log line at a time. | Local and remote CI evidence define done. |
+| A migration needs proof, not vibes | [Dev Database Migration Proof](prompts/goal-examples.md#claude-dev-database-migration) | The agent edits schema without rollback evidence. | Dev DB application and schema comparison are required. |
+| A PR may have security bugs | [Security PR Review](prompts/goal-examples.md#openhands-security-pr-review) | Review comments stay generic. | File-level auth, injection, XSS, and secret risks are called out. |
+| Checkout crashes from a stack trace | [Checkout Crash Regression Fix](prompts/goal-examples.md#openhands-checkout-crash-regression) | The agent patches the symptom. | Reproduction, root cause, fix, and regression test are all required. |
+| Users see an empty billing state | [Billing Empty State Root Cause](prompts/goal-examples.md#reddit-billing-empty-state) | The agent rewrites pricing or webhooks. | The investigation is scoped to the empty-state cause. |
+| A visual migration must not drift | [Visual Migration With Playwright](prompts/goal-examples.md#codex-visual-migration-playwright) | "Looks close" becomes the acceptance test. | Playwright checks preserve screen output. |
+| Agent runs need traceability | [Agent Trace Observability](prompts/goal-examples.md#openai-agent-tracing-observability) | Tool calls and handoffs disappear in logs. | One representative run produces trace spans. |
+| `npm audit` is red | [NPM Audit Clean Remediation](prompts/goal-examples.md#explainx-npm-audit-clean) | The agent upgrades packages blindly. | Audit and tests must both pass without public API breakage. |
+| A plan may still have holes | [Review Plan Until No Gaps](prompts/goal-examples.md#github-review-plan-no-gaps) | The agent accepts the first plausible plan. | A fresh review must find no remaining gaps. |
 
-```text
-/goal
-GOAL:
-Fix the auth module until auth tests pass, lint is clean, and public API behavior is unchanged.
-
-CONTEXT:
-- Read AGENTS.md/CLAUDE.md, package scripts, auth source, auth tests, lint config, and the latest failing output.
-- Establish a baseline with `npm test -- test/auth` and `npm run lint` or the repo-local equivalents.
-
-CONSTRAINTS:
-- Do not change public auth API shape, route contracts, token/session semantics, or exported TypeScript types.
-- Do not weaken, delete, or skip tests or lint rules.
-
-DONE WHEN:
-- Auth tests pass.
-- Lint passes.
-- The final diff has no unrelated formatting churn.
-
-VERIFY:
-- Run `npm test -- test/auth`.
-- Run `npm run lint`.
-
-STOP RULES:
-- Stop if the fix requires a product or security decision.
-- Stop after three failed fix attempts and reassess the root cause.
-```
-
-### Database Migration With Proof
-
-Use when a schema change needs rollback and compatibility evidence.
-
-```text
-/goal
-GOAL:
-Write and verify the database migration while preserving existing API behavior.
-
-CONTEXT:
-- Inspect migrations, schema files, models, repositories, seed data, and database tests.
-- Establish a baseline with the repo-local migration dry-run or test database command.
-
-CONSTRAINTS:
-- Do not destroy or rewrite data without dry-run, rollback, and row-count/checksum evidence.
-- Keep compatibility evidence for old and new paths until verification passes.
-
-DONE WHEN:
-- Migration applies cleanly.
-- Rollback or forward-fix path is documented.
-- Schema and affected tests pass.
-
-VERIFY:
-- Run the migration against a dev/test database.
-- Run affected data/API tests.
-
-STOP RULES:
-- Stop if production credentials or destructive data operations are required.
-```
-
-### Agent Trace Observability
-
-Use when an agent workflow needs traceable tool calls, handoffs, guardrails, and model events.
-
-```text
-/goal
-GOAL:
-Instrument agent runs so LLM generations, tool calls, handoffs, guardrails, and custom events are traceable.
-
-CONTEXT:
-- Inspect agent runtime code, tool definitions, handoff paths, guardrails, and existing observability setup.
-- Establish a baseline with one local agent run and current logs/traces.
-
-CONSTRAINTS:
-- Do not log secrets or sensitive user data.
-- Do not silently fall back to lower-quality behavior for critical paths.
-
-DONE WHEN:
-- One representative run produces trace spans for the agent, tools, handoffs, and guardrails.
-- Trace IDs or report links are included in final output.
-
-VERIFY:
-- Run the local agent smoke flow.
-- Inspect trace output or dashboard evidence.
-
-STOP RULES:
-- Stop if tracing requires production credentials or unavailable vendor access.
-```
+The complete library stays below as the searchable reference catalog.
 
 ## Contents
 
 - [Why This Exists](#why-this-exists)
-- [Try Three Contracts](#try-three-contracts)
-- [Goal Prompts](#goal-prompts)
+- [Start With Ten Rescue Prompts](#start-with-ten-rescue-prompts)
+- [Full Catalog](#full-catalog)
 - [How To Write A Good Goal](#how-to-write-a-good-goal)
 - [Catalog Health](#catalog-health)
 - [Templates](#templates)
@@ -127,7 +56,7 @@ STOP RULES:
 - [Sources And Caveats](#sources-and-caveats)
 - [Contributing](#contributing)
 
-## Goal Prompts
+## Full Catalog
 
 Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md), and the searchable UI lives in the [GitHub Pages catalog](https://majiayu000.github.io/awesome-goal-prompts/).
 
