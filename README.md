@@ -2,14 +2,14 @@
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-A curated catalog of <!-- generated:total-start -->**303**<!-- generated:total-end --> `/goal` prompt contracts for **Claude Code**, **OpenAI Codex**, **Cursor**, **Gemini CLI**, and other **coding agents** — source-backed, runnable, and search-tested in CI.
+A curated catalog of <!-- generated:total-start -->**314**<!-- generated:total-end --> `/goal` prompt contracts for **Claude Code**, **OpenAI Codex**, **Cursor**, **Gemini CLI**, and other **coding agents** — source-backed, runnable, and search-tested in CI.
 
 **Live catalog:** https://majiayu000.github.io/awesome-goal-prompts/
 
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk. This repo turns that contract shape into a catalog you can search, inspect, adapt, and copy.
 
 <!-- generated:stats-start -->
-Of those, **103** are source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs; the rest are reusable seed patterns.
+Of those, **114** are source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs; the rest are reusable seed patterns.
 <!-- generated:stats-end -->
 
 ![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
@@ -147,6 +147,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [API Versioning Plan](prompts/goal-examples.md#api-versioning-plan) - Create a v1/v2 coexistence plan with deprecation headers and migration tests.
 - [API Integration Tests](prompts/goal-examples.md#openhands-api-integration-tests) - Add end-to-end tests for product API endpoints with success and error cases. _(source-backed)_
 - [User Preferences API](prompts/goal-examples.md#openhands-user-preferences-api) - Add GET, PUT, and PATCH endpoints for user preferences with validation, service logic, OpenAPI docs, and tests. _(source-backed)_
+- [SPARC Payment Processing Plan](prompts/goal-examples.md#claude-flow-sparc-payment-plan) - Plan and implement payment processing through SPARC phases with requirements, pseudocode, architecture, TDD refinement, and integration. _(source-backed)_
 
 ### backend-data
 - [Database Migration Safety](prompts/goal-examples.md#db-migration-safety) - Review a migration for rollback, online execution, and lock risk.
@@ -335,6 +336,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Contributor README Rewrite](prompts/goal-examples.md#apidog-contributor-readme) - Rewrite README installation, run, test, and architecture guidance for new contributors. _(source-backed)_
 - [Public API Docs Coverage](prompts/goal-examples.md#explainx-public-api-jsdoc) - Add JSDoc and examples for public functions while keeping documentation links valid. _(source-backed)_
 - [Payment Retry Logic Diagram](prompts/goal-examples.md#claude-payment-retry-diagram) - Explain payment retry behavior as a browsable HTML page with a diagram for developer or support review. _(source-backed)_
+- [Implementation Notes Decision Ledger](prompts/goal-examples.md#deadreckon-implementation-notes-ledger) - Keep live implementation notes and the final run decisions document aligned around decisions, deviations, tradeoffs, and open questions. _(source-backed)_
 
 ### product
 - [User Journeys](prompts/goal-examples.md#product-user-journeys) - Map persona tasks into pages, events, and success states.
@@ -351,6 +353,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Success Criteria](prompts/goal-examples.md#product-success-criteria) - Define quantitative and qualitative completion measures for a feature.
 - [Design Doc Acceptance Complete](prompts/goal-examples.md#claude-design-doc-acceptance) - Implement a design document until every acceptance criterion is satisfied. _(source-backed)_
 - [Feature Flag System](prompts/goal-examples.md#openhands-feature-flag-system) - Implement boolean, percentage, and user-based feature flags with service logic, API middleware, a React hook, docs, and tests. _(source-backed)_
+- [OKR Development From Vague Priorities](prompts/goal-examples.md#claude-recipes-okr-development) - Turn vague strategic priorities into measurable OKRs with objectives, key results, alignment, scoring, guardrails, and a communication summary. _(source-backed)_
 
 ### qa
 - [Critical Path Tests](prompts/goal-examples.md#qa-critical-paths) - Cover signup, create, edit, delete, export, and recovery flows.
@@ -400,6 +403,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Benchmark Optimization](prompts/goal-examples.md#udit-benchmark-optimization) - Optimize performance against a benchmark command until the goal is reached. _(source-backed)_
 - [Order Service Performance Review](prompts/goal-examples.md#openhands-orderservice-performance-review) - Inspect service code for N+1 queries, missing indexes, inefficient loops, missing caches, and unnecessary fetching. _(source-backed)_
 - [Node Memory Leak Fix](prompts/goal-examples.md#openhands-node-memory-leak-fix) - Investigate a growing-memory Node.js process, isolate the leak source, fix it, and add monitoring for recurrence. _(source-backed)_
+- [GOAP API Latency Reduction](prompts/goal-examples.md#claude-flow-api-latency-goap) - Reduce API latency by profiling current performance, optimizing database queries, adding caching, and improving code paths. _(source-backed)_
 
 ### workflow
 - [Goal Prompt Writer](prompts/goal-examples.md#goal-meta-prompt-writer) - Ask the agent to inspect a repo and write a precise goal prompt before execution.
@@ -413,6 +417,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Non-Interactive Goal Creation](prompts/goal-examples.md#github-noninteractive-goal-creation) - Create and confirm an active goal during non-interactive Codex execution before continuing. _(source-backed)_
 - [Prep A Goal Workspace](prompts/goal-examples.md#github-goalbuddy-workspace) - Prepare a goal workspace with board, notes, receipts, and an exact `/goal` command. _(source-backed)_
 - [Long Goal With Constraints](prompts/goal-examples.md#github-claude-long-goal-template) - Use a longer goal template with repo path, constraints, plan pointer, and execution order. _(source-backed)_
+- [User-Facing Coherence Closure](prompts/goal-examples.md#deadreckon-coherence-closure) - Finish a coherence pass so CLI help, docs, JSON/plain output, colors, prompts, flags, and next-action grammar stay aligned. _(source-backed)_
 
 ### migration
 - [Visual Migration With Playwright](prompts/goal-examples.md#codex-visual-migration-playwright) - Migrate a project while preserving screen output and checking it with Playwright. _(source-backed)_
@@ -454,6 +459,7 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Flaky Auth Tests Goal](prompts/goal-examples.md#github-claude-goal-flaky-auth) - Use a Claude goal plugin example to find and fix flaky authentication tests. _(source-backed)_
 - [Improve Benchmark Coverage](prompts/goal-examples.md#github-benchmark-coverage-goal) - Use `/goal` to improve benchmark coverage and persist the command in history. _(source-backed)_
 - [Batch Fix Bugs](prompts/goal-examples.md#github-claude-batch-bugs) - Use a Claude Code goal to fix a numbered batch of bugs without looping on missing skills. _(source-backed)_
+- [GOAP Coverage Target Plan](prompts/goal-examples.md#claude-flow-coverage-goap) - Raise test coverage with an explicit test pyramid across unit, integration, and end-to-end coverage targets. _(source-backed)_
 
 ### investigation
 - [Session Drift Report](prompts/goal-examples.md#hermes-session-drift-report) - Investigate session ID drift during mid-run compression and write a report. _(source-backed)_
@@ -495,9 +501,14 @@ Full prompt bodies live in [prompts/goal-examples.md](prompts/goal-examples.md),
 - [Real CLI Goal Loop](prompts/goal-examples.md#github-hermes-real-cli-loop) - Verify a real CLI goal loop where the second judge round confirms completion. _(source-backed)_
 - [Verify File Creation](prompts/goal-examples.md#github-hermes-file-verification) - Verify that a requested file was actually created instead of trusting the agent claim. _(source-backed)_
 - [Queue Follow-Up Goals](prompts/goal-examples.md#github-hermes-goal-queue) - Promote queued follow-up goals: fix tests, run full tests, then produce coverage. _(source-backed)_
+- [Daily Goal Priority Loop](prompts/goal-examples.md#goal-agent-daily-priority-loop) - Use a persistent goal profile to compute daily priorities, execute them, log progress, and refresh status across sessions. _(source-backed)_
+- [Goal-Aligned Profile Optimization](prompts/goal-examples.md#goal-agent-profile-optimization) - Audit and update professional profiles against a stated goal while recording the resulting progress and gaps. _(source-backed)_
+- [Content And Audience Engagement Loop](prompts/goal-examples.md#goal-agent-content-engagement-loop) - Generate goal-aligned content, publish or promote it, engage with target audience posts, and log the session outcome. _(source-backed)_
 
 ### orchestration
 - [DAG Agent Dispatch](prompts/goal-examples.md#hn-dag-agent-dispatch) - Split a goal into a dependency graph and dispatch independent agents into isolated worktrees. _(source-backed)_
+- [DAG-Aware Semantic Merge Repair](prompts/goal-examples.md#deadreckon-semantic-merge-repair) - Make orchestration merge failures repairable by using plan DAG context, conflict bundles, planner-mediated repair, and bounded retry. _(source-backed)_
+- [Plan EventBus Live UX](prompts/goal-examples.md#deadreckon-orchestration-eventbus) - Unify plan, fork, merge, and orchestrate around shared builders and a live plan event stream. _(source-backed)_
 <!-- generated:catalog-end -->
 
 ## How To Write A Good Goal

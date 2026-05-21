@@ -21,6 +21,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [API Versioning Plan](#api-versioning-plan) - Create a v1/v2 coexistence plan with deprecation headers and migration tests.
 - [API Integration Tests](#openhands-api-integration-tests) - Add end-to-end tests for product API endpoints with success and error cases. Source-backed.
 - [User Preferences API](#openhands-user-preferences-api) - Add GET, PUT, and PATCH endpoints for user preferences with validation, service logic, OpenAPI docs, and tests. Source-backed.
+- [SPARC Payment Processing Plan](#claude-flow-sparc-payment-plan) - Plan and implement payment processing through SPARC phases with requirements, pseudocode, architecture, TDD refinement, and integration. Source-backed.
 
 ### backend-data
 - [Database Migration Safety](#db-migration-safety) - Review a migration for rollback, online execution, and lock risk.
@@ -209,6 +210,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Contributor README Rewrite](#apidog-contributor-readme) - Rewrite README installation, run, test, and architecture guidance for new contributors. Source-backed.
 - [Public API Docs Coverage](#explainx-public-api-jsdoc) - Add JSDoc and examples for public functions while keeping documentation links valid. Source-backed.
 - [Payment Retry Logic Diagram](#claude-payment-retry-diagram) - Explain payment retry behavior as a browsable HTML page with a diagram for developer or support review. Source-backed.
+- [Implementation Notes Decision Ledger](#deadreckon-implementation-notes-ledger) - Keep live implementation notes and the final run decisions document aligned around decisions, deviations, tradeoffs, and open questions. Source-backed.
 
 ### product
 - [User Journeys](#product-user-journeys) - Map persona tasks into pages, events, and success states.
@@ -225,6 +227,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Success Criteria](#product-success-criteria) - Define quantitative and qualitative completion measures for a feature.
 - [Design Doc Acceptance Complete](#claude-design-doc-acceptance) - Implement a design document until every acceptance criterion is satisfied. Source-backed.
 - [Feature Flag System](#openhands-feature-flag-system) - Implement boolean, percentage, and user-based feature flags with service logic, API middleware, a React hook, docs, and tests. Source-backed.
+- [OKR Development From Vague Priorities](#claude-recipes-okr-development) - Turn vague strategic priorities into measurable OKRs with objectives, key results, alignment, scoring, guardrails, and a communication summary. Source-backed.
 
 ### qa
 - [Critical Path Tests](#qa-critical-paths) - Cover signup, create, edit, delete, export, and recovery flows.
@@ -274,6 +277,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Benchmark Optimization](#udit-benchmark-optimization) - Optimize performance against a benchmark command until the goal is reached. Source-backed.
 - [Order Service Performance Review](#openhands-orderservice-performance-review) - Inspect service code for N+1 queries, missing indexes, inefficient loops, missing caches, and unnecessary fetching. Source-backed.
 - [Node Memory Leak Fix](#openhands-node-memory-leak-fix) - Investigate a growing-memory Node.js process, isolate the leak source, fix it, and add monitoring for recurrence. Source-backed.
+- [GOAP API Latency Reduction](#claude-flow-api-latency-goap) - Reduce API latency by profiling current performance, optimizing database queries, adding caching, and improving code paths. Source-backed.
 
 ### workflow
 - [Goal Prompt Writer](#goal-meta-prompt-writer) - Ask the agent to inspect a repo and write a precise goal prompt before execution.
@@ -287,6 +291,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Non-Interactive Goal Creation](#github-noninteractive-goal-creation) - Create and confirm an active goal during non-interactive Codex execution before continuing. Source-backed.
 - [Prep A Goal Workspace](#github-goalbuddy-workspace) - Prepare a goal workspace with board, notes, receipts, and an exact `/goal` command. Source-backed.
 - [Long Goal With Constraints](#github-claude-long-goal-template) - Use a longer goal template with repo path, constraints, plan pointer, and execution order. Source-backed.
+- [User-Facing Coherence Closure](#deadreckon-coherence-closure) - Finish a coherence pass so CLI help, docs, JSON/plain output, colors, prompts, flags, and next-action grammar stay aligned. Source-backed.
 
 ### migration
 - [Visual Migration With Playwright](#codex-visual-migration-playwright) - Migrate a project while preserving screen output and checking it with Playwright. Source-backed.
@@ -328,6 +333,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Flaky Auth Tests Goal](#github-claude-goal-flaky-auth) - Use a Claude goal plugin example to find and fix flaky authentication tests. Source-backed.
 - [Improve Benchmark Coverage](#github-benchmark-coverage-goal) - Use `/goal` to improve benchmark coverage and persist the command in history. Source-backed.
 - [Batch Fix Bugs](#github-claude-batch-bugs) - Use a Claude Code goal to fix a numbered batch of bugs without looping on missing skills. Source-backed.
+- [GOAP Coverage Target Plan](#claude-flow-coverage-goap) - Raise test coverage with an explicit test pyramid across unit, integration, and end-to-end coverage targets. Source-backed.
 
 ### investigation
 - [Session Drift Report](#hermes-session-drift-report) - Investigate session ID drift during mid-run compression and write a report. Source-backed.
@@ -369,9 +375,14 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Real CLI Goal Loop](#github-hermes-real-cli-loop) - Verify a real CLI goal loop where the second judge round confirms completion. Source-backed.
 - [Verify File Creation](#github-hermes-file-verification) - Verify that a requested file was actually created instead of trusting the agent claim. Source-backed.
 - [Queue Follow-Up Goals](#github-hermes-goal-queue) - Promote queued follow-up goals: fix tests, run full tests, then produce coverage. Source-backed.
+- [Daily Goal Priority Loop](#goal-agent-daily-priority-loop) - Use a persistent goal profile to compute daily priorities, execute them, log progress, and refresh status across sessions. Source-backed.
+- [Goal-Aligned Profile Optimization](#goal-agent-profile-optimization) - Audit and update professional profiles against a stated goal while recording the resulting progress and gaps. Source-backed.
+- [Content And Audience Engagement Loop](#goal-agent-content-engagement-loop) - Generate goal-aligned content, publish or promote it, engage with target audience posts, and log the session outcome. Source-backed.
 
 ### orchestration
 - [DAG Agent Dispatch](#hn-dag-agent-dispatch) - Split a goal into a dependency graph and dispatch independent agents into isolated worktrees. Source-backed.
+- [DAG-Aware Semantic Merge Repair](#deadreckon-semantic-merge-repair) - Make orchestration merge failures repairable by using plan DAG context, conflict bundles, planner-mediated repair, and bounded retry. Source-backed.
+- [Plan EventBus Live UX](#deadreckon-orchestration-eventbus) - Unify plan, fork, merge, and orchestrate around shared builders and a live plan event stream. Source-backed.
 
 ## Examples
 
@@ -14638,6 +14649,554 @@ DONE WHEN:
 
 VERIFY:
 - Run `HTML page opens locally and diagram matches the retry code path` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="deadreckon-coherence-closure"></a>
+### User-Facing Coherence Closure
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Finish a coherence pass so CLI help, docs, JSON/plain output, colors, prompts, flags, and next-action grammar stay aligned.
+- Verification: `snapshot tests, JSON leak tests, TUI render tests, docs examples, cargo workspace checks`
+- Source: [deadreckon goal corpus](https://github.com/gregce/deadreckon/blob/main/docs/goals/2026-05-17-1403-deadreckon-coherence-closure-goal.md)
+- Source type: `third-party-project`
+- Evidence: same words, colors, streams, flags, prompts, and next-action grammar
+- Evidence summary: same words, colors, streams, flags, prompts, and next-action grammar; source: deadreckon goal corpus; type: third-party-project; verification: snapshot tests, JSON leak tests, TUI render tests, docs examples, cargo workspace checks
+
+```text
+/goal
+GOAL:
+Complete User-Facing Coherence Closure for a coding-agent workflow repository: Finish a coherence pass so CLI help, docs, JSON/plain output, colors, prompts, flags, and next-action grammar stay aligned.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `snapshot tests, JSON leak tests, TUI render tests, docs examples, cargo workspace checks`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Finish a coherence pass so CLI help, docs, JSON/plain output, colors, prompts, flags, and next-action grammar stay aligned.
+- The verification command or evidence path succeeds: `snapshot tests, JSON leak tests, TUI render tests, docs examples, cargo workspace checks`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `snapshot tests, JSON leak tests, TUI render tests, docs examples, cargo workspace checks` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="deadreckon-semantic-merge-repair"></a>
+### DAG-Aware Semantic Merge Repair
+
+- Category: `orchestration`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Make orchestration merge failures repairable by using plan DAG context, conflict bundles, planner-mediated repair, and bounded retry.
+- Verification: `DAG smoke, repair smoke, refusal smoke, cargo build/test/clippy/fmt`
+- Source: [deadreckon goal corpus](https://github.com/gregce/deadreckon/blob/main/docs/goals/2026-05-16-1122-deadreckon-semantic-merge-repair-goal.md)
+- Source type: `third-party-project`
+- Evidence: Land DAG-aware merge plus automatic planner-mediated repair for true conflicts
+- Evidence summary: Land DAG-aware merge plus automatic planner-mediated repair for true conflicts; source: deadreckon goal corpus; type: third-party-project; verification: DAG smoke, repair smoke, refusal smoke, cargo build/test/clippy/fmt
+
+```text
+/goal
+GOAL:
+Complete DAG-Aware Semantic Merge Repair for an agent orchestration task: Make orchestration merge failures repairable by using plan DAG context, conflict bundles, planner-mediated repair, and bounded retry.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect plans, worktrees, subtask ownership, PRs, and coordination notes.
+- Establish a baseline by running or locating evidence for: `DAG smoke, repair smoke, refusal smoke, cargo build/test/clippy/fmt`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Keep subtask ownership explicit and avoid overlapping write scopes.
+- Do not merge or deploy automatically unless the goal explicitly allows it.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Make orchestration merge failures repairable by using plan DAG context, conflict bundles, planner-mediated repair, and bounded retry.
+- The verification command or evidence path succeeds: `DAG smoke, repair smoke, refusal smoke, cargo build/test/clippy/fmt`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `DAG smoke, repair smoke, refusal smoke, cargo build/test/clippy/fmt` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="deadreckon-orchestration-eventbus"></a>
+### Plan EventBus Live UX
+
+- Category: `orchestration`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Unify plan, fork, merge, and orchestrate around shared builders and a live plan event stream.
+- Verification: `orchestrate, coherence, attach_plan, plan_event_bus, plan_event, fmt, targeted clippy`
+- Source: [deadreckon goal corpus](https://github.com/gregce/deadreckon/blob/main/docs/goals/2026-05-18-2226-deadreckon-orchestration-eventbus-goal.md)
+- Source type: `third-party-project`
+- Evidence: move plan attach onto a shared plan event stream
+- Evidence summary: move plan attach onto a shared plan event stream; source: deadreckon goal corpus; type: third-party-project; verification: orchestrate, coherence, attach_plan, plan_event_bus, plan_event, fmt, targeted clippy
+
+```text
+/goal
+GOAL:
+Complete Plan EventBus Live UX for an agent orchestration task: Unify plan, fork, merge, and orchestrate around shared builders and a live plan event stream.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect plans, worktrees, subtask ownership, PRs, and coordination notes.
+- Establish a baseline by running or locating evidence for: `orchestrate, coherence, attach_plan, plan_event_bus, plan_event, fmt, targeted clippy`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Keep subtask ownership explicit and avoid overlapping write scopes.
+- Do not merge or deploy automatically unless the goal explicitly allows it.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Unify plan, fork, merge, and orchestrate around shared builders and a live plan event stream.
+- The verification command or evidence path succeeds: `orchestrate, coherence, attach_plan, plan_event_bus, plan_event, fmt, targeted clippy`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `orchestrate, coherence, attach_plan, plan_event_bus, plan_event, fmt, targeted clippy` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="deadreckon-implementation-notes-ledger"></a>
+### Implementation Notes Decision Ledger
+
+- Category: `docs`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Keep live implementation notes and the final run decisions document aligned around decisions, deviations, tradeoffs, and open questions.
+- Verification: `self-documenting run tests, doc kind tests, implementation notes freshness smoke, fmt, targeted clippy`
+- Source: [deadreckon goal corpus](https://github.com/gregce/deadreckon/blob/main/docs/goals/2026-05-18-2336-deadreckon-implementation-notes-goal.md)
+- Source type: `third-party-project`
+- Evidence: canonical implementation decision ledger
+- Evidence summary: canonical implementation decision ledger; source: deadreckon goal corpus; type: third-party-project; verification: self-documenting run tests, doc kind tests, implementation notes freshness smoke, fmt, targeted clippy
+
+```text
+/goal
+GOAL:
+Complete Implementation Notes Decision Ledger for a developer-facing documentation site or repository: Keep live implementation notes and the final run decisions document aligned around decisions, deviations, tradeoffs, and open questions.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect README, docs, examples, runbooks, and lint configuration.
+- Establish a baseline by running or locating evidence for: `self-documenting run tests, doc kind tests, implementation notes freshness smoke, fmt, targeted clippy`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not invent APIs, flags, commands, or product behavior.
+- Mark unverified commands clearly instead of presenting guesses as facts.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Keep live implementation notes and the final run decisions document aligned around decisions, deviations, tradeoffs, and open questions.
+- The verification command or evidence path succeeds: `self-documenting run tests, doc kind tests, implementation notes freshness smoke, fmt, targeted clippy`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `self-documenting run tests, doc kind tests, implementation notes freshness smoke, fmt, targeted clippy` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="goal-agent-daily-priority-loop"></a>
+### Daily Goal Priority Loop
+
+- Category: `goal-maintenance`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Use a persistent goal profile to compute daily priorities, execute them, log progress, and refresh status across sessions.
+- Verification: `/goal:next priorities, /goal:log entry, /goal:status dashboard, progress-tracker.md updated`
+- Source: [Goal Agent README](https://github.com/ishaquehassan/goal-agent)
+- Source type: `tool-readme`
+- Evidence: Your daily loop: /goal:next to see what to do, execute it, /goal:log to record it
+- Evidence summary: Your daily loop: /goal:next to see what to do, execute it, /goal:log to record it; source: Goal Agent README; type: tool-readme; verification: /goal:next priorities, /goal:log entry, /goal:status dashboard, progress-tracker.md updated
+
+```text
+/goal
+GOAL:
+Complete Daily Goal Priority Loop for a goal-management workflow: Use a persistent goal profile to compute daily priorities, execute them, log progress, and refresh status across sessions.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect active goals, done conditions, audit logs, and continuation state.
+- Establish a baseline by running or locating evidence for: `/goal:next priorities, /goal:log entry, /goal:status dashboard, progress-tracker.md updated`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not mark a goal complete without auditing the current done condition.
+- Keep goal edits and completion reasons visible in the final output.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Use a persistent goal profile to compute daily priorities, execute them, log progress, and refresh status across sessions.
+- The verification command or evidence path succeeds: `/goal:next priorities, /goal:log entry, /goal:status dashboard, progress-tracker.md updated`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `/goal:next priorities, /goal:log entry, /goal:status dashboard, progress-tracker.md updated` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="goal-agent-profile-optimization"></a>
+### Goal-Aligned Profile Optimization
+
+- Category: `goal-maintenance`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Audit and update professional profiles against a stated goal while recording the resulting progress and gaps.
+- Verification: `/goal:optimize platform output plus updated goal memory files`
+- Source: [Goal Agent README](https://github.com/ishaquehassan/goal-agent)
+- Source type: `tool-readme`
+- Evidence: /goal:optimize [platform]
+- Evidence summary: /goal:optimize [platform]; source: Goal Agent README; type: tool-readme; verification: /goal:optimize platform output plus updated goal memory files
+
+```text
+/goal
+GOAL:
+Complete Goal-Aligned Profile Optimization for a goal-management workflow: Audit and update professional profiles against a stated goal while recording the resulting progress and gaps.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect active goals, done conditions, audit logs, and continuation state.
+- Establish a baseline by running or locating evidence for: `/goal:optimize platform output plus updated goal memory files`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not mark a goal complete without auditing the current done condition.
+- Keep goal edits and completion reasons visible in the final output.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Audit and update professional profiles against a stated goal while recording the resulting progress and gaps.
+- The verification command or evidence path succeeds: `/goal:optimize platform output plus updated goal memory files`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `/goal:optimize platform output plus updated goal memory files` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="goal-agent-content-engagement-loop"></a>
+### Content And Audience Engagement Loop
+
+- Category: `goal-maintenance`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Generate goal-aligned content, publish or promote it, engage with target audience posts, and log the session outcome.
+- Verification: `/goal:write output, /goal:engage actions, /goal:log entry, content-calendar.md updated`
+- Source: [Goal Agent README](https://github.com/ishaquehassan/goal-agent)
+- Source type: `tool-readme`
+- Evidence: /goal:write article
+- Evidence summary: /goal:write article; source: Goal Agent README; type: tool-readme; verification: /goal:write output, /goal:engage actions, /goal:log entry, content-calendar.md updated
+
+```text
+/goal
+GOAL:
+Complete Content And Audience Engagement Loop for a goal-management workflow: Generate goal-aligned content, publish or promote it, engage with target audience posts, and log the session outcome.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect active goals, done conditions, audit logs, and continuation state.
+- Establish a baseline by running or locating evidence for: `/goal:write output, /goal:engage actions, /goal:log entry, content-calendar.md updated`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not mark a goal complete without auditing the current done condition.
+- Keep goal edits and completion reasons visible in the final output.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Generate goal-aligned content, publish or promote it, engage with target audience posts, and log the session outcome.
+- The verification command or evidence path succeeds: `/goal:write output, /goal:engage actions, /goal:log entry, content-calendar.md updated`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `/goal:write output, /goal:engage actions, /goal:log entry, content-calendar.md updated` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="claude-flow-sparc-payment-plan"></a>
+### SPARC Payment Processing Plan
+
+- Category: `backend-api`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Plan and implement payment processing through SPARC phases with requirements, pseudocode, architecture, TDD refinement, and integration.
+- Verification: `acceptance criteria, API contracts, unit and integration tests, coverage target, integration validation`
+- Source: [claude-flow code-goal-planner skill](https://github.com/ruvnet/claude-flow/blob/main/.agents/skills/agent-code-goal-planner/SKILL.md)
+- Source type: `tool-readme`
+- Evidence: goal: implement_payment_processing_with_sparc
+- Evidence summary: goal: implement_payment_processing_with_sparc; source: claude-flow code-goal-planner skill; type: tool-readme; verification: acceptance criteria, API contracts, unit and integration tests, coverage target, integration validation
+
+```text
+/goal
+GOAL:
+Complete SPARC Payment Processing Plan for a backend API service: Plan and implement payment processing through SPARC phases with requirements, pseudocode, architecture, TDD refinement, and integration.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect API routes, OpenAPI specs, handlers, middleware, and API tests.
+- Establish a baseline by running or locating evidence for: `acceptance criteria, API contracts, unit and integration tests, coverage target, integration validation`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Plan and implement payment processing through SPARC phases with requirements, pseudocode, architecture, TDD refinement, and integration.
+- The verification command or evidence path succeeds: `acceptance criteria, API contracts, unit and integration tests, coverage target, integration validation`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `acceptance criteria, API contracts, unit and integration tests, coverage target, integration validation` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="claude-flow-api-latency-goap"></a>
+### GOAP API Latency Reduction
+
+- Category: `performance`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Reduce API latency by profiling current performance, optimizing database queries, adding caching, and improving code paths.
+- Verification: `p50 latency, p99 latency, throughput, database explain, before/after performance evidence`
+- Source: [claude-flow code-goal-planner skill](https://github.com/ruvnet/claude-flow/blob/main/.agents/skills/agent-code-goal-planner/SKILL.md)
+- Source type: `tool-readme`
+- Evidence: goal: reduce_api_latency_50_percent
+- Evidence summary: goal: reduce_api_latency_50_percent; source: claude-flow code-goal-planner skill; type: tool-readme; verification: p50 latency, p99 latency, throughput, database explain, before/after performance evidence
+
+```text
+/goal
+GOAL:
+Complete GOAP API Latency Reduction for a web application with measurable performance goals: Reduce API latency by profiling current performance, optimizing database queries, adding caching, and improving code paths.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect Lighthouse reports, bundles, traces, and critical routes.
+- Establish a baseline by running or locating evidence for: `p50 latency, p99 latency, throughput, database explain, before/after performance evidence`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not trade correctness, accessibility, or security for faster synthetic scores.
+- Compare before/after metrics on the same route and environment.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Reduce API latency by profiling current performance, optimizing database queries, adding caching, and improving code paths.
+- The verification command or evidence path succeeds: `p50 latency, p99 latency, throughput, database explain, before/after performance evidence`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `p50 latency, p99 latency, throughput, database explain, before/after performance evidence` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="claude-flow-coverage-goap"></a>
+### GOAP Coverage Target Plan
+
+- Category: `testing`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Raise test coverage with an explicit test pyramid across unit, integration, and end-to-end coverage targets.
+- Verification: `coverage report reaches target and critical paths have passing unit, integration, and e2e tests`
+- Source: [claude-flow code-goal-planner skill](https://github.com/ruvnet/claude-flow/blob/main/.agents/skills/agent-code-goal-planner/SKILL.md)
+- Source type: `tool-readme`
+- Evidence: goal: achieve_80_percent_coverage
+- Evidence summary: goal: achieve_80_percent_coverage; source: claude-flow code-goal-planner skill; type: tool-readme; verification: coverage report reaches target and critical paths have passing unit, integration, and e2e tests
+
+```text
+/goal
+GOAL:
+Complete GOAP Coverage Target Plan for a project with failing or missing verification gates: Raise test coverage with an explicit test pyramid across unit, integration, and end-to-end coverage targets.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect test suites, lint config, CI logs, coverage reports, and failing output.
+- Establish a baseline by running or locating evidence for: `coverage report reaches target and critical paths have passing unit, integration, and e2e tests`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not weaken lint, typecheck, or test rules to create a green result.
+- Fix production or fixture causes before changing expectations.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Raise test coverage with an explicit test pyramid across unit, integration, and end-to-end coverage targets.
+- The verification command or evidence path succeeds: `coverage report reaches target and critical paths have passing unit, integration, and e2e tests`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `coverage report reaches target and critical paths have passing unit, integration, and e2e tests` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="claude-recipes-okr-development"></a>
+### OKR Development From Vague Priorities
+
+- Category: `product`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Turn vague strategic priorities into measurable OKRs with objectives, key results, alignment, scoring, guardrails, and a communication summary.
+- Verification: `3-5 objectives, 2-4 measurable key results each, alignment notes, scoring guide, red flags, one-page summary`
+- Source: [claude-code-recipes](https://github.com/sgharlow/claude-code-recipes/blob/main/recipes/Recipe-017-OKR-Goal-Setting.md)
+- Source type: `third-party-tutorial`
+- Evidence: PRIMARY PROMPT: OKR Development
+- Evidence summary: PRIMARY PROMPT: OKR Development; source: claude-code-recipes; type: third-party-tutorial; verification: 3-5 objectives, 2-4 measurable key results each, alignment notes, scoring guide, red flags, one-page summary
+
+```text
+/goal
+GOAL:
+Complete OKR Development From Vague Priorities for a product planning and implementation repo: Turn vague strategic priorities into measurable OKRs with objectives, key results, alignment, scoring, guardrails, and a communication summary.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect PRDs, analytics events, permission models, and acceptance criteria.
+- Establish a baseline by running or locating evidence for: `3-5 objectives, 2-4 measurable key results each, alignment notes, scoring guide, red flags, one-page summary`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not implement new product scope unless it is in the stated acceptance criteria.
+- Separate product decisions from engineering assumptions.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Turn vague strategic priorities into measurable OKRs with objectives, key results, alignment, scoring, guardrails, and a communication summary.
+- The verification command or evidence path succeeds: `3-5 objectives, 2-4 measurable key results each, alignment notes, scoring guide, red flags, one-page summary`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `3-5 objectives, 2-4 measurable key results each, alignment notes, scoring guide, red flags, one-page summary` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 

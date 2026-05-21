@@ -2,11 +2,11 @@
 
 ## Summary
 
-- Total entries: 303
-- Source-backed entries: 103
+- Total entries: 314
+- Source-backed entries: 114
 - Seed entries: 200
 - Categories: 32
-- Search eval cases: 14/14 passing
+- Search eval cases: 18/18 passing
 - Source-backed entries missing evidence summaries: 0
 - Source-backed entries missing provenance fields: 0
 
@@ -17,7 +17,7 @@
 | accessibility | 1 | 13 | 8% |
 | ai-evals | 1 | 11 | 9% |
 | ai-ops | 1 | 11 | 9% |
-| backend-api | 2 | 14 | 14% |
+| backend-api | 3 | 15 | 20% |
 | backend-data | 2 | 12 | 17% |
 | backlog | 3 | 3 | 100% |
 | cli | 1 | 1 | 100% |
@@ -26,17 +26,17 @@
 | design | 1 | 13 | 8% |
 | devops-ci | 1 | 11 | 9% |
 | devops-runtime | 1 | 11 | 9% |
-| docs | 4 | 16 | 25% |
+| docs | 5 | 17 | 29% |
 | frontend | 6 | 18 | 33% |
-| goal-maintenance | 9 | 9 | 100% |
+| goal-maintenance | 12 | 12 | 100% |
 | greenfield-build | 1 | 1 | 100% |
 | investigation | 4 | 4 | 100% |
 | maintenance | 2 | 2 | 100% |
 | migration | 8 | 8 | 100% |
 | mobile | 1 | 13 | 8% |
-| orchestration | 1 | 1 | 100% |
-| performance | 5 | 17 | 29% |
-| product | 2 | 14 | 14% |
+| orchestration | 3 | 3 | 100% |
+| performance | 6 | 18 | 33% |
+| product | 3 | 15 | 20% |
 | prompt-optimization | 3 | 3 | 100% |
 | prototype | 3 | 3 | 100% |
 | qa | 1 | 13 | 8% |
@@ -44,8 +44,8 @@
 | research | 3 | 3 | 100% |
 | security-appsec | 2 | 12 | 17% |
 | security-ops | 1 | 11 | 9% |
-| testing | 19 | 19 | 100% |
-| workflow | 9 | 11 | 82% |
+| testing | 20 | 20 | 100% |
+| workflow | 10 | 12 | 83% |
 
 ## Source Types
 
@@ -59,10 +59,10 @@
 | official-goal | 17 |
 | official-workflow | 5 |
 | public-forum | 10 |
-| third-party-project | 3 |
+| third-party-project | 7 |
 | third-party-review | 2 |
-| third-party-tutorial | 20 |
-| tool-readme | 3 |
+| third-party-tutorial | 21 |
+| tool-readme | 9 |
 | video-summary | 2 |
 | x-post | 8 |
 
@@ -84,6 +84,10 @@
 | feature flag percentage react hook | openhands-feature-flag-system | 1 | top 3 | pass |
 | checkout crash root cause regression | openhands-checkout-crash-regression | 1 | top 3 | pass |
 | slow query log optimization report | openhands-slow-query-optimization | 1 | top 3 | pass |
+| semantic merge repair dag conflict planner | deadreckon-semantic-merge-repair | 1 | top 3 | pass |
+| daily priority progress status | goal-agent-daily-priority-loop | 1 | top 3 | pass |
+| sparc payment processing | claude-flow-sparc-payment-plan | 1 | top 3 | pass |
+| okr measurable key results scoring guardrails | claude-recipes-okr-development | 1 | top 3 | pass |
 
 ## Maintenance Notes
 

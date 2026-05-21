@@ -68,5 +68,25 @@
     "query": "slow query log optimization report",
     "expected": "openhands-slow-query-optimization",
     "max_rank": 3
+  },
+  {
+    "query": "semantic merge repair dag conflict planner",
+    "expected": "deadreckon-semantic-merge-repair",
+    "max_rank": 3
+  },
+  {
+    "query": "daily priority progress status",
+    "expected": "goal-agent-daily-priority-loop",
+    "max_rank": 3
+  },
+  {
+    "query": "sparc payment processing",
+    "expected": "claude-flow-sparc-payment-plan",
+    "max_rank": 3
+  },
+  {
+    "query": "okr measurable key results scoring guardrails",
+    "expected": "claude-recipes-okr-development",
+    "max_rank": 3
   }
 ]
