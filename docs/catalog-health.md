@@ -2,11 +2,11 @@
 
 ## Summary
 
-- Total entries: 314
-- Source-backed entries: 114
+- Total entries: 315
+- Source-backed entries: 115
 - Seed entries: 200
 - Categories: 32
-- Search eval cases: 18/18 passing
+- Search eval cases: 19/19 passing
 - Source-backed entries missing evidence summaries: 0
 - Source-backed entries missing provenance fields: 0
 
@@ -41,7 +41,7 @@
 | prototype | 3 | 3 | 100% |
 | qa | 1 | 13 | 8% |
 | refactor | 2 | 2 | 100% |
-| research | 3 | 3 | 100% |
+| research | 4 | 4 | 100% |
 | security-appsec | 2 | 12 | 17% |
 | security-ops | 1 | 11 | 9% |
 | testing | 20 | 20 | 100% |
@@ -62,7 +62,7 @@
 | third-party-project | 7 |
 | third-party-review | 2 |
 | third-party-tutorial | 21 |
-| tool-readme | 9 |
+| tool-readme | 10 |
 | video-summary | 2 |
 | x-post | 8 |
 
@@ -88,6 +88,7 @@
 | daily priority progress status | goal-agent-daily-priority-loop | 1 | top 3 | pass |
 | sparc payment processing | claude-flow-sparc-payment-plan | 1 | top 3 | pass |
 | okr measurable key results scoring guardrails | claude-recipes-okr-development | 1 | top 3 | pass |
+| clinical research ai safety | clinical-research-ai-safety-boundary | 1 | top 3 | pass |
 
 ## Maintenance Notes
 

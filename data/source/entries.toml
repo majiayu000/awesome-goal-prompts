@@ -2965,3 +2965,15 @@ source_url = "https://github.com/sgharlow/claude-code-recipes/blob/main/recipes/
 source_name = "claude-code-recipes"
 source_type = "third-party-tutorial"
 evidence = "PRIMARY PROMPT: OKR Development"
+
+[[entries]]
+id = "clinical-research-ai-safety-boundary"
+category = "research"
+title = "Clinical Research AI Safety Boundary"
+intent = "Review clinical research AI work with evidence-first boundaries so agents do not invent medical sources, expose private data, or turn research notes into patient-specific advice."
+verify = "manual review checklist for source facts, uncertainty, safety note, inspected files, and human-review needs"
+origin = "source-backed"
+source_url = "https://github.com/2023Anita/clinical-ai-agent-skills"
+source_name = "Clinical AI Agent Skills README"
+source_type = "tool-readme"
+evidence = "Evidence Before Confidence"

@@ -4,14 +4,14 @@
 
 When Claude Code, Codex, Cursor, or another coding agent starts making broad edits, paste a contract that says exactly what to inspect, what not to touch, how to verify, and when to stop.
 
-This repo keeps <!-- generated:total-start -->**314**<!-- generated:total-end --> runnable `/goal` contracts for engineering work. Start with the provenance-backed rescue prompts below; use seed patterns only when you need a raw shape to adapt.
+This repo keeps <!-- generated:total-start -->**315**<!-- generated:total-end --> runnable `/goal` contracts for engineering work. Start with the provenance-backed rescue prompts below; use seed patterns only when you need a raw shape to adapt.
 
 **Search the full catalog:** https://majiayu000.github.io/awesome-goal-prompts/
 
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk. This repo turns that contract shape into a catalog you can search, inspect, adapt, and copy.
 
 <!-- generated:stats-start -->
-The public catalog starts with **114** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
+The public catalog starts with **115** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
 <!-- generated:stats-end -->
 
 ![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
@@ -176,6 +176,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Read-Only Font Match](prompts/source-backed-goals.md#jdhodges-read-only-font-match) - Research font matches in read-only mode and produce a report without purchasing or downloading assets.
 - [Public Benchmark Table](prompts/source-backed-goals.md#apidog-benchmark-table) - Collect distinct public benchmarks and build a date-sorted comparison table.
 - [Review Sentiment JSON Agent](prompts/source-backed-goals.md#hn-review-sentiment-json-agent) - Fetch reviews with browser automation, classify sentiment, and write structured JSON output.
+- [Clinical Research AI Safety Boundary](prompts/source-backed-goals.md#clinical-research-ai-safety-boundary) - Review clinical research AI work with evidence-first boundaries so agents do not invent medical sources, expose private data, or turn research notes into patient-specific advice.
 
 ### maintenance
 - [Repo Maintenance Audit](prompts/source-backed-goals.md#apidog-repo-maintenance-audit) - Find dead code, unused dependencies, and stale files, then produce a PR-ready justification list.
