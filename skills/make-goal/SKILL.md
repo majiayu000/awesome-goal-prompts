@@ -64,7 +64,7 @@ Read:
 When reviewing generated output, run the bundled linter if a local shell is available:
 
 ```bash
-python3 /Users/lifcc/.agents/skills/make-goal/scripts/lint_goal.py <goal-or-response.md>
+python3 scripts/lint_goal.py <goal-or-response.md>
 ```
 
 Use `--profile data-migration`, `--profile security-xss`, `--profile read-only`, or `--profile clarify` when the task type is known. Use `--json` when another script will consume the result.
