@@ -32,6 +32,9 @@ jobs:
       - name: Regenerate catalog
         run: python3 scripts/generate_examples.py
 
+      - name: Validate generated metadata
+        run: python3 scripts/validate_metadata.py
+
       - name: Regenerate health report
         run: python3 scripts/generate_catalog_health.py
 

@@ -322,7 +322,7 @@ def build_json_ld(entries: list[dict[str, str | None]]) -> str:
             },
         ],
     }
-    return json.dumps(graph, ensure_ascii=False, separators=(",", ":"))
+    return json.dumps(graph, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
 
 
 def update_static_metadata(entries: list[dict[str, str | None]]) -> None:
