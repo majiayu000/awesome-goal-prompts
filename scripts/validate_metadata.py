@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Validate generated catalog metadata against docs/examples.json."""
+"""Validate generated catalog metadata against docs/examples.json.
+
+The JSON-LD ItemList is intentionally scoped to source-backed entries. Seed
+patterns are counted in Dataset and social metadata, but not listed as primary
+evidence-backed contracts.
+"""
 
 from __future__ import annotations
 
@@ -95,25 +100,50 @@ def main() -> None:
         f"plus {seed_count} reusable seed patterns in the extended library."
     )
     assert_equal("Dataset description", dataset.get("description"), dataset_description)
-    assert_equal("ItemList numberOfItems", item_list.get("numberOfItems"), source_count)
     assert_equal(
-        "ItemList description",
+        "Source-backed ItemList name",
+        item_list.get("name"),
+        "Source-Backed Goal Prompt Contracts",
+    )
+    assert_equal(
+        "Source-backed ItemList numberOfItems",
+        item_list.get("numberOfItems"),
+        source_count,
+    )
+    assert_equal(
+        "Source-backed ItemList description",
         item_list.get("description"),
         f"{source_count} source-backed task contracts in the primary catalog.",
     )
 
     items = item_list.get("itemListElement")
     if not isinstance(items, list):
-        fail("ItemList itemListElement must be a list")
-    assert_equal("ItemList item count", len(items), source_count)
+        fail("Source-backed ItemList itemListElement must be a list")
+    assert_equal("Source-backed ItemList item count", len(items), source_count)
 
     for position, (entry, item) in enumerate(zip(source_entries, items), start=1):
         if not isinstance(item, dict):
-            fail(f"ItemList item {position} must be an object")
-        assert_equal(f"ItemList item {position} position", item.get("position"), position)
-        assert_equal(f"ItemList item {position} url", item.get("url"), f"{SITE_URL}#{entry['slug']}")
-        assert_equal(f"ItemList item {position} name", item.get("name"), entry.get("title"))
-        assert_equal(f"ItemList item {position} description", item.get("description"), entry.get("intent"))
+            fail(f"Source-backed ItemList item {position} must be an object")
+        assert_equal(
+            f"Source-backed ItemList item {position} position",
+            item.get("position"),
+            position,
+        )
+        assert_equal(
+            f"Source-backed ItemList item {position} url",
+            item.get("url"),
+            f"{SITE_URL}#{entry['slug']}",
+        )
+        assert_equal(
+            f"Source-backed ItemList item {position} name",
+            item.get("name"),
+            entry.get("title"),
+        )
+        assert_equal(
+            f"Source-backed ItemList item {position} description",
+            item.get("description"),
+            entry.get("intent"),
+        )
 
     print(f"metadata validation ok ({source_count} source-backed, {seed_count} seed patterns)")
 

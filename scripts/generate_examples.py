@@ -312,6 +312,8 @@ def build_json_ld(entries: list[dict[str, str | None]]) -> str:
                 "description": f"{source_backed} source-backed task contracts in the primary catalog.",
                 "numberOfItems": source_backed,
                 "itemListOrder": "https://schema.org/ItemListOrderAscending",
+                # Keep the linked ItemList scoped to evidence-backed catalog entries;
+                # seed patterns are counted in Dataset metadata but omitted here.
                 "itemListElement": [
                     {
                         "@type": "ListItem", "position": index, "url": f"{site_url}#{entry['slug']}",
