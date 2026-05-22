@@ -1,0 +1,65 @@
+{
+  "skill_name": "make-goal",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write a goal for this repo: fix failing auth tests. The agent must reproduce first, then run npm test -- auth and npm run lint.",
+      "expected_output": "A full /goal contract with GOAL, CONTEXT, CONSTRAINTS, DONE WHEN, VERIFY, OUTPUT, STOP RULES; includes both commands, reproduction/baseline, and test-integrity constraints.",
+      "files": [],
+      "assertions": [
+        {"name": "has_full_goal_sections", "type": "contains_all", "values": ["GOAL:", "CONTEXT:", "CONSTRAINTS:", "DONE WHEN:", "VERIFY:", "OUTPUT:", "STOP RULES:"]},
+        {"name": "preserves_requested_commands", "type": "contains_all", "values": ["npm test -- auth", "npm run lint"]},
+        {"name": "requires_reproduction_or_baseline", "type": "contains_any", "values": ["reproduce", "baseline", "failing output"]},
+        {"name": "protects_test_integrity", "type": "contains_any", "values": ["Do not weaken tests", "Do not delete assertions", "Do not weaken"] }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Make a read-only goal to investigate why active subscriptions show an empty billing state. Do not edit files.",
+      "expected_output": "A read-only investigation /goal whose DONE WHEN is a root-cause report with evidence; it must not instruct code edits or patches.",
+      "files": [],
+      "assertions": [
+        {"name": "has_full_goal_sections", "type": "contains_all", "values": ["GOAL:", "CONTEXT:", "CONSTRAINTS:", "DONE WHEN:", "VERIFY:", "OUTPUT:", "STOP RULES:"]},
+        {"name": "states_read_only_boundary", "type": "contains_any", "values": ["read-only", "Do not edit files", "Do not modify"]},
+        {"name": "done_when_root_cause_report", "type": "contains_all", "values": ["root cause", "evidence"]},
+        {"name": "does_not_instruct_patch", "type": "not_contains_any", "values": ["apply a fix", "patch the code", "edit implementation"] }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Generate a goal to add a unique index to users.email in a large production database.",
+      "expected_output": "A high-risk full /goal with migration dry-run, rollback, row-count/checksum or equivalent evidence, and stop rules for production credentials or destructive operations.",
+      "files": [],
+      "assertions": [
+        {"name": "has_full_goal_sections", "type": "contains_all", "values": ["GOAL:", "CONTEXT:", "CONSTRAINTS:", "DONE WHEN:", "VERIFY:", "OUTPUT:", "STOP RULES:"]},
+        {"name": "requires_migration_safety_evidence", "type": "contains_all", "values": ["dry-run", "rollback"]},
+        {"name": "requires_data_integrity_check", "type": "contains_any", "values": ["row count", "checksum", "duplicate"]},
+        {"name": "stops_on_production_or_destructive_access", "type": "contains_all", "values": ["production", "destructive"] }
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Generate a goal to fix a frontend XSS risk from user-provided links.",
+      "expected_output": "A security-focused full /goal that requires protocol allowlist validation, avoids blacklist-only guidance, mentions unsafe sinks such as innerHTML when relevant, and includes tests or browser smoke evidence.",
+      "files": [],
+      "assertions": [
+        {"name": "has_full_goal_sections", "type": "contains_all", "values": ["GOAL:", "CONTEXT:", "CONSTRAINTS:", "DONE WHEN:", "VERIFY:", "OUTPUT:", "STOP RULES:"]},
+        {"name": "requires_protocol_allowlist", "type": "contains_any", "values": ["protocol allowlist", "protocol whitelist", "allowlist"]},
+        {"name": "mentions_unsafe_sinks_or_html", "type": "contains_any", "values": ["innerHTML", "unsafe HTML", "unsafe sink"]},
+        {"name": "requires_test_or_browser_evidence", "type": "contains_any", "values": ["test", "browser", "Playwright", "smoke"] }
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Help me make this project better.",
+      "expected_output": "A clarify-first response asking for the primary goal, real context, constraints, and done-when evidence; it should not generate a broad execution goal.",
+      "files": [],
+      "assertions": [
+        {"name": "clarifies_instead_of_executing", "type": "contains_any", "values": ["primary goal", "one finish line", "What is the one"]},
+        {"name": "asks_for_context", "type": "contains_any", "values": ["files", "issue", "logs", "context"]},
+        {"name": "asks_for_done_when_or_verification", "type": "contains_any", "values": ["done", "verify", "completion", "proves"]},
+        {"name": "does_not_emit_full_goal_contract", "type": "not_contains_any", "values": ["/goal\nGOAL:", "CONSTRAINTS:", "STOP RULES:"] }
+      ]
+    }
+  ]
+}
