@@ -360,6 +360,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Read-Only Font Match](#jdhodges-read-only-font-match) - Research font matches in read-only mode and produce a report without purchasing or downloading assets. Source-backed.
 - [Public Benchmark Table](#apidog-benchmark-table) - Collect distinct public benchmarks and build a date-sorted comparison table. Source-backed.
 - [Review Sentiment JSON Agent](#hn-review-sentiment-json-agent) - Fetch reviews with browser automation, classify sentiment, and write structured JSON output. Source-backed.
+- [Clinical Research AI Safety Boundary](#clinical-research-ai-safety-boundary) - Review clinical research AI work with evidence-first boundaries so agents do not invent medical sources, expose private data, or turn research notes into patient-specific advice. Source-backed.
 
 ### maintenance
 - [Repo Maintenance Audit](#apidog-repo-maintenance-audit) - Find dead code, unused dependencies, and stale files, then produce a PR-ready justification list. Source-backed.
@@ -15197,6 +15198,56 @@ DONE WHEN:
 
 VERIFY:
 - Run `3-5 objectives, 2-4 measurable key results each, alignment notes, scoring guide, red flags, one-page summary` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="clinical-research-ai-safety-boundary"></a>
+### Clinical Research AI Safety Boundary
+
+- Category: `research`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Review clinical research AI work with evidence-first boundaries so agents do not invent medical sources, expose private data, or turn research notes into patient-specific advice.
+- Verification: `manual review checklist for source facts, uncertainty, safety note, inspected files, and human-review needs`
+- Source: [Clinical AI Agent Skills README](https://github.com/2023Anita/clinical-ai-agent-skills)
+- Source type: `tool-readme`
+- Evidence: Evidence Before Confidence
+- Evidence summary: Evidence Before Confidence; source: Clinical AI Agent Skills README; type: tool-readme; verification: manual review checklist for source facts, uncertainty, safety note, inspected files, and human-review needs
+
+```text
+/goal
+GOAL:
+Complete Clinical Research AI Safety Boundary for a research task: Review clinical research AI work with evidence-first boundaries so agents do not invent medical sources, expose private data, or turn research notes into patient-specific advice.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect source lists, citation notes, evidence files, and acceptance criteria.
+- Establish a baseline by running or locating evidence for: `manual review checklist for source facts, uncertainty, safety note, inspected files, and human-review needs`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not present unsourced claims as facts.
+- Keep direct quotes short and attach a public URL for every external claim.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Review clinical research AI work with evidence-first boundaries so agents do not invent medical sources, expose private data, or turn research notes into patient-specific advice.
+- The verification command or evidence path succeeds: `manual review checklist for source facts, uncertainty, safety note, inspected files, and human-review needs`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `manual review checklist for source facts, uncertainty, safety note, inspected files, and human-review needs` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 

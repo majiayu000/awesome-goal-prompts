@@ -197,6 +197,8 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 - [Public Benchmark Table](goal-examples.md#apidog-benchmark-table) - Collect distinct public benchmarks and build a date-sorted comparison table.
 <a id="hn-review-sentiment-json-agent"></a>
 - [Review Sentiment JSON Agent](goal-examples.md#hn-review-sentiment-json-agent) - Fetch reviews with browser automation, classify sentiment, and write structured JSON output.
+<a id="clinical-research-ai-safety-boundary"></a>
+- [Clinical Research AI Safety Boundary](goal-examples.md#clinical-research-ai-safety-boundary) - Review clinical research AI work with evidence-first boundaries so agents do not invent medical sources, expose private data, or turn research notes into patient-specific advice.
 
 ### maintenance
 <a id="apidog-repo-maintenance-audit"></a>

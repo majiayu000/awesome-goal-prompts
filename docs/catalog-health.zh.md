@@ -2,11 +2,11 @@
 
 ## 概览
 
-- 条目总数：314
-- 有公开来源的条目：114
+- 条目总数：315
+- 有公开来源的条目：115
 - Seed 条目：200
 - 分类数：32
-- 搜索评测：18/18 通过
+- 搜索评测：19/19 通过
 - 缺少来源摘要的 source-backed 条目：0
 - 缺少来源字段的 source-backed 条目：0
 
@@ -41,7 +41,7 @@
 | prototype | 3 | 3 | 100% |
 | qa | 1 | 13 | 8% |
 | refactor | 2 | 2 | 100% |
-| research | 3 | 3 | 100% |
+| research | 4 | 4 | 100% |
 | security-appsec | 2 | 12 | 17% |
 | security-ops | 1 | 11 | 9% |
 | testing | 20 | 20 | 100% |
@@ -62,7 +62,7 @@
 | third-party-project | 7 |
 | third-party-review | 2 |
 | third-party-tutorial | 21 |
-| tool-readme | 9 |
+| tool-readme | 10 |
 | video-summary | 2 |
 | x-post | 8 |
 
@@ -88,6 +88,7 @@
 | daily priority progress status | goal-agent-daily-priority-loop | 1 | top 3 | pass |
 | sparc payment processing | claude-flow-sparc-payment-plan | 1 | top 3 | pass |
 | okr measurable key results scoring guardrails | claude-recipes-okr-development | 1 | top 3 | pass |
+| clinical research ai safety | clinical-research-ai-safety-boundary | 1 | top 3 | pass |
 
 ## 维护建议
 

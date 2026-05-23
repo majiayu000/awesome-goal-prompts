@@ -88,5 +88,10 @@
     "query": "okr measurable key results scoring guardrails",
     "expected": "claude-recipes-okr-development",
     "max_rank": 3
+  },
+  {
+    "query": "clinical research ai safety",
+    "expected": "clinical-research-ai-safety-boundary",
+    "max_rank": 3
   }
 ]
