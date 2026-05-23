@@ -10,7 +10,7 @@
         {"name": "has_full_goal_sections", "type": "contains_all", "values": ["GOAL:", "CONTEXT:", "CONSTRAINTS:", "DONE WHEN:", "VERIFY:", "OUTPUT:", "STOP RULES:"]},
         {"name": "preserves_requested_commands", "type": "contains_all", "values": ["npm test -- auth", "npm run lint"]},
         {"name": "requires_reproduction_or_baseline", "type": "contains_any", "values": ["reproduce", "baseline", "failing output"]},
-        {"name": "protects_test_integrity", "type": "contains_any", "values": ["Do not weaken tests", "Do not delete assertions", "Do not weaken"] }
+        {"name": "protects_verification_integrity", "type": "contains_any", "values": ["Verification integrity:"] }
       ]
     },
     {
@@ -59,6 +59,130 @@
         {"name": "asks_for_context", "type": "contains_any", "values": ["files", "issue", "logs", "context"]},
         {"name": "asks_for_done_when_or_verification", "type": "contains_any", "values": ["done", "verify", "completion", "proves"]},
         {"name": "does_not_emit_full_goal_contract", "type": "not_contains_any", "values": ["/goal\nGOAL:", "CONSTRAINTS:", "STOP RULES:"] }
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Create a compact goal for fixing auth tests when the files and commands are already known: read auth routes and tests, run npm test -- auth and npm run lint.",
+      "expected_output": "A compact /goal with Read first, Constraints, Done when, Verify with, Stop if, and Final output; it should preserve the provided commands and test-integrity constraints.",
+      "files": [],
+      "assertions": [
+        {"name": "has_compact_goal_sections", "type": "contains_all", "values": ["/goal", "Read first:", "Constraints:", "Done when:", "Verify with:", "Stop if:", "Final output:"]},
+        {"name": "preserves_requested_commands", "type": "contains_all", "values": ["npm test -- auth", "npm run lint"]},
+        {"name": "protects_verification_integrity", "type": "contains_any", "values": ["Verification integrity:"] }
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Create a goal for a launch-readiness pass before a GitHub Trending push. It should cover README positioning, GitHub Pages first viewport, share-preview assets, and repo metadata guidance, but Trending itself is not guaranteed.",
+      "expected_output": "A full /goal that includes a launch/readiness scope fuse, treats external platform guidance as advisory unless locally required, and explicitly avoids guaranteeing GitHub Trending or similar external outcomes.",
+      "files": [],
+      "assertions": [
+        {"name": "has_full_goal_sections", "type": "contains_all", "values": ["GOAL:", "CONTEXT:", "CONSTRAINTS:", "DONE WHEN:", "VERIFY:", "OUTPUT:", "STOP RULES:"]},
+        {"name": "has_scope_fuse", "type": "contains_any", "values": ["scope fuse", "multiple independent PR-sized changes", "follow-up PRs"]},
+        {"name": "bounds_external_guidance", "type": "contains_any", "values": ["advisory", "external platform", "not guaranteed"]},
+        {"name": "does_not_guarantee_trending", "type": "not_contains_any", "values": ["guarantee GitHub Trending", "guaranteed Trending placement", "guarantee trending placement"] }
+      ]
+    }
+  ],
+  "skill_contract_checks": [
+    {
+      "id": "handoff-registers-active-goal-before-execution",
+      "file": "../SKILL.md",
+      "assertions": [
+        {"name": "handoff_mentions_active_goal", "type": "contains_all", "values": ["active goal", "启动这个 goal"]},
+        {"name": "handoff_requires_goal_registration", "type": "contains_any", "values": ["create_goal", "goal-registration"]},
+        {"name": "handoff_requires_completion_after_verify", "type": "contains_all", "values": ["update_goal", "DONE WHEN", "VERIFY"]},
+        {"name": "handoff_handles_missing_runtime_support", "type": "contains_any", "values": ["no active-goal mechanism is available", "运行环境支持"]}
+      ]
+    }
+  ],
+  "fixture_cases": [
+    {
+      "id": "pass-launch-readiness-scope-fuse",
+      "file": "fixtures/pass/launch_readiness_scope_fuse.md",
+      "profile": "auto",
+      "expected_lint_pass": true,
+      "assertions": [
+        {"name": "has_scope_fuse", "type": "contains_any", "values": ["multiple independent PR-sized changes", "follow-up PRs"]},
+        {"name": "does_not_guarantee_external_outcome", "type": "contains_any", "values": ["external outcome", "not guaranteed"]}
+      ]
+    },
+    {
+      "id": "pass-read-only-research",
+      "file": "fixtures/pass/read_only_research.md",
+      "profile": "auto",
+      "expected_lint_pass": true,
+      "assertions": [
+        {"name": "states_read_only", "type": "contains_any", "values": ["read-only", "Do not edit files"]},
+        {"name": "does_not_force_root_cause", "type": "not_contains_any", "values": ["root cause"]}
+      ]
+    },
+    {
+      "id": "pass-xss-output-encoding",
+      "file": "fixtures/pass/xss_output_encoding.md",
+      "profile": "auto",
+      "expected_lint_pass": true,
+      "assertions": [
+        {"name": "mentions_unsafe_sink", "type": "contains_any", "values": ["innerHTML", "unsafe sink"]},
+        {"name": "does_not_require_link_allowlist", "type": "not_contains_any", "values": ["protocol allowlist"]}
+      ]
+    },
+    {
+      "id": "pass-growth-plan-read-only",
+      "file": "fixtures/pass/growth_plan_read_only.md",
+      "profile": "auto",
+      "expected_lint_pass": true,
+      "assertions": [
+        {"name": "external_outcomes_not_guaranteed", "type": "contains_all", "values": ["external outcome targets", "not guaranteed"]},
+        {"name": "has_scope_fuse", "type": "contains_any", "values": ["multiple independent PR-sized changes", "follow-up PRs"]},
+        {"name": "has_manual_platform_blocker", "type": "contains_any", "values": ["repository settings changes requiring owner approval", "manual platform blockers"]}
+      ]
+    },
+    {
+      "id": "fail-fake-context-generic-done",
+      "file": "fixtures/fail/fake_context_generic_done.md",
+      "profile": "auto",
+      "expected_lint_pass": false,
+      "assertions": [
+        {"name": "contains_fake_context", "type": "contains_any", "values": ["Read relevant files"]},
+        {"name": "contains_generic_verify", "type": "contains_any", "values": ["Run tests"]}
+      ]
+    },
+    {
+      "id": "fail-migration-without-dry-run",
+      "file": "fixtures/fail/migration_without_dry_run.md",
+      "profile": "auto",
+      "expected_lint_pass": false,
+      "assertions": [
+        {"name": "missing_dry_run", "type": "not_contains_any", "values": ["dry-run"]}
+      ]
+    },
+    {
+      "id": "fail-read-only-patch",
+      "file": "fixtures/fail/read_only_patch.md",
+      "profile": "auto",
+      "expected_lint_pass": false,
+      "assertions": [
+        {"name": "contains_patch_instruction", "type": "contains_any", "values": ["patch the code"]}
+      ]
+    },
+    {
+      "id": "fail-xss-blacklist-only-link",
+      "file": "fixtures/fail/xss_blacklist_only_link.md",
+      "profile": "auto",
+      "expected_lint_pass": false,
+      "assertions": [
+        {"name": "contains_blacklist_only", "type": "contains_any", "values": ["blacklist-only"]}
+      ]
+    },
+    {
+      "id": "fail-launch-without-scope-fuse",
+      "file": "fixtures/fail/launch_without_scope_fuse.md",
+      "profile": "auto",
+      "expected_lint_pass": false,
+      "assertions": [
+        {"name": "missing_scope_fuse", "type": "not_contains_any", "values": ["multiple independent PR-sized changes", "scope fuse", "follow-up PRs"]}
       ]
     }
   ]

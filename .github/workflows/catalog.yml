@@ -41,6 +41,9 @@ jobs:
       - name: Evaluate search quality
         run: python3 scripts/evaluate_search.py
 
+      - name: Evaluate make-goal skill fixtures
+        run: python3 skills/make-goal/scripts/run_evals.py
+
       - name: Check page JavaScript
         run: node --check docs/app.js
 

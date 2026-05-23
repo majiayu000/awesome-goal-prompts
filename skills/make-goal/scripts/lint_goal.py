@@ -3,14 +3,15 @@
 
 This script checks deterministic properties that are easy to regress:
 required goal sections, fresh verification language, stop rules, and
-profile-specific safety requirements for read-only, data migration, XSS, and
-clarify-first outputs.
+profile-specific safety requirements for read-only, data migration, XSS,
+launch-readiness, and clarify-first outputs.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import re
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -25,6 +26,15 @@ FULL_SECTIONS = [
     "STOP RULES:",
 ]
 
+COMPACT_SECTIONS = [
+    "Read first:",
+    "Constraints:",
+    "Done when:",
+    "Verify with:",
+    "Stop if:",
+    "Final output:",
+]
+
 VAGUE_PHRASES = [
     "make it better",
     "fix everything",
@@ -32,6 +42,88 @@ VAGUE_PHRASES = [
     "keep going until perfect",
     "improve the codebase",
     "use your best judgment",
+]
+
+PROFILE_NAMES = [
+    "general",
+    "compact",
+    "read-only",
+    "data-migration",
+    "security-xss",
+    "launch-readiness",
+    "clarify",
+]
+
+GENERIC_CONTEXT_PHRASES = [
+    "read relevant files",
+    "inspect the repo",
+    "read the codebase",
+    "look around",
+    "understand the project",
+]
+
+GENERIC_DONE_PHRASES = [
+    "it works",
+    "works",
+    "done",
+    "complete",
+    "completed",
+    "fixed",
+    "all good",
+]
+
+GENERIC_VERIFY_PHRASES = [
+    "run tests",
+    "run the tests",
+    "test it",
+    "verify it works",
+    "make sure it works",
+]
+
+GOAL_ACTION_TERMS = [
+    "fix",
+    "add",
+    "refactor",
+    "redesign",
+    "migrate",
+    "deploy",
+    "rewrite",
+    "optimize",
+    "build",
+    "implement",
+    "update",
+    "document",
+]
+
+LINK_OR_NAVIGATION_TERMS = [
+    "user-provided link",
+    "user provided link",
+    "href",
+    "src",
+    "url",
+    "link",
+    "javascript:",
+    "window.open",
+    "location.href",
+    "navigation",
+]
+
+INVESTIGATION_TERMS = [
+    "debug",
+    "root cause",
+    "why ",
+    "empty state",
+]
+
+READ_ONLY_REPORT_TERMS = [
+    "readiness",
+    "growth",
+    "launch",
+    "review",
+    "assessment",
+    "report",
+    "plan",
+    "strategy",
 ]
 
 
@@ -58,13 +150,28 @@ def contains_all(text: str, terms: list[str]) -> bool:
     return all(term.lower() in lowered for term in terms)
 
 
+def unique(items: list[str]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for item in items:
+        if item not in seen:
+            result.append(item)
+            seen.add(item)
+    return result
+
+
 def section_positions(text: str) -> dict[str, int]:
     lowered = normalize(text)
     return {section: lowered.find(section.lower()) for section in FULL_SECTIONS}
 
 
-def extract_section(text: str, section: str) -> str:
-    positions = section_positions(text)
+def positions_for(text: str, sections: list[str]) -> dict[str, int]:
+    lowered = normalize(text)
+    return {section: lowered.find(section.lower()) for section in sections}
+
+
+def extract_section(text: str, section: str, sections: list[str] | None = None) -> str:
+    positions = positions_for(text, sections or FULL_SECTIONS)
     start = positions.get(section, -1)
     if start < 0:
         return ""
@@ -78,17 +185,126 @@ def extract_section(text: str, section: str) -> str:
     return text[start:end].strip()
 
 
-def infer_profile(text: str) -> str:
+def has_read_only_boundary(text: str) -> bool:
+    return contains_any(text, ["read-only", "do not edit files", "do not modify", "changed files: `none`", "changed files: none"])
+
+
+def is_compact_goal(text: str) -> bool:
+    lowered = normalize(text)
+    return "/goal" in lowered and all(section.lower() in lowered for section in COMPACT_SECTIONS)
+
+
+def recommends_blacklist_only(text: str) -> bool:
+    lowered = normalize(text)
+    if "blacklist-only" not in lowered and "blacklist only" not in lowered:
+        return False
+    avoidance_terms = [
+        "do not rely on blacklist",
+        "do not use blacklist",
+        "do not use blacklist-only",
+        "not rely on blacklist",
+        "avoid blacklist",
+        "avoid blacklist-only",
+        "instead of blacklist",
+        "not blacklist-only",
+        "never rely on blacklist",
+    ]
+    return not any(term in lowered for term in avoidance_terms)
+
+
+def has_link_or_navigation_context(text: str) -> bool:
+    return contains_any(text, LINK_OR_NAVIGATION_TERMS)
+
+
+def is_investigation_context(text: str) -> bool:
+    lowered = normalize(text)
+    if contains_any(lowered, ["root cause", "debug", "why ", "empty state"]):
+        return True
+    if contains_any(lowered, ["investigate", "diagnose", "diagnosis", "diagnoses"]):
+        fault_terms = ["bug", "crash", "error", "exception", "failing", "failure", "broken", "empty state"]
+        report_terms = [term for term in READ_ONLY_REPORT_TERMS if term not in {"report", "assessment"}]
+        return contains_any(lowered, fault_terms) and not contains_any(lowered, report_terms)
+    return False
+
+
+def has_concrete_context(context: str) -> bool:
+    lowered = normalize(context)
+    if contains_any(lowered, GENERIC_CONTEXT_PHRASES) and len(lowered.split()) < 30:
+        return False
+    concrete_patterns = [
+        r"`[^`]+`",
+        r"\b[A-Za-z0-9_.-]+\.(md|py|js|ts|tsx|jsx|json|toml|yml|yaml|html|css|go|rs|java|rb|php)\b",
+        r"\b(issue|pr|pull request)\s*#?\d+\b",
+        r"\bhttps?://",
+        r"\b(test|lint|build|typecheck|pytest|npm|pnpm|yarn|cargo|go test|node --check)\b",
+        r"\b(log|screenshot|trace|stack|baseline|report|workflow)\b",
+    ]
+    return any(re.search(pattern, context, re.IGNORECASE) for pattern in concrete_patterns)
+
+
+def is_generic_done_when(done_when: str) -> bool:
+    stripped = " ".join(done_when.lower().strip(" .:-`").split())
+    if stripped in GENERIC_DONE_PHRASES:
+        return True
+    return len(stripped.split()) <= 5 and contains_any(stripped, GENERIC_DONE_PHRASES)
+
+
+def is_generic_verify(verify: str) -> bool:
+    stripped = " ".join(verify.lower().strip(" .:-`").split())
+    if stripped in GENERIC_VERIFY_PHRASES:
+        return True
+    if len(stripped.split()) <= 6 and contains_any(stripped, GENERIC_VERIFY_PHRASES):
+        return True
+    return False
+
+
+def looks_like_backlog_goal(goal: str) -> bool:
+    lowered = normalize(goal)
+    if contains_any(lowered, ["backlog", "everything", "all bugs", "all issues"]):
+        return True
+    action_count = sum(1 for term in GOAL_ACTION_TERMS if re.search(rf"\b{re.escape(term)}\b", lowered))
+    has_many_connectors = lowered.count(",") >= 2 or lowered.count(" and ") >= 2
+    return action_count >= 3 and has_many_connectors
+
+
+def infer_profiles(text: str) -> list[str]:
     lowered = normalize(text)
     if "/goal" not in lowered and contains_any(lowered, ["primary goal", "one finish line", "what is the one"]):
-        return "clarify"
-    if contains_any(lowered, ["xss", "user-provided link", "javascript:", "innerhtml", "unsafe html"]):
-        return "security-xss"
+        return ["clarify"]
+
+    profiles: list[str] = []
+    if is_compact_goal(lowered):
+        profiles.append("compact")
+    else:
+        profiles.append("general")
+
     if contains_any(lowered, ["production database", "unique index", "users.email", "migration", "ddl"]):
-        return "data-migration"
-    if contains_any(lowered, ["read-only", "do not edit files", "changed files: `none`", "changed files: none"]):
-        return "read-only"
-    return "general"
+        profiles.append("data-migration")
+    if contains_any(lowered, ["xss", "innerhtml", "unsafe html"]) and (
+        has_link_or_navigation_context(lowered) or contains_any(lowered, ["innerhtml", "unsafe html", "unsafe sink"])
+    ):
+        profiles.append("security-xss")
+    if has_read_only_boundary(lowered):
+        profiles.append("read-only")
+    if contains_any(lowered, ["launch-readiness", "launch readiness", "release-prep", "release prep", "trending", "roadmap"]):
+        profiles.append("launch-readiness")
+    return unique(profiles)
+
+
+def parse_profiles(profile: str) -> list[str]:
+    if profile == "auto":
+        return ["auto"]
+    profiles = [part.strip() for part in profile.split(",") if part.strip()]
+    unknown = [name for name in profiles if name not in PROFILE_NAMES]
+    if unknown:
+        raise SystemExit(f"unknown profile: {', '.join(unknown)}")
+    if "clarify" in profiles and len(profiles) > 1:
+        raise SystemExit("clarify cannot be combined with other profiles")
+    if "general" in profiles and "compact" in profiles:
+        raise SystemExit("general and compact cannot be combined")
+    if "general" not in profiles and "compact" not in profiles and "clarify" not in profiles:
+        profiles.insert(0, "general")
+    return unique(profiles)
 
 
 def check_contract_shape(text: str) -> list[Check]:
@@ -113,13 +329,14 @@ def check_contract_shape(text: str) -> list[Check]:
         )
     )
     present_positions = [positions[section] for section in FULL_SECTIONS if positions[section] >= 0]
-    ordered = present_positions == sorted(present_positions)
+    ordered = not missing and present_positions == sorted(present_positions)
     checks.append(
         Check(
             "sections_in_order",
             "error",
             ordered,
             "Full goal sections should appear in the standard order.",
+            "cannot check order until all sections are present" if missing else "",
         )
     )
     empty_sections = [
@@ -127,13 +344,20 @@ def check_contract_shape(text: str) -> list[Check]:
         for section in FULL_SECTIONS
         if positions.get(section, -1) >= 0 and not extract_section(text, section)
     ]
+    nonempty = not missing and not empty_sections
     checks.append(
         Check(
             "sections_nonempty",
             "error",
-            not empty_sections,
+            nonempty,
             "Each full goal section should contain concrete content.",
-            ", ".join(empty_sections) if empty_sections else "all present sections have content",
+            (
+                "missing: " + ", ".join(missing)
+                if missing
+                else ", ".join(empty_sections)
+                if empty_sections
+                else "all present sections have content"
+            ),
         )
     )
     goal = extract_section(text, "GOAL:")
@@ -148,9 +372,48 @@ def check_contract_shape(text: str) -> list[Check]:
     )
     checks.append(
         Check(
+            "goal_not_backlog",
+            "error",
+            not looks_like_backlog_goal(goal),
+            "GOAL should describe one primary objective, not several independent backlog items.",
+            goal[:180],
+        )
+    )
+    context = extract_section(text, "CONTEXT:")
+    checks.append(
+        Check(
+            "context_has_concrete_sources",
+            "error",
+            has_concrete_context(context),
+            "CONTEXT should name concrete files, issues, logs, commands, screenshots, URLs, or baselines.",
+            context[:220],
+        )
+    )
+    done_when = extract_section(text, "DONE WHEN:")
+    checks.append(
+        Check(
+            "done_when_not_generic",
+            "error",
+            not is_generic_done_when(done_when),
+            "DONE WHEN should be mechanically checkable, not a generic completion phrase.",
+            done_when[:180],
+        )
+    )
+    verify = extract_section(text, "VERIFY:")
+    checks.append(
+        Check(
+            "verify_not_generic",
+            "error",
+            not is_generic_verify(verify),
+            "VERIFY should name a concrete command, report, screenshot, artifact, or exact blocker.",
+            verify[:180],
+        )
+    )
+    checks.append(
+        Check(
             "verify_requires_fresh_evidence",
             "error",
-            contains_any(extract_section(text, "VERIFY:"), ["run ", "capture", "fresh", "current session", "screenshot", "report", "inspect", "if verification cannot run", "stop and report"]),
+            contains_any(verify, ["run ", "capture", "fresh", "current session", "screenshot", "report", "inspect", "if verification cannot run", "stop and report"]),
             "VERIFY should require fresh command output, report, screenshot, inspection, or an explicit blocker.",
         )
     )
@@ -175,21 +438,103 @@ def check_contract_shape(text: str) -> list[Check]:
     )
     checks.append(
         Check(
-            "protects_test_integrity",
+            "protects_verification_integrity",
             "warn",
-            contains_any(text, ["do not weaken tests", "do not delete assertions", "test integrity", "do not weaken lint"]),
-            "Goal should protect tests and assertions when implementation or verification is involved.",
+            "verification integrity:" in normalize(text),
+            "Goals with implementation or verification work should include the canonical Verification integrity constraint.",
+        )
+    )
+    return checks
+
+
+def check_compact_shape(text: str) -> list[Check]:
+    checks: list[Check] = []
+    lowered = normalize(text)
+    checks.append(
+        Check(
+            "has_goal_command",
+            "error",
+            "/goal" in lowered,
+            "Compact goals should include the /goal command.",
+        )
+    )
+    positions = positions_for(text, COMPACT_SECTIONS)
+    missing = [section for section, pos in positions.items() if pos < 0]
+    checks.append(
+        Check(
+            "has_compact_sections",
+            "error",
+            not missing,
+            "Compact goals must include Read first, Constraints, Done when, Verify with, Stop if, and Final output.",
+            ", ".join(missing) if missing else "all compact sections present",
+        )
+    )
+    present_positions = [positions[section] for section in COMPACT_SECTIONS if positions[section] >= 0]
+    checks.append(
+        Check(
+            "compact_sections_in_order",
+            "error",
+            not missing and present_positions == sorted(present_positions),
+            "Compact goal sections should appear in the standard order.",
+            "cannot check order until all compact sections are present" if missing else "",
+        )
+    )
+    empty_sections = [
+        section
+        for section in COMPACT_SECTIONS
+        if positions.get(section, -1) >= 0 and not extract_section(text, section, COMPACT_SECTIONS)
+    ]
+    checks.append(
+        Check(
+            "compact_sections_nonempty",
+            "error",
+            not missing and not empty_sections,
+            "Each compact goal section should contain concrete content.",
+            (
+                "missing: " + ", ".join(missing)
+                if missing
+                else ", ".join(empty_sections)
+                if empty_sections
+                else "all compact sections have content"
+            ),
+        )
+    )
+    goal_line = next((line for line in text.splitlines() if line.lower().startswith("/goal")), "")
+    checks.append(
+        Check(
+            "goal_not_vague",
+            "error",
+            bool(goal_line.strip()) and not contains_any(goal_line, VAGUE_PHRASES),
+            "Compact /goal line must contain a specific measurable goal.",
+            goal_line[:180],
+        )
+    )
+    checks.append(
+        Check(
+            "compact_verify_present",
+            "error",
+            contains_any(extract_section(text, "Verify with:", COMPACT_SECTIONS), ["run ", "command", "report", "screenshot", "evidence", "test", "lint", "verify"]),
+            "Compact goals should name verification evidence.",
+        )
+    )
+    checks.append(
+        Check(
+            "compact_stop_rules_present",
+            "error",
+            contains_any(extract_section(text, "Stop if:", COMPACT_SECTIONS), ["missing", "destructive", "production", "three failed", "3 failed", "unclear"]),
+            "Compact goals should include meaningful stop conditions.",
         )
     )
     return checks
 
 
 def check_read_only(text: str) -> list[Check]:
-    return [
+    requires_root_cause = is_investigation_context(text)
+    checks = [
         Check(
             "read_only_boundary",
             "error",
-            contains_any(text, ["read-only", "do not edit files", "do not modify", "changed files: `none`", "changed files: none"]),
+            has_read_only_boundary(text),
             "Read-only goals must explicitly forbid edits.",
         ),
         Check(
@@ -199,12 +544,22 @@ def check_read_only(text: str) -> list[Check]:
             "Read-only goals must not instruct the agent to patch implementation code.",
         ),
         Check(
-            "root_cause_evidence",
+            "read_only_requires_evidence",
             "error",
-            contains_all(text, ["root cause", "evidence"]),
-            "Read-only investigation goals should require a root-cause report with evidence.",
+            contains_any(text, ["evidence", "findings", "report", "assessment", "summary"]),
+            "Read-only goals should require evidence, findings, a report, or an assessment.",
         ),
     ]
+    checks.append(
+        Check(
+            "root_cause_evidence",
+            "error",
+            (not requires_root_cause) or contains_all(text, ["root cause", "evidence"]),
+            "Read-only investigation/debug goals should require a root-cause report with evidence.",
+            "not an investigation/debug goal" if not requires_root_cause else "",
+        )
+    )
+    return checks
 
 
 def check_data_migration(text: str) -> list[Check]:
@@ -237,17 +592,19 @@ def check_data_migration(text: str) -> list[Check]:
 
 
 def check_security_xss(text: str) -> list[Check]:
+    link_context = has_link_or_navigation_context(text)
     return [
         Check(
             "requires_protocol_allowlist",
             "error",
-            contains_any(text, ["protocol allowlist", "protocol whitelist", "allowlist"]),
-            "XSS link goals must require protocol allowlist validation.",
+            (not link_context) or contains_any(text, ["protocol allowlist", "protocol whitelist", "allowlist"]),
+            "Link or navigation XSS goals must require protocol allowlist validation.",
+            "not a link/navigation XSS goal" if not link_context else "",
         ),
         Check(
             "rejects_blacklist_only",
             "error",
-            contains_any(text, ["do not rely on blacklist", "not rely on blacklist", "blacklist-only", "allowlist"]),
+            not recommends_blacklist_only(text),
             "XSS link goals should avoid blacklist-only validation.",
         ),
         Check(
@@ -261,6 +618,29 @@ def check_security_xss(text: str) -> list[Check]:
             "error",
             contains_any(text, ["browser", "playwright", "smoke", "test"]),
             "XSS link goals should require tests or browser smoke evidence.",
+        ),
+    ]
+
+
+def check_launch_readiness(text: str) -> list[Check]:
+    return [
+        Check(
+            "launch_scope_fuse",
+            "error",
+            contains_any(text, ["scope fuse", "multiple independent pr-sized changes", "follow-up prs", "smallest launch-readiness pass"]),
+            "Launch/readiness goals should include a scope fuse for multiple independent PR-sized changes.",
+        ),
+        Check(
+            "external_outcomes_not_guaranteed",
+            "error",
+            contains_any(text, ["not guaranteed", "external outcome", "do not claim", "do not imply", "advisory"]),
+            "Launch/readiness goals should not guarantee external outcomes such as trending, ranking, traffic, or approval.",
+        ),
+        Check(
+            "manual_platform_steps",
+            "error",
+            contains_any(text, ["manual", "owner approval", "repository settings", "settings access", "exact steps"]),
+            "Platform or repository settings that require owner access should be documented as manual steps or blockers.",
         ),
     ]
 
@@ -295,21 +675,24 @@ def check_clarify(text: str) -> list[Check]:
 
 
 def lint(text: str, profile: str) -> tuple[str, list[Check]]:
-    selected = infer_profile(text) if profile == "auto" else profile
+    selected_profiles = infer_profiles(text) if profile == "auto" else parse_profiles(profile)
     checks: list[Check] = []
-    if selected == "clarify":
+    if "clarify" in selected_profiles:
         checks.extend(check_clarify(text))
-        return selected, checks
-    checks.extend(check_contract_shape(text))
-    if selected == "read-only":
+        return "+".join(selected_profiles), checks
+    if "compact" in selected_profiles:
+        checks.extend(check_compact_shape(text))
+    else:
+        checks.extend(check_contract_shape(text))
+    if "read-only" in selected_profiles:
         checks.extend(check_read_only(text))
-    elif selected == "data-migration":
+    if "data-migration" in selected_profiles:
         checks.extend(check_data_migration(text))
-    elif selected == "security-xss":
+    if "security-xss" in selected_profiles:
         checks.extend(check_security_xss(text))
-    elif selected != "general":
-        raise SystemExit(f"unknown profile: {selected}")
-    return selected, checks
+    if "launch-readiness" in selected_profiles:
+        checks.extend(check_launch_readiness(text))
+    return "+".join(selected_profiles), checks
 
 
 def print_text(path: Path, profile: str, checks: list[Check]) -> None:
@@ -336,9 +719,11 @@ def main() -> int:
     parser.add_argument("path", type=Path, help="Markdown/text file to lint")
     parser.add_argument(
         "--profile",
-        choices=["auto", "general", "read-only", "data-migration", "security-xss", "clarify"],
         default="auto",
-        help="Lint profile. auto infers from the file content.",
+        help=(
+            "Lint profile. Use auto, one profile, or comma-separated profiles "
+            f"from: {', '.join(PROFILE_NAMES)}."
+        ),
     )
     parser.add_argument("--json", action="store_true", help="Emit JSON instead of text")
     parser.add_argument("--strict-warnings", action="store_true", help="Treat warnings as failures")
