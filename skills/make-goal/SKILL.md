@@ -130,6 +130,8 @@ Add category-specific constraints when relevant:
 - Frontend: preserve accessibility, keyboard behavior, existing design system, and include browser or screenshot evidence for user-visible changes.
 - CI/testing: reproduce or locate the current failure, fix production or fixture causes before changing assertions, and require fresh command output.
 - Investigation: keep changes read-only unless the goal explicitly asks for a fix; separate evidence from hypotheses.
+- Launch/readiness/release-prep: add a scope fuse. If the work expands into multiple independent PR-sized changes, keep the current goal to the smallest launch-readiness pass and list follow-up PRs instead of expanding scope.
+- External platform guidance: distinguish required local acceptance criteria from advisory platform recommendations. Record deviations and decide whether to keep or update; do not imply every recommendation must be implemented or that external outcomes such as trending, ranking, traffic, or approval are guaranteed.
 
 Read `references/quality-bar.md` before finalizing high-risk goals.
 
