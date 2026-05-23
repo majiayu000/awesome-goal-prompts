@@ -67,7 +67,7 @@ When reviewing generated output, run the bundled linter if a local shell is avai
 python3 scripts/lint_goal.py <goal-or-response.md>
 ```
 
-Use `--profile data-migration`, `--profile security-xss`, `--profile read-only`, or `--profile clarify` when the task type is known. Use `--json` when another script will consume the result.
+Use `--profile compact`, `--profile data-migration`, `--profile security-xss`, `--profile read-only`, or `--profile clarify` when the task type is known. Use `--json` when another script will consume the result.
 
 ## Required Contract
 

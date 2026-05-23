@@ -60,6 +60,17 @@
         {"name": "asks_for_done_when_or_verification", "type": "contains_any", "values": ["done", "verify", "completion", "proves"]},
         {"name": "does_not_emit_full_goal_contract", "type": "not_contains_any", "values": ["/goal\nGOAL:", "CONSTRAINTS:", "STOP RULES:"] }
       ]
+    },
+    {
+      "id": 6,
+      "prompt": "Create a compact goal for fixing auth tests when the files and commands are already known: read auth routes and tests, run npm test -- auth and npm run lint.",
+      "expected_output": "A compact /goal with Read first, Constraints, Done when, Verify with, Stop if, and Final output; it should preserve the provided commands and test-integrity constraints.",
+      "files": [],
+      "assertions": [
+        {"name": "has_compact_goal_sections", "type": "contains_all", "values": ["/goal", "Read first:", "Constraints:", "Done when:", "Verify with:", "Stop if:", "Final output:"]},
+        {"name": "preserves_requested_commands", "type": "contains_all", "values": ["npm test -- auth", "npm run lint"]},
+        {"name": "protects_test_integrity", "type": "contains_any", "values": ["Do not weaken tests", "Do not delete assertions", "Do not weaken"] }
+      ]
     }
   ]
 }

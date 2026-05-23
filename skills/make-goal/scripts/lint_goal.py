@@ -25,6 +25,15 @@ FULL_SECTIONS = [
     "STOP RULES:",
 ]
 
+COMPACT_SECTIONS = [
+    "Read first:",
+    "Constraints:",
+    "Done when:",
+    "Verify with:",
+    "Stop if:",
+    "Final output:",
+]
+
 VAGUE_PHRASES = [
     "make it better",
     "fix everything",
@@ -63,8 +72,13 @@ def section_positions(text: str) -> dict[str, int]:
     return {section: lowered.find(section.lower()) for section in FULL_SECTIONS}
 
 
-def extract_section(text: str, section: str) -> str:
-    positions = section_positions(text)
+def positions_for(text: str, sections: list[str]) -> dict[str, int]:
+    lowered = normalize(text)
+    return {section: lowered.find(section.lower()) for section in sections}
+
+
+def extract_section(text: str, section: str, sections: list[str] | None = None) -> str:
+    positions = positions_for(text, sections or FULL_SECTIONS)
     start = positions.get(section, -1)
     if start < 0:
         return ""
@@ -78,16 +92,45 @@ def extract_section(text: str, section: str) -> str:
     return text[start:end].strip()
 
 
+def has_read_only_boundary(text: str) -> bool:
+    return contains_any(text, ["read-only", "do not edit files", "do not modify", "changed files: `none`", "changed files: none"])
+
+
+def is_compact_goal(text: str) -> bool:
+    lowered = normalize(text)
+    return "/goal" in lowered and all(section.lower() in lowered for section in COMPACT_SECTIONS)
+
+
+def recommends_blacklist_only(text: str) -> bool:
+    lowered = normalize(text)
+    if "blacklist-only" not in lowered and "blacklist only" not in lowered:
+        return False
+    avoidance_terms = [
+        "do not rely on blacklist",
+        "do not use blacklist",
+        "do not use blacklist-only",
+        "not rely on blacklist",
+        "avoid blacklist",
+        "avoid blacklist-only",
+        "instead of blacklist",
+        "not blacklist-only",
+        "never rely on blacklist",
+    ]
+    return not any(term in lowered for term in avoidance_terms)
+
+
 def infer_profile(text: str) -> str:
     lowered = normalize(text)
     if "/goal" not in lowered and contains_any(lowered, ["primary goal", "one finish line", "what is the one"]):
         return "clarify"
+    if has_read_only_boundary(lowered):
+        return "read-only"
+    if is_compact_goal(lowered):
+        return "compact"
     if contains_any(lowered, ["xss", "user-provided link", "javascript:", "innerhtml", "unsafe html"]):
         return "security-xss"
     if contains_any(lowered, ["production database", "unique index", "users.email", "migration", "ddl"]):
         return "data-migration"
-    if contains_any(lowered, ["read-only", "do not edit files", "changed files: `none`", "changed files: none"]):
-        return "read-only"
     return "general"
 
 
@@ -113,13 +156,14 @@ def check_contract_shape(text: str) -> list[Check]:
         )
     )
     present_positions = [positions[section] for section in FULL_SECTIONS if positions[section] >= 0]
-    ordered = present_positions == sorted(present_positions)
+    ordered = not missing and present_positions == sorted(present_positions)
     checks.append(
         Check(
             "sections_in_order",
             "error",
             ordered,
             "Full goal sections should appear in the standard order.",
+            "cannot check order until all sections are present" if missing else "",
         )
     )
     empty_sections = [
@@ -127,13 +171,20 @@ def check_contract_shape(text: str) -> list[Check]:
         for section in FULL_SECTIONS
         if positions.get(section, -1) >= 0 and not extract_section(text, section)
     ]
+    nonempty = not missing and not empty_sections
     checks.append(
         Check(
             "sections_nonempty",
             "error",
-            not empty_sections,
+            nonempty,
             "Each full goal section should contain concrete content.",
-            ", ".join(empty_sections) if empty_sections else "all present sections have content",
+            (
+                "missing: " + ", ".join(missing)
+                if missing
+                else ", ".join(empty_sections)
+                if empty_sections
+                else "all present sections have content"
+            ),
         )
     )
     goal = extract_section(text, "GOAL:")
@@ -184,12 +235,93 @@ def check_contract_shape(text: str) -> list[Check]:
     return checks
 
 
+def check_compact_shape(text: str) -> list[Check]:
+    checks: list[Check] = []
+    lowered = normalize(text)
+    checks.append(
+        Check(
+            "has_goal_command",
+            "error",
+            "/goal" in lowered,
+            "Compact goals should include the /goal command.",
+        )
+    )
+    positions = positions_for(text, COMPACT_SECTIONS)
+    missing = [section for section, pos in positions.items() if pos < 0]
+    checks.append(
+        Check(
+            "has_compact_sections",
+            "error",
+            not missing,
+            "Compact goals must include Read first, Constraints, Done when, Verify with, Stop if, and Final output.",
+            ", ".join(missing) if missing else "all compact sections present",
+        )
+    )
+    present_positions = [positions[section] for section in COMPACT_SECTIONS if positions[section] >= 0]
+    checks.append(
+        Check(
+            "compact_sections_in_order",
+            "error",
+            not missing and present_positions == sorted(present_positions),
+            "Compact goal sections should appear in the standard order.",
+            "cannot check order until all compact sections are present" if missing else "",
+        )
+    )
+    empty_sections = [
+        section
+        for section in COMPACT_SECTIONS
+        if positions.get(section, -1) >= 0 and not extract_section(text, section, COMPACT_SECTIONS)
+    ]
+    checks.append(
+        Check(
+            "compact_sections_nonempty",
+            "error",
+            not missing and not empty_sections,
+            "Each compact goal section should contain concrete content.",
+            (
+                "missing: " + ", ".join(missing)
+                if missing
+                else ", ".join(empty_sections)
+                if empty_sections
+                else "all compact sections have content"
+            ),
+        )
+    )
+    goal_line = next((line for line in text.splitlines() if line.lower().startswith("/goal")), "")
+    checks.append(
+        Check(
+            "goal_not_vague",
+            "error",
+            bool(goal_line.strip()) and not contains_any(goal_line, VAGUE_PHRASES),
+            "Compact /goal line must contain a specific measurable goal.",
+            goal_line[:180],
+        )
+    )
+    checks.append(
+        Check(
+            "compact_verify_present",
+            "error",
+            contains_any(extract_section(text, "Verify with:", COMPACT_SECTIONS), ["run ", "command", "report", "screenshot", "evidence", "test", "lint", "verify"]),
+            "Compact goals should name verification evidence.",
+        )
+    )
+    checks.append(
+        Check(
+            "compact_stop_rules_present",
+            "error",
+            contains_any(extract_section(text, "Stop if:", COMPACT_SECTIONS), ["missing", "destructive", "production", "three failed", "3 failed", "unclear"]),
+            "Compact goals should include meaningful stop conditions.",
+        )
+    )
+    return checks
+
+
 def check_read_only(text: str) -> list[Check]:
     return [
         Check(
             "read_only_boundary",
             "error",
-            contains_any(text, ["read-only", "do not edit files", "do not modify", "changed files: `none`", "changed files: none"]),
+            has_read_only_boundary(text),
             "Read-only goals must explicitly forbid edits.",
         ),
         Check(
@@ -247,7 +379,7 @@ def check_security_xss(text: str) -> list[Check]:
         Check(
             "rejects_blacklist_only",
             "error",
-            contains_any(text, ["do not rely on blacklist", "not rely on blacklist", "blacklist-only", "allowlist"]),
+            not recommends_blacklist_only(text),
             "XSS link goals should avoid blacklist-only validation.",
         ),
         Check(
@@ -300,6 +432,9 @@ def lint(text: str, profile: str) -> tuple[str, list[Check]]:
     if selected == "clarify":
         checks.extend(check_clarify(text))
         return selected, checks
+    if selected == "compact":
+        checks.extend(check_compact_shape(text))
+        return selected, checks
     checks.extend(check_contract_shape(text))
     if selected == "read-only":
         checks.extend(check_read_only(text))
@@ -336,7 +471,7 @@ def main() -> int:
     parser.add_argument("path", type=Path, help="Markdown/text file to lint")
     parser.add_argument(
         "--profile",
-        choices=["auto", "general", "read-only", "data-migration", "security-xss", "clarify"],
+        choices=["auto", "general", "compact", "read-only", "data-migration", "security-xss", "clarify"],
         default="auto",
         help="Lint profile. auto infers from the file content.",
     )
