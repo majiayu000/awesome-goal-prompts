@@ -93,5 +93,35 @@
     "query": "clinical research ai safety",
     "expected": "clinical-research-ai-safety-boundary",
     "max_rank": 3
+  },
+  {
+    "query": "legacy stack migration compatibility checkpoints rollback",
+    "expected": "openai-code-migration-checkpoints",
+    "max_rank": 3
+  },
+  {
+    "query": "difficult task eval driven improvement loop artifact score",
+    "expected": "openai-difficult-task-eval-loop",
+    "max_rank": 3
+  },
+  {
+    "query": "promptfoo eval suite target adapter seed cases assertions",
+    "expected": "openai-promptfoo-eval-suite",
+    "max_rank": 3
+  },
+  {
+    "query": "expo react native app expo router expo go",
+    "expected": "openai-expo-react-native-app",
+    "max_rank": 3
+  },
+  {
+    "query": "agent friendly cli companion skill command surface",
+    "expected": "openai-agent-friendly-cli-skill",
+    "max_rank": 3
+  },
+  {
+    "query": "define goal measurable evidence scope stop condition",
+    "expected": "openai-define-goal-quality-bar",
+    "max_rank": 3
   }
 ]
