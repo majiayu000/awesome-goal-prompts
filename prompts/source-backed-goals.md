@@ -43,6 +43,8 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 - [React 19 Migration](goal-examples.md#cursor-forum-react19-migration) - Migrate a project to React 19 and continue until the build passes.
 <a id="github-pydantic-v2-migration"></a>
 - [Pydantic V1 To V2 Migration](goal-examples.md#github-pydantic-v2-migration) - Migrate a project from Pydantic v1 to v2 while preserving API behavior.
+<a id="openai-code-migration-checkpoints"></a>
+- [Code Migration Checkpoints](goal-examples.md#openai-code-migration-checkpoints) - Inventory legacy assumptions, map them to a target stack, and execute the migration through validated checkpoints.
 
 ### prototype
 <a id="codex-plan-milestone-prototype"></a>
@@ -59,6 +61,8 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 - [Router Prompt Eval Score](goal-examples.md#qiita-router-eval-score) - Improve a router prompt against an eval directory until the result score reaches a target.
 <a id="reddit-rag-chat-flywheel"></a>
 - [RAG Chat Flywheel](goal-examples.md#reddit-rag-chat-flywheel) - Iterate on code, tests, and metrics to improve a document-chat RAG system.
+<a id="openai-difficult-task-eval-loop"></a>
+- [Difficult Task Eval Loop](goal-examples.md#openai-difficult-task-eval-loop) - Run a difficult task as an eval-driven improvement loop with one focused change, rerun scores, and direct artifact inspection each iteration.
 
 ### testing
 <a id="claude-auth-tests-lint"></a>
@@ -127,6 +131,8 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 ### cli
 <a id="hermes-exif-rename-cli"></a>
 - [EXIF Rename CLI](goal-examples.md#hermes-exif-rename-cli) - Build a small CLI that renames photos by EXIF date and test it on a photos folder.
+<a id="openai-agent-friendly-cli-skill"></a>
+- [Agent-Friendly CLI And Skill](goal-examples.md#openai-agent-friendly-cli-skill) - Create a composable CLI and companion skill so future agent tasks can search, read, download, or draft against a recurring source safely.
 
 ### refactor
 <a id="explainx-auth-di-refactor"></a>
@@ -235,6 +241,8 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 - [Goal-Aligned Profile Optimization](goal-examples.md#goal-agent-profile-optimization) - Audit and update professional profiles against a stated goal while recording the resulting progress and gaps.
 <a id="goal-agent-content-engagement-loop"></a>
 - [Content And Audience Engagement Loop](goal-examples.md#goal-agent-content-engagement-loop) - Generate goal-aligned content, publish or promote it, engage with target audience posts, and log the session outcome.
+<a id="openai-define-goal-quality-bar"></a>
+- [Define Goal Quality Bar](goal-examples.md#openai-define-goal-quality-bar) - Turn a fuzzy intention into a concrete measurable goal with evidence, scope boundaries, and honest stop conditions before creating it.
 
 ### qa
 <a id="x-qa-engineer-simulation"></a>
@@ -273,10 +281,14 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 ### mobile
 <a id="github-mobile-agent-task-handoff"></a>
 - [Mobile Agent Task Handoff](goal-examples.md#github-mobile-agent-task-handoff) - Prepare and track a coding-agent task started from GitHub Mobile with review-ready evidence.
+<a id="openai-expo-react-native-app"></a>
+- [Expo React Native App Slice](goal-examples.md#openai-expo-react-native-app) - Build a working React Native app slice with Expo Router conventions, Expo-compatible packages, and native-feeling UI states.
 
 ### ai-evals
 <a id="openai-agent-trace-evals"></a>
 - [Trace-Graded Agent Regression](goal-examples.md#openai-agent-trace-evals) - Create trace-based evals that catch workflow regressions across tool calls and handoffs.
+<a id="openai-promptfoo-eval-suite"></a>
+- [Promptfoo Eval Suite](goal-examples.md#openai-promptfoo-eval-suite) - Add a runnable Promptfoo eval suite for an AI application before changing production prompts or model behavior.
 
 ### ai-ops
 <a id="openai-agent-tracing-observability"></a>

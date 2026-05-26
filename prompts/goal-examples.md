@@ -129,6 +129,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Cost Quality Frontier](#cost-quality-frontier) - Compare models by quality, latency, and cost to choose routing tiers.
 - [Rubric-Driven Eval](#rubric-driven-eval) - Replace binary scores with multi-dimensional rubrics for complex tasks.
 - [Trace-Graded Agent Regression](#openai-agent-trace-evals) - Create trace-based evals that catch workflow regressions across tool calls and handoffs. Source-backed.
+- [Promptfoo Eval Suite](#openai-promptfoo-eval-suite) - Add a runnable Promptfoo eval suite for an AI application before changing production prompts or model behavior. Source-backed.
 
 ### ai-ops
 - [Prompt Version Registry](#prompt-version-registry) - Bind prompt versions to eval results and deployment history.
@@ -192,6 +193,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Mobile Onboarding](#mobile-onboarding) - Create a short, skippable, restorable first-run path.
 - [Mobile Device Matrix](#mobile-device-matrix) - Cover small screen, large screen, iOS, and Android key paths.
 - [Mobile Agent Task Handoff](#github-mobile-agent-task-handoff) - Prepare and track a coding-agent task started from GitHub Mobile with review-ready evidence. Source-backed.
+- [Expo React Native App Slice](#openai-expo-react-native-app) - Build a working React Native app slice with Expo Router conventions, Expo-compatible packages, and native-feeling UI states. Source-backed.
 
 ### docs
 - [Quickstart](#docs-quickstart) - Write the shortest fresh-clone path that runs successfully in five minutes.
@@ -302,6 +304,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Moment To Day.js Migration](#explainx-moment-dayjs-migration) - Replace Moment.js with Day.js while preserving date output across edge cases. Source-backed.
 - [React 19 Migration](#cursor-forum-react19-migration) - Migrate a project to React 19 and continue until the build passes. Source-backed.
 - [Pydantic V1 To V2 Migration](#github-pydantic-v2-migration) - Migrate a project from Pydantic v1 to v2 while preserving API behavior. Source-backed.
+- [Code Migration Checkpoints](#openai-code-migration-checkpoints) - Inventory legacy assumptions, map them to a target stack, and execute the migration through validated checkpoints. Source-backed.
 
 ### prototype
 - [PLAN.md Milestone Prototype](#codex-plan-milestone-prototype) - Implement a PLAN.md-driven prototype with tests at each milestone and browser verification. Source-backed.
@@ -312,6 +315,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Eval-Driven Prompt Optimization](#codex-eval-prompt-optimization) - Optimize prompts against an eval suite until the target score or pass rate is reached. Source-backed.
 - [Router Prompt Eval Score](#qiita-router-eval-score) - Improve a router prompt against an eval directory until the result score reaches a target. Source-backed.
 - [RAG Chat Flywheel](#reddit-rag-chat-flywheel) - Iterate on code, tests, and metrics to improve a document-chat RAG system. Source-backed.
+- [Difficult Task Eval Loop](#openai-difficult-task-eval-loop) - Run a difficult task as an eval-driven improvement loop with one focused change, rerun scores, and direct artifact inspection each iteration. Source-backed.
 
 ### testing
 - [Auth Tests And Lint Clean](#claude-auth-tests-lint) - Keep working until auth tests pass and the lint step is clean. Source-backed.
@@ -343,6 +347,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 
 ### cli
 - [EXIF Rename CLI](#hermes-exif-rename-cli) - Build a small CLI that renames photos by EXIF date and test it on a photos folder. Source-backed.
+- [Agent-Friendly CLI And Skill](#openai-agent-friendly-cli-skill) - Create a composable CLI and companion skill so future agent tasks can search, read, download, or draft against a recurring source safely. Source-backed.
 
 ### refactor
 - [Auth Dependency Injection Refactor](#explainx-auth-di-refactor) - Refactor auth code to dependency injection while preserving tests, coverage, and public API. Source-backed.
@@ -379,6 +384,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Daily Goal Priority Loop](#goal-agent-daily-priority-loop) - Use a persistent goal profile to compute daily priorities, execute them, log progress, and refresh status across sessions. Source-backed.
 - [Goal-Aligned Profile Optimization](#goal-agent-profile-optimization) - Audit and update professional profiles against a stated goal while recording the resulting progress and gaps. Source-backed.
 - [Content And Audience Engagement Loop](#goal-agent-content-engagement-loop) - Generate goal-aligned content, publish or promote it, engage with target audience posts, and log the session outcome. Source-backed.
+- [Define Goal Quality Bar](#openai-define-goal-quality-bar) - Turn a fuzzy intention into a concrete measurable goal with evidence, scope boundaries, and honest stop conditions before creating it. Source-backed.
 
 ### orchestration
 - [DAG Agent Dispatch](#hn-dag-agent-dispatch) - Split a goal into a dependency graph and dispatch independent agents into isolated worktrees. Source-backed.
@@ -15248,6 +15254,306 @@ DONE WHEN:
 
 VERIFY:
 - Run `manual review checklist for source facts, uncertainty, safety note, inspected files, and human-review needs` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openai-code-migration-checkpoints"></a>
+### Code Migration Checkpoints
+
+- Category: `migration`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Inventory legacy assumptions, map them to a target stack, and execute the migration through validated checkpoints.
+- Verification: `legacy assumption inventory, checkpoint migration plan, lint, type-check, focused tests after each milestone, rollback notes`
+- Source: [OpenAI Codex code migrations use case](https://developers.openai.com/codex/use-cases/code-migrations)
+- Source type: `official-agent-task`
+- Evidence: Migrate this codebase from [legacy stack or system] to [target stack or system]
+- Evidence summary: Migrate this codebase from [legacy stack or system] to [target stack or system]; source: OpenAI Codex code migrations use case; type: official-agent-task; verification: legacy assumption inventory, checkpoint migration plan, lint, type-check, focused tests after each milestone, rollback notes
+
+```text
+/goal
+GOAL:
+Complete Code Migration Checkpoints for a migration project: Inventory legacy assumptions, map them to a target stack, and execute the migration through validated checkpoints.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect legacy code, target implementation, compatibility tests, visual snapshots, and migration notes.
+- Establish a baseline by running or locating evidence for: `legacy assumption inventory, checkpoint migration plan, lint, type-check, focused tests after each milestone, rollback notes`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Preserve existing user-visible behavior unless the goal explicitly names a behavior change.
+- Keep compatibility evidence for the old and new paths until the migration is verified.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Inventory legacy assumptions, map them to a target stack, and execute the migration through validated checkpoints.
+- The verification command or evidence path succeeds: `legacy assumption inventory, checkpoint migration plan, lint, type-check, focused tests after each milestone, rollback notes`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `legacy assumption inventory, checkpoint migration plan, lint, type-check, focused tests after each milestone, rollback notes` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openai-difficult-task-eval-loop"></a>
+### Difficult Task Eval Loop
+
+- Category: `prompt-optimization`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Run a difficult task as an eval-driven improvement loop with one focused change, rerun scores, and direct artifact inspection each iteration.
+- Verification: `score command found, per-iteration score log, artifact inspection, overall score and LLM average above target`
+- Source: [OpenAI Codex difficult problems use case](https://developers.openai.com/codex/use-cases/iterate-on-difficult-problems)
+- Source type: `official-agent-task`
+- Evidence: run it as an eval-driven improvement loop
+- Evidence summary: run it as an eval-driven improvement loop; source: OpenAI Codex difficult problems use case; type: official-agent-task; verification: score command found, per-iteration score log, artifact inspection, overall score and LLM average above target
+
+```text
+/goal
+GOAL:
+Complete Difficult Task Eval Loop for an eval-backed prompt project: Run a difficult task as an eval-driven improvement loop with one focused change, rerun scores, and direct artifact inspection each iteration.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect prompt files, eval cases, scoring reports, regressions, and failure examples.
+- Establish a baseline by running or locating evidence for: `score command found, per-iteration score log, artifact inspection, overall score and LLM average above target`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not delete, weaken, or cherry-pick eval cases to improve the score.
+- Report representative failures as well as the final score.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Run a difficult task as an eval-driven improvement loop with one focused change, rerun scores, and direct artifact inspection each iteration.
+- The verification command or evidence path succeeds: `score command found, per-iteration score log, artifact inspection, overall score and LLM average above target`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `score command found, per-iteration score log, artifact inspection, overall score and LLM average above target` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openai-promptfoo-eval-suite"></a>
+### Promptfoo Eval Suite
+
+- Category: `ai-evals`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Add a runnable Promptfoo eval suite for an AI application before changing production prompts or model behavior.
+- Verification: `target adapter, seed cases, assertions, files, env requirements, local eval command, passing and failing cases`
+- Source: [OpenAI Codex AI app evals use case](https://developers.openai.com/codex/use-cases/ai-app-evals)
+- Source type: `official-agent-task`
+- Evidence: Use $promptfoo-evals to add a Promptfoo eval suite
+- Evidence summary: Use $promptfoo-evals to add a Promptfoo eval suite; source: OpenAI Codex AI app evals use case; type: official-agent-task; verification: target adapter, seed cases, assertions, files, env requirements, local eval command, passing and failing cases
+
+```text
+/goal
+GOAL:
+Complete Promptfoo Eval Suite for an AI evaluation project: Add a runnable Promptfoo eval suite for an AI application before changing production prompts or model behavior.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect eval datasets, rubrics, model outputs, judge code, and regression reports.
+- Establish a baseline by running or locating evidence for: `target adapter, seed cases, assertions, files, env requirements, local eval command, passing and failing cases`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not tune prompts against hidden labels or delete failing eval cases to improve the score.
+- Keep before/after eval evidence and representative failures.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Add a runnable Promptfoo eval suite for an AI application before changing production prompts or model behavior.
+- The verification command or evidence path succeeds: `target adapter, seed cases, assertions, files, env requirements, local eval command, passing and failing cases`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `target adapter, seed cases, assertions, files, env requirements, local eval command, passing and failing cases` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openai-expo-react-native-app"></a>
+### Expo React Native App Slice
+
+- Category: `mobile`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Build a working React Native app slice with Expo Router conventions, Expo-compatible packages, and native-feeling UI states.
+- Verification: `working app slice, run command, verification path with Expo Go, device, simulator, dev client, or EAS`
+- Source: [OpenAI Codex Expo app use case](https://developers.openai.com/codex/use-cases/react-native-expo-apps)
+- Source type: `official-agent-task`
+- Evidence: Use the Expo plugin to build a React Native app with Expo
+- Evidence summary: Use the Expo plugin to build a React Native app with Expo; source: OpenAI Codex Expo app use case; type: official-agent-task; verification: working app slice, run command, verification path with Expo Go, device, simulator, dev client, or EAS
+
+```text
+/goal
+GOAL:
+Complete Expo React Native App Slice for a mobile or responsive application: Build a working React Native app slice with Expo Router conventions, Expo-compatible packages, and native-feeling UI states.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect mobile routes, forms, gestures, device matrix, and viewport tests.
+- Establish a baseline by running or locating evidence for: `working app slice, run command, verification path with Expo Go, device, simulator, dev client, or EAS`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not optimize only desktop behavior.
+- Keep touch targets, safe areas, and keyboard overlap in scope.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Build a working React Native app slice with Expo Router conventions, Expo-compatible packages, and native-feeling UI states.
+- The verification command or evidence path succeeds: `working app slice, run command, verification path with Expo Go, device, simulator, dev client, or EAS`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `working app slice, run command, verification path with Expo Go, device, simulator, dev client, or EAS` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openai-agent-friendly-cli-skill"></a>
+### Agent-Friendly CLI And Skill
+
+- Category: `cli`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Create a composable CLI and companion skill so future agent tasks can search, read, download, or draft against a recurring source safely.
+- Verification: `proposed command surface, command installed on PATH, help output, setup check, safe discovery command, exact read command, companion skill`
+- Source: [OpenAI Codex agent-friendly CLI use case](https://developers.openai.com/codex/use-cases/agent-friendly-clis)
+- Source type: `official-agent-task`
+- Evidence: Use $cli-creator to create a CLI you can use, and use $skill-creator to create the companion skill
+- Evidence summary: Use $cli-creator to create a CLI you can use, and use $skill-creator to create the companion skill; source: OpenAI Codex agent-friendly CLI use case; type: official-agent-task; verification: proposed command surface, command installed on PATH, help output, setup check, safe discovery command, exact read command, companion skill
+
+```text
+/goal
+GOAL:
+Complete Agent-Friendly CLI And Skill for a command-line tool: Create a composable CLI and companion skill so future agent tasks can search, read, download, or draft against a recurring source safely.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect CLI entrypoints, argument parsing, filesystem behavior, dry-run mode, and fixtures.
+- Establish a baseline by running or locating evidence for: `proposed command surface, command installed on PATH, help output, setup check, safe discovery command, exact read command, companion skill`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not perform destructive filesystem operations without a dry-run or explicit confirmation.
+- Keep command output deterministic enough for tests.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Create a composable CLI and companion skill so future agent tasks can search, read, download, or draft against a recurring source safely.
+- The verification command or evidence path succeeds: `proposed command surface, command installed on PATH, help output, setup check, safe discovery command, exact read command, companion skill`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `proposed command surface, command installed on PATH, help output, setup check, safe discovery command, exact read command, companion skill` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openai-define-goal-quality-bar"></a>
+### Define Goal Quality Bar
+
+- Category: `goal-maintenance`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Turn a fuzzy intention into a concrete measurable goal with evidence, scope boundaries, and honest stop conditions before creating it.
+- Verification: `objective names outcome, evidence, success threshold, scope boundaries, and stop condition before create_goal`
+- Source: [OpenAI define-goal skill](https://github.com/openai/skills/blob/main/skills/.curated/define-goal/SKILL.md)
+- Source type: `tool-readme`
+- Evidence: Before create_goal, the objective should answer
+- Evidence summary: Before create_goal, the objective should answer; source: OpenAI define-goal skill; type: tool-readme; verification: objective names outcome, evidence, success threshold, scope boundaries, and stop condition before create_goal
+
+```text
+/goal
+GOAL:
+Complete Define Goal Quality Bar for a goal-management workflow: Turn a fuzzy intention into a concrete measurable goal with evidence, scope boundaries, and honest stop conditions before creating it.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect active goals, done conditions, audit logs, and continuation state.
+- Establish a baseline by running or locating evidence for: `objective names outcome, evidence, success threshold, scope boundaries, and stop condition before create_goal`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not mark a goal complete without auditing the current done condition.
+- Keep goal edits and completion reasons visible in the final output.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Turn a fuzzy intention into a concrete measurable goal with evidence, scope boundaries, and honest stop conditions before creating it.
+- The verification command or evidence path succeeds: `objective names outcome, evidence, success threshold, scope boundaries, and stop condition before create_goal`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `objective names outcome, evidence, success threshold, scope boundaries, and stop condition before create_goal` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 

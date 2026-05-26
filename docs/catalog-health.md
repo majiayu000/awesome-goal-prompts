@@ -2,11 +2,11 @@
 
 ## Summary
 
-- Total entries: 315
-- Source-backed entries: 115
+- Total entries: 321
+- Source-backed entries: 121
 - Seed entries: 200
 - Categories: 32
-- Search eval cases: 19/19 passing
+- Search eval cases: 25/25 passing
 - Source-backed entries missing evidence summaries: 0
 - Source-backed entries missing provenance fields: 0
 
@@ -15,12 +15,12 @@
 | Category | Source-backed | Total | Coverage |
 | --- | --- | --- | --- |
 | accessibility | 1 | 13 | 8% |
-| ai-evals | 1 | 11 | 9% |
+| ai-evals | 2 | 12 | 17% |
 | ai-ops | 1 | 11 | 9% |
 | backend-api | 3 | 15 | 20% |
 | backend-data | 2 | 12 | 17% |
 | backlog | 3 | 3 | 100% |
-| cli | 1 | 1 | 100% |
+| cli | 2 | 2 | 100% |
 | data-analytics | 1 | 11 | 9% |
 | data-eng | 2 | 12 | 17% |
 | design | 1 | 13 | 8% |
@@ -28,16 +28,16 @@
 | devops-runtime | 1 | 11 | 9% |
 | docs | 5 | 17 | 29% |
 | frontend | 6 | 18 | 33% |
-| goal-maintenance | 12 | 12 | 100% |
+| goal-maintenance | 13 | 13 | 100% |
 | greenfield-build | 1 | 1 | 100% |
 | investigation | 4 | 4 | 100% |
 | maintenance | 2 | 2 | 100% |
-| migration | 8 | 8 | 100% |
-| mobile | 1 | 13 | 8% |
+| migration | 9 | 9 | 100% |
+| mobile | 2 | 14 | 14% |
 | orchestration | 3 | 3 | 100% |
 | performance | 6 | 18 | 33% |
 | product | 3 | 15 | 20% |
-| prompt-optimization | 3 | 3 | 100% |
+| prompt-optimization | 4 | 4 | 100% |
 | prototype | 3 | 3 | 100% |
 | qa | 1 | 13 | 8% |
 | refactor | 2 | 2 | 100% |
@@ -55,14 +55,14 @@
 | github-issue | 7 |
 | github-pr | 3 |
 | none | 200 |
-| official-agent-task | 22 |
+| official-agent-task | 27 |
 | official-goal | 17 |
 | official-workflow | 5 |
 | public-forum | 10 |
 | third-party-project | 7 |
 | third-party-review | 2 |
 | third-party-tutorial | 21 |
-| tool-readme | 10 |
+| tool-readme | 11 |
 | video-summary | 2 |
 | x-post | 8 |
 
@@ -89,6 +89,12 @@
 | sparc payment processing | claude-flow-sparc-payment-plan | 1 | top 3 | pass |
 | okr measurable key results scoring guardrails | claude-recipes-okr-development | 1 | top 3 | pass |
 | clinical research ai safety | clinical-research-ai-safety-boundary | 1 | top 3 | pass |
+| legacy stack migration compatibility checkpoints rollback | openai-code-migration-checkpoints | 1 | top 3 | pass |
+| difficult task eval driven improvement loop artifact score | openai-difficult-task-eval-loop | 1 | top 3 | pass |
+| promptfoo eval suite target adapter seed cases assertions | openai-promptfoo-eval-suite | 1 | top 3 | pass |
+| expo react native app expo router expo go | openai-expo-react-native-app | 1 | top 3 | pass |
+| agent friendly cli companion skill command surface | openai-agent-friendly-cli-skill | 1 | top 3 | pass |
+| define goal measurable evidence scope stop condition | openai-define-goal-quality-bar | 1 | top 3 | pass |
 
 ## Maintenance Notes
 

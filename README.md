@@ -4,14 +4,14 @@
 
 When Claude Code, Codex, Cursor, or another coding agent starts making broad edits, paste a contract that says exactly what to inspect, what not to touch, how to verify, and when to stop.
 
-This repo keeps <!-- generated:total-start -->**315**<!-- generated:total-end --> runnable `/goal` contracts for engineering work. Start with the provenance-backed rescue prompts below; use seed patterns only when you need a raw shape to adapt.
+This repo keeps <!-- generated:total-start -->**321**<!-- generated:total-end --> runnable `/goal` contracts for engineering work. Start with the provenance-backed rescue prompts below; use seed patterns only when you need a raw shape to adapt.
 
 **Search the full catalog:** https://majiayu000.github.io/awesome-goal-prompts/
 
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk. This repo turns that contract shape into a catalog you can search, inspect, adapt, and copy.
 
 <!-- generated:stats-start -->
-The public catalog starts with **115** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
+The public catalog starts with **121** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
 <!-- generated:stats-end -->
 
 ![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
@@ -84,6 +84,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Moment To Day.js Migration](prompts/source-backed-goals.md#explainx-moment-dayjs-migration) - Replace Moment.js with Day.js while preserving date output across edge cases.
 - [React 19 Migration](prompts/source-backed-goals.md#cursor-forum-react19-migration) - Migrate a project to React 19 and continue until the build passes.
 - [Pydantic V1 To V2 Migration](prompts/source-backed-goals.md#github-pydantic-v2-migration) - Migrate a project from Pydantic v1 to v2 while preserving API behavior.
+- [Code Migration Checkpoints](prompts/source-backed-goals.md#openai-code-migration-checkpoints) - Inventory legacy assumptions, map them to a target stack, and execute the migration through validated checkpoints.
 
 ### prototype
 - [PLAN.md Milestone Prototype](prompts/source-backed-goals.md#codex-plan-milestone-prototype) - Implement a PLAN.md-driven prototype with tests at each milestone and browser verification.
@@ -94,6 +95,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Eval-Driven Prompt Optimization](prompts/source-backed-goals.md#codex-eval-prompt-optimization) - Optimize prompts against an eval suite until the target score or pass rate is reached.
 - [Router Prompt Eval Score](prompts/source-backed-goals.md#qiita-router-eval-score) - Improve a router prompt against an eval directory until the result score reaches a target.
 - [RAG Chat Flywheel](prompts/source-backed-goals.md#reddit-rag-chat-flywheel) - Iterate on code, tests, and metrics to improve a document-chat RAG system.
+- [Difficult Task Eval Loop](prompts/source-backed-goals.md#openai-difficult-task-eval-loop) - Run a difficult task as an eval-driven improvement loop with one focused change, rerun scores, and direct artifact inspection each iteration.
 
 ### testing
 - [Auth Tests And Lint Clean](prompts/source-backed-goals.md#claude-auth-tests-lint) - Keep working until auth tests pass and the lint step is clean.
@@ -132,6 +134,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 
 ### cli
 - [EXIF Rename CLI](prompts/source-backed-goals.md#hermes-exif-rename-cli) - Build a small CLI that renames photos by EXIF date and test it on a photos folder.
+- [Agent-Friendly CLI And Skill](prompts/source-backed-goals.md#openai-agent-friendly-cli-skill) - Create a composable CLI and companion skill so future agent tasks can search, read, download, or draft against a recurring source safely.
 
 ### refactor
 - [Auth Dependency Injection Refactor](prompts/source-backed-goals.md#explainx-auth-di-refactor) - Refactor auth code to dependency injection while preserving tests, coverage, and public API.
@@ -198,6 +201,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Daily Goal Priority Loop](prompts/source-backed-goals.md#goal-agent-daily-priority-loop) - Use a persistent goal profile to compute daily priorities, execute them, log progress, and refresh status across sessions.
 - [Goal-Aligned Profile Optimization](prompts/source-backed-goals.md#goal-agent-profile-optimization) - Audit and update professional profiles against a stated goal while recording the resulting progress and gaps.
 - [Content And Audience Engagement Loop](prompts/source-backed-goals.md#goal-agent-content-engagement-loop) - Generate goal-aligned content, publish or promote it, engage with target audience posts, and log the session outcome.
+- [Define Goal Quality Bar](prompts/source-backed-goals.md#openai-define-goal-quality-bar) - Turn a fuzzy intention into a concrete measurable goal with evidence, scope boundaries, and honest stop conditions before creating it.
 
 ### qa
 - [QA Engineer Simulation](prompts/source-backed-goals.md#x-qa-engineer-simulation) - Use `/goal` as a quality loop until tests pass and lint is clean.
@@ -224,9 +228,11 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 
 ### mobile
 - [Mobile Agent Task Handoff](prompts/source-backed-goals.md#github-mobile-agent-task-handoff) - Prepare and track a coding-agent task started from GitHub Mobile with review-ready evidence.
+- [Expo React Native App Slice](prompts/source-backed-goals.md#openai-expo-react-native-app) - Build a working React Native app slice with Expo Router conventions, Expo-compatible packages, and native-feeling UI states.
 
 ### ai-evals
 - [Trace-Graded Agent Regression](prompts/source-backed-goals.md#openai-agent-trace-evals) - Create trace-based evals that catch workflow regressions across tool calls and handoffs.
+- [Promptfoo Eval Suite](prompts/source-backed-goals.md#openai-promptfoo-eval-suite) - Add a runnable Promptfoo eval suite for an AI application before changing production prompts or model behavior.
 
 ### ai-ops
 - [Agent Trace Observability](prompts/source-backed-goals.md#openai-agent-tracing-observability) - Instrument agent runs so LLM generations, tool calls, handoffs, guardrails, and custom events are traceable.
