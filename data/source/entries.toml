@@ -2343,6 +2343,18 @@ source_type = "public-forum"
 evidence = "all tests pass and the PR is ready"
 
 [[entries]]
+id = "x-interview-driven-goal-prompt-generator"
+category = "workflow"
+title = "Interview-Driven Goal Prompt Generator"
+intent = "Use a meta prompt to interview the user with clarifying questions until 'done' can be expressed in specific, measurable, verifiable terms, then output a high-quality structured /goal prompt."
+verify = "generated goal contains clear, binary, verifiable DONE WHEN criteria after clarification interview"
+origin = "source-backed"
+source_url = "https://x.com/itsolelehmann/status/2054649363234992401"
+source_name = "@itsolelehmann on X"
+source_type = "x-post"
+evidence = "Write me a /goal prompt. Ask me what I'm trying to do first, then keep asking follow-up questions until you can describe 'done' in specific, measurable terms."
+
+[[entries]]
 id = "reddit-billing-empty-state"
 category = "investigation"
 title = "Billing Empty State Root Cause"
