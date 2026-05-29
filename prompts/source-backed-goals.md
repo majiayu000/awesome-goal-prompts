@@ -17,6 +17,8 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 - [Plan-Then-Goal Execution](goal-examples.md#x-plan-then-goal-execution) - Use plan mode to define the work, then start a new goal session to implement the plan completely.
 <a id="x-measurable-goal-structure"></a>
 - [Measurable Goal Structure](goal-examples.md#x-measurable-goal-structure) - Write goals with a clear target, proof requirement, and explicit limits.
+<a id="x-interview-driven-goal-prompt-generator"></a>
+- [Interview-Driven Goal Prompt Generator](goal-examples.md#x-interview-driven-goal-prompt-generator) - Use a meta prompt to interview the user with clarifying questions until 'done' can be expressed in specific, measurable, verifiable terms, then output a high-quality structured /goal prompt.
 <a id="github-noninteractive-goal-creation"></a>
 - [Non-Interactive Goal Creation](goal-examples.md#github-noninteractive-goal-creation) - Create and confirm an active goal during non-interactive Codex execution before continuing.
 <a id="github-goalbuddy-workspace"></a>
@@ -25,6 +27,16 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 - [Long Goal With Constraints](goal-examples.md#github-claude-long-goal-template) - Use a longer goal template with repo path, constraints, plan pointer, and execution order.
 <a id="deadreckon-coherence-closure"></a>
 - [User-Facing Coherence Closure](goal-examples.md#deadreckon-coherence-closure) - Finish a coherence pass so CLI help, docs, JSON/plain output, colors, prompts, flags, and next-action grammar stay aligned.
+<a id="x-three-questions-goal-framework"></a>
+- [Three Questions Goal Framework](goal-examples.md#x-three-questions-goal-framework) - Write higher quality goals by explicitly answering three core questions: what needs to be done, how success will be measured, and what is off-limits.
+<a id="x-explicit-stop-rules-goal-loops"></a>
+- [Explicit Stop Rules for Goal Loops](goal-examples.md#x-explicit-stop-rules-goal-loops) - Prevent infinite loops, cost overruns, and unsafe behavior in autonomous /goal executions by defining clear, explicit stop conditions and escalation rules.
+<a id="x-dual-model-evaluator-goal-loop"></a>
+- [Dual-Model Evaluator Loop for Goals](goal-examples.md#x-dual-model-evaluator-goal-loop) - Run long /goal sessions reliably and cost-effectively by using a strong worker model for execution paired with a cheap fast evaluator model (typically Haiku) that periodically judges progress against the goal criteria and decides whether to continue or stop.
+<a id="x-claude-md-goal-workflow"></a>
+- [CLAUDE.md + Goal Workflow](goal-examples.md#x-claude-md-goal-workflow) - Combine a persistent project-level CLAUDE.md (or AGENTS.md) file containing rules, standards, and context with /goal commands so long-running autonomous agent work stays aligned with repository-specific constraints and learned lessons.
+<a id="x-goal-ledger"></a>
+- [Goal Ledger for Long-Running Runs](goal-examples.md#x-goal-ledger) - Maintain a live, browser-viewable HTML progress ledger during extended /goal executions to provide visibility, persistent memory, decision logging, and self-reflection, reducing drift in long autonomous sessions.
 
 ### migration
 <a id="codex-visual-migration-playwright"></a>

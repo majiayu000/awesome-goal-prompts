@@ -15,15 +15,26 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://majiayu000.github.io/awesome-goal-prompts/"
+SITE_TITLE = "Awesome Goal Prompts - /goal contracts for coding agents"
+SITE_DESCRIPTION = "300+ runnable /goal contracts for Codex, Claude Code, Cursor, and other coding agents."
+SITE_IMAGE_ALT = "Awesome Goal Prompts - searchable goal contracts for coding agents."
+DATASET_DESCRIPTION = (
+    "A searchable catalog of runnable /goal task contracts for coding agents, "
+    "with source-backed examples and reusable seed patterns."
+)
+ITEMLIST_DESCRIPTION = "Source-backed task contracts in the primary catalog."
 
 
 class IndexMetadataParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.meta: dict[str, str] = {}
+        self.title = ""
         self.json_ld_scripts: list[str] = []
+        self._capturing_title = False
         self._capturing_json_ld = False
         self._script_chunks: list[str] = []
+        self._title_chunks: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
@@ -35,12 +46,21 @@ class IndexMetadataParser(HTMLParser):
         if tag == "script" and attributes.get("type") == "application/ld+json":
             self._capturing_json_ld = True
             self._script_chunks = []
+        if tag == "title":
+            self._capturing_title = True
+            self._title_chunks = []
 
     def handle_data(self, data: str) -> None:
+        if self._capturing_title:
+            self._title_chunks.append(data)
         if self._capturing_json_ld:
             self._script_chunks.append(data)
 
     def handle_endtag(self, tag: str) -> None:
+        if tag == "title" and self._capturing_title:
+            self.title = "".join(self._title_chunks).strip()
+            self._capturing_title = False
+            self._title_chunks = []
         if tag == "script" and self._capturing_json_ld:
             self.json_ld_scripts.append("".join(self._script_chunks).strip())
             self._capturing_json_ld = False
@@ -75,17 +95,14 @@ def main() -> None:
     parser = IndexMetadataParser()
     parser.feed((ROOT / "docs" / "index.html").read_text(encoding="utf-8"))
 
-    description = (
-        f"{source_count} source-backed /goal contracts for coding agents, "
-        f"plus {seed_count} reusable seed patterns in the extended library."
-    )
-    short_description = f"{source_count} source-backed /goal contracts for coding agents."
-    image_alt = f"The Contract Codex - {source_count} source-backed goal contracts for coding agents."
-
-    assert_equal("og:description", parser.meta.get("og:description"), description)
-    assert_equal("twitter:description", parser.meta.get("twitter:description"), short_description)
-    assert_equal("og:image:alt", parser.meta.get("og:image:alt"), image_alt)
-    assert_equal("twitter:image:alt", parser.meta.get("twitter:image:alt"), image_alt)
+    assert_equal("title", parser.title, SITE_TITLE)
+    assert_equal("description", parser.meta.get("description"), SITE_DESCRIPTION)
+    assert_equal("og:title", parser.meta.get("og:title"), SITE_TITLE)
+    assert_equal("twitter:title", parser.meta.get("twitter:title"), SITE_TITLE)
+    assert_equal("og:description", parser.meta.get("og:description"), SITE_DESCRIPTION)
+    assert_equal("twitter:description", parser.meta.get("twitter:description"), SITE_DESCRIPTION)
+    assert_equal("og:image:alt", parser.meta.get("og:image:alt"), SITE_IMAGE_ALT)
+    assert_equal("twitter:image:alt", parser.meta.get("twitter:image:alt"), SITE_IMAGE_ALT)
 
     assert_equal("JSON-LD script count", len(parser.json_ld_scripts), 1)
     payload = json.loads(parser.json_ld_scripts[0])
@@ -94,12 +111,11 @@ def main() -> None:
         fail("JSON-LD @graph must be a list")
 
     dataset = find_graph_node(graph, "Dataset")
+    website = find_graph_node(graph, "WebSite")
     item_list = find_graph_node(graph, "ItemList")
-    dataset_description = (
-        f"{source_count} source-backed /goal task contracts for coding agents, "
-        f"plus {seed_count} reusable seed patterns in the extended library."
-    )
-    assert_equal("Dataset description", dataset.get("description"), dataset_description)
+    assert_equal("WebSite name", website.get("name"), SITE_TITLE)
+    assert_equal("WebSite description", website.get("description"), SITE_DESCRIPTION)
+    assert_equal("Dataset description", dataset.get("description"), DATASET_DESCRIPTION)
     assert_equal(
         "Source-backed ItemList name",
         item_list.get("name"),
@@ -113,7 +129,7 @@ def main() -> None:
     assert_equal(
         "Source-backed ItemList description",
         item_list.get("description"),
-        f"{source_count} source-backed task contracts in the primary catalog.",
+        ITEMLIST_DESCRIPTION,
     )
 
     items = item_list.get("itemListElement")

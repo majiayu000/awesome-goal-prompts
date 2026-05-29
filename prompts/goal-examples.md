@@ -290,10 +290,16 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [AGENTS.md Goal Workflow](#x-agentsmd-goal-workflow) - Use AGENTS.md rules together with `/goal` so long-running work keeps repo-specific constraints. Source-backed.
 - [Plan-Then-Goal Execution](#x-plan-then-goal-execution) - Use plan mode to define the work, then start a new goal session to implement the plan completely. Source-backed.
 - [Measurable Goal Structure](#x-measurable-goal-structure) - Write goals with a clear target, proof requirement, and explicit limits. Source-backed.
+- [Interview-Driven Goal Prompt Generator](#x-interview-driven-goal-prompt-generator) - Use a meta prompt to interview the user with clarifying questions until 'done' can be expressed in specific, measurable, verifiable terms, then output a high-quality structured /goal prompt. Source-backed.
 - [Non-Interactive Goal Creation](#github-noninteractive-goal-creation) - Create and confirm an active goal during non-interactive Codex execution before continuing. Source-backed.
 - [Prep A Goal Workspace](#github-goalbuddy-workspace) - Prepare a goal workspace with board, notes, receipts, and an exact `/goal` command. Source-backed.
 - [Long Goal With Constraints](#github-claude-long-goal-template) - Use a longer goal template with repo path, constraints, plan pointer, and execution order. Source-backed.
 - [User-Facing Coherence Closure](#deadreckon-coherence-closure) - Finish a coherence pass so CLI help, docs, JSON/plain output, colors, prompts, flags, and next-action grammar stay aligned. Source-backed.
+- [Three Questions Goal Framework](#x-three-questions-goal-framework) - Write higher quality goals by explicitly answering three core questions: what needs to be done, how success will be measured, and what is off-limits. Source-backed.
+- [Explicit Stop Rules for Goal Loops](#x-explicit-stop-rules-goal-loops) - Prevent infinite loops, cost overruns, and unsafe behavior in autonomous /goal executions by defining clear, explicit stop conditions and escalation rules. Source-backed.
+- [Dual-Model Evaluator Loop for Goals](#x-dual-model-evaluator-goal-loop) - Run long /goal sessions reliably and cost-effectively by using a strong worker model for execution paired with a cheap fast evaluator model (typically Haiku) that periodically judges progress against the goal criteria and decides whether to continue or stop. Source-backed.
+- [CLAUDE.md + Goal Workflow](#x-claude-md-goal-workflow) - Combine a persistent project-level CLAUDE.md (or AGENTS.md) file containing rules, standards, and context with /goal commands so long-running autonomous agent work stays aligned with repository-specific constraints and learned lessons. Source-backed.
+- [Goal Ledger for Long-Running Runs](#x-goal-ledger) - Maintain a live, browser-viewable HTML progress ledger during extended /goal executions to provide visibility, persistent memory, decision logging, and self-reflection, reducing drift in long autonomous sessions. Source-backed.
 
 ### migration
 - [Visual Migration With Playwright](#codex-visual-migration-playwright) - Migrate a project while preserving screen output and checking it with Playwright. Source-backed.
@@ -12627,6 +12633,56 @@ STOP RULES:
 - Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
 ```
 
+<a id="x-interview-driven-goal-prompt-generator"></a>
+### Interview-Driven Goal Prompt Generator
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Use a meta prompt to interview the user with clarifying questions until 'done' can be expressed in specific, measurable, verifiable terms, then output a high-quality structured /goal prompt.
+- Verification: `generated goal contains clear, binary, verifiable DONE WHEN criteria after clarification interview`
+- Source: [@itsolelehmann on X](https://x.com/itsolelehmann/status/2054649363234992401)
+- Source type: `x-post`
+- Evidence: Write me a /goal prompt. Ask me what I'm trying to do first, then keep asking follow-up questions until you can describe 'done' in specific, measurable terms.
+- Evidence summary: Write me a /goal prompt. Ask me what I'm trying to do first, then keep asking follow-up questions until you can describe 'done' in specific, measurable terms.; source: @itsolelehmann on X; type: x-post; verification: generated goal contains clear, binary, verifiable DONE WHEN criteria after clarification interview
+
+```text
+/goal
+GOAL:
+Complete Interview-Driven Goal Prompt Generator for a coding-agent workflow repository: Use a meta prompt to interview the user with clarifying questions until 'done' can be expressed in specific, measurable, verifiable terms, then output a high-quality structured /goal prompt.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `generated goal contains clear, binary, verifiable DONE WHEN criteria after clarification interview`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Use a meta prompt to interview the user with clarifying questions until 'done' can be expressed in specific, measurable, verifiable terms, then output a high-quality structured /goal prompt.
+- The verification command or evidence path succeeds: `generated goal contains clear, binary, verifiable DONE WHEN criteria after clarification interview`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `generated goal contains clear, binary, verifiable DONE WHEN criteria after clarification interview` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
 <a id="reddit-billing-empty-state"></a>
 ### Billing Empty State Root Cause
 
@@ -15554,6 +15610,256 @@ DONE WHEN:
 
 VERIFY:
 - Run `objective names outcome, evidence, success threshold, scope boundaries, and stop condition before create_goal` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="x-three-questions-goal-framework"></a>
+### Three Questions Goal Framework
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Write higher quality goals by explicitly answering three core questions: what needs to be done, how success will be measured, and what is off-limits.
+- Verification: `goal explicitly addresses what to do, how it will be verified as done, and clear boundaries`
+- Source: [@aashatwt on X](https://x.com/aashatwt/status/2054810622131585515)
+- Source type: `x-post`
+- Evidence: A good /goal prompt answers these three questions: What needs to be done? How will we know it's done? What's off-limits?
+- Evidence summary: A good /goal prompt answers these three questions: What needs to be done? How will we know it's done? What's off-limits?; source: @aashatwt on X; type: x-post; verification: goal explicitly addresses what to do, how it will be verified as done, and clear boundaries
+
+```text
+/goal
+GOAL:
+Complete Three Questions Goal Framework for a coding-agent workflow repository: Write higher quality goals by explicitly answering three core questions: what needs to be done, how success will be measured, and what is off-limits.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `goal explicitly addresses what to do, how it will be verified as done, and clear boundaries`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Write higher quality goals by explicitly answering three core questions: what needs to be done, how success will be measured, and what is off-limits.
+- The verification command or evidence path succeeds: `goal explicitly addresses what to do, how it will be verified as done, and clear boundaries`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `goal explicitly addresses what to do, how it will be verified as done, and clear boundaries` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="x-explicit-stop-rules-goal-loops"></a>
+### Explicit Stop Rules for Goal Loops
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Prevent infinite loops, cost overruns, and unsafe behavior in autonomous /goal executions by defining clear, explicit stop conditions and escalation rules.
+- Verification: `goal prompt contains a dedicated STOP RULES section with concrete halt conditions (turns, cost, repeated failures, risk triggers)`
+- Source: [@_avichawla on X](https://x.com/_avichawla/status/2055930732930122158)
+- Source type: `x-post`
+- Evidence: Without strong stop rules a slightly wrong condition loops forever
+- Evidence summary: Without strong stop rules a slightly wrong condition loops forever; source: @_avichawla on X; type: x-post; verification: goal prompt contains a dedicated STOP RULES section with concrete halt conditions (turns, cost, repeated failures, risk triggers)
+
+```text
+/goal
+GOAL:
+Complete Explicit Stop Rules for Goal Loops for a coding-agent workflow repository: Prevent infinite loops, cost overruns, and unsafe behavior in autonomous /goal executions by defining clear, explicit stop conditions and escalation rules.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `goal prompt contains a dedicated STOP RULES section with concrete halt conditions (turns, cost, repeated failures, risk triggers)`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Prevent infinite loops, cost overruns, and unsafe behavior in autonomous /goal executions by defining clear, explicit stop conditions and escalation rules.
+- The verification command or evidence path succeeds: `goal prompt contains a dedicated STOP RULES section with concrete halt conditions (turns, cost, repeated failures, risk triggers)`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `goal prompt contains a dedicated STOP RULES section with concrete halt conditions (turns, cost, repeated failures, risk triggers)` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="x-dual-model-evaluator-goal-loop"></a>
+### Dual-Model Evaluator Loop for Goals
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Run long /goal sessions reliably and cost-effectively by using a strong worker model for execution paired with a cheap fast evaluator model (typically Haiku) that periodically judges progress against the goal criteria and decides whether to continue or stop.
+- Verification: `goal execution uses distinct worker and evaluator models with the evaluator checking against explicit DONE WHEN conditions`
+- Source: [@_avichawla on X](https://x.com/_avichawla/status/2055930732930122158)
+- Source type: `x-post`
+- Evidence: worker model + cheap Haiku evaluator loop for goal completion decisions
+- Evidence summary: worker model + cheap Haiku evaluator loop for goal completion decisions; source: @_avichawla on X; type: x-post; verification: goal execution uses distinct worker and evaluator models with the evaluator checking against explicit DONE WHEN conditions
+
+```text
+/goal
+GOAL:
+Complete Dual-Model Evaluator Loop for Goals for a coding-agent workflow repository: Run long /goal sessions reliably and cost-effectively by using a strong worker model for execution paired with a cheap fast evaluator model (typically Haiku) that periodically judges progress against the goal criteria and decides whether to continue or stop.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `goal execution uses distinct worker and evaluator models with the evaluator checking against explicit DONE WHEN conditions`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Run long /goal sessions reliably and cost-effectively by using a strong worker model for execution paired with a cheap fast evaluator model (typically Haiku) that periodically judges progress against the goal criteria and decides whether to continue or stop.
+- The verification command or evidence path succeeds: `goal execution uses distinct worker and evaluator models with the evaluator checking against explicit DONE WHEN conditions`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `goal execution uses distinct worker and evaluator models with the evaluator checking against explicit DONE WHEN conditions` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="x-claude-md-goal-workflow"></a>
+### CLAUDE.md + Goal Workflow
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Combine a persistent project-level CLAUDE.md (or AGENTS.md) file containing rules, standards, and context with /goal commands so long-running autonomous agent work stays aligned with repository-specific constraints and learned lessons.
+- Verification: `CLAUDE.md is present and referenced; /goal executions respect the documented rules and patterns`
+- Source: [@nateherk on X](https://x.com/nateherk/status/2059377638896971985)
+- Source type: `x-post`
+- Evidence: CLAUDE.md as persistent context paired with /goal for autonomous execution
+- Evidence summary: CLAUDE.md as persistent context paired with /goal for autonomous execution; source: @nateherk on X; type: x-post; verification: CLAUDE.md is present and referenced; /goal executions respect the documented rules and patterns
+
+```text
+/goal
+GOAL:
+Complete CLAUDE.md + Goal Workflow for a coding-agent workflow repository: Combine a persistent project-level CLAUDE.md (or AGENTS.md) file containing rules, standards, and context with /goal commands so long-running autonomous agent work stays aligned with repository-specific constraints and learned lessons.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `CLAUDE.md is present and referenced; /goal executions respect the documented rules and patterns`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Combine a persistent project-level CLAUDE.md (or AGENTS.md) file containing rules, standards, and context with /goal commands so long-running autonomous agent work stays aligned with repository-specific constraints and learned lessons.
+- The verification command or evidence path succeeds: `CLAUDE.md is present and referenced; /goal executions respect the documented rules and patterns`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `CLAUDE.md is present and referenced; /goal executions respect the documented rules and patterns` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="x-goal-ledger"></a>
+### Goal Ledger for Long-Running Runs
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Maintain a live, browser-viewable HTML progress ledger during extended /goal executions to provide visibility, persistent memory, decision logging, and self-reflection, reducing drift in long autonomous sessions.
+- Verification: `an updatable HTML ledger file is created and actively maintained by the agent throughout the goal run`
+- Source: [@KingBootoshi on X](https://x.com/KingBootoshi/status/2056876283204866293)
+- Source type: `x-post`
+- Evidence: single-file HTML progress tracker and ledger for /goal runs
+- Evidence summary: single-file HTML progress tracker and ledger for /goal runs; source: @KingBootoshi on X; type: x-post; verification: an updatable HTML ledger file is created and actively maintained by the agent throughout the goal run
+
+```text
+/goal
+GOAL:
+Complete Goal Ledger for Long-Running Runs for a coding-agent workflow repository: Maintain a live, browser-viewable HTML progress ledger during extended /goal executions to provide visibility, persistent memory, decision logging, and self-reflection, reducing drift in long autonomous sessions.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `an updatable HTML ledger file is created and actively maintained by the agent throughout the goal run`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Maintain a live, browser-viewable HTML progress ledger during extended /goal executions to provide visibility, persistent memory, decision logging, and self-reflection, reducing drift in long autonomous sessions.
+- The verification command or evidence path succeeds: `an updatable HTML ledger file is created and actively maintained by the agent throughout the goal run`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `an updatable HTML ledger file is created and actively maintained by the agent throughout the goal run` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 
