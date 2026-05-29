@@ -3061,3 +3061,15 @@ source_url = "https://github.com/openai/skills/blob/main/skills/.curated/define-
 source_name = "OpenAI define-goal skill"
 source_type = "tool-readme"
 evidence = "Before create_goal, the objective should answer"
+
+[[entries]]
+id = "x-three-questions-goal-framework"
+category = "workflow"
+title = "Three Questions Goal Framework"
+intent = "Write higher quality goals by explicitly answering three core questions: what needs to be done, how success will be measured, and what is off-limits."
+verify = "goal explicitly addresses what to do, how it will be verified as done, and clear boundaries"
+origin = "source-backed"
+source_url = "https://x.com/aashatwt/status/2054810622131585515"
+source_name = "@aashatwt on X"
+source_type = "x-post"
+evidence = "A good /goal prompt answers these three questions: What needs to be done? How will we know it's done? What's off-limits?"
