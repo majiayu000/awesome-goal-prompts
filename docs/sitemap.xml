@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/</loc>
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://majiayu000.github.io/awesome-goal-prompts/?lang=en"/>
@@ -12,12 +12,18 @@
   </url>
   <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/docs.html</loc>
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://majiayu000.github.io/awesome-goal-prompts/docs.html?lang=en"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://majiayu000.github.io/awesome-goal-prompts/docs.html?lang=zh"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://majiayu000.github.io/awesome-goal-prompts/docs.html"/>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/404.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
   </url>
   <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/#api-contract-drift-audit</loc>
@@ -1777,4 +1783,36 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+  <!-- 混合渲染静态 SEO 页面（方案 A 第一批） -->
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-auth-tests-lint.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/codex-visual-migration-playwright.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/codex-plan-milestone-prototype.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/hermes-feature-port-ci-green.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/codex-eval-prompt-optimization.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- 更多静态页面见 docs/goals/sitemap-goals.xml（后续将自动化合并） -->
 </urlset>
