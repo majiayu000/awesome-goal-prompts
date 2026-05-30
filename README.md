@@ -16,6 +16,16 @@ The public catalog starts with **127** source-backed examples drawn from officia
 
 ![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
 
+## Try It In 60 Seconds
+
+1. **Open the searchable catalog** at https://majiayu000.github.io/awesome-goal-prompts/, or pick any contract straight from this README.
+2. **Copy the full `/goal` contract text** — the whole block, including `GOAL`, `CONTEXT`, `CONSTRAINTS`, `DONE WHEN`, `VERIFY`, `OUTPUT`, and `STOP RULES`.
+3. **Paste it to your coding agent** (Claude Code, Codex, or Cursor) and let it run.
+
+First example — [Auth Tests And Lint Clean](prompts/source-backed-goals.md#claude-auth-tests-lint): use it when your auth tests and lint are both red and "fix auth" keeps inviting API churn.
+
+**Expected outcome:** the agent keeps working until the auth tests pass and lint is clean, then stops only after pasting the passing command output as evidence. If it cannot reach that state, the stop rules tell it to report instead of editing further.
+
 ## Why This Exists
 
 Most prompt lists stop at catchy instructions. This catalog is for the moment after an agent starts drifting: the task is real, the repo has constraints, and "try harder" is not enough. Each contract gives the agent a narrow job, required context, explicit boundaries, proof, and stop rules.
@@ -46,6 +56,7 @@ The provenance-backed library stays below as the primary reference catalog.
 
 ## Contents
 
+- [Try It In 60 Seconds](#try-it-in-60-seconds)
 - [Why This Exists](#why-this-exists)
 - [Start With Ten Rescue Prompts](#start-with-ten-rescue-prompts)
 - [Source-Backed Catalog](#source-backed-catalog)
