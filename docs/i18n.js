@@ -3,8 +3,8 @@
 
 const copy = {
   en: {
-    pageTitle: "The Contract Codex · Awesome Goal Prompts",
-    metaDescription: "The Contract Codex: source-backed /goal task contracts for coding agents, with seed patterns separated into an extended library.",
+    pageTitle: "Awesome Goal Prompts - /goal contracts for coding agents",
+    metaDescription: "300+ runnable /goal contracts for Codex, Claude Code, Cursor, and other coding agents.",
     homeAria: "The Contract Codex home",
     repoLinksAria: "Repository links",
     languageAria: "Language",
@@ -193,8 +193,8 @@ const copy = {
     },
   },
   zh: {
-    pageTitle: "Goal Prompt 示例库 · Awesome Goal Prompts",
-    metaDescription: "有公开来源的 /goal 任务合同库，seed patterns 独立放在扩展库里。",
+    pageTitle: "Awesome Goal Prompts · /goal 任务合同库",
+    metaDescription: "300+ 个可运行的 /goal 任务合同，适用于 Codex、Claude Code、Cursor 等 coding agents。",
     homeAria: "Goal Prompt 示例库首页",
     repoLinksAria: "仓库链接",
     languageAria: "语言",

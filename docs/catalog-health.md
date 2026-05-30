@@ -2,8 +2,8 @@
 
 ## Summary
 
-- Total entries: 321
-- Source-backed entries: 121
+- Total entries: 327
+- Source-backed entries: 127
 - Seed entries: 200
 - Categories: 32
 - Search eval cases: 25/25 passing
@@ -45,7 +45,7 @@
 | security-appsec | 2 | 12 | 17% |
 | security-ops | 1 | 11 | 9% |
 | testing | 20 | 20 | 100% |
-| workflow | 10 | 12 | 83% |
+| workflow | 16 | 18 | 89% |
 
 ## Source Types
 
@@ -64,7 +64,7 @@
 | third-party-tutorial | 21 |
 | tool-readme | 11 |
 | video-summary | 2 |
-| x-post | 8 |
+| x-post | 14 |
 
 ## Search Evaluation
 

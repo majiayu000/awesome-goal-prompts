@@ -4,14 +4,14 @@
 
 When Claude Code, Codex, Cursor, or another coding agent starts making broad edits, paste a contract that says exactly what to inspect, what not to touch, how to verify, and when to stop.
 
-This repo keeps <!-- generated:total-start -->**321**<!-- generated:total-end --> runnable `/goal` contracts for engineering work. Start with the provenance-backed rescue prompts below; use seed patterns only when you need a raw shape to adapt.
+This repo keeps <!-- generated:total-start -->**300+**<!-- generated:total-end --> runnable `/goal` contracts for engineering work. Start with the provenance-backed rescue prompts below; use seed patterns only when you need a raw shape to adapt.
 
 **Search the full catalog:** https://majiayu000.github.io/awesome-goal-prompts/
 
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk. This repo turns that contract shape into a catalog you can search, inspect, adapt, and copy.
 
 <!-- generated:stats-start -->
-The public catalog starts with **121** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
+The public catalog starts with **127** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
 <!-- generated:stats-end -->
 
 ![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
@@ -70,10 +70,16 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [AGENTS.md Goal Workflow](prompts/source-backed-goals.md#x-agentsmd-goal-workflow) - Use AGENTS.md rules together with `/goal` so long-running work keeps repo-specific constraints.
 - [Plan-Then-Goal Execution](prompts/source-backed-goals.md#x-plan-then-goal-execution) - Use plan mode to define the work, then start a new goal session to implement the plan completely.
 - [Measurable Goal Structure](prompts/source-backed-goals.md#x-measurable-goal-structure) - Write goals with a clear target, proof requirement, and explicit limits.
+- [Interview-Driven Goal Prompt Generator](prompts/source-backed-goals.md#x-interview-driven-goal-prompt-generator) - Use a meta prompt to interview the user with clarifying questions until 'done' can be expressed in specific, measurable, verifiable terms, then output a high-quality structured /goal prompt.
 - [Non-Interactive Goal Creation](prompts/source-backed-goals.md#github-noninteractive-goal-creation) - Create and confirm an active goal during non-interactive Codex execution before continuing.
 - [Prep A Goal Workspace](prompts/source-backed-goals.md#github-goalbuddy-workspace) - Prepare a goal workspace with board, notes, receipts, and an exact `/goal` command.
 - [Long Goal With Constraints](prompts/source-backed-goals.md#github-claude-long-goal-template) - Use a longer goal template with repo path, constraints, plan pointer, and execution order.
 - [User-Facing Coherence Closure](prompts/source-backed-goals.md#deadreckon-coherence-closure) - Finish a coherence pass so CLI help, docs, JSON/plain output, colors, prompts, flags, and next-action grammar stay aligned.
+- [Three Questions Goal Framework](prompts/source-backed-goals.md#x-three-questions-goal-framework) - Write higher quality goals by explicitly answering three core questions: what needs to be done, how success will be measured, and what is off-limits.
+- [Explicit Stop Rules for Goal Loops](prompts/source-backed-goals.md#x-explicit-stop-rules-goal-loops) - Prevent infinite loops, cost overruns, and unsafe behavior in autonomous /goal executions by defining clear, explicit stop conditions and escalation rules.
+- [Dual-Model Evaluator Loop for Goals](prompts/source-backed-goals.md#x-dual-model-evaluator-goal-loop) - Run long /goal sessions reliably and cost-effectively by using a strong worker model for execution paired with a cheap fast evaluator model (typically Haiku) that periodically judges progress against the goal criteria and decides whether to continue or stop.
+- [CLAUDE.md + Goal Workflow](prompts/source-backed-goals.md#x-claude-md-goal-workflow) - Combine a persistent project-level CLAUDE.md (or AGENTS.md) file containing rules, standards, and context with /goal commands so long-running autonomous agent work stays aligned with repository-specific constraints and learned lessons.
+- [Goal Ledger for Long-Running Runs](prompts/source-backed-goals.md#x-goal-ledger) - Maintain a live, browser-viewable HTML progress ledger during extended /goal executions to provide visibility, persistent memory, decision logging, and self-reflection, reducing drift in long autonomous sessions.
 
 ### migration
 - [Visual Migration With Playwright](prompts/source-backed-goals.md#codex-visual-migration-playwright) - Migrate a project while preserving screen output and checking it with Playwright.

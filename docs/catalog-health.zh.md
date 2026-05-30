@@ -2,8 +2,8 @@
 
 ## 概览
 
-- 条目总数：321
-- 有公开来源的条目：121
+- 条目总数：327
+- 有公开来源的条目：127
 - Seed 条目：200
 - 分类数：32
 - 搜索评测：25/25 通过
@@ -45,7 +45,7 @@
 | security-appsec | 2 | 12 | 17% |
 | security-ops | 1 | 11 | 9% |
 | testing | 20 | 20 | 100% |
-| workflow | 10 | 12 | 83% |
+| workflow | 16 | 18 | 89% |
 
 ## 来源类型分布
 
@@ -64,7 +64,7 @@
 | third-party-tutorial | 21 |
 | tool-readme | 11 |
 | video-summary | 2 |
-| x-post | 8 |
+| x-post | 14 |
 
 ## 搜索评测
 

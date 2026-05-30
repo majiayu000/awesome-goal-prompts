@@ -14,6 +14,15 @@ import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SITE_URL = "https://majiayu000.github.io/awesome-goal-prompts/"
+SITE_TITLE = "Awesome Goal Prompts - /goal contracts for coding agents"
+SITE_DESCRIPTION = "300+ runnable /goal contracts for Codex, Claude Code, Cursor, and other coding agents."
+SITE_IMAGE_ALT = "Awesome Goal Prompts - searchable goal contracts for coding agents."
+DATASET_DESCRIPTION = (
+    "A searchable catalog of runnable /goal task contracts for coding agents, "
+    "with source-backed examples and reusable seed patterns."
+)
+ITEMLIST_DESCRIPTION = "Source-backed task contracts in the primary catalog."
 SOURCE_DIR = ROOT / "data" / "source"
 
 
@@ -250,15 +259,13 @@ def build_catalog_section(entries: list[dict[str, str | None]]) -> str:
 
 
 def build_total_section(entries: list[dict[str, str | None]]) -> str:
-    return f"**{len(entries)}**"
+    bucket = max(100, (len(entries) // 100) * 100)
+    return f"**{bucket}+**"
 
 
 def build_json_ld(entries: list[dict[str, str | None]]) -> str:
-    total = len(entries)
     source_entries = [entry for entry in entries if entry["origin"] == "source-backed"]
     source_backed = len(source_entries)
-    seed = total - source_backed
-    site_url = "https://majiayu000.github.io/awesome-goal-prompts/"
     creator = {"@type": "Person", "name": "majiayu000", "url": "https://github.com/majiayu000"}
     keywords = [
         "coding agents",
@@ -275,28 +282,25 @@ def build_json_ld(entries: list[dict[str, str | None]]) -> str:
         "@graph": [
             {
                 "@type": "WebSite",
-                "@id": f"{site_url}#website",
-                "url": site_url,
-                "name": "The Contract Codex · Awesome Goal Prompts",
-                "description": "A searchable catalog of runnable /goal task contracts for coding agents.",
+                "@id": f"{SITE_URL}#website",
+                "url": SITE_URL,
+                "name": SITE_TITLE,
+                "description": SITE_DESCRIPTION,
                 "inLanguage": ["en", "zh-CN"],
                 "publisher": creator,
                 "potentialAction": {
                     "@type": "SearchAction",
-                    "target": f"{site_url}?q={{search_term_string}}",
+                    "target": f"{SITE_URL}?q={{search_term_string}}",
                     "query-input": "required name=search_term_string",
                 },
             },
             {
                 "@type": "Dataset",
-                "@id": f"{site_url}#dataset",
+                "@id": f"{SITE_URL}#dataset",
                 "name": "Awesome Goal Prompts",
                 "alternateName": "The Contract Codex",
-                "description": (
-                    f"{source_backed} source-backed /goal task contracts for coding agents, "
-                    f"plus {seed} reusable seed patterns in the extended library."
-                ),
-                "url": site_url,
+                "description": DATASET_DESCRIPTION,
+                "url": SITE_URL,
                 "keywords": keywords,
                 "license": "https://github.com/majiayu000/awesome-goal-prompts/blob/main/LICENSE",
                 "isAccessibleForFree": True,
@@ -307,16 +311,16 @@ def build_json_ld(entries: list[dict[str, str | None]]) -> str:
             },
             {
                 "@type": "ItemList",
-                "@id": f"{site_url}#contracts",
+                "@id": f"{SITE_URL}#contracts",
                 "name": "Source-Backed Goal Prompt Contracts",
-                "description": f"{source_backed} source-backed task contracts in the primary catalog.",
+                "description": ITEMLIST_DESCRIPTION,
                 "numberOfItems": source_backed,
                 "itemListOrder": "https://schema.org/ItemListOrderAscending",
                 # Keep the linked ItemList scoped to evidence-backed catalog entries;
                 # seed patterns are counted in Dataset metadata but omitted here.
                 "itemListElement": [
                     {
-                        "@type": "ListItem", "position": index, "url": f"{site_url}#{entry['slug']}",
+                        "@type": "ListItem", "position": index, "url": f"{SITE_URL}#{entry['slug']}",
                         "name": entry["title"], "description": entry["intent"],
                     }
                     for index, entry in enumerate(source_entries, start=1)
@@ -328,31 +332,32 @@ def build_json_ld(entries: list[dict[str, str | None]]) -> str:
 
 
 def update_static_metadata(entries: list[dict[str, str | None]]) -> None:
-    total = len(entries)
-    source_backed = sum(1 for entry in entries if entry["origin"] == "source-backed")
-    seed = total - source_backed
     index_path = ROOT / "docs" / "index.html"
     index_text = index_path.read_text(encoding="utf-8")
-    description = (
-        f"{source_backed} source-backed /goal contracts for coding agents, "
-        f"plus {seed} reusable seed patterns in the extended library."
-    )
-    short_description = (
-        f"{source_backed} source-backed /goal contracts for coding agents."
-    )
-    image_alt = f"The Contract Codex - {source_backed} source-backed goal contracts for coding agents."
     replacements = {
+        r'<meta name="description" content="[^"]*">': (
+            f'<meta name="description" content="{SITE_DESCRIPTION}">'
+        ),
+        r"<title>.*?</title>": (
+            f"<title>{SITE_TITLE}</title>"
+        ),
+        r'<meta property="og:title" content="[^"]*">': (
+            f'<meta property="og:title" content="{SITE_TITLE}">'
+        ),
         r'<meta property="og:description" content="[^"]*">': (
-            f'<meta property="og:description" content="{description}">'
+            f'<meta property="og:description" content="{SITE_DESCRIPTION}">'
         ),
         r'<meta property="og:image:alt" content="[^"]*">': (
-            f'<meta property="og:image:alt" content="{image_alt}">'
+            f'<meta property="og:image:alt" content="{SITE_IMAGE_ALT}">'
+        ),
+        r'<meta name="twitter:title" content="[^"]*">': (
+            f'<meta name="twitter:title" content="{SITE_TITLE}">'
         ),
         r'<meta name="twitter:description" content="[^"]*">': (
-            f'<meta name="twitter:description" content="{short_description}">'
+            f'<meta name="twitter:description" content="{SITE_DESCRIPTION}">'
         ),
         r'<meta name="twitter:image:alt" content="[^"]*">': (
-            f'<meta name="twitter:image:alt" content="{image_alt}">'
+            f'<meta name="twitter:image:alt" content="{SITE_IMAGE_ALT}">'
         ),
         r'<script type="application/ld\+json">.*?</script>': (
             f'<script type="application/ld+json">{build_json_ld(entries)}</script>'
@@ -368,7 +373,7 @@ def update_static_metadata(entries: list[dict[str, str | None]]) -> None:
     docs_text = docs_path.read_text(encoding="utf-8")
     docs_text, count = re.subn(
         r'<meta property="og:image:alt" content="[^"]*">',
-        f'<meta property="og:image:alt" content="{image_alt}">',
+        f'<meta property="og:image:alt" content="{SITE_IMAGE_ALT}">',
         docs_text,
         count=1,
     )
