@@ -160,22 +160,22 @@ Complete Clean Worktree File Budget for a repository maintenance task: Keep the 
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect dead code, dependencies, file structure, scripts, and PR notes.
-- Establish a baseline by running or locating evidence for: `git status --short && file length check`.
+- Establish a baseline by running or locating evidence for: `git status --short &amp;&amp; file length check`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
 - Do not weaken tests, delete assertions, or mask errors to make verification pass.
-- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Respect the repository&#x27;s AGENTS.md/CLAUDE.md instructions and existing patterns.
 - Do not delete files, dependencies, or scripts without evidence that they are unused.
 - Keep every proposed removal tied to a specific verification step.
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Keep the worktree clean and enforce a source file size budget.
-- The verification command or evidence path succeeds: `git status --short && file length check`.
+- The verification command or evidence path succeeds: `git status --short &amp;&amp; file length check`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `git status --short && file length check` or the closest repo-local equivalent if the exact command is not available.
+- Run `git status --short &amp;&amp; file length check` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 

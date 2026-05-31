@@ -160,22 +160,22 @@ Complete Tests And Lint Completion for a project with failing or missing verific
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect test suites, lint config, CI logs, coverage reports, and failing output.
-- Establish a baseline by running or locating evidence for: `tests pass && lint clean`.
+- Establish a baseline by running or locating evidence for: `tests pass &amp;&amp; lint clean`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
 - Do not weaken tests, delete assertions, or mask errors to make verification pass.
-- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Respect the repository&#x27;s AGENTS.md/CLAUDE.md instructions and existing patterns.
 - Do not weaken lint, typecheck, or test rules to create a green result.
 - Fix production or fixture causes before changing expectations.
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Run a `/goal` loop until all tests pass and lint is clean.
-- The verification command or evidence path succeeds: `tests pass && lint clean`.
+- The verification command or evidence path succeeds: `tests pass &amp;&amp; lint clean`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `tests pass && lint clean` or the closest repo-local equivalent if the exact command is not available.
+- Run `tests pass &amp;&amp; lint clean` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 

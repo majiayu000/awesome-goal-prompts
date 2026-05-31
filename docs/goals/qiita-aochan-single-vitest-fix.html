@@ -160,22 +160,22 @@ Complete Single Vitest Case Fix for a project with failing or missing verificati
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect test suites, lint config, CI logs, coverage reports, and failing output.
-- Establish a baseline by running or locating evidence for: `pnpm exec vitest run -t "increments score only on correct answer"`.
+- Establish a baseline by running or locating evidence for: `pnpm exec vitest run -t &quot;increments score only on correct answer&quot;`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
 - Do not weaken tests, delete assertions, or mask errors to make verification pass.
-- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Respect the repository&#x27;s AGENTS.md/CLAUDE.md instructions and existing patterns.
 - Do not weaken lint, typecheck, or test rules to create a green result.
 - Fix production or fixture causes before changing expectations.
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Fix a quiz application until one named Vitest case passes.
-- The verification command or evidence path succeeds: `pnpm exec vitest run -t "increments score only on correct answer"`.
+- The verification command or evidence path succeeds: `pnpm exec vitest run -t &quot;increments score only on correct answer&quot;`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `pnpm exec vitest run -t "increments score only on correct answer"` or the closest repo-local equivalent if the exact command is not available.
+- Run `pnpm exec vitest run -t &quot;increments score only on correct answer&quot;` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 
@@ -195,7 +195,7 @@ STOP RULES:
     <h2>来源与证据</h2>
     <div class="source">
       <p><strong>原始来源：</strong> <a href="https://qiita.com/Aochan0604/items/8cc5f28901455097095c" target="_blank" rel="noopener">Qiita Aochan0604</a></p>
-      <p><strong>证据摘要：</strong> pnpm exec vitest run -t; source: Qiita Aochan0604; type: third-party-tutorial; verification: pnpm exec vitest run -t "increments score only on correct answer"</p>
+      <p><strong>证据摘要：</strong> pnpm exec vitest run -t; source: Qiita Aochan0604; type: third-party-tutorial; verification: pnpm exec vitest run -t &quot;increments score only on correct answer&quot;</p>
     </div>
   </div>
 
