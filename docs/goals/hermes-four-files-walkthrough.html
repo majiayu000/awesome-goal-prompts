@@ -160,22 +160,22 @@ Complete Four Files Walkthrough for a coding-agent workflow repository: Create f
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect goal text, progress logs, branch state, and verification artifacts.
-- Establish a baseline by running or locating evidence for: `for i in 1 2 3 4; do test "$(cat /tmp/note_$i.txt)" = "$i"; done`.
+- Establish a baseline by running or locating evidence for: `for i in 1 2 3 4; do test &quot;$(cat /tmp/note_$i.txt)&quot; = &quot;$i&quot;; done`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
 - Do not weaken tests, delete assertions, or mask errors to make verification pass.
-- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Respect the repository&#x27;s AGENTS.md/CLAUDE.md instructions and existing patterns.
 - Do not claim a goal is complete without a current audit of the stated contract.
 - Pause if the goal text, branch state, or permissions are inconsistent.
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Create four note files across turns and verify each contains its number.
-- The verification command or evidence path succeeds: `for i in 1 2 3 4; do test "$(cat /tmp/note_$i.txt)" = "$i"; done`.
+- The verification command or evidence path succeeds: `for i in 1 2 3 4; do test &quot;$(cat /tmp/note_$i.txt)&quot; = &quot;$i&quot;; done`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `for i in 1 2 3 4; do test "$(cat /tmp/note_$i.txt)" = "$i"; done` or the closest repo-local equivalent if the exact command is not available.
+- Run `for i in 1 2 3 4; do test &quot;$(cat /tmp/note_$i.txt)&quot; = &quot;$i&quot;; done` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 
@@ -195,7 +195,7 @@ STOP RULES:
     <h2>来源与证据</h2>
     <div class="source">
       <p><strong>原始来源：</strong> <a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/goals" target="_blank" rel="noopener">Hermes docs</a></p>
-      <p><strong>证据摘要：</strong> Create four files; source: Hermes docs; type: official-goal; verification: for i in 1 2 3 4; do test "$(cat /tmp/note_$i.txt)" = "$i"; done</p>
+      <p><strong>证据摘要：</strong> Create four files; source: Hermes docs; type: official-goal; verification: for i in 1 2 3 4; do test &quot;$(cat /tmp/note_$i.txt)&quot; = &quot;$i&quot;; done</p>
     </div>
   </div>
 

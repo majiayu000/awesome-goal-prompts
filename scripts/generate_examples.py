@@ -23,6 +23,7 @@ DATASET_DESCRIPTION = (
     "with source-backed examples and reusable seed patterns."
 )
 ITEMLIST_DESCRIPTION = "Source-backed task contracts in the primary catalog."
+STATIC_CONTRACT_URL_COUNT = 25
 SOURCE_DIR = ROOT / "data" / "source"
 
 
@@ -277,6 +278,12 @@ def build_json_ld(entries: list[dict[str, str | None]]) -> str:
         "task contracts",
         "goal prompts",
     ]
+
+    def item_url(index: int, entry: dict[str, str | None]) -> str:
+        if index <= STATIC_CONTRACT_URL_COUNT:
+            return f"{SITE_URL}goals/{entry['slug']}.html"
+        return f"{SITE_URL}#{entry['slug']}"
+
     graph = {
         "@context": "https://schema.org",
         "@graph": [
@@ -320,7 +327,7 @@ def build_json_ld(entries: list[dict[str, str | None]]) -> str:
                 # seed patterns are counted in Dataset metadata but omitted here.
                 "itemListElement": [
                     {
-                        "@type": "ListItem", "position": index, "url": f"{SITE_URL}#{entry['slug']}",
+                        "@type": "ListItem", "position": index, "url": item_url(index, entry),
                         "name": entry["title"], "description": entry["intent"],
                     }
                     for index, entry in enumerate(source_entries, start=1)

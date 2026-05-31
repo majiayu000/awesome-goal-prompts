@@ -160,22 +160,22 @@ Complete Auth Dependency Injection Refactor for a refactoring task: Refactor aut
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect the target module, call sites, public API, tests, and compatibility notes.
-- Establish a baseline by running or locating evidence for: `npm test -- auth && npm run coverage`.
+- Establish a baseline by running or locating evidence for: `npm test -- auth &amp;&amp; npm run coverage`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
 - Do not weaken tests, delete assertions, or mask errors to make verification pass.
-- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Respect the repository&#x27;s AGENTS.md/CLAUDE.md instructions and existing patterns.
 - Do not change public APIs, data formats, or user-visible behavior unless the goal requires it.
 - Keep behavior characterization tests before large internal changes.
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Refactor auth code to dependency injection while preserving tests, coverage, and public API.
-- The verification command or evidence path succeeds: `npm test -- auth && npm run coverage`.
+- The verification command or evidence path succeeds: `npm test -- auth &amp;&amp; npm run coverage`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `npm test -- auth && npm run coverage` or the closest repo-local equivalent if the exact command is not available.
+- Run `npm test -- auth &amp;&amp; npm run coverage` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 
