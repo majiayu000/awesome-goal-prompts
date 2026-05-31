@@ -16,3 +16,4 @@ User-agent: PerplexityBot
 Allow: /
 
 Sitemap: https://majiayu000.github.io/awesome-goal-prompts/sitemap.xml
+Sitemap: https://majiayu000.github.io/awesome-goal-prompts/goals/sitemap-goals.xml

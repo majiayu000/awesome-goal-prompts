@@ -32,6 +32,12 @@ jobs:
       - name: Regenerate catalog
         run: python3 scripts/generate_examples.py
 
+      - name: Validate static contract rendering
+        run: python3 scripts/validate_static_contracts.py
+
+      - name: Regenerate static contract pages
+        run: python3 scripts/generate_static_contracts.py --limit 25 --output docs/goals --sitemap
+
       - name: Validate generated metadata
         run: python3 scripts/validate_metadata.py
 
@@ -53,6 +59,7 @@ jobs:
             echo ""
             echo "::error::Generated files are out of date. Edit data/source/*.toml, then run:"
             echo "::error::  python3 scripts/generate_examples.py"
+            echo "::error::  python3 scripts/generate_static_contracts.py --limit 25 --output docs/goals --sitemap"
             echo "::error::  python3 scripts/generate_catalog_health.py"
             echo "::error::Commit the regenerated outputs alongside your data change. Do not hand-edit README catalog, data/examples.json, docs/examples.json, prompts/*.md, or docs/catalog-health.md."
             exit 1

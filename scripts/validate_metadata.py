@@ -23,6 +23,7 @@ DATASET_DESCRIPTION = (
     "with source-backed examples and reusable seed patterns."
 )
 ITEMLIST_DESCRIPTION = "Source-backed task contracts in the primary catalog."
+STATIC_CONTRACT_URL_COUNT = 25
 
 
 class IndexMetadataParser(HTMLParser):
@@ -140,6 +141,11 @@ def main() -> None:
     for position, (entry, item) in enumerate(zip(source_entries, items), start=1):
         if not isinstance(item, dict):
             fail(f"Source-backed ItemList item {position} must be an object")
+        expected_url = (
+            f"{SITE_URL}goals/{entry['slug']}.html"
+            if position <= STATIC_CONTRACT_URL_COUNT
+            else f"{SITE_URL}#{entry['slug']}"
+        )
         assert_equal(
             f"Source-backed ItemList item {position} position",
             item.get("position"),
@@ -148,7 +154,7 @@ def main() -> None:
         assert_equal(
             f"Source-backed ItemList item {position} url",
             item.get("url"),
-            f"{SITE_URL}#{entry['slug']}",
+            expected_url,
         )
         assert_equal(
             f"Source-backed ItemList item {position} name",
