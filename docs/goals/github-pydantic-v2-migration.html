@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pydantic V1 To V2 Migration · The Contract Codex</title>
+  <meta name="description" content="Migrate a project from Pydantic v1 to v2 while preserving API behavior.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://majiayu000.github.io/awesome-goal-prompts/goals/github-pydantic-v2-migration.html">
+  <link rel="icon" href="../assets/goal-map.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="The Contract Codex">
+  <meta property="og:title" content="Pydantic V1 To V2 Migration · The Contract Codex">
+  <meta property="og:description" content="Migrate a project from Pydantic v1 to v2 while preserving API behavior.">
+  <meta property="og:url" content="https://majiayu000.github.io/awesome-goal-prompts/goals/github-pydantic-v2-migration.html">
+  <meta property="og:image" content="https://majiayu000.github.io/awesome-goal-prompts/assets/og-image.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pydantic V1 To V2 Migration">
+  <meta name="twitter:description" content="Migrate a project from Pydantic v1 to v2 while preserving API behavior.">
+
+  <style>
+    :root {
+      --bg: #16140f;
+      --ink: #f4f1e9;
+      --muted: #9a9385;
+      --accent: #c4a77d;
+      --card: #1f1c17;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      line-height: 1.6;
+      padding: 40px 20px;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #3a3630;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .brand-mark {
+      background: var(--accent);
+      color: var(--bg);
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 18px;
+    }
+    h1 {
+      font-size: 28px;
+      margin: 0 0 8px;
+      line-height: 1.3;
+    }
+    .meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .badge {
+      font-size: 12px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: var(--card);
+      color: var(--muted);
+      border: 1px solid #3a3630;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .section h2 {
+      font-size: 15px;
+      color: var(--accent);
+      margin: 0 0 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .prompt-box {
+      background: var(--card);
+      border: 1px solid #3a3630;
+      border-radius: 8px;
+      padding: 24px;
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .source {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .source a {
+      color: var(--accent);
+    }
+    .footer {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid #3a3630;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .copy-btn {
+      float: right;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a href="../" class="brand">
+      <span class="brand-mark">/g</span>
+      <span>The Contract Codex</span>
+    </a>
+    <a href="../" style="color: var(--muted); font-size: 13px;">← 返回动态 Catalog</a>
+  </div>
+
+  <h1>Pydantic V1 To V2 Migration</h1>
+  <p style="font-size: 17px; color: var(--muted); margin-top: 4px;">Migrate a project from Pydantic v1 to v2 while preserving API behavior.</p>
+
+  <div class="meta">
+    <span class="badge">难度：advanced</span>
+    <span class="badge">分类：migration</span>
+    <span class="badge">来源：jailbreak-autoresearch docs</span>
+  </div>
+
+  <div class="section">
+    <h2>完整 Prompt（可直接复制）</h2>
+    <div style="position: relative;">
+      <button class="copy-btn" onclick="copyPrompt()">复制 Prompt</button>
+      <pre class="prompt-box" id="prompt-box">/goal
+GOAL:
+Complete Pydantic V1 To V2 Migration for a migration project: Migrate a project from Pydantic v1 to v2 while preserving API behavior.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect legacy code, target implementation, compatibility tests, visual snapshots, and migration notes.
+- Establish a baseline by running or locating evidence for: `pytest -q`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository&#x27;s AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Preserve existing user-visible behavior unless the goal explicitly names a behavior change.
+- Keep compatibility evidence for the old and new paths until the migration is verified.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Migrate a project from Pydantic v1 to v2 while preserving API behavior.
+- The verification command or evidence path succeeds: `pytest -q`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `pytest -q` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.</pre>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>来源与证据</h2>
+    <div class="source">
+      <p><strong>原始来源：</strong> <a href="https://github.com/davidondrej/jailbreak-autoresearch/blob/main/docs-slash-goal.md" target="_blank" rel="noopener">jailbreak-autoresearch docs</a></p>
+      <p><strong>证据摘要：</strong> Migrate this project from Pydantic v1 to v2; source: jailbreak-autoresearch docs; type: tool-readme; verification: pytest -q</p>
+    </div>
+  </div>
+
+
+  <div class="footer">
+    <p>
+      这是一个为 coding agent（Claude Code、Codex、Cursor 等）设计的可执行任务合同。<br>
+      想搜索更多、按难度/来源筛选？请使用 <a href="../">动态 Catalog</a>。
+    </p>
+    <p style="margin-top: 12px;">
+      来源：<a href="https://github.com/majiayu000/awesome-goal-prompts">GitHub - awesome-goal-prompts</a>
+    </p>
+  </div>
+
+  <script>
+    function copyPrompt() {
+      const text = document.getElementById('prompt-box').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btns = document.querySelectorAll('.copy-btn');
+        btns.forEach(b => {
+          const old = b.textContent;
+          b.textContent = '已复制 ✓';
+          setTimeout(() => b.textContent = old, 1600);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

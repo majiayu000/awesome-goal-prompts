@@ -23,7 +23,7 @@ DATASET_DESCRIPTION = (
     "with source-backed examples and reusable seed patterns."
 )
 ITEMLIST_DESCRIPTION = "Source-backed task contracts in the primary catalog."
-STATIC_CONTRACT_URL_COUNT = 25
+STATIC_CONTRACT_URL_COUNT = 80
 SOURCE_DIR = ROOT / "data" / "source"
 
 
