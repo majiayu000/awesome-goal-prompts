@@ -80,6 +80,7 @@ const els = {
   detailSource: document.querySelector("#detail-source"),
   detailSourceType: document.querySelector("#detail-source-type"),
   detailEvidence: document.querySelector("#detail-evidence"),
+  staticPage: document.querySelector("#static-page-link"),
   detailPrompt: document.querySelector("#detail-prompt"),
   validate: document.querySelector("#validate-button"),
   copy: document.querySelector("#copy-button"),
@@ -523,6 +524,17 @@ function isSafeHttpUrl(value) {
   }
 }
 
+function staticContractUrl(entry) {
+  if (!entry || !entry.static_path) {
+    return "";
+  }
+  if (!/^goals\/[a-z0-9-]+\.html$/.test(entry.static_path)) {
+    console.error("Invalid static_path for entry", entry.slug);
+    return "";
+  }
+  return entry.static_path;
+}
+
 function renderDetail() {
   const entry = state.selected;
   setText(els.copy, t("copyOriginal"));
@@ -534,6 +546,10 @@ function renderDetail() {
   if (!entry) {
     els.detailEmpty.classList.remove("hidden");
     els.detailCard.classList.add("hidden");
+    if (els.staticPage) {
+      els.staticPage.classList.add("hidden");
+      els.staticPage.removeAttribute("href");
+    }
     return;
   }
 
@@ -558,6 +574,17 @@ function renderDetail() {
   renderPlainList(els.detailConstraints, constraints, "§");
   renderVerifyList(els.detailVerifyList, verify);
   renderPlainList(els.detailStop, stopRules, "!");
+
+  const staticUrl = staticContractUrl(entry);
+  if (els.staticPage) {
+    if (staticUrl) {
+      els.staticPage.classList.remove("hidden");
+      els.staticPage.href = staticUrl;
+    } else {
+      els.staticPage.classList.add("hidden");
+      els.staticPage.removeAttribute("href");
+    }
+  }
 
   if (entry.source_url && entry.source_name && isSafeHttpUrl(entry.source_url)) {
     els.sourceRow.classList.remove("hidden");

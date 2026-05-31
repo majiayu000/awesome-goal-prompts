@@ -38,7 +38,7 @@ jobs:
         run: python3 scripts/validate_static_contracts.py
 
       - name: Regenerate static contract pages
-        run: python3 scripts/generate_static_contracts.py --limit 80 --output docs/goals
+        run: python3 scripts/generate_static_contracts.py --output docs/goals
 
       - name: Regenerate sitemap
         run: python3 scripts/generate_sitemap.py
@@ -60,14 +60,16 @@ jobs:
 
       - name: Check generated files are committed
         run: |
-          if ! git diff --exit-code; then
+          if [ -n "$(git status --short)" ]; then
+            git status --short
+            git diff --exit-code || true
             echo ""
             echo "::error::Generated files are out of date. Edit data/source/*.toml, then run:"
             echo "::error::  python3 scripts/generate_examples.py"
-            echo "::error::  python3 scripts/generate_static_contracts.py --limit 80 --output docs/goals"
+            echo "::error::  python3 scripts/generate_static_contracts.py --output docs/goals"
             echo "::error::  python3 scripts/generate_sitemap.py"
             echo "::error::  python3 scripts/generate_catalog_health.py"
-            echo "::error::Commit the regenerated outputs alongside your data change. Do not hand-edit README catalog, data/examples.json, docs/examples.json, prompts/*.md, or docs/catalog-health.md."
+            echo "::error::Commit the regenerated outputs alongside your data change. Do not hand-edit README catalog, data/examples.json, docs/examples.json, docs/goals/*.html, prompts/*.md, or docs/catalog-health.md."
             exit 1
           fi
 

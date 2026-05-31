@@ -56,6 +56,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-build-log-diagnosis.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-clear-labeled-issues.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
@@ -68,7 +74,49 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-dev-database-migration.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-flow-api-latency-goap.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-flow-coverage-goap.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-flow-sparc-payment-plan.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-module-api-migration.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-payment-retry-diagram.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-recipes-okr-development.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-reference-layout-design.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -81,6 +129,12 @@
   </url>
   <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-weekly-changelog.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/clinical-research-ai-safety-boundary.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -134,6 +188,30 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/deadreckon-coherence-closure.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/deadreckon-implementation-notes-ledger.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/deadreckon-orchestration-eventbus.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/deadreckon-semantic-merge-repair.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/devin-parallel-coverage-recovery.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
@@ -182,6 +260,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-accessibility-html-wcag.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-benchmark-coverage-goal.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
@@ -195,6 +279,12 @@
   </url>
   <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-claude-goal-flaky-auth.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-claude-long-goal-template.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -224,7 +314,31 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-hermes-file-verification.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-hermes-goal-queue.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-hermes-real-cli-loop.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-long-task-verification.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-mobile-agent-task-handoff.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -243,6 +357,24 @@
   </url>
   <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-review-plan-no-gaps.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/goal-agent-content-engagement-loop.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/goal-agent-daily-priority-loop.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/goal-agent-profile-optimization.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -320,13 +452,133 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openai-agent-friendly-cli-skill.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openai-agent-trace-evals.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openai-agent-tracing-observability.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openai-code-migration-checkpoints.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openai-define-goal-quality-bar.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openai-difficult-task-eval-loop.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openai-expo-react-native-app.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openai-long-horizon-design-tool.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openai-promptfoo-eval-suite.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openai-slash-finish-migration.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openai-tool-guardrails-appsec.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openhands-api-integration-tests.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openhands-checkout-crash-regression.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openhands-csv-processing-report.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openhands-feature-flag-system.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openhands-node-memory-leak-fix.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openhands-orderservice-performance-review.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openhands-rate-limited-web-scraper.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openhands-remote-agent-server-smoke.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openhands-security-pr-review.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openhands-slow-query-optimization.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/openhands-user-preferences-api.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -452,6 +704,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/x-claude-md-goal-workflow.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/x-dual-model-evaluator-goal-loop.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/x-explicit-stop-rules-goal-loops.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/x-goal-escape-hatch.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
@@ -459,6 +729,12 @@
   </url>
   <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/x-goal-forge-done-when.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/x-goal-ledger.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -495,6 +771,12 @@
   </url>
   <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/x-tests-lint-completion.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/x-three-questions-goal-framework.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

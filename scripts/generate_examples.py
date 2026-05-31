@@ -13,6 +13,8 @@ import re
 import tomllib
 from pathlib import Path
 
+from static_contract_policy import static_contract_path, static_contract_slugs
+
 ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://majiayu000.github.io/awesome-goal-prompts/"
 SITE_TITLE = "Awesome Goal Prompts - /goal contracts for coding agents"
@@ -23,7 +25,6 @@ DATASET_DESCRIPTION = (
     "with source-backed examples and reusable seed patterns."
 )
 ITEMLIST_DESCRIPTION = "Source-backed task contracts in the primary catalog."
-STATIC_CONTRACT_URL_COUNT = 80
 SOURCE_DIR = ROOT / "data" / "source"
 
 
@@ -267,6 +268,7 @@ def build_total_section(entries: list[dict[str, str | None]]) -> str:
 def build_json_ld(entries: list[dict[str, str | None]]) -> str:
     source_entries = [entry for entry in entries if entry["origin"] == "source-backed"]
     source_backed = len(source_entries)
+    static_slugs = set(static_contract_slugs(entries))
     creator = {"@type": "Person", "name": "majiayu000", "url": "https://github.com/majiayu000"}
     keywords = [
         "coding agents",
@@ -280,7 +282,7 @@ def build_json_ld(entries: list[dict[str, str | None]]) -> str:
     ]
 
     def item_url(index: int, entry: dict[str, str | None]) -> str:
-        if index <= STATIC_CONTRACT_URL_COUNT:
+        if entry["slug"] in static_slugs:
             return f"{SITE_URL}goals/{entry['slug']}.html"
         return f"{SITE_URL}#{entry['slug']}"
 
@@ -395,6 +397,9 @@ def main() -> None:
     entries = load_entries(categories)
     for entry in entries:
         entry["prompt"] = prompt_for(entry, categories)
+        path = static_contract_path(entry)
+        if path:
+            entry["static_path"] = path
 
     (ROOT / "prompts").mkdir(exist_ok=True)
     (ROOT / "data").mkdir(exist_ok=True)

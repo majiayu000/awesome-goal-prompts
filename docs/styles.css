@@ -977,6 +977,9 @@ body[data-lang="zh"] .guide__steps p {
 }
 
 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid rgba(22, 20, 15, 0.22);
   border-radius: 6px;
   padding: 8px 12px;
@@ -985,8 +988,10 @@ body[data-lang="zh"] .guide__steps p {
   font-family: var(--mono);
   font-size: 10.5px;
   letter-spacing: 0.08em;
+  text-decoration: none;
   text-transform: uppercase;
   white-space: nowrap;
+  cursor: pointer;
   transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
 }
 

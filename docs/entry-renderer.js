@@ -1,7 +1,8 @@
 // Contract card list renderer. Loaded after i18n.js and before app.js (see index.html).
 // Exposes global function: renderResults — used by app.js applyFilters() and selectEntry().
 // Reads runtime globals from app.js: state, els, padNumber, badge, categoryLabel,
-// difficultyLabel, originLabel, sourceTypeLabel, selectEntry, clearAndAppend.
+// difficultyLabel, originLabel, sourceTypeLabel, selectEntry, clearAndAppend,
+// staticContractUrl.
 // Reads runtime globals from i18n.js: t.
 
 function renderResults() {
@@ -15,10 +16,14 @@ function renderResults() {
 
   const children = state.filtered.map((entry) => {
     const index = state.entries.findIndex((item) => item.id === entry.id) + 1;
+    const staticUrl = staticContractUrl(entry);
     const link = document.createElement("a");
-    link.href = `#${entry.slug}`;
+    link.href = staticUrl || `#${entry.slug}`;
     link.className = state.selected && state.selected.id === entry.id ? "entry active" : "entry";
     link.dataset.entryId = String(entry.id);
+    if (staticUrl) {
+      link.dataset.staticUrl = staticUrl;
+    }
     link.setAttribute("aria-label", `${t("entryNumberPrefix")} ${padNumber(index)}: ${entry.title}`);
     link.addEventListener("click", (event) => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) {

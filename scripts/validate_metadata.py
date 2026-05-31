@@ -9,9 +9,12 @@ evidence-backed contracts.
 from __future__ import annotations
 
 import json
+import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
+
+from static_contract_policy import static_contract_path, static_contract_slugs
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://majiayu000.github.io/awesome-goal-prompts/"
@@ -23,7 +26,6 @@ DATASET_DESCRIPTION = (
     "with source-backed examples and reusable seed patterns."
 )
 ITEMLIST_DESCRIPTION = "Source-backed task contracts in the primary catalog."
-STATIC_CONTRACT_URL_COUNT = 80
 
 
 class IndexMetadataParser(HTMLParser):
@@ -77,6 +79,30 @@ def assert_equal(label: str, actual: object, expected: object) -> None:
         fail(f"{label} mismatch: expected {expected!r}, got {actual!r}")
 
 
+def assert_set_equal(label: str, actual: set[str], expected: set[str]) -> None:
+    missing = sorted(expected - actual)
+    extra = sorted(actual - expected)
+    if missing or extra:
+        details = []
+        if missing:
+            details.append(f"missing: {', '.join(missing[:10])}")
+        if extra:
+            details.append(f"extra: {', '.join(extra[:10])}")
+        fail(f"{label} mismatch ({'; '.join(details)})")
+
+
+def sitemap_locs(path: Path) -> set[str]:
+    if not path.exists():
+        fail(f"missing sitemap: {path.relative_to(ROOT)}")
+    root = ET.parse(path).getroot()
+    namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    return {
+        loc.text.strip()
+        for loc in root.findall(".//sm:loc", namespace)
+        if loc.text and loc.text.strip()
+    }
+
+
 def find_graph_node(graph: list[Any], node_type: str) -> dict[str, Any]:
     for node in graph:
         if isinstance(node, dict) and node.get("@type") == node_type:
@@ -92,6 +118,38 @@ def main() -> None:
     source_entries = [entry for entry in entries if entry.get("origin") == "source-backed"]
     source_count = len(source_entries)
     seed_count = len(entries) - source_count
+    expected_static_slugs = set(static_contract_slugs(entries))
+    expected_static_urls = {
+        f"{SITE_URL}goals/{slug}.html" for slug in expected_static_slugs
+    }
+    expected_anchor_urls = {
+        f"{SITE_URL}#{entry['slug']}" for entry in entries
+    }
+    actual_static_slugs = {
+        path.stem for path in (ROOT / "docs" / "goals").glob("*.html")
+    }
+    assert_set_equal("Static goal page slugs", actual_static_slugs, expected_static_slugs)
+
+    for entry in entries:
+        expected_path = static_contract_path(entry)
+        assert_equal(
+            f"static_path for {entry['slug']}",
+            entry.get("static_path"),
+            expected_path,
+        )
+
+    goals_sitemap_locs = sitemap_locs(ROOT / "docs" / "goals" / "sitemap-goals.xml")
+    assert_set_equal("Goals sitemap URLs", goals_sitemap_locs, expected_static_urls)
+
+    full_sitemap_locs = sitemap_locs(ROOT / "docs" / "sitemap.xml")
+    assert_set_equal(
+        "Full sitemap goal URLs",
+        {loc for loc in full_sitemap_locs if "/goals/" in loc and loc.endswith(".html")},
+        expected_static_urls,
+    )
+    missing_anchors = expected_anchor_urls - full_sitemap_locs
+    if missing_anchors:
+        fail(f"Full sitemap missing anchor URLs: {', '.join(sorted(missing_anchors)[:10])}")
 
     parser = IndexMetadataParser()
     parser.feed((ROOT / "docs" / "index.html").read_text(encoding="utf-8"))
@@ -141,11 +199,7 @@ def main() -> None:
     for position, (entry, item) in enumerate(zip(source_entries, items), start=1):
         if not isinstance(item, dict):
             fail(f"Source-backed ItemList item {position} must be an object")
-        expected_url = (
-            f"{SITE_URL}goals/{entry['slug']}.html"
-            if position <= STATIC_CONTRACT_URL_COUNT
-            else f"{SITE_URL}#{entry['slug']}"
-        )
+        expected_url = f"{SITE_URL}goals/{entry['slug']}.html"
         assert_equal(
             f"Source-backed ItemList item {position} position",
             item.get("position"),
