@@ -9,7 +9,7 @@ Edit source data, not generated outputs.
 - Add or update entries in `data/source/entries.toml`.
 - Category metadata lives in `data/source/categories.toml`.
 - Start-here recipes live in `data/source/recipes.toml`.
-- Generated outputs include `README.md` generated regions, `data/examples.json`, `docs/examples.json`, `prompts/goal-examples.md`, `prompts/source-backed-goals.md`, `prompts/seed-patterns.md`, and catalog health docs.
+- Generated outputs include `README.md` generated regions, `data/examples.json`, `docs/examples.json`, `docs/goals/*.html`, `docs/sitemap.xml`, `docs/goals/sitemap-goals.xml`, `prompts/goal-examples.md`, `prompts/source-backed-goals.md`, `prompts/seed-patterns.md`, and catalog health docs.
 
 ## Entry Fields
 
@@ -31,7 +31,7 @@ Source-backed entry:
 - `evidence`
 - `origin = "source-backed"`
 
-Generated fields such as `slug`, `difficulty`, `prompt`, and `evidence_summary` should not be hand-written in source TOML. `slug` follows `id`; `difficulty` comes from category metadata.
+Generated fields such as `slug`, `difficulty`, `prompt`, `static_path`, and `evidence_summary` should not be hand-written in source TOML. `slug` follows `id`; `difficulty` comes from category metadata.
 
 ## Source Rules
 
@@ -58,10 +58,15 @@ Run these from the catalog repository when contributing:
 ```bash
 python3 scripts/validate_data.py
 python3 scripts/generate_examples.py
+python3 scripts/validate_static_contracts.py
+python3 scripts/generate_static_contracts.py --output docs/goals
+python3 scripts/generate_sitemap.py
+python3 scripts/validate_metadata.py
 python3 scripts/generate_catalog_health.py
 python3 scripts/evaluate_search.py
+python3 skills/make-goal/scripts/run_evals.py
 node --check docs/app.js
 git diff --check
 ```
 
-CI should also check that generated files are committed by running `git diff --exit-code` after regeneration.
+CI should also check that generated files are committed by inspecting `git status --short` after regeneration.

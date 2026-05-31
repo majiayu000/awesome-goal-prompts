@@ -5,10 +5,15 @@ Every example must be useful as a small task specification, not just a catchy pr
 ## How To Add An Entry
 
 1. **Edit `data/source/entries.toml`** — append a new `[[entries]]` block with `id`, `category`, `title`, `intent`, `verify`, `origin` (`seed` or `source-backed`), and the source fields below if applicable.
-2. **Regenerate**: `python3 scripts/generate_examples.py` — this rewrites the catalog JSON, the long markdown index, and the generated regions of `README.md`.
+2. **Regenerate**:
+   - `python3 scripts/generate_examples.py`
+   - `python3 scripts/generate_static_contracts.py --output docs/goals`
+   - `python3 scripts/generate_sitemap.py`
+   - `python3 scripts/generate_catalog_health.py`
+   These commands rewrite the catalog JSON, markdown indexes, static source-backed pages, sitemaps, and generated regions of `README.md`.
 3. **Commit both** the data change and the regenerated outputs in one PR. CI runs the generator and fails on `git diff --exit-code` if outputs are stale.
 
-Do **not** hand-edit `README.md`'s catalog list, `data/examples.json`, `docs/examples.json`, `prompts/goal-examples.md`, or `docs/catalog-health.md`. They are generated. Edit `data/source/*.toml` and regenerate.
+Do **not** hand-edit `README.md`'s catalog list, `data/examples.json`, `docs/examples.json`, `docs/goals/*.html`, `prompts/goal-examples.md`, or `docs/catalog-health.md`. They are generated. Edit `data/source/*.toml` and regenerate.
 
 The static sections of `README.md` (everything outside `<!-- generated:* -->` markers) are hand-maintained. Adding a badge or rewording the intro is fine; just keep the markers in place.
 

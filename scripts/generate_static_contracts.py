@@ -3,12 +3,12 @@
 混合渲染 SEO 方案 - 静态 Goal Contract 页面生成器
 
 用法：
-    python scripts/generate_static_contracts.py --limit 20 --output docs/goals
+    python scripts/generate_static_contracts.py --output docs/goals
 
 特点：
 - 优先选择 source-backed（有真实来源）的 contracts
 - 生成干净、SEO 友好的静态 HTML
-- 可控制生成数量（先做最重要的）
+- 默认生成所有 source-backed contracts
 - 自动生成 sitemap 片段（可选）
 """
 
@@ -20,24 +20,12 @@ from string import Template
 from typing import Any
 from urllib.parse import urlparse
 
+from static_contract_policy import static_contract_entries
+
 ROOT = Path(__file__).parent.parent
 DATA_FILE = ROOT / "data" / "examples.json"
 TEMPLATE_FILE = ROOT / "templates" / "static_goal.html"
 OUTPUT_DIR = ROOT / "docs" / "goals"
-
-# 优先级排序：有真实来源的排在前面
-def score_entry(entry: dict[str, Any]) -> int:
-    score = 0
-    if entry.get("source_url"):
-        score += 100
-    if entry.get("source_name"):
-        score += 50
-    if entry.get("origin") != "seed":
-        score += 30
-    if entry.get("difficulty") in ("intermediate", "advanced"):
-        score += 10
-    return score
-
 
 def clean_text(text: str | None) -> str:
     if not text:
@@ -104,9 +92,9 @@ def render_page(entry: dict[str, Any], template: Template) -> str:
     )
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description="生成静态 SEO 友好的 Goal Contract 页面")
-    parser.add_argument("--limit", type=int, default=30, help="最多生成多少个页面（默认 30）")
+    parser.add_argument("--limit", type=int, default=None, help="最多生成多少个 source-backed 页面（默认全部）")
     parser.add_argument("--output", type=str, default=str(OUTPUT_DIR), help="输出目录")
     parser.add_argument("--sitemap", action="store_true", help="同时生成 sitemap 片段")
     args = parser.parse_args()
@@ -118,16 +106,23 @@ def main():
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         entries: list[dict[str, Any]] = json.load(f)
 
-    # 排序：优先 source-backed
-    entries.sort(key=score_entry, reverse=True)
+    selected_entries = static_contract_entries(entries)
+    if args.limit is not None:
+        selected_entries = selected_entries[: args.limit]
+    expected_files = {f"{entry['slug']}.html" for entry in selected_entries}
 
     # 加载模板
     with open(TEMPLATE_FILE, "r", encoding="utf-8") as f:
         template = Template(f.read())
 
+    for stale_path in sorted(output_dir.glob("*.html")):
+        if stale_path.name not in expected_files:
+            stale_path.unlink()
+            print(f"✓ Removed stale: goals/{stale_path.name}")
+
     generated = []
 
-    for entry in entries[: args.limit]:
+    for entry in selected_entries:
         slug = entry["slug"]
         html = render_page(entry, template)
 
