@@ -13,12 +13,12 @@
 """
 
 import argparse
+import html
 import json
-import os
-import re
 from pathlib import Path
 from string import Template
 from typing import Any
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).parent.parent
 DATA_FILE = ROOT / "data" / "examples.json"
@@ -42,9 +42,16 @@ def score_entry(entry: dict[str, Any]) -> int:
 def clean_text(text: str | None) -> str:
     if not text:
         return ""
-    # 简单转义 HTML
-    text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-    return text
+    return html.escape(str(text), quote=True)
+
+
+def require_http_url(url: str | None, field_name: str = "source_url") -> str:
+    if not url:
+        raise ValueError(f"{field_name} is required")
+    parsed = urlparse(url)
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        raise ValueError(f"{field_name} must be an absolute http(s) URL: {url!r}")
+    return clean_text(url)
 
 
 def generate_source_badge(entry: dict[str, Any]) -> str:
@@ -58,10 +65,10 @@ def generate_source_badge(entry: dict[str, Any]) -> str:
 def generate_source_section(entry: dict[str, Any]) -> str:
     if not entry.get("source_url"):
         return ""
-    url = clean_text(entry["source_url"])
+    url = require_http_url(entry["source_url"])
     name = clean_text(entry.get("source_name") or url)
     evidence = clean_text(entry.get("evidence_summary") or entry.get("evidence") or "")
-    
+
     html = f"""
   <div class="section">
     <h2>来源与证据</h2>
@@ -75,12 +82,12 @@ def generate_source_section(entry: dict[str, Any]) -> str:
 
 
 def render_page(entry: dict[str, Any], template: Template) -> str:
-    slug = entry["slug"]
+    slug = clean_text(entry["slug"])
     title = clean_text(entry["title"])
     intent = clean_text(entry["intent"])
-    prompt = entry.get("prompt", "").strip()
-    difficulty = entry.get("difficulty", "unknown")
-    category = entry.get("category", "general")
+    prompt = clean_text(entry.get("prompt", "").strip())
+    difficulty = clean_text(entry.get("difficulty", "unknown"))
+    category = clean_text(entry.get("category", "general"))
 
     source_badge = generate_source_badge(entry)
     source_section = generate_source_section(entry)

@@ -160,22 +160,22 @@ Complete Split Oversized File for a refactoring task: Split an oversized source 
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect the target module, call sites, public API, tests, and compatibility notes.
-- Establish a baseline by running or locating evidence for: `module size budget && tests pass`.
+- Establish a baseline by running or locating evidence for: `module size budget &amp;&amp; tests pass`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
 - Do not weaken tests, delete assertions, or mask errors to make verification pass.
-- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Respect the repository&#x27;s AGENTS.md/CLAUDE.md instructions and existing patterns.
 - Do not change public APIs, data formats, or user-visible behavior unless the goal requires it.
 - Keep behavior characterization tests before large internal changes.
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Split an oversized source file into focused modules while preserving behavior.
-- The verification command or evidence path succeeds: `module size budget && tests pass`.
+- The verification command or evidence path succeeds: `module size budget &amp;&amp; tests pass`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `module size budget && tests pass` or the closest repo-local equivalent if the exact command is not available.
+- Run `module size budget &amp;&amp; tests pass` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 

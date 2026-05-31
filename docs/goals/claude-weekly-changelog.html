@@ -160,22 +160,22 @@ Complete Weekly Changelog Coverage for a developer-facing documentation site or 
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect README, docs, examples, runbooks, and lint configuration.
-- Establish a baseline by running or locating evidence for: `git log --since='7 days ago' --merges && rg '^-' CHANGELOG.md`.
+- Establish a baseline by running or locating evidence for: `git log --since=&#x27;7 days ago&#x27; --merges &amp;&amp; rg &#x27;^-&#x27; CHANGELOG.md`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
 - Do not weaken tests, delete assertions, or mask errors to make verification pass.
-- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Respect the repository&#x27;s AGENTS.md/CLAUDE.md instructions and existing patterns.
 - Do not invent APIs, flags, commands, or product behavior.
 - Mark unverified commands clearly instead of presenting guesses as facts.
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Ensure CHANGELOG.md includes an entry for every PR merged this week.
-- The verification command or evidence path succeeds: `git log --since='7 days ago' --merges && rg '^-' CHANGELOG.md`.
+- The verification command or evidence path succeeds: `git log --since=&#x27;7 days ago&#x27; --merges &amp;&amp; rg &#x27;^-&#x27; CHANGELOG.md`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `git log --since='7 days ago' --merges && rg '^-' CHANGELOG.md` or the closest repo-local equivalent if the exact command is not available.
+- Run `git log --since=&#x27;7 days ago&#x27; --merges &amp;&amp; rg &#x27;^-&#x27; CHANGELOG.md` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 
@@ -195,7 +195,7 @@ STOP RULES:
     <h2>来源与证据</h2>
     <div class="source">
       <p><strong>原始来源：</strong> <a href="https://code.claude.com/docs/en/goal" target="_blank" rel="noopener">Claude Code docs</a></p>
-      <p><strong>证据摘要：</strong> CHANGELOG.md has an entry; source: Claude Code docs; type: official-goal; verification: git log --since='7 days ago' --merges &amp;&amp; rg '^-' CHANGELOG.md</p>
+      <p><strong>证据摘要：</strong> CHANGELOG.md has an entry; source: Claude Code docs; type: official-goal; verification: git log --since=&#x27;7 days ago&#x27; --merges &amp;&amp; rg &#x27;^-&#x27; CHANGELOG.md</p>
     </div>
   </div>
 

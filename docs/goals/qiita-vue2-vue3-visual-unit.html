@@ -160,22 +160,22 @@ Complete Vue 2 To Vue 3 Visual And Unit Gate for a migration project: Migrate li
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect legacy code, target implementation, compatibility tests, visual snapshots, and migration notes.
-- Establish a baseline by running or locating evidence for: `pnpm test:visual && pnpm test:unit`.
+- Establish a baseline by running or locating evidence for: `pnpm test:visual &amp;&amp; pnpm test:unit`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
 - Do not weaken tests, delete assertions, or mask errors to make verification pass.
-- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Respect the repository&#x27;s AGENTS.md/CLAUDE.md instructions and existing patterns.
 - Preserve existing user-visible behavior unless the goal explicitly names a behavior change.
 - Keep compatibility evidence for the old and new paths until the migration is verified.
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Migrate listed Vue screens and stop only when visual and unit tests pass.
-- The verification command or evidence path succeeds: `pnpm test:visual && pnpm test:unit`.
+- The verification command or evidence path succeeds: `pnpm test:visual &amp;&amp; pnpm test:unit`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `pnpm test:visual && pnpm test:unit` or the closest repo-local equivalent if the exact command is not available.
+- Run `pnpm test:visual &amp;&amp; pnpm test:unit` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 

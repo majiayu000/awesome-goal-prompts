@@ -160,22 +160,22 @@ Complete TypeScript ESLint Coverage Gate for a project with failing or missing v
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect test suites, lint config, CI logs, coverage reports, and failing output.
-- Establish a baseline by running or locating evidence for: `npm run typecheck && npm test && npm run lint && npm run coverage`.
+- Establish a baseline by running or locating evidence for: `npm run typecheck &amp;&amp; npm test &amp;&amp; npm run lint &amp;&amp; npm run coverage`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
 - Do not weaken tests, delete assertions, or mask errors to make verification pass.
-- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Respect the repository&#x27;s AGENTS.md/CLAUDE.md instructions and existing patterns.
 - Do not weaken lint, typecheck, or test rules to create a green result.
 - Fix production or fixture causes before changing expectations.
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Resolve TypeScript errors, pass tests, clear ESLint warnings, and keep coverage above a threshold.
-- The verification command or evidence path succeeds: `npm run typecheck && npm test && npm run lint && npm run coverage`.
+- The verification command or evidence path succeeds: `npm run typecheck &amp;&amp; npm test &amp;&amp; npm run lint &amp;&amp; npm run coverage`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `npm run typecheck && npm test && npm run lint && npm run coverage` or the closest repo-local equivalent if the exact command is not available.
+- Run `npm run typecheck &amp;&amp; npm test &amp;&amp; npm run lint &amp;&amp; npm run coverage` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 

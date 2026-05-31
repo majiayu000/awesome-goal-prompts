@@ -160,22 +160,22 @@ Complete NPM Audit Clean Remediation for a production operations environment: Pa
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect workflow permissions, cloud IAM, release artifacts, and audit evidence.
-- Establish a baseline by running or locating evidence for: `npm audit && npm test`.
+- Establish a baseline by running or locating evidence for: `npm audit &amp;&amp; npm test`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
 - Do not weaken tests, delete assertions, or mask errors to make verification pass.
-- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Respect the repository&#x27;s AGENTS.md/CLAUDE.md instructions and existing patterns.
 - Do not print, copy, rotate, or exfiltrate real secrets.
 - Do not widen production permissions without a documented least-privilege reason.
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Patch npm audit vulnerabilities without breaking tests or public APIs.
-- The verification command or evidence path succeeds: `npm audit && npm test`.
+- The verification command or evidence path succeeds: `npm audit &amp;&amp; npm test`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `npm audit && npm test` or the closest repo-local equivalent if the exact command is not available.
+- Run `npm audit &amp;&amp; npm test` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 

@@ -160,22 +160,22 @@ Complete Feature Port With CI Green for a migration project: Port a feature from
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect legacy code, target implementation, compatibility tests, visual snapshots, and migration notes.
-- Establish a baseline by running or locating evidence for: `pytest && npm test`.
+- Establish a baseline by running or locating evidence for: `pytest &amp;&amp; npm test`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
 - Do not weaken tests, delete assertions, or mask errors to make verification pass.
-- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Respect the repository&#x27;s AGENTS.md/CLAUDE.md instructions and existing patterns.
 - Preserve existing user-visible behavior unless the goal explicitly names a behavior change.
 - Keep compatibility evidence for the old and new paths until the migration is verified.
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Port a feature from another repo, include tests, and get CI green.
-- The verification command or evidence path succeeds: `pytest && npm test`.
+- The verification command or evidence path succeeds: `pytest &amp;&amp; npm test`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `pytest && npm test` or the closest repo-local equivalent if the exact command is not available.
+- Run `pytest &amp;&amp; npm test` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 
