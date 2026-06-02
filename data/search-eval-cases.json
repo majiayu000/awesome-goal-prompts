@@ -123,5 +123,30 @@
     "query": "define goal measurable evidence scope stop condition",
     "expected": "openai-define-goal-quality-bar",
     "max_rank": 3
+  },
+  {
+    "query": "audit friendly goal objective scope done when stop if",
+    "expected": "goal-builder-audit-friendly-template",
+    "max_rank": 3
+  },
+  {
+    "query": "copilot fleet parallel test suite subagents",
+    "expected": "github-copilot-fleet-parallel-test-suite",
+    "max_rank": 3
+  },
+  {
+    "query": "innerHTML xss unsafe rendering fix",
+    "expected": "github-copilot-xss-innerhtml-fix",
+    "max_rank": 3
+  },
+  {
+    "query": "checkout p95 latency benchmark correctness suite",
+    "expected": "halmob-checkout-p95-goal",
+    "max_rank": 3
+  },
+  {
+    "query": "voice e2e scenarios anti pattern fences goal",
+    "expected": "tecton-codex-voice-e2e-contract",
+    "max_rank": 3
   }
 ]
