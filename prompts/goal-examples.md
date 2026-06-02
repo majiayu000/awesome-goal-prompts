@@ -119,6 +119,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Attribution Window Review](#attribution-window-review) - Verify campaign attribution windows and dedupe rules.
 - [Self-Serve Data Contract](#self-serve-data-contract) - Define trusted datasets and usage limits for business users.
 - [Analyze Product Usage Patterns](#cursor-usage-pattern-analysis) - Analyze product usage patterns between tab view and agent panels. Source-backed.
+- [Copilot Usage Metrics Reconciliation](#github-copilot-usage-metrics-reconciliation) - Reconcile Copilot dashboard, API, and export metrics before reporting agent adoption or pull-request impact trends. Source-backed.
 
 ### ai-evals
 - [LLM Golden Set Build](#llm-golden-set-build) - Build an eval set from real failures and frequent tasks.
@@ -182,6 +183,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Data Card System](#design-data-card-system) - Define metric cards with value, trend, anomaly, and source states.
 - [Brand Fit Pass](#design-brand-fit) - Align the interface language with the product's audience and use case.
 - [Reference Layout Match](#claude-reference-layout-design) - Build a settings page that follows an existing profile page layout instead of inventing a new pattern. Source-backed.
+- [Design System Context Export](#layout-design-system-context-export) - Extract design tokens, components, and visual patterns into agent-readable context so generated UI follows the product design system. Source-backed.
 
 ### mobile
 - [Mobile Bottom Navigation](#mobile-bottom-nav) - Design thumb-friendly mobile navigation for core paths.
@@ -16931,6 +16933,104 @@ DONE WHEN:
 
 VERIFY:
 - Run `final agent output includes scoped diff + passing verification commands + iteration/token log; DONE WHEN audited against original contract without subjective claims; escape triggered on budget or blocker` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-usage-metrics-reconciliation"></a>
+### Copilot Usage Metrics Reconciliation
+
+- Category: `data-analytics`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Reconcile Copilot dashboard, API, and export metrics before reporting agent adoption or pull-request impact trends.
+- Verification: `metrics reconciliation report with dashboard/API/export fields, documented exclusions, and team-level join notes`
+- Source: [GitHub Copilot usage metrics reconciliation docs](https://docs.github.com/en/copilot/reference/copilot-usage-metrics/reconciling-usage-metrics)
+- Source type: `official-workflow`
+- Evidence: dashboard, APIs, and export files all use the same underlying telemetry data, but they aggregate and present it differently
+- Evidence summary: dashboard, APIs, and export files all use the same underlying telemetry data, but they aggregate and present it differently; source: GitHub Copilot usage metrics reconciliation docs; type: official-workflow; verification: metrics reconciliation report with dashboard/API/export fields, documented exclusions, and team-level join notes
+
+```text
+/goal
+GOAL:
+Complete Copilot Usage Metrics Reconciliation for an analytics or BI project: Reconcile Copilot dashboard, API, and export metrics before reporting agent adoption or pull-request impact trends.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect metric SQL, event schemas, dashboard definitions, and validation queries.
+- Establish a baseline by running or locating evidence for: `metrics reconciliation report with dashboard/API/export fields, documented exclusions, and team-level join notes`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Reconcile Copilot dashboard, API, and export metrics before reporting agent adoption or pull-request impact trends.
+- The verification command or evidence path succeeds: `metrics reconciliation report with dashboard/API/export fields, documented exclusions, and team-level join notes`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `metrics reconciliation report with dashboard/API/export fields, documented exclusions, and team-level join notes` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="layout-design-system-context-export"></a>
+### Design System Context Export
+
+- Category: `design`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Extract design tokens, components, and visual patterns into agent-readable context so generated UI follows the product design system.
+- Verification: `layout.md and token export reviewed, component variant preview checked, and design-system health score or screenshot evidence captured`
+- Source: [Layout design system docs](https://layout.design/docs)
+- Source type: `third-party-project`
+- Evidence: Pull design tokens, components, fonts, and screenshots from Figma files or live websites
+- Evidence summary: Pull design tokens, components, fonts, and screenshots from Figma files or live websites; source: Layout design system docs; type: third-party-project; verification: layout.md and token export reviewed, component variant preview checked, and design-system health score or screenshot evidence captured
+
+```text
+/goal
+GOAL:
+Complete Design System Context Export for a product UI codebase: Extract design tokens, components, and visual patterns into agent-readable context so generated UI follows the product design system.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect design tokens, component variants, layouts, visual states, and screenshots.
+- Establish a baseline by running or locating evidence for: `layout.md and token export reviewed, component variant preview checked, and design-system health score or screenshot evidence captured`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not replace the app with a landing-page style redesign.
+- Preserve domain workflows and use existing design tokens where they exist.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Extract design tokens, components, and visual patterns into agent-readable context so generated UI follows the product design system.
+- The verification command or evidence path succeeds: `layout.md and token export reviewed, component variant preview checked, and design-system health score or screenshot evidence captured`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `layout.md and token export reviewed, component variant preview checked, and design-system health score or screenshot evidence captured` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 
