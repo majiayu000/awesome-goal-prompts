@@ -2,11 +2,11 @@
 
 ## Summary
 
-- Total entries: 327
-- Source-backed entries: 127
+- Total entries: 348
+- Source-backed entries: 148
 - Seed entries: 200
 - Categories: 32
-- Search eval cases: 25/25 passing
+- Search eval cases: 30/30 passing
 - Source-backed entries missing evidence summaries: 0
 - Source-backed entries missing provenance fields: 0
 
@@ -16,36 +16,36 @@
 | --- | --- | --- | --- |
 | accessibility | 1 | 13 | 8% |
 | ai-evals | 2 | 12 | 17% |
-| ai-ops | 1 | 11 | 9% |
+| ai-ops | 2 | 12 | 17% |
 | backend-api | 3 | 15 | 20% |
-| backend-data | 2 | 12 | 17% |
+| backend-data | 3 | 13 | 23% |
 | backlog | 3 | 3 | 100% |
 | cli | 2 | 2 | 100% |
 | data-analytics | 1 | 11 | 9% |
 | data-eng | 2 | 12 | 17% |
 | design | 1 | 13 | 8% |
-| devops-ci | 1 | 11 | 9% |
+| devops-ci | 2 | 12 | 17% |
 | devops-runtime | 1 | 11 | 9% |
-| docs | 5 | 17 | 29% |
+| docs | 7 | 19 | 37% |
 | frontend | 6 | 18 | 33% |
-| goal-maintenance | 13 | 13 | 100% |
+| goal-maintenance | 15 | 15 | 100% |
 | greenfield-build | 1 | 1 | 100% |
 | investigation | 4 | 4 | 100% |
 | maintenance | 2 | 2 | 100% |
 | migration | 9 | 9 | 100% |
 | mobile | 2 | 14 | 14% |
-| orchestration | 3 | 3 | 100% |
-| performance | 6 | 18 | 33% |
+| orchestration | 4 | 4 | 100% |
+| performance | 7 | 19 | 37% |
 | product | 3 | 15 | 20% |
-| prompt-optimization | 4 | 4 | 100% |
+| prompt-optimization | 5 | 5 | 100% |
 | prototype | 3 | 3 | 100% |
-| qa | 1 | 13 | 8% |
-| refactor | 2 | 2 | 100% |
-| research | 4 | 4 | 100% |
-| security-appsec | 2 | 12 | 17% |
+| qa | 2 | 14 | 14% |
+| refactor | 3 | 3 | 100% |
+| research | 6 | 6 | 100% |
+| security-appsec | 3 | 13 | 23% |
 | security-ops | 1 | 11 | 9% |
-| testing | 20 | 20 | 100% |
-| workflow | 16 | 18 | 89% |
+| testing | 22 | 22 | 100% |
+| workflow | 20 | 22 | 91% |
 
 ## Source Types
 
@@ -55,14 +55,14 @@
 | github-issue | 7 |
 | github-pr | 3 |
 | none | 200 |
-| official-agent-task | 27 |
+| official-agent-task | 37 |
 | official-goal | 17 |
-| official-workflow | 5 |
-| public-forum | 10 |
+| official-workflow | 7 |
+| public-forum | 11 |
 | third-party-project | 7 |
-| third-party-review | 2 |
-| third-party-tutorial | 21 |
-| tool-readme | 11 |
+| third-party-review | 3 |
+| third-party-tutorial | 23 |
+| tool-readme | 16 |
 | video-summary | 2 |
 | x-post | 14 |
 
@@ -95,6 +95,11 @@
 | expo react native app expo router expo go | openai-expo-react-native-app | 1 | top 3 | pass |
 | agent friendly cli companion skill command surface | openai-agent-friendly-cli-skill | 1 | top 3 | pass |
 | define goal measurable evidence scope stop condition | openai-define-goal-quality-bar | 1 | top 3 | pass |
+| audit friendly goal objective scope done when stop if | goal-builder-audit-friendly-template | 1 | top 3 | pass |
+| copilot fleet parallel test suite subagents | github-copilot-fleet-parallel-test-suite | 1 | top 3 | pass |
+| innerHTML xss unsafe rendering fix | github-copilot-xss-innerhtml-fix | 1 | top 3 | pass |
+| checkout p95 latency benchmark correctness suite | halmob-checkout-p95-goal | 1 | top 3 | pass |
+| voice e2e scenarios anti pattern fences goal | tecton-codex-voice-e2e-contract | 1 | top 3 | pass |
 
 ## Maintenance Notes
 

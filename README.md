@@ -11,7 +11,7 @@ This repo keeps <!-- generated:total-start -->**300+**<!-- generated:total-end -
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk. This repo turns that contract shape into a catalog you can search, inspect, adapt, and copy.
 
 <!-- generated:stats-start -->
-The public catalog starts with **127** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
+The public catalog starts with **148** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
 <!-- generated:stats-end -->
 
 ![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
@@ -91,6 +91,10 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Dual-Model Evaluator Loop for Goals](prompts/source-backed-goals.md#x-dual-model-evaluator-goal-loop) - Run long /goal sessions reliably and cost-effectively by using a strong worker model for execution paired with a cheap fast evaluator model (typically Haiku) that periodically judges progress against the goal criteria and decides whether to continue or stop.
 - [CLAUDE.md + Goal Workflow](prompts/source-backed-goals.md#x-claude-md-goal-workflow) - Combine a persistent project-level CLAUDE.md (or AGENTS.md) file containing rules, standards, and context with /goal commands so long-running autonomous agent work stays aligned with repository-specific constraints and learned lessons.
 - [Goal Ledger for Long-Running Runs](prompts/source-backed-goals.md#x-goal-ledger) - Maintain a live, browser-viewable HTML progress ledger during extended /goal executions to provide visibility, persistent memory, decision logging, and self-reflection, reducing drift in long autonomous sessions.
+- [Well-Scoped Agent Issue](prompts/source-backed-goals.md#github-copilot-well-scoped-agent-issue) - Turn a backlog item into a coding-agent-ready issue with a clear problem statement, acceptance criteria, file directions, and test expectations.
+- [Research And Plan Before PR](prompts/source-backed-goals.md#github-copilot-plan-before-pr) - Have an agent research the repository, create an implementation plan, and iterate on a branch before deciding whether to open a pull request.
+- [Goalcraft Six-Field Contract Spine](prompts/source-backed-goals.md#codex-goalcraft-six-field-contract) - Write any /goal as a compact, evidence-first, thread-scoped completion contract with explicit outcome, verification surface, constraints, boundaries, iteration policy, and blocked stop conditions instead of vague effort descriptions.
+- [Strong Verifiable Goal Contract After Alignment Interview](prompts/source-backed-goals.md#chinese-v2ex-grillme-strong-goal-contract) - After a structured alignment interview, produce a binding /goal contract with explicit success evidence, hard constraints, file boundaries, iteration strategy, and blocking/escape handling so a Ralph-loop or native /goal agent can run autonomously until evidence-based completion.
 
 ### migration
 - [Visual Migration With Playwright](prompts/source-backed-goals.md#codex-visual-migration-playwright) - Migrate a project while preserving screen output and checking it with Playwright.
@@ -113,6 +117,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Router Prompt Eval Score](prompts/source-backed-goals.md#qiita-router-eval-score) - Improve a router prompt against an eval directory until the result score reaches a target.
 - [RAG Chat Flywheel](prompts/source-backed-goals.md#reddit-rag-chat-flywheel) - Iterate on code, tests, and metrics to improve a document-chat RAG system.
 - [Difficult Task Eval Loop](prompts/source-backed-goals.md#openai-difficult-task-eval-loop) - Run a difficult task as an eval-driven improvement loop with one focused change, rerun scores, and direct artifact inspection each iteration.
+- [Fitness Function Dual-Score Improvement Loop](prompts/source-backed-goals.md#goal-md-fitness-dual-score-loop) - For goals without natural scalar metric (docs quality, code health, consistency), construct an explicit runnable fitness function plus dual-score (outcome + instrument quality guard) and drive an improvement loop with iterations.jsonl ledger until converge criteria.
 
 ### testing
 - [Auth Tests And Lint Clean](prompts/source-backed-goals.md#claude-auth-tests-lint) - Keep working until auth tests pass and the lint step is clean.
@@ -135,6 +140,8 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Improve Benchmark Coverage](prompts/source-backed-goals.md#github-benchmark-coverage-goal) - Use `/goal` to improve benchmark coverage and persist the command in history.
 - [Batch Fix Bugs](prompts/source-backed-goals.md#github-claude-batch-bugs) - Use a Claude Code goal to fix a numbered batch of bugs without looping on missing skills.
 - [GOAP Coverage Target Plan](prompts/source-backed-goals.md#claude-flow-coverage-goap) - Raise test coverage with an explicit test pyramid across unit, integration, and end-to-end coverage targets.
+- [Playwright Test Instructions](prompts/source-backed-goals.md#github-copilot-playwright-instructions) - Create path-specific Playwright instructions that enforce stable locators, isolated tests, explicit assertions, cross-browser coverage, and CI behavior.
+- [Voice E2E Goal Contract](prompts/source-backed-goals.md#tecton-codex-voice-e2e-contract) - Run a long-horizon Codex goal against a TypeScript voice system using a reading list, working rules, concrete done-when criteria, and anti-pattern fences.
 
 ### docs
 - [Weekly Changelog Coverage](prompts/source-backed-goals.md#claude-weekly-changelog) - Ensure CHANGELOG.md includes an entry for every PR merged this week.
@@ -142,6 +149,8 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Public API Docs Coverage](prompts/source-backed-goals.md#explainx-public-api-jsdoc) - Add JSDoc and examples for public functions while keeping documentation links valid.
 - [Payment Retry Logic Diagram](prompts/source-backed-goals.md#claude-payment-retry-diagram) - Explain payment retry behavior as a browsable HTML page with a diagram for developer or support review.
 - [Implementation Notes Decision Ledger](prompts/source-backed-goals.md#deadreckon-implementation-notes-ledger) - Keep live implementation notes and the final run decisions document aligned around decisions, deviations, tradeoffs, and open questions.
+- [Repository Agent Instructions](prompts/source-backed-goals.md#github-copilot-repository-instructions) - Add repository-level agent instructions that document project structure, build/test/validate commands, coding standards, and documentation expectations.
+- [Documentation Matches Code](prompts/source-backed-goals.md#github-copilot-doc-code-sync) - Update stale API or function documentation so parameters, behavior, examples, thrown errors, and links match the current implementation.
 
 ### investigation
 - [Session Drift Report](prompts/source-backed-goals.md#hermes-session-drift-report) - Investigate session ID drift during mid-run compression and write a report.
@@ -156,6 +165,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 ### refactor
 - [Auth Dependency Injection Refactor](prompts/source-backed-goals.md#explainx-auth-di-refactor) - Refactor auth code to dependency injection while preserving tests, coverage, and public API.
 - [Split Oversized File](prompts/source-backed-goals.md#claude-split-oversized-file) - Split an oversized source file into focused modules while preserving behavior.
+- [Centralize Cross-Cutting Logging](prompts/source-backed-goals.md#github-copilot-cross-cutting-logging) - Centralize scattered logging, validation, security, or error-handling behavior without changing the core business behavior of the services.
 
 ### security-ops
 - [NPM Audit Clean Remediation](prompts/source-backed-goals.md#explainx-npm-audit-clean) - Patch npm audit vulnerabilities without breaking tests or public APIs.
@@ -167,6 +177,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Order Service Performance Review](prompts/source-backed-goals.md#openhands-orderservice-performance-review) - Inspect service code for N+1 queries, missing indexes, inefficient loops, missing caches, and unnecessary fetching.
 - [Node Memory Leak Fix](prompts/source-backed-goals.md#openhands-node-memory-leak-fix) - Investigate a growing-memory Node.js process, isolate the leak source, fix it, and add monitoring for recurrence.
 - [GOAP API Latency Reduction](prompts/source-backed-goals.md#claude-flow-api-latency-goap) - Reduce API latency by profiling current performance, optimizing database queries, adding caching, and improving code paths.
+- [Checkout P95 Latency Goal](prompts/source-backed-goals.md#halmob-checkout-p95-goal) - Reduce checkout p95 latency below a numeric target while keeping the correctness suite green and logging each experiment.
 
 ### greenfield-build
 - [Build Design Tool From Scratch](prompts/source-backed-goals.md#openai-long-horizon-design-tool) - Run a long-horizon Codex task to build a design tool with milestone verification.
@@ -197,6 +208,8 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Public Benchmark Table](prompts/source-backed-goals.md#apidog-benchmark-table) - Collect distinct public benchmarks and build a date-sorted comparison table.
 - [Review Sentiment JSON Agent](prompts/source-backed-goals.md#hn-review-sentiment-json-agent) - Fetch reviews with browser automation, classify sentiment, and write structured JSON output.
 - [Clinical Research AI Safety Boundary](prompts/source-backed-goals.md#clinical-research-ai-safety-boundary) - Review clinical research AI work with evidence-first boundaries so agents do not invent medical sources, expose private data, or turn research notes into patient-specific advice.
+- [Cited Architecture Research Report](prompts/source-backed-goals.md#github-copilot-research-architecture-report) - Produce a saved, cited Markdown architecture report after inspecting the local codebase, relevant repositories, and web sources.
+- [Evidence-Backed Research Reproduction](prompts/source-backed-goals.md#halmob-research-reproduction-goal) - Reproduce a paper or research result as far as local materials allow while separating confirmed findings, approximate reconstructions, blocked claims, and remaining uncertainty.
 
 ### maintenance
 - [Repo Maintenance Audit](prompts/source-backed-goals.md#apidog-repo-maintenance-audit) - Find dead code, unused dependencies, and stale files, then produce a PR-ready justification list.
@@ -204,6 +217,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 
 ### devops-ci
 - [CI Pipeline Green](prompts/source-backed-goals.md#explainx-ci-pipeline-green) - Repair CI test, lint, typecheck, and security scan failures until checks pass.
+- [Bounded Autopilot CI Repair](prompts/source-backed-goals.md#github-copilot-autopilot-ci-repair) - Run a bounded autonomous CI repair after plan acceptance, with explicit continuation limits, permissions, validation commands, and blocker reporting.
 
 ### goal-maintenance
 - [Goal Escape Hatch](prompts/source-backed-goals.md#x-goal-escape-hatch) - Add an explicit incomplete state for impossible subtasks so a goal loop can stop safely.
@@ -219,14 +233,18 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Goal-Aligned Profile Optimization](prompts/source-backed-goals.md#goal-agent-profile-optimization) - Audit and update professional profiles against a stated goal while recording the resulting progress and gaps.
 - [Content And Audience Engagement Loop](prompts/source-backed-goals.md#goal-agent-content-engagement-loop) - Generate goal-aligned content, publish or promote it, engage with target audience posts, and log the session outcome.
 - [Define Goal Quality Bar](prompts/source-backed-goals.md#openai-define-goal-quality-bar) - Turn a fuzzy intention into a concrete measurable goal with evidence, scope boundaries, and honest stop conditions before creating it.
+- [Audit-Friendly Goal Template](prompts/source-backed-goals.md#goal-builder-audit-friendly-template) - Rewrite a vague /goal into a mappable contract with objective, scope, constraints, done-when evidence, stop rules, and token budget.
+- [Single-File HTML Goal Ledger with Resume Block and Structured Incomplete Escape](prompts/source-backed-goals.md#goal-ledger-html-resume-incomplete-hatch) - Maintain one canonical browser-viewable implementation-notes.html containing Resume Here block, inline progressEvents timeline, and explicit [incomplete]/[blocked] states with full reason/proof/impact so long-running /goal can safely pause and resume across compaction or handoff without drift.
 
 ### qa
 - [QA Engineer Simulation](prompts/source-backed-goals.md#x-qa-engineer-simulation) - Use `/goal` as a quality loop until tests pass and lint is clean.
+- [Terminal Agentic Code Review](prompts/source-backed-goals.md#github-copilot-cli-agentic-review) - Review a diff from the terminal with a scoped prompt, path, or file pattern, inspect suggested commands, and apply or reject findings before commit.
 
 ### orchestration
 - [DAG Agent Dispatch](prompts/source-backed-goals.md#hn-dag-agent-dispatch) - Split a goal into a dependency graph and dispatch independent agents into isolated worktrees.
 - [DAG-Aware Semantic Merge Repair](prompts/source-backed-goals.md#deadreckon-semantic-merge-repair) - Make orchestration merge failures repairable by using plan DAG context, conflict bundles, planner-mediated repair, and bounded retry.
 - [Plan EventBus Live UX](prompts/source-backed-goals.md#deadreckon-orchestration-eventbus) - Unify plan, fork, merge, and orchestrate around shared builders and a live plan event stream.
+- [Fleet Parallel Test Suite](prompts/source-backed-goals.md#github-copilot-fleet-parallel-test-suite) - Break a large test expansion into independent subtasks that subagents can execute in parallel while the orchestrator manages dependencies and final integration.
 
 ### backend-api
 - [API Integration Tests](prompts/source-backed-goals.md#openhands-api-integration-tests) - Add end-to-end tests for product API endpoints with success and error cases.
@@ -236,6 +254,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 ### backend-data
 - [Dev Database Migration Proof](prompts/source-backed-goals.md#claude-dev-database-migration) - Write a migration, run it against the dev database, and confirm the schema matches.
 - [Slow Query Optimization Report](prompts/source-backed-goals.md#openhands-slow-query-optimization) - Analyze slow query logs, explain bottlenecks, recommend indexes or rewrites, and produce prioritized SQL changes.
+- [Deadlock-Minimizing Transaction Rewrite](prompts/source-backed-goals.md#github-copilot-deadlock-minimization) - Rewrite transaction ordering and locking to reduce deadlock risk without adverse performance or data-integrity regressions.
 
 ### accessibility
 - [HTML WCAG Instruction Audit](prompts/source-backed-goals.md#github-accessibility-html-wcag) - Audit HTML changes against WCAG guidance and prove the Lighthouse accessibility audit passes.
@@ -253,6 +272,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 
 ### ai-ops
 - [Agent Trace Observability](prompts/source-backed-goals.md#openai-agent-tracing-observability) - Instrument agent runs so LLM generations, tool calls, handoffs, guardrails, and custom events are traceable.
+- [OpenSpec Rerank Provider Goal](prompts/source-backed-goals.md#goal-builder-openspec-rerank-provider) - Implement an OpenSpec feature change exactly as specified, adding a new rerank provider with contract tests, integration coverage, docs, and changelog evidence.
 
 ### data-eng
 - [CSV Processing Report](prompts/source-backed-goals.md#openhands-csv-processing-report) - Create a data processing script that validates CSV input and generates an analysis report.
@@ -264,6 +284,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 ### security-appsec
 - [Tool Guardrails For AppSec](prompts/source-backed-goals.md#openai-tool-guardrails-appsec) - Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues.
 - [Security PR Review](prompts/source-backed-goals.md#openhands-security-pr-review) - Review a pull request for input validation, authentication, injection, XSS, and secrets risks with file-level fixes.
+- [Unsafe innerHTML XSS Fix](prompts/source-backed-goals.md#github-copilot-xss-innerhtml-fix) - Find and fix XSS caused by unsafe innerHTML rendering while preserving the user-visible text and adding a regression guard.
 <!-- generated:catalog-end -->
 
 ## How To Write A Good Goal
