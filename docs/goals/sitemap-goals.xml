@@ -32,6 +32,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/chinese-v2ex-grillme-strong-goal-contract.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/claude-auth-tests-lint.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
@@ -124,6 +130,12 @@
   <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/codex-eval-prompt-optimization.html</loc>
     <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/codex-goalcraft-six-field-contract.html</loc>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -278,8 +290,80 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-autopilot-ci-repair.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-cli-agentic-review.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-cross-cutting-logging.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-deadlock-minimization.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-doc-code-sync.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-error-messages.html</loc>
     <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-fleet-parallel-test-suite.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-plan-before-pr.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-playwright-instructions.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-repository-instructions.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-research-architecture-report.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-well-scoped-agent-issue.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/github-copilot-xss-innerhtml-fix.html</loc>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -362,8 +446,44 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/goal-builder-audit-friendly-template.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/goal-builder-openspec-rerank-provider.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/goal-ledger-html-resume-incomplete-hatch.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/goal-md-fitness-dual-score-loop.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/google-jules-auth-tests.html</loc>
     <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/halmob-checkout-p95-goal.html</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/halmob-research-reproduction-goal.html</loc>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -634,6 +754,12 @@
   <url>
     <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/reddit-trading-backlog-clearance.html</loc>
     <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/tecton-codex-voice-e2e-contract.html</loc>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

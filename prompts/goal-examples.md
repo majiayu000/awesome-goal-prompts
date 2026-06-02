@@ -36,6 +36,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Schema Drift Detector](#schema-drift-detector) - Compare ORM models, migrations, and the live database schema.
 - [Dev Database Migration Proof](#claude-dev-database-migration) - Write a migration, run it against the dev database, and confirm the schema matches. Source-backed.
 - [Slow Query Optimization Report](#openhands-slow-query-optimization) - Analyze slow query logs, explain bottlenecks, recommend indexes or rewrites, and produce prioritized SQL changes. Source-backed.
+- [Deadlock-Minimizing Transaction Rewrite](#github-copilot-deadlock-minimization) - Rewrite transaction ordering and locking to reduce deadlock risk without adverse performance or data-integrity regressions. Source-backed.
 
 ### devops-ci
 - [CI Flaky Test Triage](#ci-flaky-test-triage) - Identify flaky tests, separate real failures, and fix unstable waits or fixtures.
@@ -49,6 +50,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Release Rollback Drill](#release-rollback-drill) - Create and test a rollback path for the latest release.
 - [Semantic Version Check](#semantic-version-check) - Infer the correct semver bump from API, behavior, and changelog diffs.
 - [CI Pipeline Green](#explainx-ci-pipeline-green) - Repair CI test, lint, typecheck, and security scan failures until checks pass. Source-backed.
+- [Bounded Autopilot CI Repair](#github-copilot-autopilot-ci-repair) - Run a bounded autonomous CI repair after plan acceptance, with explicit continuation limits, permissions, validation commands, and blocker reporting. Source-backed.
 
 ### devops-runtime
 - [Docker Image Slimming](#docker-image-slimming) - Reduce image size while keeping runtime dependencies and security scans green.
@@ -76,6 +78,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [IDOR Audit](#insecure-direct-object-ref) - Verify direct object ID access always checks ownership or scope.
 - [Tool Guardrails For AppSec](#openai-tool-guardrails-appsec) - Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues. Source-backed.
 - [Security PR Review](#openhands-security-pr-review) - Review a pull request for input validation, authentication, injection, XSS, and secrets risks with file-level fixes. Source-backed.
+- [Unsafe innerHTML XSS Fix](#github-copilot-xss-innerhtml-fix) - Find and fix XSS caused by unsafe innerHTML rendering while preserving the user-visible text and adding a regression guard. Source-backed.
 
 ### security-ops
 - [Secret Scan Baseline](#secret-scan-baseline) - Add secret scanning and triage historical findings safely.
@@ -143,6 +146,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Human Review Threshold](#human-review-threshold) - Escalate high-risk AI outputs based on confidence and policy rules.
 - [AI Observability Traces](#ai-observability-traces) - Trace prompts, retrieval, tools, models, scores, and request IDs.
 - [Agent Trace Observability](#openai-agent-tracing-observability) - Instrument agent runs so LLM generations, tool calls, handoffs, guardrails, and custom events are traceable. Source-backed.
+- [OpenSpec Rerank Provider Goal](#goal-builder-openspec-rerank-provider) - Implement an OpenSpec feature change exactly as specified, adding a new rerank provider with contract tests, integration coverage, docs, and changelog evidence. Source-backed.
 
 ### frontend
 - [Empty State System](#frontend-empty-states) - Design real empty states for lists, search, permissions, and first use.
@@ -213,6 +217,8 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Public API Docs Coverage](#explainx-public-api-jsdoc) - Add JSDoc and examples for public functions while keeping documentation links valid. Source-backed.
 - [Payment Retry Logic Diagram](#claude-payment-retry-diagram) - Explain payment retry behavior as a browsable HTML page with a diagram for developer or support review. Source-backed.
 - [Implementation Notes Decision Ledger](#deadreckon-implementation-notes-ledger) - Keep live implementation notes and the final run decisions document aligned around decisions, deviations, tradeoffs, and open questions. Source-backed.
+- [Repository Agent Instructions](#github-copilot-repository-instructions) - Add repository-level agent instructions that document project structure, build/test/validate commands, coding standards, and documentation expectations. Source-backed.
+- [Documentation Matches Code](#github-copilot-doc-code-sync) - Update stale API or function documentation so parameters, behavior, examples, thrown errors, and links match the current implementation. Source-backed.
 
 ### product
 - [User Journeys](#product-user-journeys) - Map persona tasks into pages, events, and success states.
@@ -245,6 +251,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Security Smoke](#qa-security-smoke) - Check auth, permission bypass, and sensitive info leakage.
 - [Bug Reproduction Template](#qa-bug-repro-template) - Standardize environment, steps, expected, actual, and evidence.
 - [QA Engineer Simulation](#x-qa-engineer-simulation) - Use `/goal` as a quality loop until tests pass and lint is clean. Source-backed.
+- [Terminal Agentic Code Review](#github-copilot-cli-agentic-review) - Review a diff from the terminal with a scoped prompt, path, or file pattern, inspect suggested commands, and apply or reject findings before commit. Source-backed.
 
 ### accessibility
 - [Keyboard Navigation](#accessibility-keyboard-nav) - Ensure the whole app works with Tab, Enter, and Escape.
@@ -280,6 +287,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Order Service Performance Review](#openhands-orderservice-performance-review) - Inspect service code for N+1 queries, missing indexes, inefficient loops, missing caches, and unnecessary fetching. Source-backed.
 - [Node Memory Leak Fix](#openhands-node-memory-leak-fix) - Investigate a growing-memory Node.js process, isolate the leak source, fix it, and add monitoring for recurrence. Source-backed.
 - [GOAP API Latency Reduction](#claude-flow-api-latency-goap) - Reduce API latency by profiling current performance, optimizing database queries, adding caching, and improving code paths. Source-backed.
+- [Checkout P95 Latency Goal](#halmob-checkout-p95-goal) - Reduce checkout p95 latency below a numeric target while keeping the correctness suite green and logging each experiment. Source-backed.
 
 ### workflow
 - [Goal Prompt Writer](#goal-meta-prompt-writer) - Ask the agent to inspect a repo and write a precise goal prompt before execution.
@@ -300,6 +308,10 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Dual-Model Evaluator Loop for Goals](#x-dual-model-evaluator-goal-loop) - Run long /goal sessions reliably and cost-effectively by using a strong worker model for execution paired with a cheap fast evaluator model (typically Haiku) that periodically judges progress against the goal criteria and decides whether to continue or stop. Source-backed.
 - [CLAUDE.md + Goal Workflow](#x-claude-md-goal-workflow) - Combine a persistent project-level CLAUDE.md (or AGENTS.md) file containing rules, standards, and context with /goal commands so long-running autonomous agent work stays aligned with repository-specific constraints and learned lessons. Source-backed.
 - [Goal Ledger for Long-Running Runs](#x-goal-ledger) - Maintain a live, browser-viewable HTML progress ledger during extended /goal executions to provide visibility, persistent memory, decision logging, and self-reflection, reducing drift in long autonomous sessions. Source-backed.
+- [Well-Scoped Agent Issue](#github-copilot-well-scoped-agent-issue) - Turn a backlog item into a coding-agent-ready issue with a clear problem statement, acceptance criteria, file directions, and test expectations. Source-backed.
+- [Research And Plan Before PR](#github-copilot-plan-before-pr) - Have an agent research the repository, create an implementation plan, and iterate on a branch before deciding whether to open a pull request. Source-backed.
+- [Goalcraft Six-Field Contract Spine](#codex-goalcraft-six-field-contract) - Write any /goal as a compact, evidence-first, thread-scoped completion contract with explicit outcome, verification surface, constraints, boundaries, iteration policy, and blocked stop conditions instead of vague effort descriptions. Source-backed.
+- [Strong Verifiable Goal Contract After Alignment Interview](#chinese-v2ex-grillme-strong-goal-contract) - After a structured alignment interview, produce a binding /goal contract with explicit success evidence, hard constraints, file boundaries, iteration strategy, and blocking/escape handling so a Ralph-loop or native /goal agent can run autonomously until evidence-based completion. Source-backed.
 
 ### migration
 - [Visual Migration With Playwright](#codex-visual-migration-playwright) - Migrate a project while preserving screen output and checking it with Playwright. Source-backed.
@@ -322,6 +334,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Router Prompt Eval Score](#qiita-router-eval-score) - Improve a router prompt against an eval directory until the result score reaches a target. Source-backed.
 - [RAG Chat Flywheel](#reddit-rag-chat-flywheel) - Iterate on code, tests, and metrics to improve a document-chat RAG system. Source-backed.
 - [Difficult Task Eval Loop](#openai-difficult-task-eval-loop) - Run a difficult task as an eval-driven improvement loop with one focused change, rerun scores, and direct artifact inspection each iteration. Source-backed.
+- [Fitness Function Dual-Score Improvement Loop](#goal-md-fitness-dual-score-loop) - For goals without natural scalar metric (docs quality, code health, consistency), construct an explicit runnable fitness function plus dual-score (outcome + instrument quality guard) and drive an improvement loop with iterations.jsonl ledger until converge criteria. Source-backed.
 
 ### testing
 - [Auth Tests And Lint Clean](#claude-auth-tests-lint) - Keep working until auth tests pass and the lint step is clean. Source-backed.
@@ -344,6 +357,8 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Improve Benchmark Coverage](#github-benchmark-coverage-goal) - Use `/goal` to improve benchmark coverage and persist the command in history. Source-backed.
 - [Batch Fix Bugs](#github-claude-batch-bugs) - Use a Claude Code goal to fix a numbered batch of bugs without looping on missing skills. Source-backed.
 - [GOAP Coverage Target Plan](#claude-flow-coverage-goap) - Raise test coverage with an explicit test pyramid across unit, integration, and end-to-end coverage targets. Source-backed.
+- [Playwright Test Instructions](#github-copilot-playwright-instructions) - Create path-specific Playwright instructions that enforce stable locators, isolated tests, explicit assertions, cross-browser coverage, and CI behavior. Source-backed.
+- [Voice E2E Goal Contract](#tecton-codex-voice-e2e-contract) - Run a long-horizon Codex goal against a TypeScript voice system using a reading list, working rules, concrete done-when criteria, and anti-pattern fences. Source-backed.
 
 ### investigation
 - [Session Drift Report](#hermes-session-drift-report) - Investigate session ID drift during mid-run compression and write a report. Source-backed.
@@ -358,6 +373,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 ### refactor
 - [Auth Dependency Injection Refactor](#explainx-auth-di-refactor) - Refactor auth code to dependency injection while preserving tests, coverage, and public API. Source-backed.
 - [Split Oversized File](#claude-split-oversized-file) - Split an oversized source file into focused modules while preserving behavior. Source-backed.
+- [Centralize Cross-Cutting Logging](#github-copilot-cross-cutting-logging) - Centralize scattered logging, validation, security, or error-handling behavior without changing the core business behavior of the services. Source-backed.
 
 ### greenfield-build
 - [Build Design Tool From Scratch](#openai-long-horizon-design-tool) - Run a long-horizon Codex task to build a design tool with milestone verification. Source-backed.
@@ -372,6 +388,8 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Public Benchmark Table](#apidog-benchmark-table) - Collect distinct public benchmarks and build a date-sorted comparison table. Source-backed.
 - [Review Sentiment JSON Agent](#hn-review-sentiment-json-agent) - Fetch reviews with browser automation, classify sentiment, and write structured JSON output. Source-backed.
 - [Clinical Research AI Safety Boundary](#clinical-research-ai-safety-boundary) - Review clinical research AI work with evidence-first boundaries so agents do not invent medical sources, expose private data, or turn research notes into patient-specific advice. Source-backed.
+- [Cited Architecture Research Report](#github-copilot-research-architecture-report) - Produce a saved, cited Markdown architecture report after inspecting the local codebase, relevant repositories, and web sources. Source-backed.
+- [Evidence-Backed Research Reproduction](#halmob-research-reproduction-goal) - Reproduce a paper or research result as far as local materials allow while separating confirmed findings, approximate reconstructions, blocked claims, and remaining uncertainty. Source-backed.
 
 ### maintenance
 - [Repo Maintenance Audit](#apidog-repo-maintenance-audit) - Find dead code, unused dependencies, and stale files, then produce a PR-ready justification list. Source-backed.
@@ -391,11 +409,14 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Goal-Aligned Profile Optimization](#goal-agent-profile-optimization) - Audit and update professional profiles against a stated goal while recording the resulting progress and gaps. Source-backed.
 - [Content And Audience Engagement Loop](#goal-agent-content-engagement-loop) - Generate goal-aligned content, publish or promote it, engage with target audience posts, and log the session outcome. Source-backed.
 - [Define Goal Quality Bar](#openai-define-goal-quality-bar) - Turn a fuzzy intention into a concrete measurable goal with evidence, scope boundaries, and honest stop conditions before creating it. Source-backed.
+- [Audit-Friendly Goal Template](#goal-builder-audit-friendly-template) - Rewrite a vague /goal into a mappable contract with objective, scope, constraints, done-when evidence, stop rules, and token budget. Source-backed.
+- [Single-File HTML Goal Ledger with Resume Block and Structured Incomplete Escape](#goal-ledger-html-resume-incomplete-hatch) - Maintain one canonical browser-viewable implementation-notes.html containing Resume Here block, inline progressEvents timeline, and explicit [incomplete]/[blocked] states with full reason/proof/impact so long-running /goal can safely pause and resume across compaction or handoff without drift. Source-backed.
 
 ### orchestration
 - [DAG Agent Dispatch](#hn-dag-agent-dispatch) - Split a goal into a dependency graph and dispatch independent agents into isolated worktrees. Source-backed.
 - [DAG-Aware Semantic Merge Repair](#deadreckon-semantic-merge-repair) - Make orchestration merge failures repairable by using plan DAG context, conflict bundles, planner-mediated repair, and bounded retry. Source-backed.
 - [Plan EventBus Live UX](#deadreckon-orchestration-eventbus) - Unify plan, fork, merge, and orchestrate around shared builders and a live plan event stream. Source-backed.
+- [Fleet Parallel Test Suite](#github-copilot-fleet-parallel-test-suite) - Break a large test expansion into independent subtasks that subagents can execute in parallel while the orchestrator manages dependencies and final integration. Source-backed.
 
 ## Examples
 
@@ -15860,6 +15881,1056 @@ DONE WHEN:
 
 VERIFY:
 - Run `an updatable HTML ledger file is created and actively maintained by the agent throughout the goal run` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="goal-builder-audit-friendly-template"></a>
+### Audit-Friendly Goal Template
+
+- Category: `goal-maintenance`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Rewrite a vague /goal into a mappable contract with objective, scope, constraints, done-when evidence, stop rules, and token budget.
+- Verification: `audit-friendliness score, rendered /goal, Objective/Scope/Constraints/Done when/Stop if sections`
+- Source: [goal-prompt-builder README](https://github.com/win4r/goal-prompt-builder)
+- Source type: `tool-readme`
+- Evidence: 5-section golden template (Objective / Scope / Constraints / Done when / Stop if)
+- Evidence summary: 5-section golden template (Objective / Scope / Constraints / Done when / Stop if); source: goal-prompt-builder README; type: tool-readme; verification: audit-friendliness score, rendered /goal, Objective/Scope/Constraints/Done when/Stop if sections
+
+```text
+/goal
+GOAL:
+Complete Audit-Friendly Goal Template for a goal-management workflow: Rewrite a vague /goal into a mappable contract with objective, scope, constraints, done-when evidence, stop rules, and token budget.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect active goals, done conditions, audit logs, and continuation state.
+- Establish a baseline by running or locating evidence for: `audit-friendliness score, rendered /goal, Objective/Scope/Constraints/Done when/Stop if sections`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not mark a goal complete without auditing the current done condition.
+- Keep goal edits and completion reasons visible in the final output.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Rewrite a vague /goal into a mappable contract with objective, scope, constraints, done-when evidence, stop rules, and token budget.
+- The verification command or evidence path succeeds: `audit-friendliness score, rendered /goal, Objective/Scope/Constraints/Done when/Stop if sections`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `audit-friendliness score, rendered /goal, Objective/Scope/Constraints/Done when/Stop if sections` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="goal-builder-openspec-rerank-provider"></a>
+### OpenSpec Rerank Provider Goal
+
+- Category: `ai-ops`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Implement an OpenSpec feature change exactly as specified, adding a new rerank provider with contract tests, integration coverage, docs, and changelog evidence.
+- Verification: `tasks checked off with file evidence, SHALL tests, GIVEN/WHEN/THEN integration tests, npx tsc --noEmit, npm test, README and CHANGELOG updates`
+- Source: [goal-prompt-builder README](https://github.com/win4r/goal-prompt-builder)
+- Source type: `tool-readme`
+- Evidence: Implement openspec/changes/add-cohere-rerank/ exactly as specified
+- Evidence summary: Implement openspec/changes/add-cohere-rerank/ exactly as specified; source: goal-prompt-builder README; type: tool-readme; verification: tasks checked off with file evidence, SHALL tests, GIVEN/WHEN/THEN integration tests, npx tsc --noEmit, npm test, README and CHANGELOG updates
+
+```text
+/goal
+GOAL:
+Complete OpenSpec Rerank Provider Goal for an AI application runtime: Implement an OpenSpec feature change exactly as specified, adding a new rerank provider with contract tests, integration coverage, docs, and changelog evidence.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect prompts, retrieval code, routing policies, tracing, and cost logs.
+- Establish a baseline by running or locating evidence for: `tasks checked off with file evidence, SHALL tests, GIVEN/WHEN/THEN integration tests, npx tsc --noEmit, npm test, README and CHANGELOG updates`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not silently fall back to a lower-quality model for user-visible critical paths.
+- Keep request IDs, cost evidence, and schema validation errors visible.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Implement an OpenSpec feature change exactly as specified, adding a new rerank provider with contract tests, integration coverage, docs, and changelog evidence.
+- The verification command or evidence path succeeds: `tasks checked off with file evidence, SHALL tests, GIVEN/WHEN/THEN integration tests, npx tsc --noEmit, npm test, README and CHANGELOG updates`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `tasks checked off with file evidence, SHALL tests, GIVEN/WHEN/THEN integration tests, npx tsc --noEmit, npm test, README and CHANGELOG updates` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-well-scoped-agent-issue"></a>
+### Well-Scoped Agent Issue
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Turn a backlog item into a coding-agent-ready issue with a clear problem statement, acceptance criteria, file directions, and test expectations.
+- Verification: `issue includes problem description, acceptance criteria, file hints, expected tests, and review notes`
+- Source: [GitHub Copilot cloud agent best practices](https://docs.github.com/en/copilot/tutorials/cloud-agent/get-the-best-results)
+- Source type: `official-agent-task`
+- Evidence: clear description of the problem to be solved or the work required
+- Evidence summary: clear description of the problem to be solved or the work required; source: GitHub Copilot cloud agent best practices; type: official-agent-task; verification: issue includes problem description, acceptance criteria, file hints, expected tests, and review notes
+
+```text
+/goal
+GOAL:
+Complete Well-Scoped Agent Issue for a coding-agent workflow repository: Turn a backlog item into a coding-agent-ready issue with a clear problem statement, acceptance criteria, file directions, and test expectations.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `issue includes problem description, acceptance criteria, file hints, expected tests, and review notes`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Turn a backlog item into a coding-agent-ready issue with a clear problem statement, acceptance criteria, file directions, and test expectations.
+- The verification command or evidence path succeeds: `issue includes problem description, acceptance criteria, file hints, expected tests, and review notes`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `issue includes problem description, acceptance criteria, file hints, expected tests, and review notes` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-plan-before-pr"></a>
+### Research And Plan Before PR
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Have an agent research the repository, create an implementation plan, and iterate on a branch before deciding whether to open a pull request.
+- Verification: `implementation plan, reviewed diff, branch commits, explicit PR-open decision, and remaining-risk notes`
+- Source: [GitHub Copilot cloud agent best practices](https://docs.github.com/en/copilot/tutorials/cloud-agent/get-the-best-results)
+- Source type: `official-agent-task`
+- Evidence: research a repository, create an implementation plan, and make iterative code changes on a branch first
+- Evidence summary: research a repository, create an implementation plan, and make iterative code changes on a branch first; source: GitHub Copilot cloud agent best practices; type: official-agent-task; verification: implementation plan, reviewed diff, branch commits, explicit PR-open decision, and remaining-risk notes
+
+```text
+/goal
+GOAL:
+Complete Research And Plan Before PR for a coding-agent workflow repository: Have an agent research the repository, create an implementation plan, and iterate on a branch before deciding whether to open a pull request.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `implementation plan, reviewed diff, branch commits, explicit PR-open decision, and remaining-risk notes`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Have an agent research the repository, create an implementation plan, and iterate on a branch before deciding whether to open a pull request.
+- The verification command or evidence path succeeds: `implementation plan, reviewed diff, branch commits, explicit PR-open decision, and remaining-risk notes`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `implementation plan, reviewed diff, branch commits, explicit PR-open decision, and remaining-risk notes` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-repository-instructions"></a>
+### Repository Agent Instructions
+
+- Category: `docs`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Add repository-level agent instructions that document project structure, build/test/validate commands, coding standards, and documentation expectations.
+- Verification: `.github/copilot-instructions.md or AGENTS.md present, commands verified, repository structure covered, standards documented`
+- Source: [GitHub Copilot cloud agent best practices](https://docs.github.com/en/copilot/tutorials/cloud-agent/get-the-best-results)
+- Source type: `official-agent-task`
+- Evidence: guide Copilot on how to understand your project and how to build, test and validate its changes
+- Evidence summary: guide Copilot on how to understand your project and how to build, test and validate its changes; source: GitHub Copilot cloud agent best practices; type: official-agent-task; verification: .github/copilot-instructions.md or AGENTS.md present, commands verified, repository structure covered, standards documented
+
+```text
+/goal
+GOAL:
+Complete Repository Agent Instructions for a developer-facing documentation site or repository: Add repository-level agent instructions that document project structure, build/test/validate commands, coding standards, and documentation expectations.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect README, docs, examples, runbooks, and lint configuration.
+- Establish a baseline by running or locating evidence for: `.github/copilot-instructions.md or AGENTS.md present, commands verified, repository structure covered, standards documented`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not invent APIs, flags, commands, or product behavior.
+- Mark unverified commands clearly instead of presenting guesses as facts.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Add repository-level agent instructions that document project structure, build/test/validate commands, coding standards, and documentation expectations.
+- The verification command or evidence path succeeds: `.github/copilot-instructions.md or AGENTS.md present, commands verified, repository structure covered, standards documented`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `.github/copilot-instructions.md or AGENTS.md present, commands verified, repository structure covered, standards documented` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-playwright-instructions"></a>
+### Playwright Test Instructions
+
+- Category: `testing`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Create path-specific Playwright instructions that enforce stable locators, isolated tests, explicit assertions, cross-browser coverage, and CI behavior.
+- Verification: `.github/instructions/playwright-tests.instructions.md with glob front matter, sample e2e test, and passing Playwright command`
+- Source: [GitHub Copilot cloud agent best practices](https://docs.github.com/en/copilot/tutorials/cloud-agent/get-the-best-results)
+- Source type: `official-agent-task`
+- Evidence: Use stable locators
+- Evidence summary: Use stable locators; source: GitHub Copilot cloud agent best practices; type: official-agent-task; verification: .github/instructions/playwright-tests.instructions.md with glob front matter, sample e2e test, and passing Playwright command
+
+```text
+/goal
+GOAL:
+Complete Playwright Test Instructions for a project with failing or missing verification gates: Create path-specific Playwright instructions that enforce stable locators, isolated tests, explicit assertions, cross-browser coverage, and CI behavior.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect test suites, lint config, CI logs, coverage reports, and failing output.
+- Establish a baseline by running or locating evidence for: `.github/instructions/playwright-tests.instructions.md with glob front matter, sample e2e test, and passing Playwright command`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not weaken lint, typecheck, or test rules to create a green result.
+- Fix production or fixture causes before changing expectations.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Create path-specific Playwright instructions that enforce stable locators, isolated tests, explicit assertions, cross-browser coverage, and CI behavior.
+- The verification command or evidence path succeeds: `.github/instructions/playwright-tests.instructions.md with glob front matter, sample e2e test, and passing Playwright command`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `.github/instructions/playwright-tests.instructions.md with glob front matter, sample e2e test, and passing Playwright command` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-autopilot-ci-repair"></a>
+### Bounded Autopilot CI Repair
+
+- Category: `devops-ci`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Run a bounded autonomous CI repair after plan acceptance, with explicit continuation limits, permissions, validation commands, and blocker reporting.
+- Verification: `accepted plan, max continuation limit, CI command outputs, final green run or blocker report`
+- Source: [GitHub Copilot CLI autopilot docs](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/autopilot)
+- Source type: `official-workflow`
+- Evidence: Accept plan and build on autopilot
+- Evidence summary: Accept plan and build on autopilot; source: GitHub Copilot CLI autopilot docs; type: official-workflow; verification: accepted plan, max continuation limit, CI command outputs, final green run or blocker report
+
+```text
+/goal
+GOAL:
+Complete Bounded Autopilot CI Repair for a repository with CI/CD automation: Run a bounded autonomous CI repair after plan acceptance, with explicit continuation limits, permissions, validation commands, and blocker reporting.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect workflow files, build scripts, package manifests, and recent CI logs.
+- Establish a baseline by running or locating evidence for: `accepted plan, max continuation limit, CI command outputs, final green run or blocker report`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not weaken tests, remove required checks, or bypass branch protection.
+- Keep workflow permissions as narrow as the task allows.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Run a bounded autonomous CI repair after plan acceptance, with explicit continuation limits, permissions, validation commands, and blocker reporting.
+- The verification command or evidence path succeeds: `accepted plan, max continuation limit, CI command outputs, final green run or blocker report`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `accepted plan, max continuation limit, CI command outputs, final green run or blocker report` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-fleet-parallel-test-suite"></a>
+### Fleet Parallel Test Suite
+
+- Category: `orchestration`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Break a large test expansion into independent subtasks that subagents can execute in parallel while the orchestrator manages dependencies and final integration.
+- Verification: `task split, subagent ownership, dependency notes, merged test output, and conflict audit`
+- Source: [GitHub Copilot CLI fleet docs](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/fleet)
+- Source type: `official-workflow`
+- Evidence: creating a suite of tests for a new feature, are well suited to parallelization
+- Evidence summary: creating a suite of tests for a new feature, are well suited to parallelization; source: GitHub Copilot CLI fleet docs; type: official-workflow; verification: task split, subagent ownership, dependency notes, merged test output, and conflict audit
+
+```text
+/goal
+GOAL:
+Complete Fleet Parallel Test Suite for an agent orchestration task: Break a large test expansion into independent subtasks that subagents can execute in parallel while the orchestrator manages dependencies and final integration.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect plans, worktrees, subtask ownership, PRs, and coordination notes.
+- Establish a baseline by running or locating evidence for: `task split, subagent ownership, dependency notes, merged test output, and conflict audit`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Keep subtask ownership explicit and avoid overlapping write scopes.
+- Do not merge or deploy automatically unless the goal explicitly allows it.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Break a large test expansion into independent subtasks that subagents can execute in parallel while the orchestrator manages dependencies and final integration.
+- The verification command or evidence path succeeds: `task split, subagent ownership, dependency notes, merged test output, and conflict audit`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `task split, subagent ownership, dependency notes, merged test output, and conflict audit` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-research-architecture-report"></a>
+### Cited Architecture Research Report
+
+- Category: `research`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Produce a saved, cited Markdown architecture report after inspecting the local codebase, relevant repositories, and web sources.
+- Verification: `Markdown report path or gist URL, citations, assumptions, confidence assessment, and architecture summary`
+- Source: [GitHub Copilot CLI research docs](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/research)
+- Source type: `official-agent-task`
+- Evidence: /research What is the architecture of this codebase?
+- Evidence summary: /research What is the architecture of this codebase?; source: GitHub Copilot CLI research docs; type: official-agent-task; verification: Markdown report path or gist URL, citations, assumptions, confidence assessment, and architecture summary
+
+```text
+/goal
+GOAL:
+Complete Cited Architecture Research Report for a research task: Produce a saved, cited Markdown architecture report after inspecting the local codebase, relevant repositories, and web sources.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect source lists, citation notes, evidence files, and acceptance criteria.
+- Establish a baseline by running or locating evidence for: `Markdown report path or gist URL, citations, assumptions, confidence assessment, and architecture summary`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not present unsourced claims as facts.
+- Keep direct quotes short and attach a public URL for every external claim.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Produce a saved, cited Markdown architecture report after inspecting the local codebase, relevant repositories, and web sources.
+- The verification command or evidence path succeeds: `Markdown report path or gist URL, citations, assumptions, confidence assessment, and architecture summary`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `Markdown report path or gist URL, citations, assumptions, confidence assessment, and architecture summary` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-cli-agentic-review"></a>
+### Terminal Agentic Code Review
+
+- Category: `qa`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Review a diff from the terminal with a scoped prompt, path, or file pattern, inspect suggested commands, and apply or reject findings before commit.
+- Verification: `/review output, inspected diff evidence, applied fixes or explicit rejects, and final clean diff summary`
+- Source: [GitHub Copilot CLI code review docs](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/agentic-code-review)
+- Source type: `official-agent-task`
+- Evidence: /review slash command to have Copilot analyze code changes
+- Evidence summary: /review slash command to have Copilot analyze code changes; source: GitHub Copilot CLI code review docs; type: official-agent-task; verification: /review output, inspected diff evidence, applied fixes or explicit rejects, and final clean diff summary
+
+```text
+/goal
+GOAL:
+Complete Terminal Agentic Code Review for a product with automated and manual QA coverage: Review a diff from the terminal with a scoped prompt, path, or file pattern, inspect suggested commands, and apply or reject findings before commit.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect test suites, fixtures, bug templates, and release checklists.
+- Establish a baseline by running or locating evidence for: `/review output, inspected diff evidence, applied fixes or explicit rejects, and final clean diff summary`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not delete or weaken failing tests to make the suite pass.
+- Reproduce failures before changing production code.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Review a diff from the terminal with a scoped prompt, path, or file pattern, inspect suggested commands, and apply or reject findings before commit.
+- The verification command or evidence path succeeds: `/review output, inspected diff evidence, applied fixes or explicit rejects, and final clean diff summary`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `/review output, inspected diff evidence, applied fixes or explicit rejects, and final clean diff summary` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-cross-cutting-logging"></a>
+### Centralize Cross-Cutting Logging
+
+- Category: `refactor`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Centralize scattered logging, validation, security, or error-handling behavior without changing the core business behavior of the services.
+- Verification: `central middleware/decorator/config module, duplicate removal, focused regression tests, and unchanged public behavior`
+- Source: [GitHub Copilot Cookbook](https://docs.github.com/en/copilot/tutorials/copilot-cookbook/refactor-code/handle-cross-cutting)
+- Source type: `official-agent-task`
+- Evidence: logging, security, data validation, and error handling
+- Evidence summary: logging, security, data validation, and error handling; source: GitHub Copilot Cookbook; type: official-agent-task; verification: central middleware/decorator/config module, duplicate removal, focused regression tests, and unchanged public behavior
+
+```text
+/goal
+GOAL:
+Complete Centralize Cross-Cutting Logging for a refactoring task: Centralize scattered logging, validation, security, or error-handling behavior without changing the core business behavior of the services.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect the target module, call sites, public API, tests, and compatibility notes.
+- Establish a baseline by running or locating evidence for: `central middleware/decorator/config module, duplicate removal, focused regression tests, and unchanged public behavior`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not change public APIs, data formats, or user-visible behavior unless the goal requires it.
+- Keep behavior characterization tests before large internal changes.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Centralize scattered logging, validation, security, or error-handling behavior without changing the core business behavior of the services.
+- The verification command or evidence path succeeds: `central middleware/decorator/config module, duplicate removal, focused regression tests, and unchanged public behavior`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `central middleware/decorator/config module, duplicate removal, focused regression tests, and unchanged public behavior` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-deadlock-minimization"></a>
+### Deadlock-Minimizing Transaction Rewrite
+
+- Category: `backend-data`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Rewrite transaction ordering and locking to reduce deadlock risk without adverse performance or data-integrity regressions.
+- Verification: `consistent lock order, shorter transaction evidence, database tests, and before/after query or lock notes`
+- Source: [GitHub Copilot Cookbook](https://docs.github.com/en/copilot/tutorials/copilot-cookbook/refactor-code/fix-database-deadlocks)
+- Source type: `official-agent-task`
+- Evidence: reduce the chance of deadlock to a minimum while not adversely affecting performance
+- Evidence summary: reduce the chance of deadlock to a minimum while not adversely affecting performance; source: GitHub Copilot Cookbook; type: official-agent-task; verification: consistent lock order, shorter transaction evidence, database tests, and before/after query or lock notes
+
+```text
+/goal
+GOAL:
+Complete Deadlock-Minimizing Transaction Rewrite for a data-backed backend service: Rewrite transaction ordering and locking to reduce deadlock risk without adverse performance or data-integrity regressions.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect schema files, migrations, models, repositories, and data tests.
+- Establish a baseline by running or locating evidence for: `consistent lock order, shorter transaction evidence, database tests, and before/after query or lock notes`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not destroy or rewrite data without a dry-run, rollback, and row-count/checksum evidence.
+- Do not hide database errors behind warnings or silent fallbacks.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Rewrite transaction ordering and locking to reduce deadlock risk without adverse performance or data-integrity regressions.
+- The verification command or evidence path succeeds: `consistent lock order, shorter transaction evidence, database tests, and before/after query or lock notes`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `consistent lock order, shorter transaction evidence, database tests, and before/after query or lock notes` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-xss-innerhtml-fix"></a>
+### Unsafe innerHTML XSS Fix
+
+- Category: `security-appsec`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Find and fix XSS caused by unsafe innerHTML rendering while preserving the user-visible text and adding a regression guard.
+- Verification: `unsafe sink replaced, security or DOM test added, no sanitizer bypass, and UI output preserved`
+- Source: [GitHub Copilot Cookbook](https://docs.github.com/en/copilot/tutorials/copilot-cookbook/analyze-security/find-vulnerabilities)
+- Source type: `official-agent-task`
+- Evidence: innerHTML = `Showing results for "${name}"`
+- Evidence summary: innerHTML = `Showing results for "${name}"`; source: GitHub Copilot Cookbook; type: official-agent-task; verification: unsafe sink replaced, security or DOM test added, no sanitizer bypass, and UI output preserved
+
+```text
+/goal
+GOAL:
+Complete Unsafe innerHTML XSS Fix for an application with security-sensitive code paths: Find and fix XSS caused by unsafe innerHTML rendering while preserving the user-visible text and adding a regression guard.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect auth, input handling, rendering, upload, and boundary tests.
+- Establish a baseline by running or locating evidence for: `unsafe sink replaced, security or DOM test added, no sanitizer bypass, and UI output preserved`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not bypass authentication, authorization, validation, or audit checks.
+- Do not use eval, unsafe HTML injection, shell string concatenation, or string-built SQL.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Find and fix XSS caused by unsafe innerHTML rendering while preserving the user-visible text and adding a regression guard.
+- The verification command or evidence path succeeds: `unsafe sink replaced, security or DOM test added, no sanitizer bypass, and UI output preserved`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `unsafe sink replaced, security or DOM test added, no sanitizer bypass, and UI output preserved` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-copilot-doc-code-sync"></a>
+### Documentation Matches Code
+
+- Category: `docs`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Update stale API or function documentation so parameters, behavior, examples, thrown errors, and links match the current implementation.
+- Verification: `documentation diff matches code signature, examples compile or type-check, docs lint passes`
+- Source: [GitHub Copilot Cookbook](https://docs.github.com/en/copilot/tutorials/copilot-cookbook/document-code/sync-documentation)
+- Source type: `official-agent-task`
+- Evidence: Update the existing documentation for the getByCategoryName function to reflect the current implementation
+- Evidence summary: Update the existing documentation for the getByCategoryName function to reflect the current implementation; source: GitHub Copilot Cookbook; type: official-agent-task; verification: documentation diff matches code signature, examples compile or type-check, docs lint passes
+
+```text
+/goal
+GOAL:
+Complete Documentation Matches Code for a developer-facing documentation site or repository: Update stale API or function documentation so parameters, behavior, examples, thrown errors, and links match the current implementation.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect README, docs, examples, runbooks, and lint configuration.
+- Establish a baseline by running or locating evidence for: `documentation diff matches code signature, examples compile or type-check, docs lint passes`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not invent APIs, flags, commands, or product behavior.
+- Mark unverified commands clearly instead of presenting guesses as facts.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Update stale API or function documentation so parameters, behavior, examples, thrown errors, and links match the current implementation.
+- The verification command or evidence path succeeds: `documentation diff matches code signature, examples compile or type-check, docs lint passes`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `documentation diff matches code signature, examples compile or type-check, docs lint passes` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="tecton-codex-voice-e2e-contract"></a>
+### Voice E2E Goal Contract
+
+- Category: `testing`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Run a long-horizon Codex goal against a TypeScript voice system using a reading list, working rules, concrete done-when criteria, and anti-pattern fences.
+- Verification: `four target end-to-end voice scenarios pass, transcript review shows no prompt loops, and unavailable metrics are documented honestly`
+- Source: [Tecton & Tide Codex goal run](https://www.tectontide.com/en/blog/codex-goal-six-hour-run/)
+- Source type: `third-party-review`
+- Evidence: All four target end-to-end voice scenarios passed verification
+- Evidence summary: All four target end-to-end voice scenarios passed verification; source: Tecton & Tide Codex goal run; type: third-party-review; verification: four target end-to-end voice scenarios pass, transcript review shows no prompt loops, and unavailable metrics are documented honestly
+
+```text
+/goal
+GOAL:
+Complete Voice E2E Goal Contract for a project with failing or missing verification gates: Run a long-horizon Codex goal against a TypeScript voice system using a reading list, working rules, concrete done-when criteria, and anti-pattern fences.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect test suites, lint config, CI logs, coverage reports, and failing output.
+- Establish a baseline by running or locating evidence for: `four target end-to-end voice scenarios pass, transcript review shows no prompt loops, and unavailable metrics are documented honestly`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not weaken lint, typecheck, or test rules to create a green result.
+- Fix production or fixture causes before changing expectations.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Run a long-horizon Codex goal against a TypeScript voice system using a reading list, working rules, concrete done-when criteria, and anti-pattern fences.
+- The verification command or evidence path succeeds: `four target end-to-end voice scenarios pass, transcript review shows no prompt loops, and unavailable metrics are documented honestly`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `four target end-to-end voice scenarios pass, transcript review shows no prompt loops, and unavailable metrics are documented honestly` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="halmob-checkout-p95-goal"></a>
+### Checkout P95 Latency Goal
+
+- Category: `performance`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Reduce checkout p95 latency below a numeric target while keeping the correctness suite green and logging each experiment.
+- Verification: `checkout benchmark p95 below 120 ms, correctness suite green, iteration log, and blocker report if the benchmark cannot run`
+- Source: [Halmob Codex goals guide](https://halmob.com/blog/openai-codex-goals-persistent-objectives-guide)
+- Source type: `third-party-tutorial`
+- Evidence: Reduce p95 checkout latency below 120 ms
+- Evidence summary: Reduce p95 checkout latency below 120 ms; source: Halmob Codex goals guide; type: third-party-tutorial; verification: checkout benchmark p95 below 120 ms, correctness suite green, iteration log, and blocker report if the benchmark cannot run
+
+```text
+/goal
+GOAL:
+Complete Checkout P95 Latency Goal for a web application with measurable performance goals: Reduce checkout p95 latency below a numeric target while keeping the correctness suite green and logging each experiment.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect Lighthouse reports, bundles, traces, and critical routes.
+- Establish a baseline by running or locating evidence for: `checkout benchmark p95 below 120 ms, correctness suite green, iteration log, and blocker report if the benchmark cannot run`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not trade correctness, accessibility, or security for faster synthetic scores.
+- Compare before/after metrics on the same route and environment.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Reduce checkout p95 latency below a numeric target while keeping the correctness suite green and logging each experiment.
+- The verification command or evidence path succeeds: `checkout benchmark p95 below 120 ms, correctness suite green, iteration log, and blocker report if the benchmark cannot run`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `checkout benchmark p95 below 120 ms, correctness suite green, iteration log, and blocker report if the benchmark cannot run` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="halmob-research-reproduction-goal"></a>
+### Evidence-Backed Research Reproduction
+
+- Category: `research`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Reproduce a paper or research result as far as local materials allow while separating confirmed findings, approximate reconstructions, blocked claims, and remaining uncertainty.
+- Verification: `report with confirmed findings, approximate reconstructions, blocked claims, remaining uncertainty, and inspected outputs`
+- Source: [Halmob Codex goals guide](https://halmob.com/blog/openai-codex-goals-persistent-objectives-guide)
+- Source type: `third-party-tutorial`
+- Evidence: Produce the strongest evidence-backed reproduction of the paper
+- Evidence summary: Produce the strongest evidence-backed reproduction of the paper; source: Halmob Codex goals guide; type: third-party-tutorial; verification: report with confirmed findings, approximate reconstructions, blocked claims, remaining uncertainty, and inspected outputs
+
+```text
+/goal
+GOAL:
+Complete Evidence-Backed Research Reproduction for a research task: Reproduce a paper or research result as far as local materials allow while separating confirmed findings, approximate reconstructions, blocked claims, and remaining uncertainty.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect source lists, citation notes, evidence files, and acceptance criteria.
+- Establish a baseline by running or locating evidence for: `report with confirmed findings, approximate reconstructions, blocked claims, remaining uncertainty, and inspected outputs`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not present unsourced claims as facts.
+- Keep direct quotes short and attach a public URL for every external claim.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Reproduce a paper or research result as far as local materials allow while separating confirmed findings, approximate reconstructions, blocked claims, and remaining uncertainty.
+- The verification command or evidence path succeeds: `report with confirmed findings, approximate reconstructions, blocked claims, remaining uncertainty, and inspected outputs`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `report with confirmed findings, approximate reconstructions, blocked claims, remaining uncertainty, and inspected outputs` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="codex-goalcraft-six-field-contract"></a>
+### Goalcraft Six-Field Contract Spine
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Write any /goal as a compact, evidence-first, thread-scoped completion contract with explicit outcome, verification surface, constraints, boundaries, iteration policy, and blocked stop conditions instead of vague effort descriptions.
+- Verification: `activated goal text passes length and structure validation (under 4000 chars, all 6 fields present); subsequent agent run produces claim-by-claim evidence audit instead of proxy claims`
+- Source: [goalcraft SKILL.md](https://raw.githubusercontent.com/grp06/goalcraft/main/SKILL.md)
+- Source type: `tool-readme`
+- Evidence: six-field spine: Outcome + Verification surface + Constraints + Boundaries + Iteration policy + Blocked stop condition
+- Evidence summary: six-field spine: Outcome + Verification surface + Constraints + Boundaries + Iteration policy + Blocked stop condition; source: goalcraft SKILL.md; type: tool-readme; verification: activated goal text passes length and structure validation (under 4000 chars, all 6 fields present); subsequent agent run produces claim-by-claim evidence audit instead of proxy claims
+
+```text
+/goal
+GOAL:
+Complete Goalcraft Six-Field Contract Spine for a coding-agent workflow repository: Write any /goal as a compact, evidence-first, thread-scoped completion contract with explicit outcome, verification surface, constraints, boundaries, iteration policy, and blocked stop conditions instead of vague effort descriptions.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `activated goal text passes length and structure validation (under 4000 chars, all 6 fields present); subsequent agent run produces claim-by-claim evidence audit instead of proxy claims`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Write any /goal as a compact, evidence-first, thread-scoped completion contract with explicit outcome, verification surface, constraints, boundaries, iteration policy, and blocked stop conditions instead of vague effort descriptions.
+- The verification command or evidence path succeeds: `activated goal text passes length and structure validation (under 4000 chars, all 6 fields present); subsequent agent run produces claim-by-claim evidence audit instead of proxy claims`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `activated goal text passes length and structure validation (under 4000 chars, all 6 fields present); subsequent agent run produces claim-by-claim evidence audit instead of proxy claims` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="goal-md-fitness-dual-score-loop"></a>
+### Fitness Function Dual-Score Improvement Loop
+
+- Category: `prompt-optimization`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: For goals without natural scalar metric (docs quality, code health, consistency), construct an explicit runnable fitness function plus dual-score (outcome + instrument quality guard) and drive an improvement loop with iterations.jsonl ledger until converge criteria.
+- Verification: `./scripts/score.sh --json outputs numeric scores; iterations.jsonl shows progress without instrument gaming; final report matches When to Stop template`
+- Source: [goal-md template](https://raw.githubusercontent.com/jmilinovich/goal-md/main/template/GOAL.md)
+- Source type: `tool-readme`
+- Evidence: dual-score split + measure/diagnose/act/verify/revert loop + Action Catalog + machine-checkable stopping conditions
+- Evidence summary: dual-score split + measure/diagnose/act/verify/revert loop + Action Catalog + machine-checkable stopping conditions; source: goal-md template; type: tool-readme; verification: ./scripts/score.sh --json outputs numeric scores; iterations.jsonl shows progress without instrument gaming; final report matches When to Stop template
+
+```text
+/goal
+GOAL:
+Complete Fitness Function Dual-Score Improvement Loop for an eval-backed prompt project: For goals without natural scalar metric (docs quality, code health, consistency), construct an explicit runnable fitness function plus dual-score (outcome + instrument quality guard) and drive an improvement loop with iterations.jsonl ledger until converge criteria.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect prompt files, eval cases, scoring reports, regressions, and failure examples.
+- Establish a baseline by running or locating evidence for: `./scripts/score.sh --json outputs numeric scores; iterations.jsonl shows progress without instrument gaming; final report matches When to Stop template`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not delete, weaken, or cherry-pick eval cases to improve the score.
+- Report representative failures as well as the final score.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: For goals without natural scalar metric (docs quality, code health, consistency), construct an explicit runnable fitness function plus dual-score (outcome + instrument quality guard) and drive an improvement loop with iterations.jsonl ledger until converge criteria.
+- The verification command or evidence path succeeds: `./scripts/score.sh --json outputs numeric scores; iterations.jsonl shows progress without instrument gaming; final report matches When to Stop template`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `./scripts/score.sh --json outputs numeric scores; iterations.jsonl shows progress without instrument gaming; final report matches When to Stop template` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="goal-ledger-html-resume-incomplete-hatch"></a>
+### Single-File HTML Goal Ledger with Resume Block and Structured Incomplete Escape
+
+- Category: `goal-maintenance`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Maintain one canonical browser-viewable implementation-notes.html containing Resume Here block, inline progressEvents timeline, and explicit [incomplete]/[blocked] states with full reason/proof/impact so long-running /goal can safely pause and resume across compaction or handoff without drift.
+- Verification: `.agent/runs/<goal-id>/implementation-notes.html exists, opens in browser, is appended at every checkpoint, and any incomplete item carries structured explanation instead of silent drop`
+- Source: [kingbootoshi/goal-ledger SKILL.md](https://raw.githubusercontent.com/kingbootoshi/goal-ledger/main/plugins/goal-ledger/skills/goal/SKILL.md)
+- Source type: `tool-readme`
+- Evidence: Resume Here + progressEvents array + 6 states including [incomplete] with mandatory explanation fields
+- Evidence summary: Resume Here + progressEvents array + 6 states including [incomplete] with mandatory explanation fields; source: kingbootoshi/goal-ledger SKILL.md; type: tool-readme; verification: .agent/runs/<goal-id>/implementation-notes.html exists, opens in browser, is appended at every checkpoint, and any incomplete item carries structured explanation instead of silent drop
+
+```text
+/goal
+GOAL:
+Complete Single-File HTML Goal Ledger with Resume Block and Structured Incomplete Escape for a goal-management workflow: Maintain one canonical browser-viewable implementation-notes.html containing Resume Here block, inline progressEvents timeline, and explicit [incomplete]/[blocked] states with full reason/proof/impact so long-running /goal can safely pause and resume across compaction or handoff without drift.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect active goals, done conditions, audit logs, and continuation state.
+- Establish a baseline by running or locating evidence for: `.agent/runs/<goal-id>/implementation-notes.html exists, opens in browser, is appended at every checkpoint, and any incomplete item carries structured explanation instead of silent drop`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not mark a goal complete without auditing the current done condition.
+- Keep goal edits and completion reasons visible in the final output.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Maintain one canonical browser-viewable implementation-notes.html containing Resume Here block, inline progressEvents timeline, and explicit [incomplete]/[blocked] states with full reason/proof/impact so long-running /goal can safely pause and resume across compaction or handoff without drift.
+- The verification command or evidence path succeeds: `.agent/runs/<goal-id>/implementation-notes.html exists, opens in browser, is appended at every checkpoint, and any incomplete item carries structured explanation instead of silent drop`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `.agent/runs/<goal-id>/implementation-notes.html exists, opens in browser, is appended at every checkpoint, and any incomplete item carries structured explanation instead of silent drop` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="chinese-v2ex-grillme-strong-goal-contract"></a>
+### Strong Verifiable Goal Contract After Alignment Interview
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: After a structured alignment interview, produce a binding /goal contract with explicit success evidence, hard constraints, file boundaries, iteration strategy, and blocking/escape handling so a Ralph-loop or native /goal agent can run autonomously until evidence-based completion.
+- Verification: `final agent output includes scoped diff + passing verification commands + iteration/token log; DONE WHEN audited against original contract without subjective claims; escape triggered on budget or blocker`
+- Source: [V2EX Chinese engineering community (JustW post)](https://v2ex.com/t/1214285)
+- Source type: `public-forum`
+- Evidence: grill-me + goal 6-element strong contract pattern with Ralph loop execution
+- Evidence summary: grill-me + goal 6-element strong contract pattern with Ralph loop execution; source: V2EX Chinese engineering community (JustW post); type: public-forum; verification: final agent output includes scoped diff + passing verification commands + iteration/token log; DONE WHEN audited against original contract without subjective claims; escape triggered on budget or blocker
+
+```text
+/goal
+GOAL:
+Complete Strong Verifiable Goal Contract After Alignment Interview for a coding-agent workflow repository: After a structured alignment interview, produce a binding /goal contract with explicit success evidence, hard constraints, file boundaries, iteration strategy, and blocking/escape handling so a Ralph-loop or native /goal agent can run autonomously until evidence-based completion.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `final agent output includes scoped diff + passing verification commands + iteration/token log; DONE WHEN audited against original contract without subjective claims; escape triggered on budget or blocker`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: After a structured alignment interview, produce a binding /goal contract with explicit success evidence, hard constraints, file boundaries, iteration strategy, and blocking/escape handling so a Ralph-loop or native /goal agent can run autonomously until evidence-based completion.
+- The verification command or evidence path succeeds: `final agent output includes scoped diff + passing verification commands + iteration/token log; DONE WHEN audited against original contract without subjective claims; escape triggered on budget or blocker`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `final agent output includes scoped diff + passing verification commands + iteration/token log; DONE WHEN audited against original contract without subjective claims; escape triggered on budget or blocker` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 
