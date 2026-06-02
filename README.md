@@ -11,7 +11,7 @@ This repo keeps <!-- generated:total-start -->**300+**<!-- generated:total-end -
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk. This repo turns that contract shape into a catalog you can search, inspect, adapt, and copy.
 
 <!-- generated:stats-start -->
-The public catalog starts with **148** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
+The public catalog starts with **150** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
 <!-- generated:stats-end -->
 
 ![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
@@ -194,6 +194,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 
 ### data-analytics
 - [Analyze Product Usage Patterns](prompts/source-backed-goals.md#cursor-usage-pattern-analysis) - Analyze product usage patterns between tab view and agent panels.
+- [Copilot Usage Metrics Reconciliation](prompts/source-backed-goals.md#github-copilot-usage-metrics-reconciliation) - Reconcile Copilot dashboard, API, and export metrics before reporting agent adoption or pull-request impact trends.
 
 ### frontend
 - [Fix Freezing Chart Tooltips](prompts/source-backed-goals.md#cursor-chart-tooltip-freeze) - Debug and fix chart tooltips that freeze on hover.
@@ -261,6 +262,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 
 ### design
 - [Reference Layout Match](prompts/source-backed-goals.md#claude-reference-layout-design) - Build a settings page that follows an existing profile page layout instead of inventing a new pattern.
+- [Design System Context Export](prompts/source-backed-goals.md#layout-design-system-context-export) - Extract design tokens, components, and visual patterns into agent-readable context so generated UI follows the product design system.
 
 ### mobile
 - [Mobile Agent Task Handoff](prompts/source-backed-goals.md#github-mobile-agent-task-handoff) - Prepare and track a coding-agent task started from GitHub Mobile with review-ready evidence.

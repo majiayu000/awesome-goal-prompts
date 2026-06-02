@@ -148,5 +148,15 @@
     "query": "voice e2e scenarios anti pattern fences goal",
     "expected": "tecton-codex-voice-e2e-contract",
     "max_rank": 3
+  },
+  {
+    "query": "copilot usage metrics dashboard api export reconciliation",
+    "expected": "github-copilot-usage-metrics-reconciliation",
+    "max_rank": 3
+  },
+  {
+    "query": "design tokens figma agent context layout md",
+    "expected": "layout-design-system-context-export",
+    "max_rank": 3
   }
 ]

@@ -2,11 +2,11 @@
 
 ## Summary
 
-- Total entries: 348
-- Source-backed entries: 148
+- Total entries: 350
+- Source-backed entries: 150
 - Seed entries: 200
 - Categories: 32
-- Search eval cases: 30/30 passing
+- Search eval cases: 32/32 passing
 - Source-backed entries missing evidence summaries: 0
 - Source-backed entries missing provenance fields: 0
 
@@ -21,9 +21,9 @@
 | backend-data | 3 | 13 | 23% |
 | backlog | 3 | 3 | 100% |
 | cli | 2 | 2 | 100% |
-| data-analytics | 1 | 11 | 9% |
+| data-analytics | 2 | 12 | 17% |
 | data-eng | 2 | 12 | 17% |
-| design | 1 | 13 | 8% |
+| design | 2 | 14 | 14% |
 | devops-ci | 2 | 12 | 17% |
 | devops-runtime | 1 | 11 | 9% |
 | docs | 7 | 19 | 37% |
@@ -57,9 +57,9 @@
 | none | 200 |
 | official-agent-task | 37 |
 | official-goal | 17 |
-| official-workflow | 7 |
+| official-workflow | 8 |
 | public-forum | 11 |
-| third-party-project | 7 |
+| third-party-project | 8 |
 | third-party-review | 3 |
 | third-party-tutorial | 23 |
 | tool-readme | 16 |
@@ -100,6 +100,8 @@
 | innerHTML xss unsafe rendering fix | github-copilot-xss-innerhtml-fix | 1 | top 3 | pass |
 | checkout p95 latency benchmark correctness suite | halmob-checkout-p95-goal | 1 | top 3 | pass |
 | voice e2e scenarios anti pattern fences goal | tecton-codex-voice-e2e-contract | 1 | top 3 | pass |
+| copilot usage metrics dashboard api export reconciliation | github-copilot-usage-metrics-reconciliation | 1 | top 3 | pass |
+| design tokens figma agent context layout md | layout-design-system-context-export | 1 | top 3 | pass |
 
 ## Maintenance Notes
 

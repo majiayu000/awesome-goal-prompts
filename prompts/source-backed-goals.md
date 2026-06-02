@@ -215,6 +215,8 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 ### data-analytics
 <a id="cursor-usage-pattern-analysis"></a>
 - [Analyze Product Usage Patterns](goal-examples.md#cursor-usage-pattern-analysis) - Analyze product usage patterns between tab view and agent panels.
+<a id="github-copilot-usage-metrics-reconciliation"></a>
+- [Copilot Usage Metrics Reconciliation](goal-examples.md#github-copilot-usage-metrics-reconciliation) - Reconcile Copilot dashboard, API, and export metrics before reporting agent adoption or pull-request impact trends.
 
 ### frontend
 <a id="cursor-chart-tooltip-freeze"></a>
@@ -327,6 +329,8 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 ### design
 <a id="claude-reference-layout-design"></a>
 - [Reference Layout Match](goal-examples.md#claude-reference-layout-design) - Build a settings page that follows an existing profile page layout instead of inventing a new pattern.
+<a id="layout-design-system-context-export"></a>
+- [Design System Context Export](goal-examples.md#layout-design-system-context-export) - Extract design tokens, components, and visual patterns into agent-readable context so generated UI follows the product design system.
 
 ### mobile
 <a id="github-mobile-agent-task-handoff"></a>
