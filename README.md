@@ -26,6 +26,12 @@ First example — [Auth Tests And Lint Clean](prompts/source-backed-goals.md#cla
 
 **Expected outcome:** the agent keeps working until the auth tests pass and lint is clean, then stops only after pasting the passing command output as evidence. If it cannot reach that state, the stop rules tell it to report instead of editing further.
 
+## Contribute A Goal In 5 Minutes
+
+1. Find a thin category or missing rescue pattern in the [catalog browser](https://majiayu000.github.io/awesome-goal-prompts/) or [catalog health report](docs/catalog-health.md).
+2. Draft the contract with [skills/make-goal/](skills/make-goal/) and its [catalog contribution reference](skills/make-goal/references/catalog-contribution.md).
+3. Add the entry through [CONTRIBUTING.md](CONTRIBUTING.md): edit `data/source/entries.toml`, keep public provenance for source-backed examples, regenerate, and run the validation commands.
+
 ## Why This Exists
 
 Most prompt lists stop at catchy instructions. This catalog is for the moment after an agent starts drifting: the task is real, the repo has constraints, and "try harder" is not enough. Each contract gives the agent a narrow job, required context, explicit boundaries, proof, and stop rules.
@@ -57,11 +63,13 @@ The provenance-backed library stays below as the primary reference catalog.
 ## Contents
 
 - [Try It In 60 Seconds](#try-it-in-60-seconds)
+- [Contribute A Goal In 5 Minutes](#contribute-a-goal-in-5-minutes)
 - [Why This Exists](#why-this-exists)
 - [Start With Ten Rescue Prompts](#start-with-ten-rescue-prompts)
 - [Source-Backed Catalog](#source-backed-catalog)
 - [How To Write A Good Goal](#how-to-write-a-good-goal)
 - [Catalog Health](#catalog-health)
+- [Growth Playbook](#growth-playbook)
 - [Templates](#templates)
 - [Quality Bar](#quality-bar)
 - [Sources And Caveats](#sources-and-caveats)
@@ -296,6 +304,10 @@ The short version: write one measurable goal, point at the real context, add har
 ## Catalog Health
 
 The generated [catalog health report](docs/catalog-health.md) tracks source-backed coverage, source types, and search evaluation results.
+
+## Growth Playbook
+
+Use [docs/growth-playbook.md](docs/growth-playbook.md) to plan one-week contributor and traffic measurement. It separates leading signals such as catalog traffic, search eval health, and merged PRs from lagging indicators such as stars.
 
 ## Templates
 
