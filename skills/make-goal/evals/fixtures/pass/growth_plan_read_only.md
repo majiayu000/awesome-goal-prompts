@@ -28,7 +28,7 @@ VERIFY:
 - Run `python3 scripts/validate_data.py`, `python3 scripts/validate_metadata.py`, and `python3 scripts/evaluate_search.py`.
 
 OUTPUT:
-- Concise growth plan with baseline, blockers, launch sequence, first PR scope, distribution checklist, metric cadence, manual platform blockers, and remaining risks.
+- Concise growth plan with baseline evidence, blockers, launch sequence, first PR scope, distribution checklist, metric cadence, manual platform blockers, and remaining risks.
 - Changed files: none.
 - Explicit decision on whether issue #2 is ready now, blocked until 2026-06-13, or blocked by awesome-lint/category fit.
 
