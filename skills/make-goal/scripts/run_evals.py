@@ -13,7 +13,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from lint_goal import Check, lint
+from lint_goal_engine import lint
+from lint_goal_model import Check
 
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]

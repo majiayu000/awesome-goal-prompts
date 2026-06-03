@@ -159,6 +159,17 @@
       ]
     },
     {
+      "id": "fail-missing-output-accountability",
+      "file": "fixtures/fail/missing_output_accountability.md",
+      "profile": "auto",
+      "expected_lint_pass": false,
+      "assertions": [
+        {"name": "contains_weak_output", "type": "contains_any", "values": ["Summary of what changed"]},
+        {"name": "missing_changed_files_output", "type": "not_contains_any", "values": ["Changed files"]},
+        {"name": "missing_risk_output", "type": "not_contains_any", "values": ["remaining risk", "follow-up", "uncertainty"]}
+      ]
+    },
+    {
       "id": "fail-read-only-patch",
       "file": "fixtures/fail/read_only_patch.md",
       "profile": "auto",
