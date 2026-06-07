@@ -11,7 +11,7 @@ This repo keeps <!-- generated:total-start -->**300+**<!-- generated:total-end -
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk. This repo turns that contract shape into a catalog you can search, inspect, adapt, and copy.
 
 <!-- generated:stats-start -->
-The public catalog starts with **150** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
+The public catalog starts with **151** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
 <!-- generated:stats-end -->
 
 ![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
@@ -99,6 +99,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Dual-Model Evaluator Loop for Goals](prompts/source-backed-goals.md#x-dual-model-evaluator-goal-loop) - Run long /goal sessions reliably and cost-effectively by using a strong worker model for execution paired with a cheap fast evaluator model (typically Haiku) that periodically judges progress against the goal criteria and decides whether to continue or stop.
 - [CLAUDE.md + Goal Workflow](prompts/source-backed-goals.md#x-claude-md-goal-workflow) - Combine a persistent project-level CLAUDE.md (or AGENTS.md) file containing rules, standards, and context with /goal commands so long-running autonomous agent work stays aligned with repository-specific constraints and learned lessons.
 - [Goal Ledger for Long-Running Runs](prompts/source-backed-goals.md#x-goal-ledger) - Maintain a live, browser-viewable HTML progress ledger during extended /goal executions to provide visibility, persistent memory, decision logging, and self-reflection, reducing drift in long autonomous sessions.
+- [Artifact-Backed Phase Runner](prompts/source-backed-goals.md#github-supergoal-artifact-backed-phase-runner) - Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan.
 - [Well-Scoped Agent Issue](prompts/source-backed-goals.md#github-copilot-well-scoped-agent-issue) - Turn a backlog item into a coding-agent-ready issue with a clear problem statement, acceptance criteria, file directions, and test expectations.
 - [Research And Plan Before PR](prompts/source-backed-goals.md#github-copilot-plan-before-pr) - Have an agent research the repository, create an implementation plan, and iterate on a branch before deciding whether to open a pull request.
 - [Goalcraft Six-Field Contract Spine](prompts/source-backed-goals.md#codex-goalcraft-six-field-contract) - Write any /goal as a compact, evidence-first, thread-scoped completion contract with explicit outcome, verification surface, constraints, boundaries, iteration policy, and blocked stop conditions instead of vague effort descriptions.

@@ -5359,6 +5359,23 @@
     "static_path": "goals/x-goal-ledger.html"
   },
   {
+    "id": "github-supergoal-artifact-backed-phase-runner",
+    "slug": "github-supergoal-artifact-backed-phase-runner",
+    "category": "workflow",
+    "title": "Artifact-Backed Phase Runner",
+    "intent": "Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan.",
+    "verify": "test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name \"phase-*.md\" -print -quit | grep -q . && grep -R -E \"SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE\" .supergoal",
+    "difficulty": "intermediate",
+    "origin": "source-backed",
+    "source_url": "https://github.com/robzilla1738/supergoal",
+    "source_name": "supergoal README",
+    "source_type": "tool-readme",
+    "evidence": "one /goal covers the whole run; phase work lives in files the agent reads from disk",
+    "evidence_summary": "one /goal covers the whole run; phase work lives in files the agent reads from disk; source: supergoal README; type: tool-readme; verification: test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name \"phase-*.md\" -print -quit | grep -q . && grep -R -E \"SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE\" .supergoal",
+    "prompt": "/goal\nGOAL:\nComplete Artifact-Backed Phase Runner for a coding-agent workflow repository: Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan.\n\nCONTEXT:\n- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.\n- Inspect goal text, progress logs, branch state, and verification artifacts.\n- Establish a baseline by running or locating evidence for: `test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name \"phase-*.md\" -print -quit | grep -q . && grep -R -E \"SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE\" .supergoal`.\n\nCONSTRAINTS:\n- Keep the scope limited to this goal; do not expand into unrelated cleanup.\n- Do not weaken tests, delete assertions, or mask errors to make verification pass.\n- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.\n- Do not claim a goal is complete without a current audit of the stated contract.\n- Pause if the goal text, branch state, or permissions are inconsistent.\n\nDONE WHEN:\n- The implementation or documentation directly satisfies: Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan.\n- The verification command or evidence path succeeds: `test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name \"phase-*.md\" -print -quit | grep -q . && grep -R -E \"SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE\" .supergoal`.\n- The final diff is scoped to the relevant files and has no unrelated formatting churn.\n\nVERIFY:\n- Run `test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name \"phase-*.md\" -print -quit | grep -q . && grep -R -E \"SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE\" .supergoal` or the closest repo-local equivalent if the exact command is not available.\n- Capture before/after evidence for the behavior, metric, report, or artifact involved.\n- If verification cannot run locally, stop and report the missing dependency instead of guessing success.\n\nOUTPUT:\n- Summarize changed files, key decisions, verification output, and remaining risks.\n- Include any follow-up that is required for production rollout or human review.\n\nSTOP RULES:\n- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.\n- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.\n- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.",
+    "static_path": "goals/github-supergoal-artifact-backed-phase-runner.html"
+  },
+  {
     "id": "goal-builder-audit-friendly-template",
     "slug": "goal-builder-audit-friendly-template",
     "category": "goal-maintenance",

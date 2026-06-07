@@ -2,11 +2,11 @@
 
 ## 概览
 
-- 条目总数：350
-- 有公开来源的条目：150
+- 条目总数：351
+- 有公开来源的条目：151
 - Seed 条目：200
 - 分类数：32
-- 搜索评测：32/32 通过
+- 搜索评测：33/33 通过
 - 缺少来源摘要的 source-backed 条目：0
 - 缺少来源字段的 source-backed 条目：0
 
@@ -45,7 +45,7 @@
 | security-appsec | 3 | 13 | 23% |
 | security-ops | 1 | 11 | 9% |
 | testing | 22 | 22 | 100% |
-| workflow | 20 | 22 | 91% |
+| workflow | 21 | 23 | 91% |
 
 ## 来源类型分布
 
@@ -62,7 +62,7 @@
 | third-party-project | 8 |
 | third-party-review | 3 |
 | third-party-tutorial | 23 |
-| tool-readme | 16 |
+| tool-readme | 17 |
 | video-summary | 2 |
 | x-post | 14 |
 
@@ -102,6 +102,7 @@
 | voice e2e scenarios anti pattern fences goal | tecton-codex-voice-e2e-contract | 1 | top 3 | pass |
 | copilot usage metrics dashboard api export reconciliation | github-copilot-usage-metrics-reconciliation | 1 | top 3 | pass |
 | design tokens figma agent context layout md | layout-design-system-context-export | 1 | top 3 | pass |
+| long horizon one goal roadmap state protocol phase specs | github-supergoal-artifact-backed-phase-runner | 1 | top 3 | pass |
 
 ## 维护建议
 

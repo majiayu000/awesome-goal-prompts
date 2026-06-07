@@ -62,6 +62,19 @@ Stop if: <missing input, destructive operation, repeated failed fixes, productio
 Final output: <changed files, verification, risks, next action>.
 ```
 
+## Artifact-Backed Long Template
+
+Use the normal full template for the user-facing contract, but for long-horizon work add artifact requirements inside the existing sections instead of inventing new top-level sections:
+
+- `CONTEXT`: name the roadmap, state file, phase specs, baseline branch or commit, and required repository instructions to read first.
+- `CONSTRAINTS`: keep phase scope narrow, preserve test integrity, and forbid unrelated cleanup between phases.
+- `DONE WHEN`: every phase has a completion marker, the final audit has passed, and no handoff or blocker marker remains unresolved.
+- `VERIFY`: re-run aggregated verification from all phases and check declared deliverables against the current working tree, including committed, staged, unstaged, and untracked files.
+- `OUTPUT`: report changed files, phase evidence, final audit result, unresolved trust-prior checks, and remaining risk.
+- `STOP RULES`: stop on repeated phase failure, audit failure after bounded repair attempts, missing credentials, destructive operations, or conflicting repository instructions.
+
+This shape is for real multi-phase work. If the task can be completed and verified in one focused edit loop, use the full or compact template instead.
+
 ## Six Moves
 
 1. Make the goal singular. One goal can be large, but it needs one finish line.

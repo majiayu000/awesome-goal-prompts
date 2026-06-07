@@ -158,5 +158,10 @@
     "query": "design tokens figma agent context layout md",
     "expected": "layout-design-system-context-export",
     "max_rank": 3
+  },
+  {
+    "query": "long horizon one goal roadmap state protocol phase specs",
+    "expected": "github-supergoal-artifact-backed-phase-runner",
+    "max_rank": 3
   }
 ]

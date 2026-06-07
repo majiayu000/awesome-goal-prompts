@@ -3123,6 +3123,18 @@ source_type = "x-post"
 evidence = "single-file HTML progress tracker and ledger for /goal runs"
 
 [[entries]]
+id = "github-supergoal-artifact-backed-phase-runner"
+category = "workflow"
+title = "Artifact-Backed Phase Runner"
+intent = "Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan."
+verify = 'test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name "phase-*.md" -print -quit | grep -q . && grep -R -E "SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE" .supergoal'
+origin = "source-backed"
+source_url = "https://github.com/robzilla1738/supergoal"
+source_name = "supergoal README"
+source_type = "tool-readme"
+evidence = "one /goal covers the whole run; phase work lives in files the agent reads from disk"
+
+[[entries]]
 id = "goal-builder-audit-friendly-template"
 category = "goal-maintenance"
 title = "Audit-Friendly Goal Template"

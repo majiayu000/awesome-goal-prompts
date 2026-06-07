@@ -37,6 +37,8 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 - [CLAUDE.md + Goal Workflow](goal-examples.md#x-claude-md-goal-workflow) - Combine a persistent project-level CLAUDE.md (or AGENTS.md) file containing rules, standards, and context with /goal commands so long-running autonomous agent work stays aligned with repository-specific constraints and learned lessons.
 <a id="x-goal-ledger"></a>
 - [Goal Ledger for Long-Running Runs](goal-examples.md#x-goal-ledger) - Maintain a live, browser-viewable HTML progress ledger during extended /goal executions to provide visibility, persistent memory, decision logging, and self-reflection, reducing drift in long autonomous sessions.
+<a id="github-supergoal-artifact-backed-phase-runner"></a>
+- [Artifact-Backed Phase Runner](goal-examples.md#github-supergoal-artifact-backed-phase-runner) - Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan.
 <a id="github-copilot-well-scoped-agent-issue"></a>
 - [Well-Scoped Agent Issue](goal-examples.md#github-copilot-well-scoped-agent-issue) - Turn a backlog item into a coding-agent-ready issue with a clear problem statement, acceptance criteria, file directions, and test expectations.
 <a id="github-copilot-plan-before-pr"></a>

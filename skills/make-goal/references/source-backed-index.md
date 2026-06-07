@@ -26,6 +26,7 @@ Use this as a compact pattern map. Adapt the shape to the user's real repository
 - Long Task Until Verification: continue long work until final verification passes.
 - Completion Audit Before Done: audit done criteria before marking completion.
 - Goal Escape Hatch: define an incomplete state for impossible or blocked subtasks.
+- Artifact-Backed Phase Runner: keep the active `/goal` short while durable roadmap, state, protocol, and phase files carry long-horizon execution details; finish only after a final audit checks the original plan and working-tree deliverables.
 
 ## Patterns By Intent
 

@@ -310,6 +310,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Dual-Model Evaluator Loop for Goals](#x-dual-model-evaluator-goal-loop) - Run long /goal sessions reliably and cost-effectively by using a strong worker model for execution paired with a cheap fast evaluator model (typically Haiku) that periodically judges progress against the goal criteria and decides whether to continue or stop. Source-backed.
 - [CLAUDE.md + Goal Workflow](#x-claude-md-goal-workflow) - Combine a persistent project-level CLAUDE.md (or AGENTS.md) file containing rules, standards, and context with /goal commands so long-running autonomous agent work stays aligned with repository-specific constraints and learned lessons. Source-backed.
 - [Goal Ledger for Long-Running Runs](#x-goal-ledger) - Maintain a live, browser-viewable HTML progress ledger during extended /goal executions to provide visibility, persistent memory, decision logging, and self-reflection, reducing drift in long autonomous sessions. Source-backed.
+- [Artifact-Backed Phase Runner](#github-supergoal-artifact-backed-phase-runner) - Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan. Source-backed.
 - [Well-Scoped Agent Issue](#github-copilot-well-scoped-agent-issue) - Turn a backlog item into a coding-agent-ready issue with a clear problem statement, acceptance criteria, file directions, and test expectations. Source-backed.
 - [Research And Plan Before PR](#github-copilot-plan-before-pr) - Have an agent research the repository, create an implementation plan, and iterate on a branch before deciding whether to open a pull request. Source-backed.
 - [Goalcraft Six-Field Contract Spine](#codex-goalcraft-six-field-contract) - Write any /goal as a compact, evidence-first, thread-scoped completion contract with explicit outcome, verification surface, constraints, boundaries, iteration policy, and blocked stop conditions instead of vague effort descriptions. Source-backed.
@@ -15883,6 +15884,56 @@ DONE WHEN:
 
 VERIFY:
 - Run `an updatable HTML ledger file is created and actively maintained by the agent throughout the goal run` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="github-supergoal-artifact-backed-phase-runner"></a>
+### Artifact-Backed Phase Runner
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan.
+- Verification: `test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name "phase-*.md" -print -quit | grep -q . && grep -R -E "SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE" .supergoal`
+- Source: [supergoal README](https://github.com/robzilla1738/supergoal)
+- Source type: `tool-readme`
+- Evidence: one /goal covers the whole run; phase work lives in files the agent reads from disk
+- Evidence summary: one /goal covers the whole run; phase work lives in files the agent reads from disk; source: supergoal README; type: tool-readme; verification: test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name "phase-*.md" -print -quit | grep -q . && grep -R -E "SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE" .supergoal
+
+```text
+/goal
+GOAL:
+Complete Artifact-Backed Phase Runner for a coding-agent workflow repository: Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name "phase-*.md" -print -quit | grep -q . && grep -R -E "SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE" .supergoal`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan.
+- The verification command or evidence path succeeds: `test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name "phase-*.md" -print -quit | grep -q . && grep -R -E "SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE" .supergoal`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name "phase-*.md" -print -quit | grep -q . && grep -R -E "SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE" .supergoal` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 
