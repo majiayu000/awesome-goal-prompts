@@ -2,11 +2,11 @@
 
 ## Summary
 
-- Total entries: 350
-- Source-backed entries: 150
+- Total entries: 351
+- Source-backed entries: 151
 - Seed entries: 200
 - Categories: 32
-- Search eval cases: 32/32 passing
+- Search eval cases: 33/33 passing
 - Source-backed entries missing evidence summaries: 0
 - Source-backed entries missing provenance fields: 0
 
@@ -45,7 +45,7 @@
 | security-appsec | 3 | 13 | 23% |
 | security-ops | 1 | 11 | 9% |
 | testing | 22 | 22 | 100% |
-| workflow | 20 | 22 | 91% |
+| workflow | 21 | 23 | 91% |
 
 ## Source Types
 
@@ -62,7 +62,7 @@
 | third-party-project | 8 |
 | third-party-review | 3 |
 | third-party-tutorial | 23 |
-| tool-readme | 16 |
+| tool-readme | 17 |
 | video-summary | 2 |
 | x-post | 14 |
 
@@ -102,6 +102,7 @@
 | voice e2e scenarios anti pattern fences goal | tecton-codex-voice-e2e-contract | 1 | top 3 | pass |
 | copilot usage metrics dashboard api export reconciliation | github-copilot-usage-metrics-reconciliation | 1 | top 3 | pass |
 | design tokens figma agent context layout md | layout-design-system-context-export | 1 | top 3 | pass |
+| one goal roadmap state phase specs final audit working tree | github-supergoal-artifact-backed-phase-runner | 1 | top 3 | pass |
 
 ## Maintenance Notes
 

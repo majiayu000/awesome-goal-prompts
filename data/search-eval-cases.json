@@ -158,5 +158,10 @@
     "query": "design tokens figma agent context layout md",
     "expected": "layout-design-system-context-export",
     "max_rank": 3
+  },
+  {
+    "query": "one goal roadmap state phase specs final audit working tree",
+    "expected": "github-supergoal-artifact-backed-phase-runner",
+    "max_rank": 3
   }
 ]
