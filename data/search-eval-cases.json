@@ -160,7 +160,7 @@
     "max_rank": 3
   },
   {
-    "query": "one goal roadmap state phase specs final audit working tree",
+    "query": "long horizon one goal roadmap state protocol phase specs",
     "expected": "github-supergoal-artifact-backed-phase-runner",
     "max_rank": 3
   }

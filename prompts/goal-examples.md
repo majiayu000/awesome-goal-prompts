@@ -15904,11 +15904,11 @@ STOP RULES:
 - Difficulty: `intermediate`
 - Origin: `source-backed`
 - Intent: Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan.
-- Verification: `ROADMAP.md, STATE.md, phase-N specs, pre-flight command summary, one completion marker per phase, final audit against original plan, and complete working-tree deliverable evidence`
+- Verification: `test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name "phase-*.md" -print -quit | grep -q . && grep -R -E "SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE" .supergoal`
 - Source: [supergoal README](https://github.com/robzilla1738/supergoal)
 - Source type: `tool-readme`
 - Evidence: one /goal covers the whole run; phase work lives in files the agent reads from disk
-- Evidence summary: one /goal covers the whole run; phase work lives in files the agent reads from disk; source: supergoal README; type: tool-readme; verification: ROADMAP.md, STATE.md, phase-N specs, pre-flight command summary, one completion marker per phase, final audit against original plan, and complete working-tree deliverable evidence
+- Evidence summary: one /goal covers the whole run; phase work lives in files the agent reads from disk; source: supergoal README; type: tool-readme; verification: test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name "phase-*.md" -print -quit | grep -q . && grep -R -E "SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE" .supergoal
 
 ```text
 /goal
@@ -15918,7 +15918,7 @@ Complete Artifact-Backed Phase Runner for a coding-agent workflow repository: Ru
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect goal text, progress logs, branch state, and verification artifacts.
-- Establish a baseline by running or locating evidence for: `ROADMAP.md, STATE.md, phase-N specs, pre-flight command summary, one completion marker per phase, final audit against original plan, and complete working-tree deliverable evidence`.
+- Establish a baseline by running or locating evidence for: `test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name "phase-*.md" -print -quit | grep -q . && grep -R -E "SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE" .supergoal`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
@@ -15929,11 +15929,11 @@ CONSTRAINTS:
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan.
-- The verification command or evidence path succeeds: `ROADMAP.md, STATE.md, phase-N specs, pre-flight command summary, one completion marker per phase, final audit against original plan, and complete working-tree deliverable evidence`.
+- The verification command or evidence path succeeds: `test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name "phase-*.md" -print -quit | grep -q . && grep -R -E "SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE" .supergoal`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `ROADMAP.md, STATE.md, phase-N specs, pre-flight command summary, one completion marker per phase, final audit against original plan, and complete working-tree deliverable evidence` or the closest repo-local equivalent if the exact command is not available.
+- Run `test -f .supergoal/ROADMAP.md && test -f .supergoal/STATE.md && test -f .supergoal/PROTOCOL.md && find .supergoal/phases -name "phase-*.md" -print -quit | grep -q . && grep -R -E "SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE" .supergoal` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 

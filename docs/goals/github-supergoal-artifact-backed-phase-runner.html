@@ -160,7 +160,7 @@ Complete Artifact-Backed Phase Runner for a coding-agent workflow repository: Ru
 CONTEXT:
 - Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
 - Inspect goal text, progress logs, branch state, and verification artifacts.
-- Establish a baseline by running or locating evidence for: `ROADMAP.md, STATE.md, phase-N specs, pre-flight command summary, one completion marker per phase, final audit against original plan, and complete working-tree deliverable evidence`.
+- Establish a baseline by running or locating evidence for: `test -f .supergoal/ROADMAP.md &amp;&amp; test -f .supergoal/STATE.md &amp;&amp; test -f .supergoal/PROTOCOL.md &amp;&amp; find .supergoal/phases -name &quot;phase-*.md&quot; -print -quit | grep -q . &amp;&amp; grep -R -E &quot;SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE&quot; .supergoal`.
 
 CONSTRAINTS:
 - Keep the scope limited to this goal; do not expand into unrelated cleanup.
@@ -171,11 +171,11 @@ CONSTRAINTS:
 
 DONE WHEN:
 - The implementation or documentation directly satisfies: Run a long-horizon task from one short /goal by storing the roadmap, state, protocol, and phase specs on disk, then auditing final deliverables against the original plan.
-- The verification command or evidence path succeeds: `ROADMAP.md, STATE.md, phase-N specs, pre-flight command summary, one completion marker per phase, final audit against original plan, and complete working-tree deliverable evidence`.
+- The verification command or evidence path succeeds: `test -f .supergoal/ROADMAP.md &amp;&amp; test -f .supergoal/STATE.md &amp;&amp; test -f .supergoal/PROTOCOL.md &amp;&amp; find .supergoal/phases -name &quot;phase-*.md&quot; -print -quit | grep -q . &amp;&amp; grep -R -E &quot;SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE&quot; .supergoal`.
 - The final diff is scoped to the relevant files and has no unrelated formatting churn.
 
 VERIFY:
-- Run `ROADMAP.md, STATE.md, phase-N specs, pre-flight command summary, one completion marker per phase, final audit against original plan, and complete working-tree deliverable evidence` or the closest repo-local equivalent if the exact command is not available.
+- Run `test -f .supergoal/ROADMAP.md &amp;&amp; test -f .supergoal/STATE.md &amp;&amp; test -f .supergoal/PROTOCOL.md &amp;&amp; find .supergoal/phases -name &quot;phase-*.md&quot; -print -quit | grep -q . &amp;&amp; grep -R -E &quot;SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE&quot; .supergoal` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 
@@ -195,7 +195,7 @@ STOP RULES:
     <h2>来源与证据</h2>
     <div class="source">
       <p><strong>原始来源：</strong> <a href="https://github.com/robzilla1738/supergoal" target="_blank" rel="noopener">supergoal README</a></p>
-      <p><strong>证据摘要：</strong> one /goal covers the whole run; phase work lives in files the agent reads from disk; source: supergoal README; type: tool-readme; verification: ROADMAP.md, STATE.md, phase-N specs, pre-flight command summary, one completion marker per phase, final audit against original plan, and complete working-tree deliverable evidence</p>
+      <p><strong>证据摘要：</strong> one /goal covers the whole run; phase work lives in files the agent reads from disk; source: supergoal README; type: tool-readme; verification: test -f .supergoal/ROADMAP.md &amp;&amp; test -f .supergoal/STATE.md &amp;&amp; test -f .supergoal/PROTOCOL.md &amp;&amp; find .supergoal/phases -name &quot;phase-*.md&quot; -print -quit | grep -q . &amp;&amp; grep -R -E &quot;SUPERGOAL_PHASE_DONE|AUDIT_COMPLETE&quot; .supergoal</p>
     </div>
   </div>
 

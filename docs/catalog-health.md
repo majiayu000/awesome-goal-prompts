@@ -102,7 +102,7 @@
 | voice e2e scenarios anti pattern fences goal | tecton-codex-voice-e2e-contract | 1 | top 3 | pass |
 | copilot usage metrics dashboard api export reconciliation | github-copilot-usage-metrics-reconciliation | 1 | top 3 | pass |
 | design tokens figma agent context layout md | layout-design-system-context-export | 1 | top 3 | pass |
-| one goal roadmap state phase specs final audit working tree | github-supergoal-artifact-backed-phase-runner | 1 | top 3 | pass |
+| long horizon one goal roadmap state protocol phase specs | github-supergoal-artifact-backed-phase-runner | 1 | top 3 | pass |
 
 ## Maintenance Notes
 
