@@ -1,6 +1,10 @@
 # Awesome Goal Prompts — Coding Agent Rescue Contracts
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+[![Catalog quality](https://github.com/majiayu000/awesome-goal-prompts/actions/workflows/catalog.yml/badge.svg)](https://github.com/majiayu000/awesome-goal-prompts/actions/workflows/catalog.yml)
+[![Pages](https://github.com/majiayu000/awesome-goal-prompts/actions/workflows/pages.yml/badge.svg)](https://github.com/majiayu000/awesome-goal-prompts/actions/workflows/pages.yml)
+[![Release](https://img.shields.io/github/v/release/majiayu000/awesome-goal-prompts)](https://github.com/majiayu000/awesome-goal-prompts/releases/latest)
+[![License: CC0-1.0](https://img.shields.io/badge/License-CC0--1.0-lightgrey.svg)](LICENSE)
 
 When Claude Code, Codex, Cursor, or another coding agent starts making broad edits, paste a contract that says exactly what to inspect, what not to touch, how to verify, and when to stop.
 

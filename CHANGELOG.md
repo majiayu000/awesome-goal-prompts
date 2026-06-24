@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added README status badges for catalog quality, Pages, release, and license.
+- Updated GitHub Actions checkout steps to the current major version.
+
 ## v0.1.2 - 2026-05-18
 
 Release metadata fix.
