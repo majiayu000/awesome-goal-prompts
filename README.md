@@ -15,7 +15,7 @@ This repo keeps <!-- generated:total-start -->**300+**<!-- generated:total-end -
 A good goal is not a wish. It is a runnable contract: one goal, enough context to inspect, hard constraints, verifiable completion, and stop rules for uncertainty or risk. This repo turns that contract shape into a catalog you can search, inspect, adapt, and copy.
 
 <!-- generated:stats-start -->
-The public catalog starts with **151** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
+The public catalog starts with **159** source-backed examples drawn from official docs, public GitHub threads, tutorials, forum posts, and tool READMEs. The other **200** reusable seed patterns are kept in [Seed Patterns](prompts/seed-patterns.md) so they do not dilute provenance-backed examples.
 <!-- generated:stats-end -->
 
 ![Awesome Goal Prompts — searchable prompt catalog for Claude Code, Codex, and Cursor coding agents](docs/assets/catalog-browser.png)
@@ -108,6 +108,9 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Research And Plan Before PR](prompts/source-backed-goals.md#github-copilot-plan-before-pr) - Have an agent research the repository, create an implementation plan, and iterate on a branch before deciding whether to open a pull request.
 - [Goalcraft Six-Field Contract Spine](prompts/source-backed-goals.md#codex-goalcraft-six-field-contract) - Write any /goal as a compact, evidence-first, thread-scoped completion contract with explicit outcome, verification surface, constraints, boundaries, iteration policy, and blocked stop conditions instead of vague effort descriptions.
 - [Strong Verifiable Goal Contract After Alignment Interview](prompts/source-backed-goals.md#chinese-v2ex-grillme-strong-goal-contract) - After a structured alignment interview, produce a binding /goal contract with explicit success evidence, hard constraints, file boundaries, iteration strategy, and blocking/escape handling so a Ralph-loop or native /goal agent can run autonomously until evidence-based completion.
+- [Codex Acceptance-Criteria Stop](prompts/source-backed-goals.md#simi-codex-acceptance-stop) - Put explicit acceptance and stopping criteria directly in the agent task so it stops when the condition is met instead of running open-ended.
+- [Oracle Definition Of Done](prompts/source-backed-goals.md#sunilpai-oracle-definition-of-done) - Define an oracle — the concrete checks (tests, edge cases, benchmarks, static checks) that decide success — before running the agent task.
+- [Goal Finish Line Built From Evidence](prompts/source-backed-goals.md#aimaker-goal-finish-line-evidence) - Write the /goal finish line as an outcome plus success criteria built from evidence, not vibes, so the agent knows when it is truly done.
 
 ### migration
 - [Visual Migration With Playwright](prompts/source-backed-goals.md#codex-visual-migration-playwright) - Migrate a project while preserving screen output and checking it with Playwright.
@@ -179,9 +182,12 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Auth Dependency Injection Refactor](prompts/source-backed-goals.md#explainx-auth-di-refactor) - Refactor auth code to dependency injection while preserving tests, coverage, and public API.
 - [Split Oversized File](prompts/source-backed-goals.md#claude-split-oversized-file) - Split an oversized source file into focused modules while preserving behavior.
 - [Centralize Cross-Cutting Logging](prompts/source-backed-goals.md#github-copilot-cross-cutting-logging) - Centralize scattered logging, validation, security, or error-handling behavior without changing the core business behavior of the services.
+- [Structured-Prompt-Driven Refactor](prompts/source-backed-goals.md#fowler-structured-prompt-refactor) - Keep the spec or prompt and the code in sync during a refactor; when reality diverges, fix the prompt or spec first, then update the code.
+- [Refactor Until Stop Conditions Met](prompts/source-backed-goals.md#openai-community-refactor-stop-conditions) - Let the agent iterate on a refactor continually until one of several predefined stop conditions is met, resolving blockers so each run works longer.
 
 ### security-ops
 - [NPM Audit Clean Remediation](prompts/source-backed-goals.md#explainx-npm-audit-clean) - Patch npm audit vulnerabilities without breaking tests or public APIs.
+- [Dependency Audit Triage Boundaries](prompts/source-backed-goals.md#addyosmani-dependency-audit-triage) - Triage dependency audit results with explicit boundaries: audits only find known advisories, so verify before trusting a package and never commit secrets.
 
 ### performance
 - [Lighthouse And Core Web Vitals Gate](prompts/source-backed-goals.md#explainx-lighthouse-core-web-vitals) - Improve Lighthouse and Core Web Vitals to explicit thresholds without regressions.
@@ -253,6 +259,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 ### qa
 - [QA Engineer Simulation](prompts/source-backed-goals.md#x-qa-engineer-simulation) - Use `/goal` as a quality loop until tests pass and lint is clean.
 - [Terminal Agentic Code Review](prompts/source-backed-goals.md#github-copilot-cli-agentic-review) - Review a diff from the terminal with a scoped prompt, path, or file pattern, inspect suggested commands, and apply or reject findings before commit.
+- [Agent Skill Exit Criteria](prompts/source-backed-goals.md#developersdigest-skill-exit-criteria) - Require exit criteria and a change report (files changed, commands run, commands not run, open risks) before an agent task counts as done.
 
 ### orchestration
 - [DAG Agent Dispatch](prompts/source-backed-goals.md#hn-dag-agent-dispatch) - Split a goal into a dependency graph and dispatch independent agents into isolated worktrees.
@@ -300,6 +307,7 @@ Reusable patterns that are not backed by public sources live in [Seed Patterns](
 - [Tool Guardrails For AppSec](prompts/source-backed-goals.md#openai-tool-guardrails-appsec) - Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues.
 - [Security PR Review](prompts/source-backed-goals.md#openhands-security-pr-review) - Review a pull request for input validation, authentication, injection, XSS, and secrets risks with file-level fixes.
 - [Unsafe innerHTML XSS Fix](prompts/source-backed-goals.md#github-copilot-xss-innerhtml-fix) - Find and fix XSS caused by unsafe innerHTML rendering while preserving the user-visible text and adding a regression guard.
+- [Security Do-NOT Constraint List](prompts/source-backed-goals.md#simonroses-security-do-not-list) - Build a growing Do-NOT constraint list from every security issue found in AI-generated code, and include it in future security prompts.
 <!-- generated:catalog-end -->
 
 ## How To Write A Good Goal

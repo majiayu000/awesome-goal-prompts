@@ -47,6 +47,12 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 - [Goalcraft Six-Field Contract Spine](goal-examples.md#codex-goalcraft-six-field-contract) - Write any /goal as a compact, evidence-first, thread-scoped completion contract with explicit outcome, verification surface, constraints, boundaries, iteration policy, and blocked stop conditions instead of vague effort descriptions.
 <a id="chinese-v2ex-grillme-strong-goal-contract"></a>
 - [Strong Verifiable Goal Contract After Alignment Interview](goal-examples.md#chinese-v2ex-grillme-strong-goal-contract) - After a structured alignment interview, produce a binding /goal contract with explicit success evidence, hard constraints, file boundaries, iteration strategy, and blocking/escape handling so a Ralph-loop or native /goal agent can run autonomously until evidence-based completion.
+<a id="simi-codex-acceptance-stop"></a>
+- [Codex Acceptance-Criteria Stop](goal-examples.md#simi-codex-acceptance-stop) - Put explicit acceptance and stopping criteria directly in the agent task so it stops when the condition is met instead of running open-ended.
+<a id="sunilpai-oracle-definition-of-done"></a>
+- [Oracle Definition Of Done](goal-examples.md#sunilpai-oracle-definition-of-done) - Define an oracle — the concrete checks (tests, edge cases, benchmarks, static checks) that decide success — before running the agent task.
+<a id="aimaker-goal-finish-line-evidence"></a>
+- [Goal Finish Line Built From Evidence](goal-examples.md#aimaker-goal-finish-line-evidence) - Write the /goal finish line as an outcome plus success criteria built from evidence, not vibes, so the agent knows when it is truly done.
 
 ### migration
 <a id="codex-visual-migration-playwright"></a>
@@ -173,10 +179,16 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 - [Split Oversized File](goal-examples.md#claude-split-oversized-file) - Split an oversized source file into focused modules while preserving behavior.
 <a id="github-copilot-cross-cutting-logging"></a>
 - [Centralize Cross-Cutting Logging](goal-examples.md#github-copilot-cross-cutting-logging) - Centralize scattered logging, validation, security, or error-handling behavior without changing the core business behavior of the services.
+<a id="fowler-structured-prompt-refactor"></a>
+- [Structured-Prompt-Driven Refactor](goal-examples.md#fowler-structured-prompt-refactor) - Keep the spec or prompt and the code in sync during a refactor; when reality diverges, fix the prompt or spec first, then update the code.
+<a id="openai-community-refactor-stop-conditions"></a>
+- [Refactor Until Stop Conditions Met](goal-examples.md#openai-community-refactor-stop-conditions) - Let the agent iterate on a refactor continually until one of several predefined stop conditions is met, resolving blockers so each run works longer.
 
 ### security-ops
 <a id="explainx-npm-audit-clean"></a>
 - [NPM Audit Clean Remediation](goal-examples.md#explainx-npm-audit-clean) - Patch npm audit vulnerabilities without breaking tests or public APIs.
+<a id="addyosmani-dependency-audit-triage"></a>
+- [Dependency Audit Triage Boundaries](goal-examples.md#addyosmani-dependency-audit-triage) - Triage dependency audit results with explicit boundaries: audits only find known advisories, so verify before trusting a package and never commit secrets.
 
 ### performance
 <a id="explainx-lighthouse-core-web-vitals"></a>
@@ -297,6 +309,8 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 - [QA Engineer Simulation](goal-examples.md#x-qa-engineer-simulation) - Use `/goal` as a quality loop until tests pass and lint is clean.
 <a id="github-copilot-cli-agentic-review"></a>
 - [Terminal Agentic Code Review](goal-examples.md#github-copilot-cli-agentic-review) - Review a diff from the terminal with a scoped prompt, path, or file pattern, inspect suggested commands, and apply or reject findings before commit.
+<a id="developersdigest-skill-exit-criteria"></a>
+- [Agent Skill Exit Criteria](goal-examples.md#developersdigest-skill-exit-criteria) - Require exit criteria and a change report (files changed, commands run, commands not run, open risks) before an agent task counts as done.
 
 ### orchestration
 <a id="hn-dag-agent-dispatch"></a>
@@ -369,3 +383,5 @@ These source-backed contracts are the primary catalog. Follow each link for the 
 - [Security PR Review](goal-examples.md#openhands-security-pr-review) - Review a pull request for input validation, authentication, injection, XSS, and secrets risks with file-level fixes.
 <a id="github-copilot-xss-innerhtml-fix"></a>
 - [Unsafe innerHTML XSS Fix](goal-examples.md#github-copilot-xss-innerhtml-fix) - Find and fix XSS caused by unsafe innerHTML rendering while preserving the user-visible text and adding a regression guard.
+<a id="simonroses-security-do-not-list"></a>
+- [Security Do-NOT Constraint List](goal-examples.md#simonroses-security-do-not-list) - Build a growing Do-NOT constraint list from every security issue found in AI-generated code, and include it in future security prompts.
