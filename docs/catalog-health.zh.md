@@ -2,8 +2,8 @@
 
 ## 概览
 
-- 条目总数：351
-- 有公开来源的条目：151
+- 条目总数：359
+- 有公开来源的条目：159
 - Seed 条目：200
 - 分类数：32
 - 搜索评测：33/33 通过
@@ -39,13 +39,13 @@
 | product | 3 | 15 | 20% |
 | prompt-optimization | 5 | 5 | 100% |
 | prototype | 3 | 3 | 100% |
-| qa | 2 | 14 | 14% |
-| refactor | 3 | 3 | 100% |
+| qa | 3 | 15 | 20% |
+| refactor | 5 | 5 | 100% |
 | research | 6 | 6 | 100% |
-| security-appsec | 3 | 13 | 23% |
-| security-ops | 1 | 11 | 9% |
+| security-appsec | 4 | 14 | 29% |
+| security-ops | 2 | 12 | 17% |
 | testing | 22 | 22 | 100% |
-| workflow | 21 | 23 | 91% |
+| workflow | 24 | 26 | 92% |
 
 ## 来源类型分布
 
@@ -58,11 +58,11 @@
 | official-agent-task | 37 |
 | official-goal | 17 |
 | official-workflow | 8 |
-| public-forum | 11 |
+| public-forum | 12 |
 | third-party-project | 8 |
 | third-party-review | 3 |
-| third-party-tutorial | 23 |
-| tool-readme | 17 |
+| third-party-tutorial | 29 |
+| tool-readme | 18 |
 | video-summary | 2 |
 | x-post | 14 |
 

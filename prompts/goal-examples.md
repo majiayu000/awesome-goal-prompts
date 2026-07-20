@@ -79,6 +79,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Tool Guardrails For AppSec](#openai-tool-guardrails-appsec) - Add tool guardrails around high-risk agent tool calls and stop unsafe input or output before execution continues. Source-backed.
 - [Security PR Review](#openhands-security-pr-review) - Review a pull request for input validation, authentication, injection, XSS, and secrets risks with file-level fixes. Source-backed.
 - [Unsafe innerHTML XSS Fix](#github-copilot-xss-innerhtml-fix) - Find and fix XSS caused by unsafe innerHTML rendering while preserving the user-visible text and adding a regression guard. Source-backed.
+- [Security Do-NOT Constraint List](#simonroses-security-do-not-list) - Build a growing Do-NOT constraint list from every security issue found in AI-generated code, and include it in future security prompts. Source-backed.
 
 ### security-ops
 - [Secret Scan Baseline](#secret-scan-baseline) - Add secret scanning and triage historical findings safely.
@@ -92,6 +93,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Production Access Review](#prod-access-review) - Inventory production access, approval paths, and audit evidence.
 - [Backup Restore Security](#backup-restore-security) - Verify encrypted backups and a restricted restore path.
 - [NPM Audit Clean Remediation](#explainx-npm-audit-clean) - Patch npm audit vulnerabilities without breaking tests or public APIs. Source-backed.
+- [Dependency Audit Triage Boundaries](#addyosmani-dependency-audit-triage) - Triage dependency audit results with explicit boundaries: audits only find known advisories, so verify before trusting a package and never commit secrets. Source-backed.
 
 ### data-eng
 - [ETL Contract Tests](#etl-contract-tests) - Add schema and sample-data contracts between source and target tables.
@@ -254,6 +256,7 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Bug Reproduction Template](#qa-bug-repro-template) - Standardize environment, steps, expected, actual, and evidence.
 - [QA Engineer Simulation](#x-qa-engineer-simulation) - Use `/goal` as a quality loop until tests pass and lint is clean. Source-backed.
 - [Terminal Agentic Code Review](#github-copilot-cli-agentic-review) - Review a diff from the terminal with a scoped prompt, path, or file pattern, inspect suggested commands, and apply or reject findings before commit. Source-backed.
+- [Agent Skill Exit Criteria](#developersdigest-skill-exit-criteria) - Require exit criteria and a change report (files changed, commands run, commands not run, open risks) before an agent task counts as done. Source-backed.
 
 ### accessibility
 - [Keyboard Navigation](#accessibility-keyboard-nav) - Ensure the whole app works with Tab, Enter, and Escape.
@@ -315,6 +318,9 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Research And Plan Before PR](#github-copilot-plan-before-pr) - Have an agent research the repository, create an implementation plan, and iterate on a branch before deciding whether to open a pull request. Source-backed.
 - [Goalcraft Six-Field Contract Spine](#codex-goalcraft-six-field-contract) - Write any /goal as a compact, evidence-first, thread-scoped completion contract with explicit outcome, verification surface, constraints, boundaries, iteration policy, and blocked stop conditions instead of vague effort descriptions. Source-backed.
 - [Strong Verifiable Goal Contract After Alignment Interview](#chinese-v2ex-grillme-strong-goal-contract) - After a structured alignment interview, produce a binding /goal contract with explicit success evidence, hard constraints, file boundaries, iteration strategy, and blocking/escape handling so a Ralph-loop or native /goal agent can run autonomously until evidence-based completion. Source-backed.
+- [Codex Acceptance-Criteria Stop](#simi-codex-acceptance-stop) - Put explicit acceptance and stopping criteria directly in the agent task so it stops when the condition is met instead of running open-ended. Source-backed.
+- [Oracle Definition Of Done](#sunilpai-oracle-definition-of-done) - Define an oracle — the concrete checks (tests, edge cases, benchmarks, static checks) that decide success — before running the agent task. Source-backed.
+- [Goal Finish Line Built From Evidence](#aimaker-goal-finish-line-evidence) - Write the /goal finish line as an outcome plus success criteria built from evidence, not vibes, so the agent knows when it is truly done. Source-backed.
 
 ### migration
 - [Visual Migration With Playwright](#codex-visual-migration-playwright) - Migrate a project while preserving screen output and checking it with Playwright. Source-backed.
@@ -377,6 +383,8 @@ These examples intentionally use only the documented `/goal <goal>` form. They d
 - [Auth Dependency Injection Refactor](#explainx-auth-di-refactor) - Refactor auth code to dependency injection while preserving tests, coverage, and public API. Source-backed.
 - [Split Oversized File](#claude-split-oversized-file) - Split an oversized source file into focused modules while preserving behavior. Source-backed.
 - [Centralize Cross-Cutting Logging](#github-copilot-cross-cutting-logging) - Centralize scattered logging, validation, security, or error-handling behavior without changing the core business behavior of the services. Source-backed.
+- [Structured-Prompt-Driven Refactor](#fowler-structured-prompt-refactor) - Keep the spec or prompt and the code in sync during a refactor; when reality diverges, fix the prompt or spec first, then update the code. Source-backed.
+- [Refactor Until Stop Conditions Met](#openai-community-refactor-stop-conditions) - Let the agent iterate on a refactor continually until one of several predefined stop conditions is met, resolving blockers so each run works longer. Source-backed.
 
 ### greenfield-build
 - [Build Design Tool From Scratch](#openai-long-horizon-design-tool) - Run a long-horizon Codex task to build a design tool with milestone verification. Source-backed.
@@ -17082,6 +17090,406 @@ DONE WHEN:
 
 VERIFY:
 - Run `layout.md and token export reviewed, component variant preview checked, and design-system health score or screenshot evidence captured` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="fowler-structured-prompt-refactor"></a>
+### Structured-Prompt-Driven Refactor
+
+- Category: `refactor`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Keep the spec or prompt and the code in sync during a refactor; when reality diverges, fix the prompt or spec first, then update the code.
+- Verification: `pytest && git diff --check`
+- Source: [Structured-Prompt-Driven Development (SPDD) - martinfowler.com](https://martinfowler.com/articles/structured-prompt-driven/)
+- Source type: `third-party-tutorial`
+- Evidence: When reality diverges, fix the prompt first — then update the code.
+- Evidence summary: When reality diverges, fix the prompt first — then update the code.; source: Structured-Prompt-Driven Development (SPDD) - martinfowler.com; type: third-party-tutorial; verification: pytest && git diff --check
+
+```text
+/goal
+GOAL:
+Complete Structured-Prompt-Driven Refactor for a refactoring task: Keep the spec or prompt and the code in sync during a refactor; when reality diverges, fix the prompt or spec first, then update the code.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect the target module, call sites, public API, tests, and compatibility notes.
+- Establish a baseline by running or locating evidence for: `pytest && git diff --check`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not change public APIs, data formats, or user-visible behavior unless the goal requires it.
+- Keep behavior characterization tests before large internal changes.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Keep the spec or prompt and the code in sync during a refactor; when reality diverges, fix the prompt or spec first, then update the code.
+- The verification command or evidence path succeeds: `pytest && git diff --check`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `pytest && git diff --check` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="openai-community-refactor-stop-conditions"></a>
+### Refactor Until Stop Conditions Met
+
+- Category: `refactor`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Let the agent iterate on a refactor continually until one of several predefined stop conditions is met, resolving blockers so each run works longer.
+- Verification: `pytest && git status --short`
+- Source: [How to achieve greater code refactoring automation? - OpenAI Community](https://community.openai.com/t/how-to-achieve-greater-code-refactoring-automation/1385318)
+- Source type: `public-forum`
+- Evidence: I suggested we allow Codex to iterate continually until one of numerous stop conditions was met.
+- Evidence summary: I suggested we allow Codex to iterate continually until one of numerous stop conditions was met.; source: How to achieve greater code refactoring automation? - OpenAI Community; type: public-forum; verification: pytest && git status --short
+
+```text
+/goal
+GOAL:
+Complete Refactor Until Stop Conditions Met for a refactoring task: Let the agent iterate on a refactor continually until one of several predefined stop conditions is met, resolving blockers so each run works longer.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect the target module, call sites, public API, tests, and compatibility notes.
+- Establish a baseline by running or locating evidence for: `pytest && git status --short`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not change public APIs, data formats, or user-visible behavior unless the goal requires it.
+- Keep behavior characterization tests before large internal changes.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Let the agent iterate on a refactor continually until one of several predefined stop conditions is met, resolving blockers so each run works longer.
+- The verification command or evidence path succeeds: `pytest && git status --short`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `pytest && git status --short` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="simi-codex-acceptance-stop"></a>
+### Codex Acceptance-Criteria Stop
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Put explicit acceptance and stopping criteria directly in the agent task so it stops when the condition is met instead of running open-ended.
+- Verification: `pytest -k acceptance`
+- Source: [Codex Best Practices - Simi Studio](https://simi.studio/en/posts/codex-best-practices/)
+- Source type: `third-party-tutorial`
+- Evidence: Codex will stop when it is reasonably confident the stopping condition has been met.
+- Evidence summary: Codex will stop when it is reasonably confident the stopping condition has been met.; source: Codex Best Practices - Simi Studio; type: third-party-tutorial; verification: pytest -k acceptance
+
+```text
+/goal
+GOAL:
+Complete Codex Acceptance-Criteria Stop for a coding-agent workflow repository: Put explicit acceptance and stopping criteria directly in the agent task so it stops when the condition is met instead of running open-ended.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `pytest -k acceptance`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Put explicit acceptance and stopping criteria directly in the agent task so it stops when the condition is met instead of running open-ended.
+- The verification command or evidence path succeeds: `pytest -k acceptance`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `pytest -k acceptance` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="sunilpai-oracle-definition-of-done"></a>
+### Oracle Definition Of Done
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Define an oracle — the concrete checks (tests, edge cases, benchmarks, static checks) that decide success — before running the agent task.
+- Verification: `pytest && npm run lint`
+- Source: [where good ideas come from (for coding agents) - Sunil Pai](https://sunilpai.dev/posts/seven-ways/)
+- Source type: `third-party-tutorial`
+- Evidence: the checks that decide success: tests to add, edge cases, benchmarks, static checks, canary signals.
+- Evidence summary: the checks that decide success: tests to add, edge cases, benchmarks, static checks, canary signals.; source: where good ideas come from (for coding agents) - Sunil Pai; type: third-party-tutorial; verification: pytest && npm run lint
+
+```text
+/goal
+GOAL:
+Complete Oracle Definition Of Done for a coding-agent workflow repository: Define an oracle — the concrete checks (tests, edge cases, benchmarks, static checks) that decide success — before running the agent task.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `pytest && npm run lint`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Define an oracle — the concrete checks (tests, edge cases, benchmarks, static checks) that decide success — before running the agent task.
+- The verification command or evidence path succeeds: `pytest && npm run lint`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `pytest && npm run lint` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="aimaker-goal-finish-line-evidence"></a>
+### Goal Finish Line Built From Evidence
+
+- Category: `workflow`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Write the /goal finish line as an outcome plus success criteria built from evidence, not vibes, so the agent knows when it is truly done.
+- Verification: `pytest && git diff --check`
+- Source: [How I Use /goal To Stop Babysitting AI Agents - aimaker (Substack)](https://aimaker.substack.com/p/claude-code-goal-command-finish-line)
+- Source type: `third-party-tutorial`
+- Evidence: A good finish line is built from evidence, not vibes.
+- Evidence summary: A good finish line is built from evidence, not vibes.; source: How I Use /goal To Stop Babysitting AI Agents - aimaker (Substack); type: third-party-tutorial; verification: pytest && git diff --check
+
+```text
+/goal
+GOAL:
+Complete Goal Finish Line Built From Evidence for a coding-agent workflow repository: Write the /goal finish line as an outcome plus success criteria built from evidence, not vibes, so the agent knows when it is truly done.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect goal text, progress logs, branch state, and verification artifacts.
+- Establish a baseline by running or locating evidence for: `pytest && git diff --check`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not claim a goal is complete without a current audit of the stated contract.
+- Pause if the goal text, branch state, or permissions are inconsistent.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Write the /goal finish line as an outcome plus success criteria built from evidence, not vibes, so the agent knows when it is truly done.
+- The verification command or evidence path succeeds: `pytest && git diff --check`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `pytest && git diff --check` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="developersdigest-skill-exit-criteria"></a>
+### Agent Skill Exit Criteria
+
+- Category: `qa`
+- Difficulty: `intermediate`
+- Origin: `source-backed`
+- Intent: Require exit criteria and a change report (files changed, commands run, commands not run, open risks) before an agent task counts as done.
+- Verification: `pytest && git status --short`
+- Source: [Agent Skills Need Exit Criteria, Not More Prompt Lore - DevelopersDigest](https://www.developersdigest.tech/blog/agent-skills-production-checklist)
+- Source type: `third-party-tutorial`
+- Evidence: Every agent change must report files changed, commands run, commands not run, and risks left open.
+- Evidence summary: Every agent change must report files changed, commands run, commands not run, and risks left open.; source: Agent Skills Need Exit Criteria, Not More Prompt Lore - DevelopersDigest; type: third-party-tutorial; verification: pytest && git status --short
+
+```text
+/goal
+GOAL:
+Complete Agent Skill Exit Criteria for a product with automated and manual QA coverage: Require exit criteria and a change report (files changed, commands run, commands not run, open risks) before an agent task counts as done.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect test suites, fixtures, bug templates, and release checklists.
+- Establish a baseline by running or locating evidence for: `pytest && git status --short`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not delete or weaken failing tests to make the suite pass.
+- Reproduce failures before changing production code.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Require exit criteria and a change report (files changed, commands run, commands not run, open risks) before an agent task counts as done.
+- The verification command or evidence path succeeds: `pytest && git status --short`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `pytest && git status --short` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="simonroses-security-do-not-list"></a>
+### Security Do-NOT Constraint List
+
+- Category: `security-appsec`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Build a growing Do-NOT constraint list from every security issue found in AI-generated code, and include it in future security prompts.
+- Verification: `npm audit && pytest -k security`
+- Source: [Prompt Engineering for Secure Code (Part 7) - Simon Roses](https://simonroses.com/2026/06/prompt-engineering-for-secure-code-part-7/)
+- Source type: `third-party-tutorial`
+- Evidence: Every security issue you've found in AI-generated code becomes a "Do NOT" for future prompts.
+- Evidence summary: Every security issue you've found in AI-generated code becomes a "Do NOT" for future prompts.; source: Prompt Engineering for Secure Code (Part 7) - Simon Roses; type: third-party-tutorial; verification: npm audit && pytest -k security
+
+```text
+/goal
+GOAL:
+Complete Security Do-NOT Constraint List for an application with security-sensitive code paths: Build a growing Do-NOT constraint list from every security issue found in AI-generated code, and include it in future security prompts.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect auth, input handling, rendering, upload, and boundary tests.
+- Establish a baseline by running or locating evidence for: `npm audit && pytest -k security`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not bypass authentication, authorization, validation, or audit checks.
+- Do not use eval, unsafe HTML injection, shell string concatenation, or string-built SQL.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Build a growing Do-NOT constraint list from every security issue found in AI-generated code, and include it in future security prompts.
+- The verification command or evidence path succeeds: `npm audit && pytest -k security`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `npm audit && pytest -k security` or the closest repo-local equivalent if the exact command is not available.
+- Capture before/after evidence for the behavior, metric, report, or artifact involved.
+- If verification cannot run locally, stop and report the missing dependency instead of guessing success.
+
+OUTPUT:
+- Summarize changed files, key decisions, verification output, and remaining risks.
+- Include any follow-up that is required for production rollout or human review.
+
+STOP RULES:
+- Pause if secrets, production access, stakeholder decisions, or destructive data operations are required.
+- Pause after three failed fix attempts on the same symptom and challenge the root-cause hypothesis.
+- Do not mark the goal complete until the current repository state has been audited against DONE WHEN.
+```
+
+<a id="addyosmani-dependency-audit-triage"></a>
+### Dependency Audit Triage Boundaries
+
+- Category: `security-ops`
+- Difficulty: `advanced`
+- Origin: `source-backed`
+- Intent: Triage dependency audit results with explicit boundaries: audits only find known advisories, so verify before trusting a package and never commit secrets.
+- Verification: `npm audit && git status --short`
+- Source: [Security and Hardening - addyosmani/agent-skills (GitHub)](https://github.com/addyosmani/agent-skills/blob/main/skills/security-and-hardening/SKILL.md)
+- Source type: `tool-readme`
+- Evidence: Audits only find known advisories; they do not catch a newly malicious or typosquatted package.
+- Evidence summary: Audits only find known advisories; they do not catch a newly malicious or typosquatted package.; source: Security and Hardening - addyosmani/agent-skills (GitHub); type: tool-readme; verification: npm audit && git status --short
+
+```text
+/goal
+GOAL:
+Complete Dependency Audit Triage Boundaries for a production operations environment: Triage dependency audit results with explicit boundaries: audits only find known advisories, so verify before trusting a package and never commit secrets.
+
+CONTEXT:
+- Before editing, read the nearest AGENTS.md/CLAUDE.md, current issue or PLAN.md, and any failing logs already in the repo.
+- Inspect workflow permissions, cloud IAM, release artifacts, and audit evidence.
+- Establish a baseline by running or locating evidence for: `npm audit && git status --short`.
+
+CONSTRAINTS:
+- Keep the scope limited to this goal; do not expand into unrelated cleanup.
+- Do not weaken tests, delete assertions, or mask errors to make verification pass.
+- Respect the repository's AGENTS.md/CLAUDE.md instructions and existing patterns.
+- Do not print, copy, rotate, or exfiltrate real secrets.
+- Do not widen production permissions without a documented least-privilege reason.
+
+DONE WHEN:
+- The implementation or documentation directly satisfies: Triage dependency audit results with explicit boundaries: audits only find known advisories, so verify before trusting a package and never commit secrets.
+- The verification command or evidence path succeeds: `npm audit && git status --short`.
+- The final diff is scoped to the relevant files and has no unrelated formatting churn.
+
+VERIFY:
+- Run `npm audit && git status --short` or the closest repo-local equivalent if the exact command is not available.
 - Capture before/after evidence for the behavior, metric, report, or artifact involved.
 - If verification cannot run locally, stop and report the missing dependency instead of guessing success.
 
