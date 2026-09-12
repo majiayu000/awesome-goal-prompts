@@ -5,6 +5,7 @@ from pathlib import Path
 from string import Template
 
 import generate_static_contracts
+from static_contract_policy import is_safe_slug, safe_output_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,6 +50,21 @@ def main() -> None:
         require("source_url must be an absolute http(s) URL" in str(exc), "unexpected unsafe URL error")
     else:
         raise AssertionError("unsafe source_url did not fail")
+
+    output_dir = ROOT / "docs" / "goals"
+    traversal_slugs = ("../index", "/tmp/x", "goals/../index", "..", "foo/bar", "foo\\bar")
+    for slug in traversal_slugs:
+        require(not is_safe_slug(slug), f"traversal slug should fail allowlist: {slug!r}")
+        try:
+            safe_output_path(output_dir, slug)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"traversal slug was not rejected before write: {slug!r}")
+
+    safe_path = safe_output_path(output_dir, "static-render-safety")
+    require(safe_path.parent == output_dir.resolve(), "safe slug escaped output directory")
+    require(safe_path.name == "static-render-safety.html", "safe slug produced unexpected filename")
 
     print("static contract rendering validation ok")
 

@@ -20,7 +20,7 @@ from string import Template
 from typing import Any
 from urllib.parse import urlparse
 
-from static_contract_policy import static_contract_entries
+from static_contract_policy import safe_output_path, static_contract_entries
 
 ROOT = Path(__file__).parent.parent
 DATA_FILE = ROOT / "data" / "examples.json"
@@ -126,7 +126,7 @@ def main() -> None:
         slug = entry["slug"]
         html = render_page(entry, template)
 
-        out_path = output_dir / f"{slug}.html"
+        out_path = safe_output_path(output_dir, slug)
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(html)
 

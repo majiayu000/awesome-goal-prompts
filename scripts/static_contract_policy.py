@@ -2,10 +2,40 @@
 
 from __future__ import annotations
 
+import re
+from pathlib import Path
 from typing import Any
 
 
 STATIC_CONTRACT_POLICY = "all-source-backed"
+
+# Same allowlist as docs/app.js static_path: goals/[a-z0-9-]+.html
+SAFE_SLUG_PATTERN = re.compile(r"^[a-z0-9-]+$")
+
+
+def is_safe_slug(slug: str) -> bool:
+    """Return whether slug is a safe single-segment id (no path separators)."""
+    return isinstance(slug, str) and bool(SAFE_SLUG_PATTERN.fullmatch(slug))
+
+
+def safe_output_path(output_dir: Path, slug: str, suffix: str = ".html") -> Path:
+    """Resolve output_dir / f\"{slug}{suffix}\" and require it stay inside output_dir.
+
+    Raises ValueError for unsafe slugs or any path that escapes the output directory
+    (``..``, absolute paths, or other separators).
+    """
+    if not is_safe_slug(slug):
+        raise ValueError(f"unsafe static contract slug: {slug!r}")
+
+    resolved_dir = output_dir.resolve()
+    candidate = (resolved_dir / f"{slug}{suffix}").resolve()
+    try:
+        candidate.relative_to(resolved_dir)
+    except ValueError as exc:
+        raise ValueError(
+            f"static contract path escapes output dir: slug={slug!r} path={candidate}"
+        ) from exc
+    return candidate
 
 
 def is_static_contract_entry(entry: dict[str, Any]) -> bool:

@@ -11,6 +11,8 @@ import sys
 import tomllib
 from pathlib import Path
 
+from static_contract_policy import is_safe_slug
+
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = ROOT / "data" / "source"
 
@@ -88,6 +90,12 @@ def validate_entries(entries: list[dict], categories: dict[str, dict]) -> list[s
             value = entry.get(field)
             if not isinstance(value, str) or not value:
                 errors.append(f"entry '{entry_id}': missing or empty required field '{field}'")
+
+        entry_id_value = entry.get("id")
+        if isinstance(entry_id_value, str) and entry_id_value and not is_safe_slug(entry_id_value):
+            errors.append(
+                f"entry '{entry_id}': id must match ^[a-z0-9-]+$ (safe slug), got {entry_id_value!r}"
+            )
 
         category = entry.get("category")
         if isinstance(category, str) and category not in categories:
