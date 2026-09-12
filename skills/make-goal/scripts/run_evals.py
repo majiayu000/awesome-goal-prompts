@@ -29,6 +29,28 @@ class CaseResult:
     detail: str
 
 
+def resolve_fixture_path(file_value: str) -> Path:
+    """Resolve a fixture path under EVALS_DIR, constrained to SKILL_ROOT.
+
+    Absolute paths are rejected. Relative paths are joined under EVALS_DIR,
+    resolved, and must remain inside the skill package root so intentional
+    references like ``../SKILL.md`` stay valid while traversal outside the
+    skill fails closed before any file read.
+    """
+    if not isinstance(file_value, str) or not file_value.strip():
+        raise ValueError("fixture file path must be a non-empty string")
+    raw = Path(file_value)
+    if raw.is_absolute():
+        raise ValueError(f"fixture file path must be relative, got absolute: {file_value!r}")
+    resolved = (EVALS_DIR / raw).resolve()
+    skill_root = SKILL_ROOT.resolve()
+    if not resolved.is_relative_to(skill_root):
+        raise ValueError(
+            f"fixture file path escapes skill root {skill_root}: {file_value!r} -> {resolved}"
+        )
+    return resolved
+
+
 def assertion_passes(text: str, assertion: dict[str, Any]) -> bool:
     kind = assertion["type"]
     values = assertion.get("values", [])
@@ -75,7 +97,7 @@ def validate_prompt_eval_specs(data: dict[str, Any]) -> list[CaseResult]:
 
 def run_skill_contract_check(case: dict[str, Any]) -> CaseResult:
     case_id = case["id"]
-    path = EVALS_DIR / case["file"]
+    path = resolve_fixture_path(case["file"])
     text = path.read_text(encoding="utf-8")
     assertion_failures = [
         assertion["name"]
@@ -97,7 +119,7 @@ def lint_passed(checks: list[Check], strict_warnings: bool) -> bool:
 
 def run_fixture(case: dict[str, Any]) -> CaseResult:
     case_id = case["id"]
-    path = EVALS_DIR / case["file"]
+    path = resolve_fixture_path(case["file"])
     text = path.read_text(encoding="utf-8")
     profile = case.get("profile", "auto")
     strict_warnings = bool(case.get("strict_warnings", False))
@@ -126,9 +148,50 @@ def run_fixture(case: dict[str, Any]) -> CaseResult:
     return CaseResult(f"fixture:{case_id}", passed, detail)
 
 
+def _expect_resolve_rejection(file_value: str, *, label: str) -> None:
+    """Assert resolve_fixture_path rejects before any read_text occurs."""
+    try:
+        resolve_fixture_path(file_value)
+    except ValueError:
+        return
+    raise AssertionError(f"{label}: expected ValueError for {file_value!r} before read_text")
+
+
+def self_check_fixture_path_resolver() -> list[CaseResult]:
+    """Negative unit assertions for absolute and skill-root escape paths."""
+    results: list[CaseResult] = []
+
+    try:
+        _expect_resolve_rejection("/etc/hosts", label="absolute-path")
+        results.append(CaseResult("path-safety:reject-absolute", True, "absolute path rejected"))
+    except AssertionError as exc:
+        results.append(CaseResult("path-safety:reject-absolute", False, str(exc)))
+
+    try:
+        _expect_resolve_rejection("../../../README.md", label="escape-skill-root")
+        results.append(
+            CaseResult("path-safety:reject-escape", True, "path escaping skill root rejected")
+        )
+    except AssertionError as exc:
+        results.append(CaseResult("path-safety:reject-escape", False, str(exc)))
+
+    try:
+        allowed = resolve_fixture_path("../SKILL.md")
+        if not allowed.is_relative_to(SKILL_ROOT.resolve()):
+            raise AssertionError(f"../SKILL.md resolved outside skill root: {allowed}")
+        if allowed.name != "SKILL.md":
+            raise AssertionError(f"expected SKILL.md, got {allowed}")
+        results.append(CaseResult("path-safety:allow-skill-md", True, f"resolved {allowed}"))
+    except (AssertionError, ValueError) as exc:
+        results.append(CaseResult("path-safety:allow-skill-md", False, str(exc)))
+
+    return results
+
+
 def main() -> int:
     data = json.loads(EVALS_PATH.read_text(encoding="utf-8"))
-    results = validate_prompt_eval_specs(data)
+    results = self_check_fixture_path_resolver()
+    results.extend(validate_prompt_eval_specs(data))
     for case in data.get("skill_contract_checks", []):
         results.append(run_skill_contract_check(case))
     for case in data.get("fixture_cases", []):
