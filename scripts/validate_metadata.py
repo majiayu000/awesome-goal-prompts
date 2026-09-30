@@ -122,9 +122,6 @@ def main() -> None:
     expected_static_urls = {
         f"{SITE_URL}goals/{slug}.html" for slug in expected_static_slugs
     }
-    expected_anchor_urls = {
-        f"{SITE_URL}#{entry['slug']}" for entry in entries
-    }
     actual_static_slugs = {
         path.stem for path in (ROOT / "docs" / "goals").glob("*.html")
     }
@@ -143,13 +140,10 @@ def main() -> None:
 
     full_sitemap_locs = sitemap_locs(ROOT / "docs" / "sitemap.xml")
     assert_set_equal(
-        "Full sitemap goal URLs",
-        {loc for loc in full_sitemap_locs if "/goals/" in loc and loc.endswith(".html")},
-        expected_static_urls,
+        "Full sitemap canonical URLs",
+        full_sitemap_locs,
+        expected_static_urls | {SITE_URL, f"{SITE_URL}docs.html"},
     )
-    missing_anchors = expected_anchor_urls - full_sitemap_locs
-    if missing_anchors:
-        fail(f"Full sitemap missing anchor URLs: {', '.join(sorted(missing_anchors)[:10])}")
 
     parser = IndexMetadataParser()
     parser.feed((ROOT / "docs" / "index.html").read_text(encoding="utf-8"))

@@ -143,7 +143,6 @@ def main() -> None:
             for slug in generated:
                 f.write(f"  <url>\n")
                 f.write(f"    <loc>https://majiayu000.github.io/awesome-goal-prompts/goals/{slug}.html</loc>\n")
-                f.write(f"    <lastmod>2026-05-29</lastmod>\n")
                 f.write(f"    <changefreq>monthly</changefreq>\n")
                 f.write(f"    <priority>0.7</priority>\n")
                 f.write(f"  </url>\n")

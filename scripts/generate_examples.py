@@ -8,6 +8,7 @@ of README.md). Edit the TOML data, not the generated outputs.
 
 from __future__ import annotations
 
+import html
 import json
 import re
 import tomllib
@@ -376,6 +377,19 @@ def update_static_metadata(entries: list[dict[str, str | None]]) -> None:
         index_text, count = re.subn(pattern, replacement, index_text, count=1, flags=re.DOTALL)
         if count != 1:
             raise SystemExit(f"failed to update docs/index.html metadata for pattern: {pattern}")
+    contracts = []
+    for entry in entries:
+        path = static_contract_path(entry)
+        if not path:
+            continue
+        contracts.append(
+            f'<a class="entry" href="{html.escape(path, quote=True)}">'
+            f'<span class="entry__no">No. {len(contracts) + 1:03d}</span>'
+            f'<span class="entry__content"><span class="entry__title">{html.escape(entry["title"])}</span>'
+            f'<span class="entry__intent">{html.escape(entry["intent"])}</span></span>'
+            '<span class="entry__action">View</span></a>'
+        )
+    index_text = replace_markers(index_text, {"contracts": "\n" + "\n".join(contracts) + "\n"})
     index_path.write_text(index_text, encoding="utf-8")
 
     docs_path = ROOT / "docs" / "docs.html"
