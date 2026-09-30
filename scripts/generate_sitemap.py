@@ -1,55 +1,28 @@
 #!/usr/bin/env python3
-"""Regenerate sitemap.xml so lastmod reflects real git commit dates.
+"""Regenerate sitemaps containing canonical, separately addressable pages.
 
 Outputs:
-  docs/sitemap.xml          full sitemap (home, docs, goals pages, SPA anchors)
+  docs/sitemap.xml          full sitemap (home, docs, goals pages)
   docs/goals/sitemap-goals.xml   goals pages only
 """
-import datetime
-import json
-import subprocess
 from pathlib import Path
 
 BASE_URL = "https://majiayu000.github.io/awesome-goal-prompts/"
 ROOT = Path(__file__).resolve().parents[1]
 DOCS_DIR = ROOT / "docs"
 GOALS_DIR = DOCS_DIR / "goals"
-EXAMPLES_JSON = DOCS_DIR / "examples.json"
 SITEMAP_PATH = DOCS_DIR / "sitemap.xml"
 GOALS_SITEMAP_PATH = GOALS_DIR / "sitemap-goals.xml"
 
 HREFLANGS = ("en", "zh", "x-default")
 
 
-def git_last_modified(rel_path: str) -> str:
-    """Return the last git commit date (YYYY-MM-DD) for rel_path.
-
-    Falls back to today's date when the file has no git history or the
-    command fails. Uses array args (no shell) per SEC-01.
-    """
-    today = datetime.date.today().isoformat()
-    try:
-        result = subprocess.run(
-            ["git", "log", "-1", "--format=%cs", "--", rel_path],
-            capture_output=True,
-            text=True,
-            cwd=ROOT,
-        )
-    except (OSError, subprocess.SubprocessError):
-        return today
-    if result.returncode != 0:
-        return today
-    date = result.stdout.strip()
-    return date if date else today
-
-
-def build_url_block(loc: str, lastmod: str, changefreq: str,
+def build_url_block(loc: str, changefreq: str,
                     priority: str, alternates: str = "") -> str:
     """Render one <url> element."""
     return (
         "  <url>\n"
         f"    <loc>{loc}</loc>\n"
-        f"    <lastmod>{lastmod}</lastmod>\n"
         f"    <changefreq>{changefreq}</changefreq>\n"
         f"    <priority>{priority}</priority>\n"
         f"{alternates}"
@@ -73,14 +46,12 @@ def build_alternates(path: str) -> str:
 
 def collect_localized_blocks() -> list[str]:
     """Home + docs.html with hreflang alternates."""
-    home_mod = git_last_modified("docs/index.html")
-    docs_mod = git_last_modified("docs/docs.html")
     return [
         build_url_block(
-            BASE_URL, home_mod, "weekly", "1.0", build_alternates("")
+            BASE_URL, "weekly", "1.0", build_alternates("")
         ),
         build_url_block(
-            f"{BASE_URL}docs.html", docs_mod, "monthly", "0.8",
+            f"{BASE_URL}docs.html", "monthly", "0.8",
             build_alternates("docs.html"),
         ),
     ]
@@ -91,21 +62,8 @@ def collect_goals_blocks() -> list[str]:
     blocks = []
     for html in sorted(GOALS_DIR.glob("*.html")):
         slug = html.stem
-        mod = git_last_modified(f"docs/goals/{html.name}")
         loc = f"{BASE_URL}goals/{slug}.html"
-        blocks.append(build_url_block(loc, mod, "monthly", "0.7"))
-    return blocks
-
-
-def collect_anchor_blocks() -> list[str]:
-    """SPA anchors /#<slug> from examples.json, sharing its commit date."""
-    anchor_mod = git_last_modified("docs/examples.json")
-    with open(EXAMPLES_JSON, encoding="utf-8") as fh:
-        entries = json.load(fh)
-    blocks = []
-    for entry in entries:
-        loc = f"{BASE_URL}#{entry['slug']}"
-        blocks.append(build_url_block(loc, anchor_mod, "monthly", "0.5"))
+        blocks.append(build_url_block(loc, "monthly", "0.7"))
     return blocks
 
 
@@ -123,9 +81,8 @@ def render_urlset(blocks: list[str]) -> str:
 def main() -> None:
     localized = collect_localized_blocks()
     goals = collect_goals_blocks()
-    anchors = collect_anchor_blocks()
 
-    full = render_urlset(localized + goals + anchors)
+    full = render_urlset(localized + goals)
     with open(SITEMAP_PATH, "w", encoding="utf-8") as fh:
         fh.write(full)
 
@@ -133,7 +90,7 @@ def main() -> None:
     with open(GOALS_SITEMAP_PATH, "w", encoding="utf-8") as fh:
         fh.write(goals_only)
 
-    print(f"sitemap.xml: {len(localized) + len(goals) + len(anchors)} urls")
+    print(f"sitemap.xml: {len(localized) + len(goals)} urls")
     print(f"sitemap-goals.xml: {len(goals)} urls")
 
 
