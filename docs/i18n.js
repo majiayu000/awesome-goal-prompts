@@ -1,5 +1,5 @@
 // i18n dictionaries and helpers. Loaded before app.js and docs-page.js.
-// Exposes globals: copy, queryAliases, glyphs, activeCopy, t, formatContractsCount, localizedLabel, titleCase.
+// Exposes globals: copy, queryAliases, glyphs, activeCopy, t, formatContractsCount, localizedLabel, titleCase, decodedHash.
 
 const copy = {
   en: {
@@ -486,4 +486,16 @@ function localizedLabel(group, value, fallback = "") {
   const labels = activeCopy()[group] || copy.en[group] || {};
   const defaultLabels = copy.en[group] || {};
   return labels[value] || defaultLabels[value] || fallback || titleCase(value);
+}
+
+function decodedHash() {
+  const hash = window.location.hash.replace("#", "");
+  try {
+    return decodeURIComponent(hash);
+  } catch (error) {
+    if (error instanceof URIError) {
+      return hash;
+    }
+    throw error;
+  }
 }

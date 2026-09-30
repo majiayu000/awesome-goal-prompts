@@ -138,7 +138,7 @@ function activeDoc() {
 }
 
 function getRequestedDoc() {
-  const hash = decodeURIComponent(window.location.hash.replace("#", ""));
+  const hash = decodedHash();
   return docs.find((doc) => doc.id === hash) || docs[0];
 }
 

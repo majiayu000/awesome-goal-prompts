@@ -754,7 +754,7 @@ async function loadExamples() {
     renderRecipes();
     renderStats();
 
-    const wanted = decodeURIComponent(window.location.hash.replace("#", ""));
+    const wanted = decodedHash();
     const linkedEntry = entries.find((entry) => entry.slug === wanted);
     if (linkedEntry) {
       state.origin = linkedEntry.origin;
