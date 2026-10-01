@@ -108,11 +108,35 @@
         <article class="doc-paper" aria-live="polite">
           <header class="doc-paper__head">
             <p class="doc-kicker" id="doc-kicker">Documentation</p>
-            <h2 id="doc-title">Loading...</h2>
+            <h2 id="doc-title">How To Write A Good /goal</h2>
             <p id="doc-summary"></p>
           </header>
           <div class="doc-render" id="doc-content">
-            <p class="doc-loading" data-i18n="docsLoading">Loading document...</p>
+            <p>A task contract turns one coding request into an auditable result. Name the current files and evidence, keep boundaries explicit, and replace sample commands with the repository's real checks.</p>
+            <h3>Start with seven fields</h3>
+            <ol>
+              <li><strong>GOAL:</strong> one concrete outcome.</li>
+              <li><strong>CONTEXT:</strong> files, issues and logs to inspect first.</li>
+              <li><strong>CONSTRAINTS:</strong> scope, behavior and safety boundaries.</li>
+              <li><strong>DONE WHEN:</strong> measurable completion conditions.</li>
+              <li><strong>VERIFY:</strong> fresh commands or artifacts that prove those conditions.</li>
+              <li><strong>OUTPUT:</strong> changes, evidence and remaining risks.</li>
+              <li><strong>STOP RULES:</strong> when missing access or decisions require a pause.</li>
+            </ol>
+            <h3>Choose a pattern for your task</h3>
+            <ul>
+              <li>Vague request: <a href="goals/x-meta-goal-prompt-generator.html">inspect context, then draft a goal</a>.</li>
+              <li>Tests, lint and typecheck: <a href="goals/x-tests-lint-completion.html">a mechanical completion loop</a>.</li>
+              <li>Blocked work: <a href="goals/x-goal-escape-hatch.html">report an escape hatch instead of claiming completion</a>.</li>
+              <li>Design before execution: <a href="goals/x-plan-then-goal-execution.html">plan, then run a stable goal</a>.</li>
+            </ul>
+            <h3>Is /goal a native command in every agent?</h3>
+            <p>The catalog provides task text. It does not install a command or establish support in every agent. Check your agent's current interface; if needed, paste the contract as ordinary instructions.</p>
+            <h3>How is this different from GitHub Spec Kit?</h3>
+            <p>This catalog helps you select and adapt a bounded task contract. <a href="https://github.com/github/spec-kit">Spec Kit</a> is an installable toolkit with structured specification, bug-fix and assessment workflows. Choose it when you need that workflow and its artifacts; reading this catalog does not install it.</p>
+            <h3>Does source-backed mean ready to run?</h3>
+            <p>It identifies public provenance, not verification in your repository. Seed patterns are separately authored starting points. For both, bind the files, checks and completion conditions to your actual task.</p>
+            <p>Read the complete <a href="how-to-write-goals.md">English guide</a> or <a href="how-to-write-goals.zh.md" lang="zh-CN">中文指南</a>. With JavaScript enabled, the full selected-language guide loads here.</p>
           </div>
         </article>
       </section>

@@ -131,12 +131,12 @@ These patterns are starting points, not ready-to-run goals. Keep the useful shap
 
 | Pattern | Use it when | Catalog entry |
 | --- | --- | --- |
-| Meta goal writer | The task is vague and the repo has useful history/docs. First ask the agent to inspect context and draft the `/goal`. | `x-meta-goal-prompt-generator` |
-| Tests and lint loop | The desired goal is purely mechanical: all tests pass, lint is clean, typecheck is clean. | `x-tests-lint-completion` |
-| Escape hatch | A long-running goal may contain impossible or blocked subtasks. | `x-goal-escape-hatch` |
-| AGENTS/CLAUDE rules with goal | Repo-specific rules must survive a long session or compaction. | `x-agentsmd-goal-workflow` |
-| Plan then goal | The work needs design first, then execution against a stable plan. | `x-plan-then-goal-execution` |
-| Measurable proof and limits | The goal is at risk of becoming vague todo-list work. | `x-measurable-goal-structure` |
+| Meta goal writer | The task is vague and the repo has useful history/docs. First ask the agent to inspect context and draft the `/goal`. | [x-meta-goal-prompt-generator](goals/x-meta-goal-prompt-generator.html) |
+| Tests and lint loop | The desired goal is purely mechanical: all tests pass, lint is clean, typecheck is clean. | [x-tests-lint-completion](goals/x-tests-lint-completion.html) |
+| Escape hatch | A long-running goal may contain impossible or blocked subtasks. | [x-goal-escape-hatch](goals/x-goal-escape-hatch.html) |
+| AGENTS/CLAUDE rules with goal | Repo-specific rules must survive a long session or compaction. | [x-agentsmd-goal-workflow](goals/x-agentsmd-goal-workflow.html) |
+| Plan then goal | The work needs design first, then execution against a stable plan. | [x-plan-then-goal-execution](goals/x-plan-then-goal-execution.html) |
+| Measurable proof and limits | The goal is at risk of becoming vague todo-list work. | [x-measurable-goal-structure](goals/x-measurable-goal-structure.html) |
 
 ## Copyable Examples
 
@@ -225,3 +225,17 @@ Avoid goal text that asks for confidence instead of proof:
 - `use your best judgment` without constraints
 
 Replace those with a measurable end state, real verification, and explicit stop rules.
+
+## Frequently Asked Questions
+
+### Is `/goal` a native command in every agent?
+
+This catalog provides task text. It does not install a command or establish support in every agent. Check your agent's current interface; if needed, paste the seven-field contract as ordinary instructions.
+
+### How is this different from GitHub Spec Kit?
+
+This catalog helps you select and adapt a bounded task contract. [Spec Kit](https://github.com/github/spec-kit) is an installable toolkit with structured specification, bug-fix and assessment workflows. Choose it when you need that workflow and its artifacts; reading this catalog does not install it.
+
+### Does source-backed mean ready to run?
+
+It identifies public provenance, not verification in your repository. Seed patterns are separately authored starting points. For both, bind the files, checks and completion conditions to your actual task.

@@ -131,12 +131,12 @@ STOP RULES:
 
 | 模式 | 适用场景 | 目录条目 |
 | --- | --- | --- |
-| 让智能体先写 goal | 任务太模糊，但仓库里有足够上下文。先让智能体阅读上下文并起草 `/goal`。 | `x-meta-goal-prompt-generator` |
-| 测试和 lint 闭环 | 目标很明确：测试通过、lint 干净、类型检查通过。 | `x-tests-lint-completion` |
-| 失败时退出 | 长任务里可能存在无法完成或被阻塞的部分。 | `x-goal-escape-hatch` |
-| 仓库规则 + goal | `AGENTS.md` 或 `CLAUDE.md` 里的规则必须在长会话或压缩后继续生效。 | `x-agentsmd-goal-workflow` |
-| 先计划再执行 | 工作需要先设计方案，再按稳定计划执行。 | `x-plan-then-goal-execution` |
-| 可衡量证明 | 任务容易变成泛泛的待办列表。 | `x-measurable-goal-structure` |
+| 让智能体先写 goal | 任务太模糊，但仓库里有足够上下文。先让智能体阅读上下文并起草 `/goal`。 | [x-meta-goal-prompt-generator](goals/x-meta-goal-prompt-generator.html) |
+| 测试和 lint 闭环 | 目标很明确：测试通过、lint 干净、类型检查通过。 | [x-tests-lint-completion](goals/x-tests-lint-completion.html) |
+| 失败时退出 | 长任务里可能存在无法完成或被阻塞的部分。 | [x-goal-escape-hatch](goals/x-goal-escape-hatch.html) |
+| 仓库规则 + goal | `AGENTS.md` 或 `CLAUDE.md` 里的规则必须在长会话或压缩后继续生效。 | [x-agentsmd-goal-workflow](goals/x-agentsmd-goal-workflow.html) |
+| 先计划再执行 | 工作需要先设计方案，再按稳定计划执行。 | [x-plan-then-goal-execution](goals/x-plan-then-goal-execution.html) |
+| 可衡量证明 | 任务容易变成泛泛的待办列表。 | [x-measurable-goal-structure](goals/x-measurable-goal-structure.html) |
 
 ## 可复制示例
 
@@ -212,3 +212,17 @@ STOP RULES:
 - `use your best judgment` 但没有约束
 
 把这些换成可衡量的结束状态、真实验证和明确停止规则。
+
+## 常见问题
+
+### `/goal` 是每个智能体的原生命令吗？
+
+本目录提供任务文本，不安装命令，也不能证明所有智能体都支持这个入口。先检查当前工具的界面；需要时把七字段合同作为普通指令粘贴。
+
+### 和 GitHub Spec Kit 有什么区别？
+
+这里帮助你挑选和改写一个有边界的任务合同。[Spec Kit](https://github.com/github/spec-kit) 是需要安装的工具包，包含结构化规格、修复和评估工作流。需要整套工作流与产物时再选择它；阅读本目录不会安装它。
+
+### source-backed 就能直接执行吗？
+
+它说明公开来源，不代表已在你的仓库验证。seed 是另行编写的起点；两者都需要绑定真实文件、检查命令和完成条件。
