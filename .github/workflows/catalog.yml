@@ -58,6 +58,9 @@ jobs:
       - name: Check page JavaScript
         run: node --check docs/app.js
 
+      - name: Test page fragment handling
+        run: node --test scripts/test_page_hashes.cjs
+
       - name: Check generated files are committed
         run: |
           if [ -n "$(git status --short)" ]; then
